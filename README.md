@@ -12,7 +12,7 @@ OpenSync is a simple and low-cost synchronizer based on microcontroller technolo
 
 ## Specs
  - **Main PLL Frequency**: overclocked to 200 MHz
- - **Output Channels**: 8 (supports up to 24)
+ - **Output Channels**: 8 (supports up to 16)
  - **Input Channel(s)**: 1
  - **I/O Channel Voltage**: 5V
  - **I/O Resolution**: 1 clock cycle (5ns * clock divider)
@@ -30,13 +30,21 @@ Complete instructions to construct and use OpenSync are provided in [imaginary l
 ## Quick Start
 
 ### Compilation
-TBD
+OpenSync uses the [RP2350](https://www.raspberrypi.com/products/rp2350/) microcontroller and [Pico SDK](https://www.raspberrypi.com/documentation/microcontrollers/c_sdk.html) as the basis for developing devices that require precise timing with great flexibility. However, there currently isn't an official IDE like the arduino IDE for this microcontroller. Instead, Microsoft Visual Code with the Pico SDK plugin will be used as the IDE to compile the software. Compilation is extremely simple in this context as the IDE and CMake files take care of all the compilation steps. Simply open the root directory of the OpenSync source code with Microsoft Visual Code and click on `>>Compile<<` on the bottom right corner. This will generate the .UF2 file necessary for flashing firmware to the microcontroller.
 
 ### Flashing
-TBD
+Flashing firmware to OpenSync is extremely simple. Make sure OpenSync is disconnected from the computer. With the top cover off, press down on the white button on the Pico 2 development board and plug in OpenSync to a computer containing the .UF2 file generated during the compilation process. OpenSync will register itself as a storage device on most computers. Open the folder for OpenSync and drag the .UF2 file into the root directory. OpenSync should then disconnect and reconnect with the computer. During the first bootup, all status LEDs will turn on which indicated that the firmware has been successfully flashed.
 
 ### Self Test
-TBD
+Import the Python library `opensync` and type in the following command:
+```python
+from opensync import create_connection, device_comm_test
+
+sync_device = create_connection(port="Enter OpenSync USB port connection here")
+
+device_comm_test(sync_device)
+```
+If successfull, no errors or warning should be produced. Please note that all commands to and from opensync are terminated with CRLF. Additionally, all used output terminals should be validated on an osciliscope for peace-of-mind, allthough this is not necessary.
 
 ## Context
 https://groups.google.com/g/openpiv-users/c/xi7qt28IGEE
