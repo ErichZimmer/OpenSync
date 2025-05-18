@@ -1,0 +1,16 @@
+*.pyc
+*.dll
+*.so
+*.o
+*.ipynb_checkpoints
+.coverage
+
+firmware/opensync/.vscode
+firmware/opensync/build
+
+
+demos/*
+documents/*
+firmware/*
+hardware/*
+software/*
