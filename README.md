@@ -1,7 +1,7 @@
 # OpenSync
 An open source synchronizer for the velocimetry of fluids using a Raspberry Pi Pico 2 microcontroller.
 
-![Example Timing Graph for Diode Laser](demos/opensync_demo_timing.png)
+![Example Timing Graph for Diode Laser](demos/timing/opensync_demo_timing.png)
 
 # NOTICE
 This is for a future project for an undergraduate course (that will be completed 2 semesters from now). The course is over embedded systems and programming design, and I'll think it will greatly enhance the code for the synchronizer. Currently, this repository is going to be left blank until I obtain a 2 or 4 channel >100MHz oscilloscope. Also, I decided to shift towards using a portion of the PrawnDO firmware (reference 3) for the serial interface due to performance and flexibility.
