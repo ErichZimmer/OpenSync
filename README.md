@@ -81,6 +81,18 @@ https://groups.google.com/g/openpiv-users/c/xi7qt28IGEE
 ## Acknowledgments
 Will be determined after the first milestone of this project.
 
+## TODO
+- [x] Add timing plot utilities
+- [x] Add device containerization for customization
+- [x] Add the ability to change channel names
+- [ ] Add the ability to disable output channels (necessary?)
+- [ ] Add second external trigger and output port masking
+- [ ] Add POST bootup validation (not really necessary, but why not)
+- [ ] Add RP2040 (original Pico) support
+- [ ] Add video examples on YouTube
+- [ ] Learn power electronics (this semester)
+- [ ] Validate against an osciliscope
+
 ## References
  1. Radim Hošák, & Miroslav Ježek. (2018). Arbitrary digital pulse sequence generator with delay-loop timing. Review of Scientific Instruments, 89(4). https://doi.org/10.1063/1.5019685
  2. Scallon, A. (2017, June 18). Arduino TTL Pulse Generator and Controller. Optogenetics and Neural Engineering Core. https://optogeneticsandneuralengineeringcore.gitlab.io/ONECoreSite/projects/Arduino%20TTL%20Pulse%20Generator%20and%20Controller/
