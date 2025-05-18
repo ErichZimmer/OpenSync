@@ -28,19 +28,19 @@ OpenSync is a simple and low-cost synchronizer based on microcontroller technolo
 ## File Architecture
 ```
 opensync/
-├── demos/					# Demonstration images and videos
-├── documents/				# OpenSync PDF manual (independent of device documentation)
-├── firmware/				# Firmware for RP2350 microcontroller
-│   ├── opensync/			# Source folder root directory
-│   └──   ├── src/			# C and assembly source code files
-│         └── external/		# PrawnDO TUSB interface code and liscense
-├── hardware/				# Hardware for OpenSync
-│   ├── opensync/			# Hardware folder root directory
-│   └──   ├── Components/	# Parts necessary to build OpenSync
-│         └── CAD/			# CAD files for 3D printing housing and parts
-└── software/				# Python interfrace for OpenSync
-    ├── opensync/			# Namespace package root directory
-    └── docs/				# Sphinx documentation generator
+├── demos/                  # Demonstration images and videos
+├── documents/              # OpenSync PDF manual (independent of device documentation)
+├── firmware/               # Firmware for RP2350 microcontroller
+│   ├── opensync/           # Source folder root directory
+│   └──   ├── src/          # C and assembly source code files
+│         └── external/     # PrawnDO TUSB interface code and liscense
+├── hardware/               # Hardware for OpenSync
+│   ├── opensync/           # Hardware folder root directory
+│   └──   ├── Components/   # Parts necessary to build OpenSync
+│         └── CAD/          # CAD files for 3D printing housing and parts
+└── software/               # Python interfrace for OpenSync
+    ├── opensync/           # Namespace package root directory
+    └── docs/               # Sphinx documentation generator
 
 ```
 
