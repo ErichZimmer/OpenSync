@@ -3,7 +3,7 @@ from numpy import inf as INF
 from typing import Tuple
 
 from ._utils import get_channel_ids
-from .._communication import CLOCK_CYCLE
+from ..communication._communication import CLOCK_CYCLE
 
 
 MAX_PULSE_SEQUENCE = 200
