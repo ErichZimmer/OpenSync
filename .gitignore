@@ -4,6 +4,7 @@
 *.o
 *.ipynb_checkpoints
 .coverage
+__pycache__
 
 firmware/opensync/.vscode
 firmware/opensync/build
@@ -13,4 +14,4 @@ demos/videos/*
 documents/*
 firmware/*
 hardware/*
-software/*
+software/docs/*
