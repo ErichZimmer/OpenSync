@@ -24,8 +24,8 @@ OpenSync is a simple and low-cost synchronizer based on microcontroller technolo
  - **Ext. Trigger Min Pulse Width**: 5 clock cycles (25ns * clock divider)
  - **Ext. Trigger Jitter**: 2 clock cycles (10ns * clock divider)
  - **Max Pulse Sequence Length**: 32 pulses
- - **Pulse Sequence Repetition Jitter**: 2 clock cycles (10ns * clock divider)
  - **Pulse Sequence Repetition**: Up to 500,000 iterations
+ - **Pulse Sequence Repetition Jitter**: 4 clock cycles (20ns * clock divider)
  - All powered via USB! (for now)
 
 
