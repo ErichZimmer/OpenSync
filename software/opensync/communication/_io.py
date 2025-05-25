@@ -79,15 +79,15 @@ def device_comm_open(port: str) -> 'opensync':
     SerialException
         If the connection to the specified port cannot be established.
     """
-    opensync_device = Serial()
-    opensync_device.baudrate = BAUDRATE
-    opensync_device.port = port
-    opensync_device.timeout = READ_TIMEOUT
-    opensync_device.write_timeout = WRITE_TIMEOUT
+    device = Serial()
+    device.baudrate = BAUDRATE
+    device.port = port
+    device.timeout = READ_TIMEOUT
+    device.write_timeout = WRITE_TIMEOUT
     
-    opensync_device.open()
+    device.open()
 
-    return opensync_device
+    return device
 
 
 def device_comm_write(
@@ -162,9 +162,9 @@ def device_comm_managed(port: str) -> None:
         An instance of the OpenSync device that is connected to the
         specified port.
     """
-    opensync_device = device_comm_open(port)
+    device = device_comm_open(port)
     
     try:
-        yield opensync_device
+        yield device
     finally:
-        device_comm_close(opensync_device)
+        device_comm_close(device)

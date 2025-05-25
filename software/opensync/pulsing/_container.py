@@ -5,6 +5,7 @@ __all__ = [
     'get_pulse_params',
     'insert_pulse',
     'config_trigger',
+    'config_trigger_delay',
     'config_reps'
 ]
 
@@ -35,14 +36,18 @@ def get_pulse_params() -> dict:
            (default is 1).
         - 'ext_trigger': A string indicating the external trigger status
            (default is 'disabled').
+        - 'ext_trigger_delay': A float respresenting the delay  between the
+           external trigger and the start of the pulse sequence 
+           (default is 0.0).
         - 'reps_khz': A float representing the repetition rate in kilohertz
-           (default is 0.015).
+           (default is 0.001).
         - 'channel_X': A dict of channel name and pulse data for each channel
            (where X is the channel number from 0 to 15).
     """
     pulse_params = {
         'clock_divider': 1,
         'ext_trigger': 'disabled',
+        'ext_trigger_delay': 0.0
         'reps_khz': 0.001,
         'channel_0': [],
         'channel_1': [],
@@ -72,10 +77,10 @@ def get_pulse_params() -> dict:
     
 def insert_pulse(
     pulse_params: dict,
-    pulse_1_start: int,
-    pulse_1_end: int,
-    pulse_2_start: int = None,
-    pulse_2_end: int = None,
+    rising_edge_1: int,
+    falling_edge_1: int,
+    rising_edge_2: int = None,
+    falling_edge_2: int = None,
     channel_id: int = 0,
     channel_name=None
 ) -> dict:
@@ -89,16 +94,16 @@ def insert_pulse(
     ----------
     pulse_params : dict
         A dictionary containing pulse parameters from `get_pulse_params`.
-    pulse_1_start : int
+    rising_edge_1 : int
         The start time of the first pulse in microseconds.
-    pulse_1_end : int
+    falling_edge_1 : int
         The end time of the first pulse in microseconds.
-    pulse_2_start : int, optional
+    rising_edge_2 : int, optional
         The start time of the second pulse in microseconds. If not provided,
         no second pulse is added.
-    pulse_2_end : int, optional
+    falling_edge_2 : int, optional
         The end time of the second pulse in microseconds. Must be provided
-        if pulse_2_start is provided.
+        if rising_edge_2 is provided.
     channel_id : int, optional
         The index of the channel to which the pulses will be added.
     channel_name : str, optional
@@ -114,14 +119,14 @@ def insert_pulse(
     channel = get_channel_ids(pulse_params)[channel_id]
 
     pulse_train = [
-        pulse_1_start,
-        pulse_1_end
+        rising_edge_1,
+        falling_edge_1
     ]
 
     if (pulse_2_start != None) and (pulse_2_end != None):
         pulse_train += [
-            pulse_2_start,
-            pulse_2_end
+            rising_edge_2,
+            falling_edge_2
         ]
 
     pulse_params[channel]['data'] = pulse_train
@@ -133,7 +138,7 @@ def insert_pulse(
 
 
 def config_trigger(
-    pulse_params: 'param',
+    pulse_params: dict,
     enable: bool
 ) -> dict:
     """Change external trigger configuration.
@@ -153,7 +158,8 @@ def config_trigger(
     Returns
     -------
     pulse_params : dict
-        The updated pulse parameters dictionary with the external trigger configuration.
+        The updated pulse parameters dictionary with the external trigger
+        configuration.
     
     Notes
     -----
@@ -165,9 +171,44 @@ def config_trigger(
     else:
         pulse_params['ext_trigger'] = 'disabled'
 
+
+def config_trigger_delay(
+    pulse_params: dict,
+    delay: float
+) -> dict:
+    """Change external trigger configuration.
+
+    This function updates the pulse parameters to add a delay to the
+    external trigger of the timing system used in the experiment.
+
+    Parameters
+    ----------
+    pulse_params : dict
+        A dictionary containing pulse parameters from `get_pulse_params`.
+    delay : float
+        The desired delay in microseconds between the external trigger and
+        the start of the pulse sequence.
+
+    Returns
+    -------
+    pulse_params : dict
+        The updated pulse parameters dictionary with the external trigger
+        configuration.
+    
+    Notes
+    -----
+    - The function modifies the 'ext_trigger_delay' key in the pulse_params
+      dictionary to reflect the desired state of the external trigger.
+    """
+    if delay > 0.0:
+        pulse_params['ext_trigger_delay'] = delay
+
+    return pulse_params
+        
+
     
 def config_reps(
-    pulse_params: 'param',
+    pulse_params: dict,
     hertz: int
 ) -> dict:
     """Configure repetition rate.
@@ -180,18 +221,20 @@ def config_reps(
      pulse_params : dict
         A dictionary containing pulse parameters from `get_pulse_params`.
     hertz : int
-        The desired repetition rate in hertz (Hz). This value will be converted
-        to kilohertz (kHz) for storage in the pulse parameters.
+        The desired repetition rate in hertz (Hz). This value will be
+        converted to kilohertz (kHz) for storage in the pulse parameters.
 
     Returns
     -------
     pulse_params : dict
-        The updated pulse parameters dictionary with the repetition rate configuration.
+        The updated pulse parameters dictionary with the repetition rate 
+        configuration.
     
     Notes
     -----
     - The function modifies the 'reps_khz' key in the pulse_params dictionary
-      to store the repetition rate in kilohertz, calculated by dividing the input hertz value by 1000.
+      to store the repetition rate in kilohertz, calculated by dividing the
+      input hertz value by 1000.
     """
     pulse_params['reps_khz'] = hertz / 1000
     

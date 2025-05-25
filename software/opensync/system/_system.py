@@ -1,10 +1,12 @@
 from ..communication._io import device_comm_write
+from ..error_handles import DeviceSystemError
 
 
 __all__ = [
     'device_get_version',
     'device_get_freq',
     'device_get_status',
+    'device_system_test',
     'device_system_fire',
     'device_system_stop'
 ]
@@ -72,6 +74,54 @@ def device_get_status(device: 'opensync') -> list[str]:
     command = 'stat'
     return device_comm_write(device, command)
 
+
+def device_system_test(device: 'opensync') -> None:
+    """Test opensync device status and clock frequencies.
+
+    This function sends a few commands to the OpenSync device to make sure
+    it is functioning as intended.
+
+    Parameters
+    ----------
+    device : 'opensync'
+        An instance of the OpenSync device to which the commands will be sent.
+
+    Returns
+    -------
+    None
+    """
+    EXPECTED_CLOCK_MAIN_FREQ = 200000 # KHz
+    CLOCK_MAIN_INDEX = 3
+    VALID_RESPONSE = 'ok'
+    INVALID_RESPONSE = 'Invalid Response'
+
+    if resp[-1] != VALID_RESPONSE:
+        raise DeviceSystemError(
+            'OpenSync device recieved an unexpected response for valid command'
+        )
+
+    # Test for invalid commands
+    command = 'some_invalid_command'
+    resp = device_comm_write(device, command)
+
+    if INVALID_RESPONSE not in resp[-1]:
+        raise DeviceSystemError(
+            'OpenSync device recieved an unexpected response for invalid ' + 
+            'command'
+        )
+        
+    # Test main clock frequency
+    resp = device_get_freq(device)
+    main_clock_freq = resp[CLOCK_MAIN_INDEX]
+
+    if main_clock_freq != EXPECTED_CLOCK_MAIN_FREQ:
+        raise DeviceSystemError(
+            'OpenSync device is operating at an unsupport clock frequency'
+        )
+
+    # Test for valid commands
+    resp = device_get_version(device)
+    
 
 def device_system_fire(
     device: 'opensync',

@@ -3,10 +3,11 @@ from numpy import inf as INF
 from typing import Tuple
 
 from ._utils import get_channel_ids
-from ..communication._communication import CLOCK_CYCLE
+from .._communication import CLOCK_CYCLE
 
 
-MAX_PULSE_SEQUENCE = 200
+# Simple pulse sequences should not be larger than 256 instructions pairs.
+MAX_PULSE_SEQUENCE = 256
 EXT_TRIGGER = 0
 
 
@@ -94,7 +95,6 @@ def _convert_pulse_params(pulse_params: dict) -> Tuple[list[int], list[int]]:
             break
         
         state = list(output_state_mask)
-        channels_to_pop = []
         for channel in range(len(detected_pulses)):
             state[channel] = str(_eval_piecewise_function(
                 coeffs[channel], 
@@ -180,9 +180,13 @@ def convert_pulse_params(pulse_params: dict) -> Tuple[list[int], list[int]]:
 
     output_delay_cycles = _output_delay_cycles(output_delay_microseconds)
     
-
     if pulse_params['ext_trigger'] == 'enabled':
+        # Trigger flag needs to be the first instruction
         output_state.insert(0, EXT_TRIGGER)
         output_delay_cycles.insert(0, EXT_TRIGGER)
+        
+        # Trigger delay needs to be the second instruction
+        output_state.insert(1, EXT_TRIGGER)
+        output_delay_cycles.insert(1, pulse_params['ext_trigger_delay'])
 
     return output_state, output_delay_cycles
