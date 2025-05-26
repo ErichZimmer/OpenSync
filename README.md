@@ -92,6 +92,7 @@ If successfull, no errors or warnings should be produced. Please note that all c
  - If a pulse sequence is longer than the clock trigger rate, the system will become unstable.
  - If all output channels are used at once and for long pulse durations, the system will become unstable due to exceeding the capabilities of the internal capacitor bank.
  - Pulsing a frequencies >1MHz could incur cross-talk and other noise between output channels (yet to be validated).
+ - Clock divider now modifies the system clock instead of the state machine clocks. This enables the synchronization between two PIO blocks that is necessary for this architecture. Low system clock speeds could cause instability.
 
 ## Context
 https://groups.google.com/g/openpiv-users/c/xi7qt28IGEE
