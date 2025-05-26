@@ -39,7 +39,7 @@ OpenSync is a simple and low-cost synchronizer based on microcontroller technolo
 ```
 opensync/
 ├── demos/                  # Demonstration images and videos
-├── documents/              # OpenSync PDF manual (independent of device documentation)
+├── documents/              # OpenSync PDF manual (independent of device documentation) and SDLC
 ├── firmware/               # Firmware for RP2350 microcontroller
 │   ├── opensync/           # Source folder root directory
 │   └──   ├── src/          # C and assembly source code files
