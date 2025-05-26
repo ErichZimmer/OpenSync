@@ -3,11 +3,11 @@ from numpy import inf as INF
 from typing import Tuple
 
 from ._utils import get_channel_ids
-from .._communication import CLOCK_CYCLE
+from ..communication import CLOCK_CYCLE
 
 
 # Simple pulse sequences should not be larger than 256 instructions pairs.
-MAX_PULSE_SEQUENCE = 256
+MAX_PULSE_SEQUENCE = 16
 EXT_TRIGGER = 0
 
 
@@ -59,6 +59,7 @@ def _eval_piecewise_function(pulse_data: list, x: float) -> bool:
 
 def _convert_pulse_params(pulse_params: dict) -> Tuple[list[int], list[int]]:  
     output_state_mask = '0000000000000000'
+    eps = 0.00001
     
     channels = get_channel_ids(pulse_params)
 
@@ -77,9 +78,9 @@ def _convert_pulse_params(pulse_params: dict) -> Tuple[list[int], list[int]]:
 
     min_pulse_len = _get_min_pulse(detected_pulses)
     max_pulse_len = _get_max_pulse(detected_pulses)
-
-    if min_pulse_len != 0.0:
-        output_state.append(output_state_mask)
+    
+    if min_pulse_len > eps:
+        output_state.append(0)
 #        output_delay.append(None) # We will add the final delay later on
 
     current_delay = 0.0
@@ -111,6 +112,10 @@ def _convert_pulse_params(pulse_params: dict) -> Tuple[list[int], list[int]]:
             
         reps += 1
 
+    # Remove first delay if min delay is zero
+    if min_pulse_len == INF:
+        output_delay.pop(0)
+        
     # Add null value to signal we still need the final delay
     output_delay.append(None)
 

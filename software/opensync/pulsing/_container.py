@@ -47,7 +47,7 @@ def get_pulse_params() -> dict:
     pulse_params = {
         'clock_divider': 1,
         'ext_trigger': 'disabled',
-        'ext_trigger_delay': 0.0
+        'ext_trigger_delay': 0.0,
         'reps_khz': 0.001,
         'channel_0': [],
         'channel_1': [],
@@ -123,7 +123,7 @@ def insert_pulse(
         falling_edge_1
     ]
 
-    if (pulse_2_start != None) and (pulse_2_end != None):
+    if (rising_edge_2 != None) and (falling_edge_2 != None):
         pulse_train += [
             rising_edge_2,
             falling_edge_2
