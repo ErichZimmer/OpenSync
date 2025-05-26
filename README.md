@@ -15,19 +15,25 @@ OpenSync is a simple and low-cost synchronizer based on microcontroller technolo
 ## Specs
  - **Main PLL Frequency**: overclocked to 200 MHz
  - **Output Channels**: 16
- - **Input Channel(s)**: 1
- - **Internal Synchronization Clocks**: 4
+ - **Input Channel(s)**: 2
+ - **Internal Synchronization Clocks**: 2
  - **I/O Channel Voltage**: 5V @ 50 Ohm
  - **I/O Resolution**: 1 clock cycle (5ns * clock divider)
  - **Min Pulse Width**: 5 clock cycles (25ns * clock divider)
  - **Max Pulse Width**: 2^32 - 1 cycles (~21.47s * clock divider)
  - **Ext. Trigger Min Pulse Width**: 5 clock cycles (25ns * clock divider)
  - **Ext. Trigger Jitter**: 2 clock cycles (10ns * clock divider)
- - **Max Pulse Sequence Length**: 32 pulses
+ - **Max Pulse Sequence Length**: 16 pulses
  - **Pulse Sequence Repetition**: Up to 500,000 iterations
  - **Pulse Sequence Repetition Jitter**: 4 clock cycles (20ns * clock divider)
  - All powered via USB! (for now)
 
+
+## Advanced Features
+ - Four (4) independent clocks mapped to all 16 output channels
+ - Each clock can be mapped to one of two input channels
+ - Variable timing for each internal clock
+ - Each clock can skip certain number of external triggers
 
 ## File Architecture
 ```
@@ -79,6 +85,13 @@ device_system_test(sync_device)
 device_comm_close(sync_device)
 ```
 If successfull, no errors or warnings should be produced. Please note that all commands to and from opensync are terminated with CRLF. Additionally, all used output terminals should be validated on an osciliscope for peace-of-mind, allthough this is not strictly necessary.
+
+
+## Known Erratas
+ - If two clock channels modify the same output channel, the clock channel with the highest priority will modify that output channel.
+ - If a pulse sequence is longer than the clock trigger rate, the system will become unstable.
+ - If all output channels are used at once and for long pulse durations, the system will become unstable due to exceeding the capabilities of the internal capacitor bank.
+ - Pulsing a frequencies >1MHz could incur cross-talk and other noise between output channels (yet to be validated).
 
 ## Context
 https://groups.google.com/g/openpiv-users/c/xi7qt28IGEE
