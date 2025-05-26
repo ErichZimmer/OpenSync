@@ -16,7 +16,7 @@ OpenSync is a simple and low-cost synchronizer based on microcontroller technolo
  - **Main PLL Frequency**: overclocked to 200 MHz
  - **Output Channels**: 16
  - **Input Channel(s)**: 2
- - **Internal Synchronization Clocks**: 2
+ - **Internal Synchronization Clocks**: 4
  - **I/O Channel Voltage**: 5V @ 50 Ohm
  - **I/O Resolution**: 1 clock cycle (5ns * clock divider)
  - **Min Pulse Width**: 5 clock cycles (25ns * clock divider)
