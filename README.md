@@ -1,5 +1,5 @@
 # OpenSync
-An open source synchronizer for the velocimetry of fluids using a Raspberry Pi Pico 2 microcontroller.
+An open source synchronizer for the velocimetry of fluids using a Raspberry Pi microcontroller.
 
 ![Example Timing Graph for Diode Laser](demos/timing/opensync_demo_timing.png)
 
@@ -88,7 +88,7 @@ If successfull, no errors or warnings should be produced. Please note that all c
 
 
 ## Known Erratas
- - The RP2350 microcontroller has a known latching problem on GPIO inputs (errata 9). This is minimized by an 8k resistor. As such, external triggering should be limited around 1 MHz and >100ns pulse durations at peak operating frequency.
+ - The RP2350 microcontroller has a known latching problem on GPIO inputs (errata 9). This is minimized by an 8k resistor. As such, external triggering should be limited to around 1 MHz and >100ns pulse durations at peak operating frequency.
  - If two clock channels modify the same output channel, the clock channel with the highest priority will modify that output channel.
  - If a pulse sequence is longer than the clock trigger rate, the system will become unstable.
  - If all output channels are used at once and for long pulse durations, the system will become unstable due to exceeding the capabilities of the internal capacitor bank.

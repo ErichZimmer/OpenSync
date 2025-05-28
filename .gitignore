@@ -11,7 +11,7 @@ firmware/opensync/build
 
 
 demos/videos/*
-documents/*
+documents/manual/*
 firmware/*
 hardware/*
 software/docs/*
