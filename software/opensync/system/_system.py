@@ -90,7 +90,7 @@ def device_system_test(device: 'opensync') -> None:
     -------
     None
     """
-    EXPECTED_CLOCK_MAIN_FREQ = 200000 # KHz
+    EXPECTED_CLOCK_MAIN_FREQ = 400000 # KHz
     CLOCK_MAIN_INDEX = 3
     VALID_RESPONSE = 'ok'
     INVALID_RESPONSE = 'Invalid Response'

@@ -7,7 +7,7 @@ from ..communication import CLOCK_CYCLE
 
 
 # Simple pulse sequences should not be larger than 256 instructions pairs.
-MAX_PULSE_SEQUENCE = 16
+MAX_PULSE_SEQUENCE = 32
 EXT_TRIGGER = 0
 
 
