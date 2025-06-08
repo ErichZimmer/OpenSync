@@ -10,13 +10,13 @@ This is for a future project for an undergraduate course (that will be completed
 This idea was inspired by the use of an Arduino Uno to send TTL pulses to two Arducam ~1 MP monochrome global shutter cameras on one of my previouse experiments. However, that implementation used a simple loop that was hard-coded. To increase flexibility, a serial I/O interface should be created so that the user can change the parameters of the synchronizer while the device is on (not operating, though, as that could cause damage to lab equipment and maybe even the synchronizer itself). Due to the dynamic nature of the serial interface, optimization from hard-coding would be lost which could cause a loss in temporal resolution and accuracy. However, very efficient execution of instructions could be done using programmable input/output (PIO) on a RP2350-based microcontroller (e.g., Pico 2). The RP2350 could be used as an effective 8-channel arbitrary pulse generator with jitter as low as one clock cycle (10ns to 4ns). The dual-core nature of the RP2350 allows for one core to be dedicated to IO and another to the serial interface, thus alleviating the aforementioned issues with Arduino microcontrollers. The synchronizer is programmed using an 8 bit word (one bit for each channel) and a 32 bit word (delay to next instruction). The RP2350 supports a few thousand instructions, so great flexibility could be achieved. An external trigger (optional) could be used to execute the pulse sequence along with internal timing based on repitition in Hertz. The entire system can be 3D printed and soldered in-house in as little as an afternoon. This system would also allow for the use of up to 4 cameras in addition to a dual-head YAG/YLF laser.
 
 ## Design
-OpenSync is a simple and low-cost synchronizer based on microcontroller technology. Due to the intrinsic nature of microcontrollers compared to more advanced devices (e.g., field programmable gate arrays), most complex features that are typical of commercial propietary devices such as gating, external trigger manipulation, etc are not implemented. However, OpenSync remains sufficiently flexible and provides enough support for most users' needs when performing a PIV experiment. This is because OpenSync is an arbitrary pulse generator under-the-hood which allows for rather complex pulse sequences to be synthesized through simple output port manipulation. Additionally, four (4) independent internal clocks can be utilized to allow for relatively advanced pulse timing. While this implementation for a synchronizer may be quite restrictive at times, it is what makes OpenSync so simple!
+OpenSync is a simple and low-cost synchronizer based on microcontroller technology. Due to the intrinsic nature of microcontrollers compared to more advanced devices (e.g., field programmable gate arrays), most complex features that are typical of commercial propietary devices such as gating, external trigger manipulation, etc are not implemented. However, OpenSync remains sufficiently flexible and provides enough support for most users' needs when performing a PIV experiment. This is because OpenSync is an arbitrary pulse generator under-the-hood which allows for rather complex pulse sequences to be synthesized through simple output port manipulation. Additionally, three (3) independent internal clocks can be utilized to allow for relatively advanced pulse timing. While this implementation for a synchronizer may be quite restrictive at times, it is what makes OpenSync so simple!
 
 ## Specs
  - **Main PLL Frequency**: overclocked to 300 MHz
- - **Output Channels**: 16
- - **Input Channel(s)**: 2
- - **Internal Synchronization Clocks**: 4
+ - **Output Channels**: 12
+ - **Input Channel(s)**: 3
+ - **Internal Synchronization Clocks**: 3
  - **I/O Channel Voltage**: 5V @ 50 Ohm
  - **I/O Resolution**: 1 clock cycle (~3.3ns * clock divider)
  - **Min Pulse Width**: 5 clock cycles (~16.5ns * clock divider)
@@ -25,13 +25,13 @@ OpenSync is a simple and low-cost synchronizer based on microcontroller technolo
  - **Ext. Trigger Jitter**: 2 clock cycles (~6.6ns * clock divider)
  - **Max Pulse Sequence Length**: 32 pulses
  - **Pulse Sequence Repetition**: Up to 500,000 iterations
- - **Pulse Sequence Repetition Jitter**: 4 clock cycles (~13.2ns * clock divider)
- - All powered via USB! (for now)
+ - **Pulse Sequence Repetition Jitter**: up to 5 clock cycles (up to ~16.5ns * clock divider)
+ - All powered via USB!
 
 
 ## Advanced Features
- - Four (4) independent clocks mapped to all 16 output channels
- - Each clock can be mapped to one of two input channels
+ - Three (3) independent clocks mapped to all 12 output channels
+ - Each clock can be mapped to one of three input channels
  - Variable timing for each internal clock
  - Each clock can skip certain number of external triggers
 
@@ -93,9 +93,7 @@ If successfull, no errors or warnings should be produced. Please note that all c
  - The RP2350 microcontroller has a known latching problem on GPIO inputs (errata 9). This is minimized by an 8k resistor. As such, external triggering should be limited to around 1 MHz and >100ns pulse durations at peak operating frequency.
  - If two clock channels modify the same output channel, the clock channel with the highest priority will modify that output channel.
  - If a pulse sequence is longer than the clock trigger rate, the system will become unstable.
- - If all output channels are used at once and for long pulse durations, the system will become unstable due to exceeding the capabilities of the internal capacitor bank.
  - Pulsing at frequencies >1MHz could incur cross-talk and other noise between output channels (yet to be validated).
- - Clock divider now modifies the system clock instead of the state machine clocks. This enables the synchronization between two PIO blocks that is necessary for this architecture to work. Low system clock speeds could cause instability.
 
 ## Context
 https://groups.google.com/g/openpiv-users/c/xi7qt28IGEE
@@ -108,13 +106,13 @@ Will be determined after the first milestone of this project.
 - [x] Add device containerization for customization
 - [x] Add the ability to change channel names
 - [ ] Add the ability to disable output channels (necessary?)
-- [ ] Add four internal timers that can be mapped to pulse sequences
+- [ ] Add three internal timers that can be mapped to pulse sequences
 - [ ] Add the ability to count and skip external triggers (usefull for phase-locked stuff like rotor blades)
 - [ ] Add second external trigger and output port masking
 - [ ] Add POST bootup validation (not really necessary, but why not)
 - [ ] Add video examples on YouTube
 - [ ] Learn power electronics (this semester)
-- [ ] Validate against an osciliscope
+- [ ] Validate against an osciliscope (WIP on obtaining one)
 
 ## References
  1. Radim Hošák, & Miroslav Ježek. (2018). Arbitrary digital pulse sequence generator with delay-loop timing. Review of Scientific Instruments, 89(4). https://doi.org/10.1063/1.5019685
