@@ -1,6 +1,6 @@
 <div align="center">
 
-# On the Feasibility of an Open-Source 16-Channel Synchronizer
+# On the Feasibility of an Open-Source 12-Channel Synchronizer
 
 
 
