@@ -50,7 +50,7 @@ opensync/
 │   ├── opensync/           # Hardware folder root directory
 │   └──   ├── Components/   # Parts necessary to build OpenSync
 │         └── CAD/          # CAD files for 3D printing housing and parts
-└── software/               # Python interfrace for OpenSync
+└── software/               # Python interface for OpenSync
     ├── opensync/           # Namespace package root directory
     └── docs/               # Sphinx documentation generator
 
@@ -92,7 +92,7 @@ If successfull, no errors or warnings should be produced. Please note that all c
 ## Known Erratas
  - The RP2350 microcontroller has a known latching problem on GPIO inputs (errata 9). This is minimized by an 8k resistor. As such, external triggering should be limited to around 1 MHz and >100ns pulse durations at peak operating frequency.
  - If two clock channels modify the same output channel, the clock channel with the highest priority will modify that output channel.
- - If a pulse sequence is longer than the clock trigger rate, the system will become unstable.
+ - If a pulse sequence is longer than the clock trigger rate, the system will become unstable for one pulse sequence iteration before correcting itself.
  - Pulsing at frequencies >1MHz could incur cross-talk and other noise between output channels (yet to be validated).
 
 ## Context
