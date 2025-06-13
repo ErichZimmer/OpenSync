@@ -1,5 +1,5 @@
-from .._communication import device_comm_write
-from .._buffer import device_buffer_load
+from ..communication import device_comm_write
+from ..buffer import device_buffer_load
 from . import _conversion as _conv
 
 
