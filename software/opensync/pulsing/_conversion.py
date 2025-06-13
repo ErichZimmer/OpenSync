@@ -4,10 +4,13 @@ from typing import Tuple
 
 from ._utils import get_channel_ids
 from ..communication import CLOCK_CYCLE
+from ..error_handles import DeviceBufferSizeWarning
+
+import warnings
 
 
 # Simple pulse sequences should not be larger than 256 instructions pairs.
-MAX_PULSE_SEQUENCE = 32
+MAX_PULSE_INSTRUCTIONS = 64
 EXT_TRIGGER = 0
 
 
@@ -78,16 +81,12 @@ def _convert_pulse_params(pulse_params: dict) -> Tuple[list[int], list[int]]:
 
     min_pulse_len = _get_min_pulse(detected_pulses)
     max_pulse_len = _get_max_pulse(detected_pulses)
-    
-    if min_pulse_len > eps:
-        output_state.append(0)
-#        output_delay.append(None) # We will add the final delay later on
 
     current_delay = 0.0
     total_delay = 0.0
     
     reps = 0
-    while reps < MAX_PULSE_SEQUENCE:
+    while reps < MAX_PULSE_INSTRUCTIONS:
         min_pulse_len = _get_min_pulse(detected_pulses)
         current_delay = abs(total_delay - min_pulse_len)
         total_delay += current_delay
@@ -112,12 +111,16 @@ def _convert_pulse_params(pulse_params: dict) -> Tuple[list[int], list[int]]:
             
         reps += 1
 
-    # Remove first delay if min delay is zero
-    if min_pulse_len == INF:
-        output_delay.pop(0)
+    # Warn about resource management
+    if reps == MAX_PULSE_INSTRUCTIONS - 1:
+        msg = 'Device resources has been exausted. The device only supports ' +\
+             f'{MAX_PULSE_INSTRUCTIONS} instructions. Remaining instructions '+\
+              'have been ignored'
         
-    # Add null value to signal we still need the final delay
-    output_delay.append(None)
+        warnings.warn(
+            msg,
+            DeviceBufferSizeWarning
+        )
 
     return output_state, output_delay
 
@@ -175,23 +178,6 @@ def convert_pulse_params(pulse_params: dict) -> Tuple[list[int], list[int]]:
         A list of integers representing the corresponding delays in cycles.
     """
     output_state, output_delay_microseconds = _convert_pulse_params(pulse_params)
-
-    output_delay_reps_micros = _reps_khz_to_delay_micros(
-        pulse_params['reps_khz'],
-        output_delay_microseconds
-    )
-
-    output_delay_microseconds[-1] = output_delay_reps_micros
-
     output_delay_cycles = _output_delay_cycles(output_delay_microseconds)
-    
-    if pulse_params['ext_trigger'] == 'enabled':
-        # Trigger flag needs to be the first instruction
-        output_state.insert(0, EXT_TRIGGER)
-        output_delay_cycles.insert(0, EXT_TRIGGER)
-        
-        # Trigger delay needs to be the second instruction
-        output_state.insert(1, EXT_TRIGGER)
-        output_delay_cycles.insert(1, pulse_params['ext_trigger_delay'])
 
     return output_state, output_delay_cycles
