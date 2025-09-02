@@ -109,8 +109,8 @@ Will be determined after the first milestone of this project.
 - [x] Add device containerization for customization
 - [x] Add the ability to change channel names
 - [ ] Add the ability to disable output channels (necessary?)
-- [ ] Add three internal timers that can be mapped to pulse sequences
-- [ ] Add the ability to count and skip external triggers (usefull for phase-locked stuff like rotor blades)
+- [x] Add three internal timers that can be mapped to pulse sequences
+- [x] Add the ability to count and skip external triggers (usefull for phase-locked stuff like rotor blades)
 - [ ] Add second external trigger and output port masking
 - [ ] Add POST bootup validation (not really necessary, but why not)
 - [ ] Add video examples on YouTube
