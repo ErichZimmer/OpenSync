@@ -19,6 +19,7 @@ On the behalf of the\
 | 5/30/2025 | 0.2.0 | Elaboration on proposed solution. |
 | 6/8/2025 | 0.3.0 | Updated design due to RP2350 limitations. |
 | 6/10/2025 | 0.4.0 | Finished the solutions section. |
+| 9/2/2025 | 0.4.1 | Deadline exttension |
  
 ## Table of Contents
  1. Introduction
@@ -50,12 +51,12 @@ This project aimed towards designing and constructing a low-cost synchronizer fo
 | Date | Event |
 | --- | --- |
 | 09/02/2025 | Initial hardware engineering project starting point. |
-| 09/09/2025 | Initial circuitry and firmware design created. |
-| 09/16/2025 | Preliminary report on results of project. |
-| 09/23/2025 | Second report on results of project. |
-| 09/30/2025 | First presentation on the results of the project. |
-| 10/07/2025 | Second presentation on the final synchronizer model. |
-| 10/14/2025 | Final presentation and paper on the designed synchronizer. |
+| 09/16/2025 | Initial circuitry and firmware design created. |
+| 09/30/2025 | Preliminary report on results of project. |
+| 10/07/2025 | Second report on results of project. |
+| 10/14/2025 | First presentation on the results of the project. |
+| 10/28/2025 | Second presentation on the final synchronizer model. |
+| 10/31/2025 | Final presentation and paper on the designed synchronizer. |
 
 ## 3. Solutions
 
