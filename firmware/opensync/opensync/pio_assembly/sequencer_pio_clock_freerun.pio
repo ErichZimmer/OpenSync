@@ -1,0 +1,76 @@
+; 
+; Copyright 2025, Erich Zimmer
+;
+; sequencer_pio_clock_freerun.pio
+; 
+; This file contains the pio assmembly implmentation of a free running sequencer
+; clock. This clock source does not accept any external triggers and is
+; ran completely internally (e.g., software trigger).
+
+; Defines
+.program sequencer_pio_clock_freerun
+
+pulse_reps:
+    pull block
+    mov x, OSR ; store pulse repition count
+
+pulse_delay_block:
+    pull block
+
+pulse_delay:
+    mov y, OSR ; store pulse delay (e.g., pulse-to-pulse distance)
+
+pulse_trigger_start:
+    jmp !x-- pulse_start ; If x register (reps) is 0, then pull next instruction
+    set pins, 1 [9] ; 10 cyckes pulse width (9 cycles + 1) (see SDLC docs on why)
+    set pins, 0
+
+pulse_trigger_delay:
+    jmp y-- pulse_trigger_delay
+
+pulse_trigger_reset:
+    jmp pulse_delay
+
+% c-sdk {
+
+void sequencer_freerun_init(
+    PIO pio, uint sm, 
+    uint offset, 
+    uint pin_out,
+    uint clock_divider
+) {
+    assert(clock_divider < 65535)
+
+    // Get config for pio state machine
+	pio_sm_config config = sequencer_pio_clock_freerun_program_get_default_config(offset);
+
+    // Set output pin direction as output and init
+	pio_sm_set_consecutive_pindirs(
+        pio, sm,
+		pin_out,
+		1, // only one pin is used
+        true
+    );
+    
+	pio_gpio_init(pio, pin_out);
+
+    // Set output pins of config to output pins
+	sm_config_set_out_pins(
+        &config,
+        pin_out, 
+        1 // only one pin is used
+    );
+
+    // Setup clock clock divider
+    sm_config_set_clkdiv(
+        &config,
+        clock_divider
+    )
+
+    pio_sm_init(
+        pio, sm,
+        offset,
+        &config
+    );
+}
+%}

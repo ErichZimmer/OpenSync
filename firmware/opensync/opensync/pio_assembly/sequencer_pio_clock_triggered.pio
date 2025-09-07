@@ -1,0 +1,106 @@
+; 
+; Copyright 2025, Erich Zimmer
+;
+; sequencer_pio_clock_triggered.pio
+; 
+; This file contains the pio assmembly implmentation of a triggered sequencer
+; clock. This clock source relies on external triggers to send the internall
+; clock signal to fire the pulse sequence. It does not accept any sequencer
+; parameters beyond trigger skip and trigger delay.
+
+; Pulse sequence reps are determined by the ring buffer (2 instructions * reps_count)
+
+; Defines
+.program sequencer_pio_clock_triggered
+
+.wrap_target
+trigger_skips:
+    out x, 32 ; store the number of external triggers to skip
+
+trigger_delay:
+    out y, 32 ; store the trigger delay signal
+
+trigger_pulse_wait:
+    wait 0 pin 0 ; make sure the falling edge is recieved first
+    wait 1 pin 0 ; then wait for the rising edge
+    
+trigger_pulse_skip:
+    jmp x-- trigger_pulse_wait
+
+trigger_pulse_delay:
+    jmp y-- trogger_pulse_delay
+
+trigger_pulse_start:
+    set pins, 1 [9] ; 10 cyckes pulse width (9 cycles + 1) (see SDLC docs on why)
+    set pins, 0
+
+.wrap
+
+% c-sdk {
+
+void sequencer_triggered_init(
+    PIO pio, uint sm, 
+    uint offset, 
+    uint pin_out,
+    uint pin_trig, 
+    uint clock_divider
+) {
+    assert(clock_divider < 65535)
+
+    // Get config for pio state machine
+	pio_sm_config config = sequencer_pio_clock_triggered_program_get_default_config(offset);
+
+     // Set output pin direction as output and init
+	pio_sm_set_consecutive_pindirs(
+        pio, sm,
+		pin_out,
+		1, // only one pin is used
+        true
+    );
+    
+	pio_gpio_init(pio, pin_out);
+
+    // Set trigger pin direction as input and init
+	pio_sm_set_consecutive_pindirs(
+        pio, sm,
+		pin_out,
+		1, // only one pin is used
+        false
+    );
+
+	pio_gpio_init(pio, pin_out);
+
+    // Set output pins of config to output pins
+	sm_config_set_out_pins(
+        &config,
+        pin_out, 
+        1 // only one pin is used
+    );
+
+    // Set trigger pins of config to input pins
+    sn_config_set_in_pins(
+        &config,
+        pin_trig
+    );
+
+    // Setup autopull for 32 bit words
+    sm_config_set_out_shift(
+        &config, 
+        true, 
+        true, 
+        32
+    );
+
+    // Setup clock clock divider
+    sm_config_set_clkdiv(
+        &config,
+        clock_divider
+    )
+
+    pio_sm_init(
+        pio, sm,
+        offset,
+        &config
+    );
+}
+%}

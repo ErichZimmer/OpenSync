@@ -1,0 +1,108 @@
+; 
+; Copyright 2025, Erich Zimmer
+;
+; sequencer_pio_pulse_sequencer.pio
+; 
+; This file contains the pio assmembly implmentation of an arbitrary Pulse
+; generator. A pulse sequence is executed once every internal trigger signal
+; is sent.
+
+; Pulse sequence reps are determined by the ring buffer (32 instructions * reps_count)
+
+; Defines
+.program sequencer_pio_pulser
+
+; The sequencer takes in two 32 bit words: one for output channel state and one for
+; delaying to the next instruction. Only 8 bits of the first word is used, the rest
+; are discarded. This program is only concerned with the output state and delay to
+; the next instruction.
+
+.wrap_target
+
+output_wait:
+    wait 1 gpio 0
+
+output_start:
+    out pins, 32 ; first instruction (pin state)
+
+output_delay_check:
+    out X, 32 ; second instruction (delay)
+
+ output_delay_loop:
+    jmp X-- output_delay_loop
+
+.wrap
+
+
+% c-sdk {
+
+void sequencer_pulser_init(
+    PIO pio, uint sm, 
+    uint offset, 
+    uint pin_out_base,
+    uint pin_out_count,
+    uint pin_trig, 
+    uint clock_divider
+) {
+    assert(clock_divider < 65535)
+
+    // Get config for pio state machine
+	pio_sm_config config = sequencer_pio_clock_triggered_program_get_default_config(offset);
+
+    // Set output pin direction as output and init
+    pio_sm_set_consecutive_pindirs(
+        pio, sm,
+		pin_out_base,
+		pin_out_count,
+        true
+    );
+
+    for(uint i = 0; i < pin_out_count; i++)
+    {
+		pio_gpio_init(pio, pin_out_base + i);
+	}
+    
+    // Set trigger pin direction as input and init
+	pio_sm_set_consecutive_pindirs(
+        pio, sm,
+		pin_out,
+		1, // only one pin is used
+        false
+    );
+
+	pio_gpio_init(pio, pin_out);
+
+    // Set output pins of config to output pins
+	sm_config_set_out_pins(
+        &config,
+        pin_out_base, 
+        pin_out_count
+    );
+
+    // Set trigger pins of config to input pins
+    sn_config_set_in_pins(
+        &config,
+        pin_trig
+    );
+
+    // Setup autopull for 32 bit words
+    sm_config_set_out_shift(
+        &config, 
+        true, 
+        true, 
+        32
+    );
+
+    // Setup clock clock divider
+    sm_config_set_clkdiv(
+        &config,
+        clock_divider
+    )
+
+    pio_sm_init(
+        pio, sm,
+        offset,
+        &config
+    );
+}
+%}
