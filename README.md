@@ -124,5 +124,6 @@ Will be determined after the first milestone of this project.
  3. Starkey, P. T., Turnbaugh, C., Miller, P., LeBlanc, K.-J., & Meyer, D. H. (2024). Experimental timing and control using microcontrollers. Review of Scientific Instruments, 95(10). https://doi.org/10.1063/5.0225550
  4. Stasicki, B. and Ehrenfried, K. and Dieterle, L. and Ludwikowski, K. and Raffel, M.  (2001) Advanced syncronization techniques for complex flow field investigations by means of PIV .    4th Intern. Symposium on Particle Image Velocimetry, Göttingen, Germany, September 17-19, 2001.  
     
-
-
+## Licensing
+All software components are covered by the GNU GPLv3 license.
+All hardware is covered by the CERN OHL v2 Strongly Reciprocal.
