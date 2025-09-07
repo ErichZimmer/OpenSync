@@ -42,7 +42,7 @@ void sequencer_pulser_init(
     assert(clock_divider < 65535)
 
     // Get config for pio state machine
-	pio_sm_config config = sequencer_pio_clock_triggered_program_get_default_config(offset);
+	pio_sm_config config = sequencer_pio_pulser_program_get_default_config(offset);
 
     // Set output pin direction as output and init
     pio_sm_set_consecutive_pindirs(
