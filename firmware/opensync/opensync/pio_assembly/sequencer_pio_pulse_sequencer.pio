@@ -6,16 +6,15 @@
 ; This file contains the pio assmembly implmentation of an arbitrary Pulse
 ; generator. A pulse sequence is executed once every internal trigger signal
 ; is sent.
+; 
+; The sequencer takes in two 32 bit words: one for output channel state. Only
+; 12 bits of the first word is used, the rest are discarded. This program is
+; only concerned with the output state.
 
-; Pulse sequence reps are determined by the ring buffer (32 instructions * reps_count)
+; Pulse sequence reps are determined by the ring buffer (64 instructions * reps_count)
 
 ; Defines
 .program sequencer_pio_pulser
-
-; The sequencer takes in two 32 bit words: one for output channel state and one for
-; delaying to the next instruction. Only 8 bits of the first word is used, the rest
-; are discarded. This program is only concerned with the output state and delay to
-; the next instruction.
 
 .wrap_target
 
@@ -23,13 +22,7 @@ output_wait:
     wait 1 gpio 0
 
 output_start:
-    out pins, 32 ; first instruction (pin state)
-
-output_delay_check:
-    out X, 32 ; second instruction (delay)
-
- output_delay_loop:
-    jmp X-- output_delay_loop
+    out pins, 32 ; bit-bang pin state
 
 .wrap
 
