@@ -21,8 +21,8 @@ pulse_delay:
     mov y, OSR ; store pulse delay (e.g., pulse-to-pulse distance)
 
 pulse_trigger_start:
-    jmp !x-- pulse_start ; If x register (reps) is 0, then pull next instruction
-    set pins, 1 [9] ; 10 cyckes pulse width (9 cycles + 1) (see SDLC docs on why)
+    jmp !x-- pulse_reps ; If x register (reps) is 0, then pull next instruction
+    set pins, 1 [9] ; 10 cycles pulse width (9 cycles + 1) (see SDLC docs on why)
     set pins, 0
 
 pulse_trigger_delay:
