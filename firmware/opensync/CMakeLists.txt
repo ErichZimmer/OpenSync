@@ -37,4 +37,4 @@ set(CMAKE_CXX_STANDARD 17)
 pico_sdk_init()
 
 # add project directories
-# add_subdirectory(opensync)
+ add_subdirectory(src)
