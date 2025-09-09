@@ -15,7 +15,7 @@ add_executable(opensync
     main.c 
     ${OPENSYNC_SOURCE}
     ${PRAWN_DO_DIR}/fast_serial.c
-)
+) 
 
 pico_set_program_name(opensync "OpenSync")
 pico_set_program_version(opensync "0.1")
