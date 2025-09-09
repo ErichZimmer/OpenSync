@@ -19,8 +19,8 @@ extern uin32_t sequencer_status;
 
 void sequencer_status_register(void);
 
-void sequencer_set_status(uint32_t status_new);
+void sequencer_status_set(uint32_t status_new);
 
-int sequencer_get_status(void);
+int sequencer_status_get(void);
 
-const char* sequencer_get_status_str(uint32_t status_copy);
+const char* sequencer_status_to_str(uint32_t status_copy);
