@@ -11,7 +11,7 @@
 // Local //
 #include "structs/clock_config.h"
 #include "structs/pulse_config.h"
-#include "sequencer/sequencer.h"
+#include "sequencer/sequencer_clock.h"
 #include "status/sequencer_status.h"
 #include "serial/serial_interface.h"
 

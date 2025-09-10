@@ -3,6 +3,8 @@
 #include <stdint.h>
 #include "hardware/pio.h"
 
+#define PULSE_INSTRUCTIONS_MAX 64
+
 
 struct pulse_config
 {
@@ -12,6 +14,6 @@ struct pulse_config
     uint out_pins_count;
     uint clock_pin;
     int dma_chan;
-    uint32_t instructions[64];
+    uint32_t instructions[PULSE_INSTRUCTIONS_MAX];
     bool active;
 };

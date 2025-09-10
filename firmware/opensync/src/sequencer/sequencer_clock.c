@@ -1,4 +1,4 @@
-#include "sequencer.h"
+#include "sequencer_clock.h"
 
 // Used for user input validation
 const uint32_t OUT_MASK = ((1u << OUTPUT_PIN_COUNT) - 1) << OUTPUT_PIN_BASE;
@@ -49,10 +49,9 @@ bool sequencer_clocks_configure(
 
 bool sequencer_insert_instructions_internal(
     struct clock_config* config_array,
-    uint32_t (*instructions)[INSTRUCTIONS_MAX],
+    uint32_t (*instructions)[CLOCK_INSTRUCTIONS_MAX],
     uint32_t num_clocks
-)
-{
+) {
     if (num_clocks >= CLOCKS_MAX)
     {
         return 0;
@@ -60,7 +59,7 @@ bool sequencer_insert_instructions_internal(
     
     for (uint32_t i = 0; i < num_clocks; i++)
     {
-        for (uint32_t j = 0; j < INSTRUCTIONS_MAX; j++)
+        for (uint32_t j = 0; j < CLOCK_INSTRUCTIONS_MAX; j++)
         {
             config_array[i].instructions[j] = instructions[i][j];
         }
@@ -72,10 +71,9 @@ bool sequencer_insert_instructions_internal(
 
 bool sequencer_insert_instructions_triggered(
     struct clock_config* config_array,
-    uint32_t (*instructions)[TRIGGERS_MAX],
+    uint32_t (*instructions)[CLOCK_TRIGGERS_MAX],
     uint32_t num_clocks
-)
-{
+) {
     if (num_clocks >= CLOCKS_MAX)
     {
         return 0;
@@ -83,7 +81,7 @@ bool sequencer_insert_instructions_triggered(
     
     for (uint32_t i = 0; i < num_clocks; i++)
     {
-        for (uint32_t j = 0; j < TRIGGERS_MAX; j++)
+        for (uint32_t j = 0; j < CLOCK_TRIGGERS_MAX; j++)
         {
             config_array[i].trigger_config[j] = instructions[i][j];
         }
