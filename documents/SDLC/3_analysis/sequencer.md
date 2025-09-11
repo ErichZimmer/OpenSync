@@ -40,10 +40,14 @@ It should be mentioned that each instruction takes exactly one clock cycle to ex
 ## 3. Primary Implementation
 
 ## 3.1 PIO Block 1
-![Timing Graph for Freerun Clock Signal Generator](assets/images/sequencer_pio_clock_freerun_flowchart.png)(
 
+Figure 1. Timing Diagram for Freerun Clock Signal Generator
+![Timing Graph for Freerun Clock Signal Generator](assets/images/sequencer_pio_clock_freerun_flowchart.png)
+
+Figure 2. Timing Diagram for Triggered Clock Signal Generator
 ![Timing Graph for Triggered Clock Signal Generator](assets/images/sequencer_pio_clock_triggered_flowchart.png)
 
 
 ## 3.2 PIO Block 2
+Figure 3. Timing Diagram for Pulse Sequencer
 ![Timing Graph for Pulse Sequencer](assets/images/sequencer_pio_pulse_sequence_flowchart.png)
