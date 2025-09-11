@@ -44,7 +44,7 @@ The scope of this project is very simple: design an easily manufacturable and pe
 ## 2. Project Overview
 
 ### 2.1 Operational Details
-This project aimed towards designing and constructing a low-cost synchronizer for applications of fluid flow diagnostics is privately funded by Erich Zimmer (the author of this project). Nearly all responsibilities for the design, construction, and validation of any devices produced during this project would fall on this person. This project has a finalized budget of ~$500 USD (2025) which also includes the costs of obtaining equipment for the purpose of electrical engineering (e.g., soldering station, osciliscope, etc). Finally, the project is in its very early developmental phase and is expected to remain so until the project officially starts.
+This project aimed towards designing and constructing a low-cost synchronizer for applications of fluid flow diagnostics is privately funded by Erich Zimmer (the author of this project). Nearly all responsibilities for the design, construction, and validation of any devices produced during this project would fall on this person. This project has a finalized budget of ~$600 USD (2025) which also includes the costs of obtaining equipment for the purpose of electrical engineering (e.g., soldering station, osciliscope, etc). Finally, the project is in its very early developmental phase and is expected to remain so until the project officially starts.
 
 ### 2.2 Project Schedule
 
