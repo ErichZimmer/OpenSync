@@ -65,7 +65,7 @@ void sequencer_clock_insert_instructions_triggered(
 }
 
 
-void sequencer_clock_reset(
+void sequencer_clock_config_reset(
     struct clock_config* config
 ) {
     sequencer_clock_insert_instructions_internal(
@@ -84,7 +84,6 @@ void sequencer_clock_reset(
 
 void sequencer_clock_freerun_dma_configure(
     struct clock_config* config
-
 ) {
     config -> dma_chan = dma_claim_unused_channel(true);
     
@@ -119,7 +118,6 @@ void sequencer_clock_freerun_dma_configure(
 void sequencer_clock_triggered_dma_configure(
     struct clock_config* config,
     uint32_t reps
-
 ) {
     config -> dma_chan = dma_claim_unused_channel(true);
     
@@ -245,6 +243,7 @@ void sequencer_clock_sm_free(
 void sequencer_clock_free(
     struct clock_config* config
 ) {
+    sequencer_clock_config_reset(config);
     sequencer_clock_dma_free(config);
     sequencer_clock_sm_free(config);
 }
