@@ -21,7 +21,7 @@ pulse_delay:
     mov y, OSR ; store pulse delay (e.g., pulse-to-pulse distance)
 
 pulse_trigger_start:
-    jmp !x-- pulse_reps ; If x register (reps) is 0, then pull next instruction
+    jmp x-- pulse_reps ; If x register (reps) is 0, then pull next instruction
     set pins, 1 [9] ; 10 cycles pulse width (9 cycles + 1) (see SDLC docs on why)
     set pins, 0
 
@@ -33,13 +33,13 @@ pulse_trigger_reset:
 
 % c-sdk {
 
-void sequencer_freerun_init(
+void sequencer_freerun_sm_helper_init(
     PIO pio, uint sm, 
     uint offset, 
     uint pin_out,
     uint clock_divider
 ) {
-    assert(clock_divider < 65535)
+    assert(clock_divider < 65535);
 
     // Get config for pio state machine
 	pio_sm_config config = sequencer_pio_clock_freerun_program_get_default_config(offset);
@@ -65,7 +65,7 @@ void sequencer_freerun_init(
     sm_config_set_clkdiv(
         &config,
         clock_divider
-    )
+    );
 
     pio_sm_init(
         pio, sm,

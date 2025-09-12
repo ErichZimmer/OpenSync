@@ -7,6 +7,8 @@ set(OPENSYNC_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/sequencer/sequencer_clock.c
     ${CMAKE_CURRENT_SOURCE_DIR}/status/sequencer_status.c
     ${CMAKE_CURRENT_SOURCE_DIR}/serial/serial_interface.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/system/core_1.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/system/core_2.c
     ${CMAKE_CURRENT_SOURCE_DIR}/version/opensync_version.c
 )
 
@@ -21,9 +23,9 @@ pico_set_program_name(opensync "OpenSync")
 pico_set_program_version(opensync "0.1")
 
 # Generate PIO header
-# pico_generate_pio_header(opensync ${CMAKE_CURRENT_LIST_DIR}/pio_assembly/sequencer_pio_clock_freerun.pio)
-# pico_generate_pio_header(opensync ${CMAKE_CURRENT_LIST_DIR}/pio_assembly/sequencer_clock_pio_triggered.pio)
-# pico_generate_pio_header(opensync ${CMAKE_CURRENT_LIST_DIR}/pio_assembly/sequencer_pio_pulse_sequencer.pio)
+ pico_generate_pio_header(opensync ${CMAKE_CURRENT_SOURCE_DIR}/pio_assembly/sequencer_pio_clock_freerun.pio)
+ pico_generate_pio_header(opensync ${CMAKE_CURRENT_SOURCE_DIR}/pio_assembly/sequencer_pio_clock_triggered.pio)
+ pico_generate_pio_header(opensync ${CMAKE_CURRENT_SOURCE_DIR}/pio_assembly/sequencer_pio_pulse_sequencer.pio)
 
 # Enable USB COMS
 pico_enable_stdio_uart(opensync 0)

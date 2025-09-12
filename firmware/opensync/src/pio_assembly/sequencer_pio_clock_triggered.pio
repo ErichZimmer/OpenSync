@@ -38,14 +38,14 @@ trigger_pulse_start:
 
 % c-sdk {
 
-void sequencer_triggered_init(
+void sequencer_triggered_sm_helper_init(
     PIO pio, uint sm, 
     uint offset, 
     uint pin_out,
     uint pin_trig, 
     uint clock_divider
 ) {
-    assert(clock_divider < 65535)
+    assert(clock_divider < 65535);
 
     // Get config for pio state machine
 	pio_sm_config config = sequencer_pio_clock_triggered_program_get_default_config(offset);
@@ -78,7 +78,7 @@ void sequencer_triggered_init(
     );
 
     // Set trigger pins of config to input pins
-    sn_config_set_in_pins(
+    sm_config_set_in_pins(
         &config,
         pin_trig
     );
@@ -95,7 +95,7 @@ void sequencer_triggered_init(
     sm_config_set_clkdiv(
         &config,
         clock_divider
-    )
+    );
 
     pio_sm_init(
         pio, sm,
