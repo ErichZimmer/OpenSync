@@ -1,18 +1,9 @@
 #include "sequencer_clock.h"
-
+#include "sequencer_common.h"
 #include "sequencer_pio_clock_freerun.pio.h"
 #include "sequencer_pio_clock_triggered.pio.h"
 
-
-// Used for user input validation
-const uint32_t OUT_MASK = ((1u << OUTPUT_PIN_COUNT) - 1) << OUTPUT_PIN_BASE;
-
 // Sequence stuff
-const uint32_t ITERATIONS_MAX = 500000;
-const uint32_t CLOCK_DIVIDER_MAX = 65000;
-const uint32_t INTERNAL_CLOCK_PINS[3] = {16, 17, 18};
-const uint32_t EXTERNAL_TRIGGER_PINS[3] = {13, 14, 15};
-
 uint32_t CLOCK_INSTRUCTIONS_DEFAULT[CLOCK_INSTRUCTIONS_MAX] = {0};
 uint32_t CLOCK_TRIGGERS_DEFAULT[CLOCK_TRIGGERS_MAX] = {0};
 
@@ -243,7 +234,7 @@ void sequencer_clock_sm_free(
 void sequencer_clock_free(
     struct clock_config* config
 ) {
-    sequencer_clock_config_reset(config);
     sequencer_clock_dma_free(config);
     sequencer_clock_sm_free(config);
+    sequencer_clock_config_reset(config);
 }

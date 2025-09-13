@@ -6,13 +6,6 @@
 
 #include "structs/clock_config.h"
 
-enum {
-    OUTPUT_PIN_BASE = 0,
-    OUTPUT_PIN_COUNT = 12,
-};
-
-extern const uint32_t OUT_MASK;
-
 void sequencer_clocks_init(
     struct clock_config* config_array,
     PIO clock_pio
