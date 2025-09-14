@@ -1,5 +1,4 @@
 #include "sequencer_clock.h"
-#include "sequencer_common.h"
 #include "sequencer_pio_clock_freerun.pio.h"
 #include "sequencer_pio_clock_triggered.pio.h"
 

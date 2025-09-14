@@ -15,7 +15,7 @@
 #include "structs/pulse_config.h"
 #include "sequencer/sequencer_clock.h"
 #include "status/sequencer_status.h"
-#include "serial/serial_interface.h"
+#include "serial/serial_int_output.h"
 
 // Third-party //
 #include "fast_serial.h"

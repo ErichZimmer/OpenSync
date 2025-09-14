@@ -5,6 +5,7 @@
 #include "hardware/pio.h"
 
 #include "structs/clock_config.h"
+#include "sequencer_common.h"
 
 void sequencer_clocks_init(
     struct clock_config* config_array,

@@ -6,6 +6,7 @@
 
 #include "structs/clock_config.h"
 #include "structs/pulse_config.h"
+#include "sequencer_common.h"
 
 void sequencer_output_init(
     struct pulse_config* config_array,

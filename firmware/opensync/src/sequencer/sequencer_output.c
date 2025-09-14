@@ -1,5 +1,4 @@
 #include "sequencer_output.h"
-#include "sequencer_common.h"
 #include "sequencer_pio_pulse_sequencer.pio.h"
 
 uint32_t PULSE_INSTRUCTIONS_DEFAULT[PULSE_INSTRUCTIONS_MAX] = {0};
