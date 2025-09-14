@@ -8,6 +8,15 @@
 #include "structs/pulse_config.h"
 #include "sequencer_common.h"
 
+uint sequencer_program_output_add(
+    PIO pio_clock
+);
+
+void sequencer_program_ouput_remove(
+    PIO pio_clock, 
+    uint offset
+);
+
 void sequencer_output_init(
     struct pulse_config* config_array,
     PIO clock_pio

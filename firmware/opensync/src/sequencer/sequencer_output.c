@@ -5,6 +5,28 @@ uint32_t PULSE_INSTRUCTIONS_DEFAULT[PULSE_INSTRUCTIONS_MAX] = {0};
 // uint32_t CLOCK_TRIGGERS_DEFAULT[CLOCK_TRIGGERS_MAX] = {0};
 
 
+uint sequencer_program_output_add(
+    PIO pio_clock
+) {
+    return pio_add_program(
+        pio_clock,
+        &sequencer_pio_pulser_program
+    );
+}
+
+
+void sequencer_program_ouput_remove(
+    PIO pio_clock, 
+    uint offset
+) {
+    pio_remove_program(
+        pio_clock,
+        &sequencer_pio_pulser_program,
+        offset
+    );
+}
+
+
 void sequencer_output_init(
     struct pulse_config* config_array,
     PIO clock_pio

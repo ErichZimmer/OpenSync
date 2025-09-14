@@ -7,6 +7,24 @@
 #include "structs/clock_config.h"
 #include "sequencer_common.h"
 
+uint sequencer_program_freerun_add(
+    PIO pio_clock
+);
+
+uint sequencer_program_triggered_add(
+    PIO pio_clock
+);
+
+void sequencer_program_freerun_remove(
+    PIO pio_clock, 
+    uint offset
+);
+
+void sequencer_program_triggered_remove(
+    PIO pio_clock, 
+    uint offset
+);
+
 void sequencer_clocks_init(
     struct clock_config* config_array,
     PIO clock_pio

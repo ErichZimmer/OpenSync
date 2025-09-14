@@ -7,6 +7,50 @@ uint32_t CLOCK_INSTRUCTIONS_DEFAULT[CLOCK_INSTRUCTIONS_MAX] = {0};
 uint32_t CLOCK_TRIGGERS_DEFAULT[CLOCK_TRIGGERS_MAX] = {0};
 
 
+uint sequencer_program_freerun_add(
+    PIO pio_clock
+) {
+    return pio_add_program(
+        pio_clock,
+        &sequencer_pio_clock_freerun_program
+    );
+}
+
+
+uint sequencer_program_triggered_add(
+    PIO pio_clock
+) {
+    return pio_add_program(
+        pio_clock,
+        &sequencer_pio_clock_triggered_program
+    );
+}
+
+
+void sequencer_program_freerun_remove(
+    PIO pio_clock, 
+    uint offset
+) {
+    pio_remove_program(
+        pio_clock,
+        &sequencer_pio_clock_freerun_program,
+        offset
+    );
+}
+
+
+void sequencer_program_triggered_remove(
+    PIO pio_clock, 
+    uint offset
+) {
+    pio_remove_program(
+        pio_clock,
+        &sequencer_pio_clock_triggered_program,
+        offset
+    );
+}
+
+
 void sequencer_clocks_init(
     struct clock_config* config_array,
     PIO clock_pio
