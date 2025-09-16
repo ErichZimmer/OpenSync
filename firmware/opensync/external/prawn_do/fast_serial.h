@@ -38,10 +38,18 @@ static inline uint32_t fast_serial_write_available(){
 	return tud_cdc_write_available();
 }
 
+
+// Supress -Wdiscarded-qualifiers const discarded warning
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdiscarded-qualifiers"
+
 // Read up to 64 bytes
 static inline uint32_t fast_serial_read_atomic(const char * buffer, uint32_t buffer_size){
 	return tud_cdc_read(buffer, buffer_size);
 }
+
+#pragma GCC diagnostic pop
+
 
 // Read bytes (blocks until buffer_size is reached)
 uint32_t fast_serial_read(const char * buffer, uint32_t buffer_size);
