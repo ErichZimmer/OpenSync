@@ -9,10 +9,11 @@ from ..error_handles import DeviceBufferSizeWarning
 import warnings
 
 
-# Simple pulse sequences should not be larger than 256 instructions pairs.
-MAX_PULSE_INSTRUCTIONS = 64
-EXT_TRIGGER = 0
-
+# Simple pulse sequences should not be larger than 30 instructions pairs.
+MAX_PULSE_INSTRUCTION_PAIRS = 31 # 62 total instructions supported + 2 term. flags
+MIN_PULSE_CYCLE_WIDTH = 5
+DEFAULT_OUTPUT_STATE = 0
+TERMINATION_FLAG = 0
 
 __all__ = [
     'convert_pulse_params'
@@ -61,7 +62,7 @@ def _eval_piecewise_function(pulse_data: list, x: float) -> bool:
 
 
 def _convert_pulse_params(pulse_params: dict) -> Tuple[list[int], list[int]]:  
-    output_state_mask = '0000000000000000'
+    OUTPUT_STATE_MASK = '000000000000'
     eps = 0.00001
     
     channels = get_channel_ids(pulse_params)
@@ -86,7 +87,7 @@ def _convert_pulse_params(pulse_params: dict) -> Tuple[list[int], list[int]]:
     total_delay = 0.0
     
     reps = 0
-    while reps < MAX_PULSE_INSTRUCTIONS:
+    while reps < MAX_PULSE_INSTRUCTION_PAIRS:
         min_pulse_len = _get_min_pulse(detected_pulses)
         current_delay = abs(total_delay - min_pulse_len)
         total_delay += current_delay
@@ -94,7 +95,7 @@ def _convert_pulse_params(pulse_params: dict) -> Tuple[list[int], list[int]]:
         if total_delay > max_pulse_len:
             break
         
-        state = list(output_state_mask)
+        state = list(OUTPUT_STATE_MASK)
         for channel in range(len(detected_pulses)):
             state[channel] = str(_eval_piecewise_function(
                 coeffs[channel], 
@@ -112,10 +113,10 @@ def _convert_pulse_params(pulse_params: dict) -> Tuple[list[int], list[int]]:
         reps += 1
 
     # Warn about resource management
-    if reps == MAX_PULSE_INSTRUCTIONS - 1:
+    if reps > MAX_PULSE_INSTRUCTION_PAIRS:
         msg = 'Device resources has been exausted. The device only supports ' +\
-             f'{MAX_PULSE_INSTRUCTIONS} instructions. Remaining instructions '+\
-              'have been ignored'
+             f'{MAX_PULSE_INSTRUCTION_PAIRS} instructions pairs. Remaining ' +\
+              'instructions have been ignored'
         
         warnings.warn(
             msg,
@@ -135,7 +136,7 @@ def _nanos_to_cycle(nanosecond: int) -> int:
 
 def _output_delay_cycles(output_delays: list[float]) -> list[int]:
     output_delay_nanos = [_micros_to_nano(delay) for delay in output_delays]
-    output_delay_cycels = [_nanos_to_cycle(delay) for delay in output_delay_nanos]
+    output_delay_cycels = [int(_nanos_to_cycle(delay)) for delay in output_delay_nanos]
 
     return output_delay_cycels
     
@@ -144,18 +145,40 @@ def _reps_khz_to_delay_micros(
     reps_khz: float,
     output_delay_microseconds: list[float]
 ) -> float:
-    # Just in case, but it should never raise unless something bad happened
-    if None not in output_delay_microseconds:
-        raise ValueError(
-            'Pulse sequence already has repetition delay'
-        )
-        
     total_delay_microseconds = sum(output_delay_microseconds[:-1])
     delay_reps_microsecond = (1 / reps_khz) * 1000
 
     return delay_reps_microsecond - total_delay_microseconds
 
-    
+
+def _conversion_delay_bugfix(
+    output_delay: list[int]
+):
+    # If the first delay is zero, replace it (byproduct of the conversion)
+    if output_delay[0] == 0:
+        output_delay = output_delay[1:]
+        output_delay.append(MIN_PULSE_CYCLE_WIDTH)
+
+    return output_delay
+
+
+def _conversion_pad_unused_instrutions(
+    output_state: list[int],
+    output_delay: list[int]
+):
+    while len(output_state) < MAX_PULSE_INSTRUCTION_PAIRS:
+        output_state.append(DEFAULT_OUTPUT_STATE)
+        
+    while len(output_delay) < MAX_PULSE_INSTRUCTION_PAIRS:
+        output_delay.append(MIN_PULSE_CYCLE_WIDTH)
+        
+    # Add termination lfags to the pulse sequence
+    output_state.append(TERMINATION_FLAG)
+    output_delay.append(TERMINATION_FLAG)
+
+    return output_state, output_delay
+
+
 def convert_pulse_params(pulse_params: dict) -> Tuple[list[int], list[int]]:
     """Convert pulse parameters into output states and delays.
 
@@ -179,5 +202,11 @@ def convert_pulse_params(pulse_params: dict) -> Tuple[list[int], list[int]]:
     """
     output_state, output_delay_microseconds = _convert_pulse_params(pulse_params)
     output_delay_cycles = _output_delay_cycles(output_delay_microseconds)
+    
+    output_delay_cycles = _conversion_delay_bugfix(output_delay_cycles)
+    output_state, output_delay_cycles = _conversion_pad_unused_instrutions(
+        output_state,
+        output_delay_cycles
+    )
 
     return output_state, output_delay_cycles

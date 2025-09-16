@@ -6,7 +6,7 @@ from contextlib import contextmanager
 BAUDRATE = 19200
 READ_TIMEOUT = 0.25
 WRITE_TIMEOUT = 0.25
-CLOCK_CYCLE = 2.5 # clock cycle in nanoseconds
+CLOCK_CYCLE = 2.976194 # clock cycle in nanoseconds
 EOL = '\r\n'
 
 

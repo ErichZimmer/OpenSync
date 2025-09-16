@@ -13,6 +13,7 @@ __all__ = [
     'config_clock_id',
     'config_clock_divider',
     'config_trigger',
+    'config_trigger_id',
     'config_trigger_skips',
     'config_trigger_delay',
     'config_reps_hz',
@@ -33,11 +34,14 @@ def get_clock_params() -> dict:
     clock_params : dict
         A dictionary containing the default clock parameters. The structure
         of the dictionary includes:
-        - 'clock_id': An integer between 0 and 2 representing the clock channel to use.
+        - 'clock_id': An integer between 0 and 2 representing the clock
+           channel to use (default is 0).
         - 'clock_divider': An integer representing the clock divider
            (default is 1).
         - 'ext_trigger': A string indicating the external trigger status
            (default is 'disabled').
+        - 'ext_trigger_id': An integer between 0 and 2 representing the
+           external trigger channel to use (default is 0).
         - 'ext_trigger_delay': An integer respresenting the number of ext.
            trigger signals to skip (default is 0).
         - 'ext_trigger_delay': A float respresenting the delay between the
@@ -52,6 +56,7 @@ def get_clock_params() -> dict:
         'clock_id': 0,
         'clock_divider': 1,
         'ext_trigger': 'disabled',
+        'ext_trigger_id': 0,
         'ext_trigger_skips': 0,
         'ext_trigger_delay': 0.0,
         'reps_khz': 0.01,
@@ -87,7 +92,6 @@ def config_clock_id(
         msg = f'Invalid clock channel selected. Got {channel_id}'
         raise ValueError(msg)
 
-    
     clock_params['clock_id'] = channel_id
 
     return clock_params
@@ -162,6 +166,37 @@ def config_trigger(
     return clock_params
 
 
+def config_trigger_id(
+    clock_params: dict,
+    channel_id: int=0
+) -> dict:
+    """Configure which trigger channel to use.
+
+    This function updates the clock pararameters by selecting which external
+    trigger input channel to use for the internal timing and execution of the
+    pulse parameters.
+
+    clock_params : dict
+        A dictionary containing clock parameters from `get_clock_params`.
+    channel_id : int
+        The index of the clock channel to which the pulse parameters will be
+        controlled. Valid clock ids are 0, 1, and 2.
+
+    Returns
+    -------
+    clock_params : dict
+        The updated clock parameters dictionary.
+    
+    """
+    if channel_id not in VALID_CLOCK_IDS:
+        msg = f'Invalid clock channel selected. Got {channel_id}'
+        raise ValueError(msg)
+    
+    clock_params['ext_trigger_id'] = channel_id
+
+    return clock_params
+
+    
 def config_trigger_skips(
     clock_params: dict,
     skips: int

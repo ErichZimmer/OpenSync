@@ -10,6 +10,6 @@ __all__ = [
 
 def device_params_load(
     pulse_params: 'pulse_params',
-    clock_params: 'clock_params
+    clock_params: 'clock_params'
 ):
     raise Exception('Not implemented yet')
