@@ -46,7 +46,6 @@ void sequencer_output_configure(
     uint32_t clock_pin
 ) {
     config -> clock_pin = clock_pin;
-    config -> active = true;
 }
 
 
@@ -110,7 +109,6 @@ void sequencer_output_dma_configure(
 void sequencer_output_sm_config(
     struct pulse_config* config,
     uint offset,
-    uint clock_pin,
     uint clock_divider,
     uint32_t reps
 ) {
@@ -128,7 +126,7 @@ void sequencer_output_sm_config(
         offset,
         OUTPUT_PIN_BASE,
         OUTPUT_PIN_COUNT,
-        clock_pin,
+        config -> clock_pin,
         clock_divider
     );
 
@@ -136,6 +134,8 @@ void sequencer_output_sm_config(
         config,
         reps
     );
+
+    config -> active = true;
 }
 
 

@@ -73,7 +73,6 @@ void sequencer_clock_configure(
 ) {
     config -> clock_pin = clock_pin;
     config -> trigger_pin = trigger_pin;
-    config -> active = true;
 }
 
 
@@ -186,7 +185,6 @@ void sequencer_clock_triggered_dma_configure(
 void sequencer_clock_freerun_sm_config(
     struct clock_config* config,
     uint offset,
-    uint pin_out,
     uint clock_divider
 ) {
 
@@ -206,11 +204,13 @@ void sequencer_clock_freerun_sm_config(
         config -> pio,
         config -> sm,
         offset,
-        pin_out,
+        config -> clock_pin,
         clock_divider
     );
 
     sequencer_clock_freerun_dma_configure(config);
+
+    config -> active = true;
 }
 
 
@@ -243,6 +243,8 @@ void sequencer_clock_triggered_sm_config(
         config,
         reps
     );
+
+    config -> active = true;
 }
 
 

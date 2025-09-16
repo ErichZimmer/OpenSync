@@ -13,6 +13,10 @@ void core_2_init()
     // Initialize serial interface
 	fast_serial_init();
 
+	// Intialize sequencer core
+	multicore_launch_core1(core_1_init);
+    multicore_fifo_pop_blocking();
+
 	// Set status to off
 	sequencer_status_set(IDLE);
 
@@ -67,6 +71,12 @@ void core_2_init()
 		else if(strncmp(serial_buf, "freq", 4) == 0)
         {
 			serial_print_freqs();
+		}
+
+		// Return system frequencies
+		else if(strncmp(serial_buf, "fire", 4) == 0)
+        {
+			multicore_fifo_push_blocking(1);
 		}
     }
 }

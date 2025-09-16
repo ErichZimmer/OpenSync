@@ -16,6 +16,7 @@
 #include "sequencer/sequencer_clock.h"
 #include "status/sequencer_status.h"
 #include "serial/serial_int_output.h"
+#include "core_1.h"
 
 // Third-party //
 #include "fast_serial.h"

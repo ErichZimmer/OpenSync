@@ -64,16 +64,6 @@ void sequencer_pulser_sm_helper_init(
     {
 		pio_gpio_init(pio, pin_out_base + i);
 	}
-    
-    // Set trigger pin direction as input and init
-	pio_sm_set_consecutive_pindirs(
-        pio, sm,
-		pin_trig,
-		1, // only one pin is used
-        false
-    );
-
-	pio_gpio_init(pio, pin_trig);
 
     // Set output pins of config to output pins
 	sm_config_set_out_pins(

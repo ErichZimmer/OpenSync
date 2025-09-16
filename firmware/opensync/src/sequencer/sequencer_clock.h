@@ -62,7 +62,6 @@ void sequencer_clock_triggered_dma_configure(
 void sequencer_clock_freerun_sm_config(
     struct clock_config* config,
     uint offset,
-    uint pin_out,
     uint clock_divider
 );
 
