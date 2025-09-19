@@ -70,7 +70,7 @@ void serial_print_clock_configs(
 }
 
 
-// Dump the clock config freerun instructions
+// Dump the pulse config freerun instructions
 void serial_print_pulse_instructions(
     struct pulse_config* config
 ) {
@@ -80,7 +80,7 @@ void serial_print_pulse_instructions(
         uint32_t reps = config -> instructions[i];
         uint32_t delay = config -> instructions[i+1];
 
-        fast_serial_printf("Instruction %i: reps=%i, delay=%i\r\n", inst_num, reps, delay);
+        fast_serial_printf("Instruction %i: state=%b, delay=%i\r\n", inst_num, reps, delay);
     }
 }
 
