@@ -99,7 +99,7 @@ void sequencer_output_dma_configure(
         config -> dma_chan,
         &dma_config,
 		&config -> pio->txf[config -> sm], // Source pointer
-		config -> instructions, // Instruction read address
+		&config -> instructions, // Instruction read address
 		PULSE_INSTRUCTIONS_MAX * reps, // Number of instructions * reps to perform
 		true // Start transfers immediately
     );

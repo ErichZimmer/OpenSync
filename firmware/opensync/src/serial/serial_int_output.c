@@ -17,6 +17,93 @@ void serial_print_status()
 }
 
 
+// Dump the clock config freerun instructions
+void serial_print_clock_instructions(
+    struct clock_config* config
+) {
+    for (uint32_t i = 0; i < CLOCK_INSTRUCTIONS_MAX; i = i + 2)
+    {
+        uint32_t inst_num = i / 2;
+        uint32_t reps = config -> instructions[i];
+        uint32_t delay = config -> instructions[i+1];
+
+        fast_serial_printf("Instruction %i: reps=%i, delay=%i\r\n", inst_num, reps, delay);
+    }
+}
+
+
+// Dump the clock config trigger instructions
+void serial_print_clock_triggers(
+    struct clock_config* config
+) {
+    for (uint32_t i = 0; i < CLOCK_TRIGGERS_MAX; i = i + 2)
+    {
+        uint32_t inst_num = i / 2;
+        uint32_t reps = config -> instructions[i];
+        uint32_t delay = config -> instructions[i+1];
+
+        fast_serial_printf("Instruction %i: reps=%i, delay=%i\r\n", inst_num, reps, delay);
+    }
+}
+
+
+// Dump clock config settings
+void serial_print_clock_configs(
+    struct clock_config* config_array
+)
+{
+    for (uint32_t i = 0; i < CLOCKS_MAX; i++)
+    {
+        fast_serial_printf("Clock config ID: %i\r\n", i);
+        fast_serial_printf("Clock config sm: %i\r\n", config_array[i].sm);
+        fast_serial_printf("Clock config clock pin: %i\r\n", config_array[i].clock_pin);
+        fast_serial_printf("Clock config trigger pin: %i\r\n", config_array[i].trigger_pin);
+        fast_serial_printf("Clock config DMA channel: %i\r\n", config_array[i].dma_chan);
+        serial_print_clock_instructions(
+            &config_array[i]
+        );
+        serial_print_clock_triggers(
+            &config_array[i]
+        );
+        fast_serial_printf("Clock config is active: %i\r\n", config_array[i].active);
+    }
+}
+
+
+// Dump the clock config freerun instructions
+void serial_print_pulse_instructions(
+    struct pulse_config* config
+) {
+    for (uint32_t i = 0; i < PULSE_INSTRUCTIONS_MAX; i = i + 2)
+    {
+        uint32_t inst_num = i / 2;
+        uint32_t reps = config -> instructions[i];
+        uint32_t delay = config -> instructions[i+1];
+
+        fast_serial_printf("Instruction %i: reps=%i, delay=%i\r\n", inst_num, reps, delay);
+    }
+}
+
+
+// Dump pulse config settings
+void serial_print_pulse_configs(
+    struct pulse_config* config_array
+)
+{
+    for (uint32_t i = 0; i < CLOCKS_MAX; i++)
+    {
+        fast_serial_printf("Pulse config ID: %i\r\n", i);
+        fast_serial_printf("Pulse config sm: %i\r\n", config_array[i].sm);
+        fast_serial_printf("Pulse config pulse pin: %i\r\n", config_array[i].clock_pin);
+        fast_serial_printf("Pulse config DMA channel: %i\r\n", config_array[i].dma_chan);
+        serial_print_pulse_instructions(
+            &config_array[i]
+        );
+        fast_serial_printf("Pulse config is active: %i\r\n", config_array[i].active);
+    }
+}
+
+
 // Report system frequencies
 // See https://github.com/raspberrypi/pico-examples/blob/master/clocks/hello_48MHz/hello_48MHz.c
 // Liscensed under BSD-3-Clause License

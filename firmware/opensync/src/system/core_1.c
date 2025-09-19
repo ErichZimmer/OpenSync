@@ -1,4 +1,6 @@
 #include "core_1.h"
+#include "fast_serial.h"
+
 
 uint32_t clock_instructions[CLOCKS_MAX][CLOCK_INSTRUCTIONS_MAX];
 uint32_t trigger_instructions[CLOCKS_MAX][CLOCK_TRIGGERS_MAX];
@@ -52,7 +54,7 @@ void core_1_init()
 
     // Create some clock pattern
     dummy_clock_instruction[0] = reps; // The amount of reps to perform
-    dummy_clock_instruction[1] = 400000000; // the repition rate (must be higher than the total duration of the pulse sequencer)
+    dummy_clock_instruction[1] = 200000; // the repition rate (must be higher than the total duration of the pulse sequencer)
 
     // Make an array of ones to insert a dummy program
     uint32_t dummy_output_instruction[PULSE_INSTRUCTIONS_MAX] = {0};
@@ -80,16 +82,16 @@ void core_1_init()
 
     // Create some pulse pattern
     dummy_output_instruction[0] = 2048; // Channel 12 square wave
-    dummy_output_instruction[1] = 40000000;
-
+    dummy_output_instruction[1] = 4000000;
+                                  
     dummy_output_instruction[0] = 1024; // Channel 11 square wave
-    dummy_output_instruction[1] = 40000000;
+    dummy_output_instruction[1] = 4000000;
 
     dummy_output_instruction[0] = 512; // Channel 10 square wave
-    dummy_output_instruction[1] = 40000000;
+    dummy_output_instruction[1] = 4000000;
 
     dummy_output_instruction[0] = 2560; // Channel 10 and 12
-    dummy_output_instruction[1] = 40000000;
+    dummy_output_instruction[1] = 4000000;
 
 
     // Make sure the final instructions are zero
@@ -106,6 +108,10 @@ void core_1_init()
         {
             continue;
         }
+        
+        fast_serial_printf("Internal Message: Starting to initialize clocks\r\n");
+
+        sequencer_status_set(ARMING);
 
         // INTERNAL CLOCK //
         sequencer_clocks_init(
@@ -119,6 +125,8 @@ void core_1_init()
             dummy_clock_instruction
         );
 
+        fast_serial_printf("Internal Message: Starting to configure clocks\r\n");
+
         sequencer_clock_configure(
             &sequencer_clock_config[0],
             INTERNAL_CLOCK_PINS[0],
@@ -131,6 +139,7 @@ void core_1_init()
             clock_divider
         );
 
+        fast_serial_printf("Internal Message: Starting to initialize outputs\r\n");
         // OUTPUT //
         sequencer_output_init(
             sequencer_pulse_config,
@@ -142,6 +151,8 @@ void core_1_init()
             &sequencer_pulse_config[0],
             dummy_output_instruction
         );
+
+        fast_serial_printf("Internal Message: Starting to configure outputs\r\n");
 
         // Set clock ID to 0
         sequencer_output_configure(
@@ -175,16 +186,34 @@ void core_1_init()
             }
         }
 
-        pio_enable_sm_multi_mask_in_sync(
-            pio_clocks,
-            0u,
-            pio_clocks_sm_mask,
+        
+
+        sequencer_status_set(RUNNING);
+
+//        pio_enable_sm_multi_mask_in_sync(
+//            pio_clocks,
+//            0u,
+//            pio_clocks_sm_mask,
+//            pio_output_sm_mask
+//        );
+
+        fast_serial_printf("Internal Message: Starting outputs state machine\r\n");
+        pio_enable_sm_mask_in_sync(
+            pio_output,
             pio_output_sm_mask
         );
+
+        fast_serial_printf("Internal Message: Starting clocks state machine\r\n");
+        pio_enable_sm_mask_in_sync(
+            pio_clocks,
+            pio_clocks_sm_mask
+        );
+
 
         // Stall core until all processes are done
         for (uint32_t i = 0; i < CLOCKS_MAX; ++i)
         {
+            fast_serial_printf("Internal Message: Entering stall for clock id: %i\r\n", i);
             if (sequencer_pulse_config[i].active != true)
             {
                 continue;
@@ -192,6 +221,9 @@ void core_1_init()
 
             while(dma_channel_is_busy(sequencer_pulse_config[i].dma_chan)){ }
         }
+
+        fast_serial_printf("Internal Message: Cleaning up state machines\r\n");
+        sequencer_status_set(DISARMING);
 
         // Cleanup clock configs
         for (uint32_t i = 0; i < CLOCKS_MAX; ++i)
@@ -214,5 +246,8 @@ void core_1_init()
                 );
             }
         }
+
+        fast_serial_printf("Internal Message: Sequencer reset to IDLE status\r\n");
+        sequencer_status_set(IDLE);
     }
 }

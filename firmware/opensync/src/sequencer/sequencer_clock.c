@@ -142,8 +142,8 @@ void sequencer_clock_freerun_dma_configure(
         &dma_config,
 		&config -> pio->txf[config -> sm], // Source pointer
 		config -> instructions, // Instruction read address
-		CLOCK_TRIGGERS_MAX, // Number of instructions
-		false // Do not start automatically
+		CLOCK_INSTRUCTIONS_MAX, // Number of instructions
+		true // Do not start automatically
     );
 }
 

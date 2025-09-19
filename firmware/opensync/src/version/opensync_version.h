@@ -2,4 +2,4 @@
 
 #include <string.h>
 
-extern const char OPENSYNC_VERSION[6];
+extern const char OPENSYNC_VERSION[8];

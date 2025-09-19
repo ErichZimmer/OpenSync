@@ -77,6 +77,12 @@ void core_2_init()
 		else if(strncmp(serial_buf, "fire", 4) == 0)
         {
 			multicore_fifo_push_blocking(1);
+			fast_serial_printf("ok\r\n");
+		}
+
+		else
+		{
+			fast_serial_printf("Invalid request\r\n");
 		}
     }
 }
