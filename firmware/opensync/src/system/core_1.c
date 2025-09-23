@@ -14,24 +14,25 @@ struct pulse_config sequencer_pulse_config[CLOCKS_MAX];
 PIO pio_clocks = pio0;
 PIO pio_output = pio1;
 
-uint clock_divider = 1;
-uint reps = 5;
+uint clock_divider = 60000;
+uint reps = 20;
 
 const uint32_t ARM_SEQUENCER = 1;
 
 
 void core_1_init()
 {
-    // Add a PIO programs
+    // Freerun PIO clock program
     uint offset_clock_freerun = sequencer_program_freerun_add(
         pio_clocks
     );
 
+    // Triggered PIO clock program
     uint offset_clock_triggered = sequencer_program_triggered_add(
         pio_clocks
     );
 
-    // Add a single instance of the PIO pulse output program
+    // Sequencer PIO pulse program
     uint offset_output = sequencer_program_output_add(
         pio_output
     );
@@ -54,7 +55,7 @@ void core_1_init()
 
     // Create some clock pattern
     dummy_clock_instruction[0] = reps; // The amount of reps to perform
-    dummy_clock_instruction[1] = 200000; // the repition rate (must be higher than the total duration of the pulse sequencer)
+    dummy_clock_instruction[1] = 200000000; // the repition rate (must be higher than the total duration of the pulse sequencer)
 
     // Make an array of ones to insert a dummy program
     uint32_t dummy_output_instruction[PULSE_INSTRUCTIONS_MAX] = {0};
@@ -84,14 +85,14 @@ void core_1_init()
     dummy_output_instruction[0] = 2048; // Channel 12 square wave
     dummy_output_instruction[1] = 4000000;
                                   
-    dummy_output_instruction[0] = 1024; // Channel 11 square wave
-    dummy_output_instruction[1] = 4000000;
+    dummy_output_instruction[2] = 1024; // Channel 11 square wave
+    dummy_output_instruction[3] = 4000000;
 
-    dummy_output_instruction[0] = 512; // Channel 10 square wave
-    dummy_output_instruction[1] = 4000000;
+    dummy_output_instruction[4] = 512; // Channel 10 square wave
+    dummy_output_instruction[5] = 4000000;
 
-    dummy_output_instruction[0] = 2560; // Channel 10 and 12
-    dummy_output_instruction[1] = 4000000;
+    dummy_output_instruction[6] = 2560; // Channel 10 and 12
+    dummy_output_instruction[7] = 4000000;
 
 
     // Make sure the final instructions are zero
@@ -108,8 +109,14 @@ void core_1_init()
         {
             continue;
         }
+
+        uint32_t debug_status_local = debug_status_get();
         
-        fast_serial_printf("Internal Message: Starting to initialize clocks\r\n");
+        if (debug_status_local == SEQUENCER_DEBUG)
+        {
+            fast_serial_printf("Internal Message: Starting to initialize clocks\r\n");
+        }
+
 
         sequencer_status_set(ARMING);
 
@@ -125,7 +132,10 @@ void core_1_init()
             dummy_clock_instruction
         );
 
-        fast_serial_printf("Internal Message: Starting to configure clocks\r\n");
+        if (debug_status_local == SEQUENCER_DEBUG)
+        {
+            fast_serial_printf("Internal Message: Starting to configure clocks\r\n");
+        }
 
         sequencer_clock_configure(
             &sequencer_clock_config[0],
@@ -139,7 +149,11 @@ void core_1_init()
             clock_divider
         );
 
-        fast_serial_printf("Internal Message: Starting to initialize outputs\r\n");
+        if (debug_status_local == SEQUENCER_DEBUG)
+        {
+            fast_serial_printf("Internal Message: Starting to initialize outputs\r\n");
+        }
+
         // OUTPUT //
         sequencer_output_init(
             sequencer_pulse_config,
@@ -152,7 +166,10 @@ void core_1_init()
             dummy_output_instruction
         );
 
-        fast_serial_printf("Internal Message: Starting to configure outputs\r\n");
+        if (debug_status_local == SEQUENCER_DEBUG)
+        {
+            fast_serial_printf("Internal Message: Starting to configure outputs\r\n");
+        }
 
         // Set clock ID to 0
         sequencer_output_configure(
@@ -160,12 +177,12 @@ void core_1_init()
             INTERNAL_CLOCK_PINS[0]
         );
 
-        sequencer_output_sm_config(
-            &sequencer_pulse_config[0],
-            offset_output,
-            clock_divider,
-            reps
-        );
+//        sequencer_output_sm_config(
+//            &sequencer_pulse_config[0],
+//            offset_output,
+//            clock_divider,
+//            reps
+//        );
 
         uint pio_clocks_sm_mask = 0;
         uint pio_output_sm_mask = 0;
@@ -186,7 +203,16 @@ void core_1_init()
             }
         }
 
-        
+        if (debug_status_local == SEQUENCER_DEBUG)
+        {
+            serial_print_clock_configs(sequencer_clock_config);
+            serial_print_pulse_configs(sequencer_pulse_config);
+
+            fast_serial_printf(
+                "DMA clock id %i status: %i\r\n", 
+                0, dma_channel_is_busy(sequencer_clock_config[0].dma_chan)
+            );       
+        }
 
         sequencer_status_set(RUNNING);
 
@@ -197,23 +223,30 @@ void core_1_init()
 //            pio_output_sm_mask
 //        );
 
-        fast_serial_printf("Internal Message: Starting outputs state machine\r\n");
-        pio_enable_sm_mask_in_sync(
-            pio_output,
-            pio_output_sm_mask
-        );
+//        fast_serial_printf("Internal Message: Starting outputs state machine\r\n");
+//        pio_enable_sm_mask_in_sync(
+//            pio_output,
+//            pio_output_sm_mask
+//        );
 
-        fast_serial_printf("Internal Message: Starting clocks state machine\r\n");
+        if (debug_status_local == SEQUENCER_DEBUG)
+        {
+            fast_serial_printf("Internal Message: Starting clocks state machine\r\n");
+        }
+
         pio_enable_sm_mask_in_sync(
             pio_clocks,
             pio_clocks_sm_mask
         );
 
-
         // Stall core until all processes are done
         for (uint32_t i = 0; i < CLOCKS_MAX; ++i)
         {
+            if (debug_status_local == SEQUENCER_DEBUG)
+            {  
             fast_serial_printf("Internal Message: Entering stall for clock id: %i\r\n", i);
+            }
+
             if (sequencer_pulse_config[i].active != true)
             {
                 continue;
@@ -222,7 +255,11 @@ void core_1_init()
             while(dma_channel_is_busy(sequencer_pulse_config[i].dma_chan)){ }
         }
 
-        fast_serial_printf("Internal Message: Cleaning up state machines\r\n");
+
+        if (debug_status_local == SEQUENCER_DEBUG)
+        {
+            fast_serial_printf("Internal Message: Cleaning up state machines\r\n");
+        }
         sequencer_status_set(DISARMING);
 
         // Cleanup clock configs
@@ -237,17 +274,21 @@ void core_1_init()
         }
 
         // Cleanup output configs
-        for (uint32_t i = 0; i < CLOCKS_MAX; ++i)
-        {
-            if (sequencer_pulse_config[i].active == true)
-            {
-                sequencer_output_sm_free(
-                    &sequencer_pulse_config[i]
-                );
-            }
-        }
+//        for (uint32_t i = 0; i < CLOCKS_MAX; ++i)
+//        {
+//            if (sequencer_pulse_config[i].active == true)
+//            {
+//                sequencer_output_sm_free(
+//                    &sequencer_pulse_config[i]
+//                );
+//            }
+//     }
 
-        fast_serial_printf("Internal Message: Sequencer reset to IDLE status\r\n");
+        if (debug_status_local == SEQUENCER_DEBUG)
+        {
+            fast_serial_printf("Internal Message: Sequencer reset to IDLE status\r\n");
+        }
+        
         sequencer_status_set(IDLE);
     }
 }

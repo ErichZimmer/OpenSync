@@ -47,31 +47,30 @@ void sequencer_triggered_sm_helper_init(
 ) {
     assert(clock_divider < 65535);
 
+    // Initialize GPIO pin
+    pio_gpio_init(pio, pin_out);
+    pio_gpio_init(pio, pin_trig);
+
+    // Set pin directions
+    pio_sm_set_consecutive_pindirs(
+        pio, sm,
+		pin_out,
+		1, // only one pin is used
+        true // output direction
+    );
+
+	pio_sm_set_consecutive_pindirs(
+        pio, sm,
+		pin_trig,
+		1, // only one pin is used
+        false // input direction
+    );
+
     // Get config for pio state machine
-	pio_sm_config config = sequencer_pio_clock_triggered_program_get_default_config(offset);
-
-     // Set output pin direction as output and init
-	pio_sm_set_consecutive_pindirs(
-        pio, sm,
-		pin_out,
-		1, // only one pin is used
-        true
-    );
-    
-	pio_gpio_init(pio, pin_out);
-
-    // Set trigger pin direction as input and init
-	pio_sm_set_consecutive_pindirs(
-        pio, sm,
-		pin_out,
-		1, // only one pin is used
-        false
-    );
-
-	pio_gpio_init(pio, pin_out);
+	pio_sm_config config = sequencer_pio_clock_triggered_program_get_default_config(offset);	
 
     // Set output pins of config to output pins
-	sm_config_set_out_pins(
+	sm_config_set_set_pins(
         &config,
         pin_out, 
         1 // only one pin is used

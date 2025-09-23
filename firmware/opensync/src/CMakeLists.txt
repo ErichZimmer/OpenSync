@@ -8,6 +8,7 @@ set(OPENSYNC_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/sequencer/sequencer_clock.c
     ${CMAKE_CURRENT_SOURCE_DIR}/sequencer/sequencer_output.c
     ${CMAKE_CURRENT_SOURCE_DIR}/status/sequencer_status.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/status/debug_status.c
     ${CMAKE_CURRENT_SOURCE_DIR}/serial/serial_int_output.c
     ${CMAKE_CURRENT_SOURCE_DIR}/system/core_1.c
     ${CMAKE_CURRENT_SOURCE_DIR}/system/core_2.c

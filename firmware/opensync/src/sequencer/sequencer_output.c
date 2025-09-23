@@ -67,8 +67,6 @@ void sequencer_output_config_reset(
         config,
         PULSE_INSTRUCTIONS_DEFAULT
     );
-    
-    config -> active = false;
 }
 
 
@@ -173,4 +171,6 @@ void sequencer_output_free(
     sequencer_output_dma_free(config);
     sequencer_output_sm_free(config);
     sequencer_output_config_reset(config);
+
+    config -> active = false;
 }

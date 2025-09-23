@@ -110,8 +110,6 @@ void sequencer_clock_config_reset(
         config,
         CLOCK_TRIGGERS_DEFAULT
     );
-    
-    config -> active = false;
 }
 
 
@@ -123,8 +121,20 @@ void sequencer_clock_freerun_dma_configure(
     dma_channel_config dma_config = dma_channel_get_default_config(config -> dma_chan);
 
     // Enable read increment and disable write increment
-	channel_config_set_read_increment(&dma_config, true);
-	channel_config_set_write_increment(&dma_config, false);
+	channel_config_set_read_increment(
+        &dma_config, 
+        true
+    );
+	channel_config_set_write_increment(
+        &dma_config, 
+        false
+    );
+
+    // Set read increment size
+    channel_config_set_transfer_data_size(
+        &dma_config, 
+        DMA_SIZE_32
+    );
 
     // Set data transfer request signal
 	channel_config_set_dreq(
@@ -157,8 +167,20 @@ void sequencer_clock_triggered_dma_configure(
     dma_channel_config dma_config = dma_channel_get_default_config(config -> dma_chan);
 
     // Enable read increment and disable write increment
-	channel_config_set_read_increment(&dma_config, true);
-	channel_config_set_write_increment(&dma_config, false);
+	channel_config_set_read_increment(
+        &dma_config, 
+        true
+    );
+	channel_config_set_write_increment(
+        &dma_config, 
+        false
+    );
+
+    // Set read increment size
+    channel_config_set_transfer_data_size(
+        &dma_config, 
+        DMA_SIZE_32
+    );
 
     // Set data transfer request signal
 	channel_config_set_dreq(
@@ -282,4 +304,6 @@ void sequencer_clock_free(
     sequencer_clock_dma_free(config);
     sequencer_clock_sm_free(config);
     sequencer_clock_config_reset(config);
+
+    config -> active = false;
 }

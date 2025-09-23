@@ -1,4 +1,5 @@
 #include "core_2.h"
+#include "hardware/gpio.h"
 
 // Serial buffer//
 #define SERIAL_BUFFER_SIZE 256
@@ -9,6 +10,7 @@ void core_2_init()
 {
     // Register sequencer_status mutex
     sequencer_status_register();
+	debug_status_register();
 
     // Initialize serial interface
 	fast_serial_init();
@@ -71,6 +73,41 @@ void core_2_init()
 		else if(strncmp(serial_buf, "freq", 4) == 0)
         {
 			serial_print_freqs();
+		}
+
+		 // Return system frequencies
+		else if(strncmp(serial_buf, "togg", 4) == 0)
+        {
+			gpio_init(16);
+    		gpio_set_dir(16, GPIO_OUT);
+			
+			gpio_put(16, 1);
+			sleep_ms(500);
+			gpio_put(16, 0);
+
+
+		}
+
+		// Set debug staus
+		else if(strncmp(serial_buf, "dbug", 4) == 0)
+        {
+            uint32_t debug_status_local = 0;
+
+            int parsed = sscanf(serial_buf, "%*s %d", &debug_status_local);
+
+            if(parsed < 1){
+				fast_serial_printf("Invalid request: Invalid debug input\r\n");
+				continue;
+			}
+
+            if ((debug_status_local < 0) || (debug_status_local > 1))
+            {
+                fast_serial_printf("Invalid request: Debug status must be either 0 or 1\r\n");
+				continue;
+            }
+
+			debug_status_set(debug_status_local);
+			fast_serial_printf("ok\r\n");
 		}
 
 		// Return system frequencies

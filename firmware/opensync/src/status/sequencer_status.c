@@ -32,7 +32,7 @@ void sequencer_status_set(uint32_t status_new)
 }
 
 
-int sequencer_status_get()
+uint32_t sequencer_status_get()
 {
 	mutex_enter_blocking(&sequencer_mutex_status);
 	uint32_t status_copy = sequencer_status;

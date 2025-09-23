@@ -49,10 +49,13 @@ void sequencer_pulser_sm_helper_init(
 ) {
     assert(clock_divider < 65535);
 
-    // Get config for pio state machine
-	pio_sm_config config = sequencer_pio_pulser_program_get_default_config(offset);
+    // Initialize GPIO pins
+    for(uint i = 0; i < pin_out_count; i++)
+    {
+		pio_gpio_init(pio, pin_out_base + i);
+	}
 
-    // Set output pin direction as output and init
+    // Set output pins direction to output
     pio_sm_set_consecutive_pindirs(
         pio, sm,
 		pin_out_base,
@@ -60,10 +63,8 @@ void sequencer_pulser_sm_helper_init(
         true
     );
 
-    for(uint i = 0; i < pin_out_count; i++)
-    {
-		pio_gpio_init(pio, pin_out_base + i);
-	}
+    // Get config for pio state machine
+	pio_sm_config config = sequencer_pio_pulser_program_get_default_config(offset);
 
     // Set output pins of config to output pins
 	sm_config_set_out_pins(
@@ -72,7 +73,12 @@ void sequencer_pulser_sm_helper_init(
         pin_out_count
     );
 
-    // Set trigger pins of config to input pins
+    /* Note:
+       The GPIO clock trigger pins would be already initialized by the
+       clock PIO programs. DO NOT RECONFIGURE PIN DIRCTIONS!!!
+    */
+    
+    // Set clock trigger pins of config to input pins
     sm_config_set_in_pins(
         &config,
         pin_trig
