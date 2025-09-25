@@ -15,7 +15,7 @@ PIO pio_clocks = pio0;
 PIO pio_output = pio1;
 
 uint clock_divider = 60000;
-uint reps = 20;
+uint reps = 50;
 
 const uint32_t ARM_SEQUENCER = 1;
 
@@ -55,7 +55,7 @@ void core_1_init()
 
     // Create some clock pattern
     dummy_clock_instruction[0] = reps; // The amount of reps to perform
-    dummy_clock_instruction[1] = 200000000; // the repition rate (must be higher than the total duration of the pulse sequencer)
+    dummy_clock_instruction[1] = 10; // the repition rate (must be higher than the total duration of the pulse sequencer)
 
     // Make an array of ones to insert a dummy program
     uint32_t dummy_output_instruction[PULSE_INSTRUCTIONS_MAX] = {0};
@@ -189,7 +189,7 @@ void core_1_init()
 
         for (uint32_t i = 0; i < CLOCKS_MAX; i++)
         {
-            if (sequencer_pulse_config[i].active == true)
+            if (sequencer_clock_config[i].active == true)
             {
                 pio_clocks_sm_mask |= 1u << i;
             }
@@ -223,7 +223,11 @@ void core_1_init()
 //            pio_output_sm_mask
 //        );
 
-//        fast_serial_printf("Internal Message: Starting outputs state machine\r\n");
+//        if (debug_status_local == SEQUENCER_DEBUG)
+//        {
+//            fast_serial_printf("Internal Message: Starting outputs state machine\r\n");
+//        }
+
 //        pio_enable_sm_mask_in_sync(
 //            pio_output,
 //            pio_output_sm_mask
@@ -247,19 +251,19 @@ void core_1_init()
             fast_serial_printf("Internal Message: Entering stall for clock id: %i\r\n", i);
             }
 
-            if (sequencer_pulse_config[i].active != true)
+            if (sequencer_clock_config[i].active != true)
             {
                 continue;
             }
 
-            while(dma_channel_is_busy(sequencer_pulse_config[i].dma_chan)){ }
+            while(dma_channel_is_busy(sequencer_clock_config[i].dma_chan)){ }
         }
-
 
         if (debug_status_local == SEQUENCER_DEBUG)
         {
             fast_serial_printf("Internal Message: Cleaning up state machines\r\n");
         }
+
         sequencer_status_set(DISARMING);
 
         // Cleanup clock configs
@@ -272,6 +276,7 @@ void core_1_init()
                 );
             }
         }
+            
 
         // Cleanup output configs
 //        for (uint32_t i = 0; i < CLOCKS_MAX; ++i)

@@ -75,19 +75,6 @@ void core_2_init()
 			serial_print_freqs();
 		}
 
-		 // Return system frequencies
-		else if(strncmp(serial_buf, "togg", 4) == 0)
-        {
-			gpio_init(16);
-    		gpio_set_dir(16, GPIO_OUT);
-			
-			gpio_put(16, 1);
-			sleep_ms(500);
-			gpio_put(16, 0);
-
-
-		}
-
 		// Set debug staus
 		else if(strncmp(serial_buf, "dbug", 4) == 0)
         {
@@ -110,7 +97,7 @@ void core_2_init()
 			fast_serial_printf("ok\r\n");
 		}
 
-		// Return system frequencies
+		// Fire sequencer with current settings
 		else if(strncmp(serial_buf, "fire", 4) == 0)
         {
 			multicore_fifo_push_blocking(1);

@@ -209,21 +209,26 @@ void sequencer_clock_freerun_sm_config(
     uint offset,
     uint clock_divider
 ) {
-
-    // Make sure the state machine is disabled
-	pio_sm_set_enabled(
-        config -> pio, 
-        config -> sm, 
-        false
-    );
-
     pio_claim_sm_mask(
         config -> pio,
         1u << config -> sm
     );
 
+    // Make sure the state machine is disabled
+	pio_sm_set_enabled(
+        config -> pio, 
+        config -> sm,
+        false
+    );
+
+    // Reset the state machine to default state
+    pio_sm_restart(
+        config -> pio, 
+        config -> sm
+    );
+
     sequencer_freerun_sm_helper_init(
-        config -> pio,
+        config -> pio, 
         config -> sm,
         offset,
         config -> clock_pin,
@@ -252,6 +257,12 @@ void sequencer_clock_triggered_sm_config(
         false
     );
 
+    // Reset the state machine to default state
+    pio_sm_restart(
+        config -> pio, 
+        config -> sm
+    );
+
     sequencer_triggered_sm_helper_init(
         config -> pio,
         config -> sm,
@@ -277,6 +288,10 @@ void sequencer_clock_dma_free(
         config -> dma_chan
     );
 
+    dma_channel_cleanup(
+        config -> dma_chan
+    );
+
     dma_channel_unclaim(
         config -> dma_chan
     );
@@ -287,6 +302,11 @@ void sequencer_clock_sm_free(
     struct clock_config* config
 ) {
     pio_sm_drain_tx_fifo(
+        config -> pio,
+        config -> sm
+    );
+
+    pio_sm_clear_fifos(
         config -> pio,
         config -> sm
     );
@@ -303,7 +323,7 @@ void sequencer_clock_free(
 ) {
     sequencer_clock_dma_free(config);
     sequencer_clock_sm_free(config);
-    sequencer_clock_config_reset(config);
+//    sequencer_clock_config_reset(config);
 
     config -> active = false;
 }
