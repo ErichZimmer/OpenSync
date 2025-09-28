@@ -6,7 +6,6 @@
 uint32_t CLOCK_INSTRUCTIONS_DEFAULT[CLOCK_INSTRUCTIONS_MAX] = {0};
 uint32_t CLOCK_TRIGGERS_DEFAULT[CLOCK_TRIGGERS_MAX] = {0};
 
-
 uint sequencer_program_freerun_add(
     PIO pio_clock
 ) {

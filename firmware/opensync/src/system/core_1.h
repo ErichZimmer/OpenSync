@@ -38,7 +38,17 @@ bool clock_trigger_instructions_load(
     uint32_t trigger_delay
 );
 
+bool clock_instructions_load(
+    uint32_t clock_id,
+    uint32_t instructions[CLOCK_INSTRUCTIONS_MAX]
+);
+
 bool pulse_pin_clock_set(
     uint32_t pulse_id,
     uint32_t clock_id
+);
+
+bool pulse_instructions_load(
+    uint32_t pulse_id,
+    uint32_t instructions[PULSE_INSTRUCTIONS_MAX]
 );

@@ -10,8 +10,6 @@ const uint32_t ABORTED = 5;
 const uint32_t DISARMING = 6;
 
 const uint32_t STAND_BY = 0;
-const uint32_t SEQUENCE_TRIGGER_START = 0;
-
 
 // Mutex for status
 static mutex_t sequencer_mutex_status;

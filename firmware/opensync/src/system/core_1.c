@@ -2,8 +2,6 @@
 #include "fast_serial.h"
 
 
-uint32_t trigger_pins[CLOCKS_MAX] = {13};
-
 static struct clock_config sequencer_clock_config[CLOCKS_MAX];
 static struct pulse_config sequencer_pulse_config[CLOCKS_MAX];
 
@@ -420,6 +418,26 @@ bool clock_trigger_instructions_load(
 }
 
 
+bool clock_instructions_load(
+    uint32_t clock_id,
+    uint32_t instructions[CLOCK_INSTRUCTIONS_MAX]
+) {
+
+    // Validate clock ID
+    if(!clock_id_validate(clock_id))
+    {
+        return 0;
+    }
+
+    sequencer_clock_insert_instructions_internal(
+        &sequencer_clock_config[clock_id],
+        instructions
+    );
+
+    return 1;
+}
+
+
 bool pulse_pin_clock_set(
     uint32_t pulse_id,
     uint32_t clock_id
@@ -438,6 +456,25 @@ bool pulse_pin_clock_set(
     }
 
     sequencer_pulse_config[pulse_id].clock_pin = INTERNAL_CLOCK_PINS[clock_id];
+
+    return 1;
+}
+
+bool pulse_instructions_load(
+    uint32_t pulse_id,
+    uint32_t instructions[PULSE_INSTRUCTIONS_MAX]
+) {
+
+    // Validate pulse ID (same as clock ID)
+    if(!clock_id_validate(pulse_id))
+    {
+        return 0;
+    }
+
+    sequencer_output_insert_instructions(
+        &sequencer_pulse_config[pulse_id],
+        instructions
+    );
 
     return 1;
 }

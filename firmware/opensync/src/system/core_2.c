@@ -200,6 +200,80 @@ void core_2_init()
 			fast_serial_printf("ok\r\n");
 		}
 
+		// Load clock instructions (Clock LoaD Instructions --> CLDI)
+		else if(strncmp(serial_buf, "cldi", 4) == 0)
+        {
+            uint32_t clock_id = 0;
+
+			int parsed = sscanf(serial_buf, "%*s %i", &clock_id);
+
+			if(parsed < 1)
+			{
+				fast_serial_printf("Invalid request: Invalid input\r\n");
+				continue;
+			}
+
+			// Create instruction buffer
+			uint32_t instruction_buffer[CLOCK_INSTRUCTIONS_MAX] = {0};
+
+			// Fill instruction buffer
+			uint32_t instruction_count = 0;
+			uint32_t instruction_count_max = CLOCK_INSTRUCTIONS_MAX;
+
+			while(instruction_count < instruction_count_max)
+            {
+				uint32_t reps = 0, delay = 0, num_elements = 0;
+
+				do
+                {
+					buf_len = fast_serial_read_until(serial_buf, SERIAL_BUFFER_SIZE, '\n');
+
+                    if(buf_len >= 4)
+                    {
+                        // Exit if requested
+                        if(strncmp(serial_buf, "exit", 4) == 0)
+                        {
+                            break;
+                        }
+                    }
+
+                    num_elements = sscanf(serial_buf, "%i %i", &reps, &delay);
+
+				} while (num_elements < 2); // Simple validation; repeat until we get what we want
+
+                // Self explanatory
+				if(strncmp(serial_buf, "exit", 4) == 0)
+                {
+					break;
+				}
+
+				if (reps > ITERATIONS_MAX)
+				{
+                    fast_serial_printf("Invalid Request: Invalid repition count: %i\r\n", reps);
+                    break;
+                }
+
+                instruction_buffer[instruction_count] = reps;
+                instruction_count++;
+
+                instruction_buffer[instruction_count] = delay;
+                instruction_count++;
+			}
+
+			// Load instructions into clock
+			bool success = clock_instructions_load(
+				clock_id,
+				instruction_buffer
+			);
+
+			if (!success){
+				fast_serial_printf("Invalid request: Failed to load clock instructions\r\n");
+				continue;
+			}
+
+			fast_serial_printf("ok\r\n");
+		}
+
 		// Set pulse sequencer internal clock pins
 		else if(strncmp(serial_buf, "pset", 4) == 0)
         {
@@ -223,6 +297,115 @@ void core_2_init()
 				continue;
 			}
 			
+			fast_serial_printf("ok\r\n");
+		}
+
+		// Load pulse instructions (Pulse LoaD Instructions --> PLDI)
+		else if(strncmp(serial_buf, "pldi", 4) == 0)
+        {
+            uint32_t pulse_id = 0;
+
+			int parsed = sscanf(serial_buf, "%*s %i", &pulse_id);
+
+			if(parsed < 1)
+			{
+				fast_serial_printf("Invalid request: Invalid input\r\n");
+				continue;
+			}
+
+			// Create instruction buffer
+			uint32_t instruction_buffer[PULSE_INSTRUCTIONS_MAX] = {0};
+
+			// Configure default buffer pattern
+			/*
+			Important Note:
+			The pulse output instruction are broken up into two parts: the output
+			state and the delay duration to the next instruction. For instance,
+			every even instruction starting from zero (e.g., 0, 2, 4, 6, 8...) sets
+			the output state. Only the first 12 bits are used to set the output state
+			while the rest are discarded. The delay instructions are at every odd
+			instruction index (e.g., 1, 3, 5, 7, 9...) and are used in a delay loop.
+			The final two instruction at the end of the instruction buffer are used
+			to set the output state to idle and a terminating flag.
+
+			// DO NOT FORGET TO SET THE TERMINATING FLAGS (0) AND MAKE SURE ALL OTHER INSTRUCTIONS ARE NON-ZERO!!!!
+			*/
+
+			// Set all delay instructions to 1 (they can't be zero)
+			for (int i = 1; i < PULSE_INSTRUCTIONS_MAX; i += 2)
+			{
+				instruction_buffer[i] = 1; // 1 cycle delay
+			}
+
+			// Fill instruction buffer
+			uint32_t instruction_flag_count = 2;
+			uint32_t instruction_count = 0;
+			uint32_t instruction_count_max = PULSE_INSTRUCTIONS_MAX - instruction_flag_count;
+
+			while(instruction_count < instruction_count_max)
+            {
+				uint32_t output = 0, delay = 0, num_elements = 0;
+
+				do
+                {
+					buf_len = fast_serial_read_until(serial_buf, SERIAL_BUFFER_SIZE, '\n');
+
+                    if(buf_len >= 4)
+                    {
+                        // Exit if requested
+                        if(strncmp(serial_buf, "exit", 4) == 0)
+                        {
+                            break;
+                        }
+                    }
+
+                    num_elements = sscanf(serial_buf, "%i %i", &output, &delay);
+
+				} while (num_elements < 2); // Simple validation; repeat until we get what we want
+
+                // Self explanatory
+				if(strncmp(serial_buf, "exit", 4) == 0)
+                {
+					break;
+				}
+
+                // Validate output
+                if(output & ~OUT_MASK)
+                {
+                    fast_serial_printf("Invalid Request: Invalid output state: %i\r\n", output);
+                    break;
+                }
+
+				// Validate delay cycles
+                if(delay < (PULSE_INSTRUCTION_OFFSET + 1) && delay != SEQUENCE_FLAG_END)
+                {
+                    fast_serial_printf("Invalid Request: invalid delay (cycles): %i\r\n", delay);
+
+                    break;
+                }
+
+                instruction_buffer[instruction_count] = output;
+                instruction_count++;
+
+                instruction_buffer[instruction_count] = delay;
+                instruction_count++;
+			}
+
+			// Make sure the final instructions are zero
+			instruction_buffer[PULSE_INSTRUCTIONS_MAX - 1] = 0;
+			instruction_buffer[PULSE_INSTRUCTIONS_MAX - 2] = 0;
+
+			// Load instructions into clock
+			bool success = pulse_instructions_load(
+				pulse_id,
+				instruction_buffer
+			);
+
+			if (!success){
+				fast_serial_printf("Invalid request: Failed to load pulse instructions\r\n");
+				continue;
+			}
+
 			fast_serial_printf("ok\r\n");
 		}
 

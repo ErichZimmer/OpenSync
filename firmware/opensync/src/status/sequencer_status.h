@@ -13,7 +13,6 @@ extern const uint32_t ABORTED;
 extern const uint32_t DISARMING;
 
 extern const uint32_t STAND_BY;
-extern const uint32_t SEQUENCE_TRIGGER_START;
 
 void sequencer_status_register(void);
 
