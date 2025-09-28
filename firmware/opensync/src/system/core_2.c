@@ -83,17 +83,146 @@ void core_2_init()
             int parsed = sscanf(serial_buf, "%*s %d", &debug_status_local);
 
             if(parsed < 1){
-				fast_serial_printf("Invalid request: Invalid debug input\r\n");
+				fast_serial_printf("Invalid request: Invalid input\r\n");
 				continue;
 			}
 
-            if ((debug_status_local < 0) || (debug_status_local > 1))
+            if ((debug_status_local < 0) || (debug_status_local > 2))
             {
-                fast_serial_printf("Invalid request: Debug status must be either 0 or 1\r\n");
+                fast_serial_printf("Invalid request: Debug status must be between 0 and 2\r\n");
 				continue;
             }
 
 			debug_status_set(debug_status_local);
+			fast_serial_printf("ok\r\n");
+		}
+
+		// Set clock divider
+		else if(strncmp(serial_buf, "cdiv", 4) == 0)
+        {
+            uint32_t clock_divider_local = 0;
+
+            int parsed = sscanf(serial_buf, "%*s %i", &clock_divider_local);
+
+            if(parsed < 1){
+				fast_serial_printf("Invalid request: Invalid input\r\n");
+				continue;
+			}
+
+			bool success = clock_divider_set(clock_divider_local);
+
+			if (!success){
+				fast_serial_printf("Invalid request: Failed to set clock divider\r\n");
+				continue;
+			}
+			
+			fast_serial_printf("ok\r\n");
+		}
+
+		// Set clock external trigger pins
+		else if(strncmp(serial_buf, "tset", 4) == 0)
+        {
+            uint32_t clock_id = 0;
+			uint32_t trigger_pin_id = 0;
+
+            int parsed = sscanf(serial_buf, "%*s %i %i", &clock_id, &trigger_pin_id);
+
+            if(parsed < 2){
+				fast_serial_printf("Invalid request: Invalid input\r\n");
+				continue;
+			}
+
+			bool success = clock_pin_trigger_set(
+				clock_id,
+				trigger_pin_id
+			);
+
+			if (!success){
+				fast_serial_printf("Invalid request: Failed to set clock trigger pin\r\n");
+				continue;
+			}
+			
+			fast_serial_printf("ok\r\n");
+		}
+
+		// Set clock external trigger repitions
+		else if(strncmp(serial_buf, "trep", 4) == 0)
+        {
+            uint32_t clock_id = 0;
+			uint32_t trigger_reps = 0;
+
+            int parsed = sscanf(serial_buf, "%*s %d %d", &clock_id, &trigger_reps);
+
+            if(parsed < 2){
+				fast_serial_printf("Invalid request: Invalid input\r\n");
+				continue;
+			}
+
+			bool success = clock_reps_trigger_set(
+				clock_id,
+				trigger_reps
+			);
+
+			if (!success){
+				fast_serial_printf("Invalid request: Failed to set clock trigger reps\r\n");
+				continue;
+			}
+			
+			fast_serial_printf("ok\r\n");
+		}
+
+		// Load external trigger instructions (Trigger LoaD Instructions --> TLDI)
+		else if(strncmp(serial_buf, "tldi", 4) == 0)
+        {
+            uint32_t clock_id = 0;
+			uint32_t trigger_skips = 0;
+			uint32_t trigger_delay = 0;
+
+            int parsed = sscanf(serial_buf, "%*s %i %i %i", &clock_id, &trigger_skips, &trigger_delay);
+
+            if(parsed < 3){
+				fast_serial_printf("Invalid request: Invalid input\r\n");
+				continue;
+			}
+
+			// This is not ideal, but there should only ever be two external trigger instructions and never more
+			bool success = clock_trigger_instructions_load(
+				clock_id,
+				trigger_skips,
+				trigger_delay
+			);
+
+			if (!success){
+				fast_serial_printf("Invalid request: Failed to load clock trigger instructions\r\n");
+				continue;
+			}
+			
+			fast_serial_printf("ok\r\n");
+		}
+
+		// Set pulse sequencer internal clock pins
+		else if(strncmp(serial_buf, "pset", 4) == 0)
+        {
+            uint32_t pulse_id = 0;
+			uint clock_id = 0;
+
+            int parsed = sscanf(serial_buf, "%*s %i %i", &pulse_id, &clock_id);
+
+            if(parsed < 2){
+				fast_serial_printf("Invalid request: Invalid input\r\n");
+				continue;
+			}
+
+			bool success = pulse_pin_clock_set(
+				pulse_id,
+				clock_id
+			);
+
+			if (!success){
+				fast_serial_printf("Invalid request: Failed to set internal clock pin\r\n");
+				continue;
+			}
+			
 			fast_serial_printf("ok\r\n");
 		}
 

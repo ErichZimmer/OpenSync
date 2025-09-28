@@ -61,6 +61,7 @@ void sequencer_clocks_init(
         config_array[i].sm = i;
         config_array[i].clock_pin = INTERNAL_CLOCK_PINS[i];
         config_array[i].trigger_pin = EXTERNAL_TRIGGER_PINS[i];
+        config_array[i].trigger_reps = 0;
         config_array[i].active = false;
     }
 }
@@ -69,10 +70,12 @@ void sequencer_clocks_init(
 void sequencer_clock_configure(
     struct clock_config* config,
     uint32_t clock_pin,
-    uint32_t trigger_pin
+    uint32_t trigger_pin,
+    uint32_t trigger_reps
 ) {
     config -> clock_pin = clock_pin;
     config -> trigger_pin = trigger_pin;
+    config -> trigger_reps = trigger_reps;
 }
 
 
@@ -159,8 +162,7 @@ void sequencer_clock_freerun_dma_configure(
 
 
 void sequencer_clock_triggered_dma_configure(
-    struct clock_config* config,
-    uint32_t reps
+    struct clock_config* config
 ) {
     config -> dma_chan = dma_claim_unused_channel(true);
     
@@ -198,7 +200,7 @@ void sequencer_clock_triggered_dma_configure(
         &dma_config,
 		&config -> pio->txf[config -> sm], // Source pointer
 		config -> trigger_config, // Instruction read address
-		CLOCK_TRIGGERS_MAX * reps, // Number of instructions * reps to perform
+		CLOCK_TRIGGERS_MAX * config -> trigger_reps, // Number of instructions * reps to perform
 		true // Start transfers immediately
     );
 }
@@ -246,8 +248,7 @@ void sequencer_clock_triggered_sm_config(
     uint offset,
     uint pin_out,
     uint pin_triggwer,
-    uint clock_divider,
-    uint32_t reps
+    uint clock_divider
 ) {
 
     // Make sure the state machine is disabled
@@ -273,8 +274,7 @@ void sequencer_clock_triggered_sm_config(
     );
 
     sequencer_clock_triggered_dma_configure(
-        config,
-        reps
+        config
     );
 
     config -> active = true;

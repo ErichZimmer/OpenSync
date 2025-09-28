@@ -34,7 +34,8 @@ void sequencer_clocks_init(
 void sequencer_clock_configure(
     struct clock_config* config,
     uint32_t clock_pin,
-    uint32_t trigger_pin
+    uint32_t trigger_pin,
+    uint32_t trigger_reps
 );
 
 void sequencer_clock_insert_instructions_internal(
@@ -56,8 +57,7 @@ void sequencer_clock_freerun_dma_configure(
 );
 
 void sequencer_clock_triggered_dma_configure(
-    struct clock_config* config,
-    uint32_t reps
+    struct clock_config* config
 );
 
 void sequencer_clock_freerun_sm_config(
@@ -71,8 +71,7 @@ void sequencer_clock_triggered_sm_config(
     uint offset,
     uint pin_out,
     uint pin_triggwer,
-    uint clock_divider,
-    uint32_t reps
+    uint clock_divider
 );
 
 void sequencer_clock_dma_free(

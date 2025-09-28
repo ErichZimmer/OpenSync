@@ -3,6 +3,7 @@
 // Device status
 const uint32_t SEQUENCER_DNDEBUG = 0;
 const uint32_t SEQUENCER_DEBUG = 1;
+const uint32_t SEQUENCER_DEBUG_ALL = 2;
 
 
 // Mutex for status
@@ -41,7 +42,9 @@ const char* debug_status_to_str(uint32_t status_copy)
         case SEQUENCER_DNDEBUG:
             return "DO NO DEBUG";
         case SEQUENCER_DEBUG:
-            return "DEBUG";
+            return "DEBUG 1";
+        case SEQUENCER_DEBUG_ALL:
+            return "DEBUG 2";
         default:
             return "Not Supported";
     }

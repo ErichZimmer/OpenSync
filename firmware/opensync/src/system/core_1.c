@@ -2,19 +2,16 @@
 #include "fast_serial.h"
 
 
-uint32_t clock_instructions[CLOCKS_MAX][CLOCK_INSTRUCTIONS_MAX];
-uint32_t trigger_instructions[CLOCKS_MAX][CLOCK_TRIGGERS_MAX];
-uint32_t pulse_instructions[CLOCKS_MAX][PULSE_INSTRUCTIONS_MAX];
-
 uint32_t trigger_pins[CLOCKS_MAX] = {13};
 
-struct clock_config sequencer_clock_config[CLOCKS_MAX];
-struct pulse_config sequencer_pulse_config[CLOCKS_MAX];
+static struct clock_config sequencer_clock_config[CLOCKS_MAX];
+static struct pulse_config sequencer_pulse_config[CLOCKS_MAX];
+
+static uint clock_divider = 60000;
 
 PIO pio_clocks = pio0;
 PIO pio_output = pio1;
 
-uint clock_divider = 60000;
 uint reps = 50;
 
 const uint32_t ARM_SEQUENCER = 1;
@@ -99,6 +96,44 @@ void core_1_init()
     dummy_output_instruction[PULSE_INSTRUCTIONS_MAX - 1] = 0;
     dummy_output_instruction[PULSE_INSTRUCTIONS_MAX - 2] = 0;
 
+    // INTERNAL CLOCK //
+    sequencer_clocks_init(
+        sequencer_clock_config,
+        pio_clocks
+    );
+
+    // Add instruction to ouput channel 0
+    sequencer_clock_insert_instructions_internal(
+        &sequencer_clock_config[0],
+        dummy_clock_instruction
+    );
+
+    sequencer_clock_configure(
+        &sequencer_clock_config[0],
+        INTERNAL_CLOCK_PINS[0],
+        EXTERNAL_TRIGGER_PINS[0],
+        0
+    );
+
+    // OUTPUT //
+    sequencer_output_init(
+        sequencer_pulse_config,
+        pio_output
+    );
+
+    // Add instruction to ouput channel 0
+    sequencer_output_insert_instructions(
+        &sequencer_pulse_config[0],
+        dummy_output_instruction
+    );
+
+    // Set clock ID to 0
+    sequencer_output_configure(
+        &sequencer_pulse_config[0],
+        INTERNAL_CLOCK_PINS[0]
+    );
+
+
     multicore_fifo_push_blocking(0);
 
     while(true)
@@ -112,69 +147,37 @@ void core_1_init()
 
         uint32_t debug_status_local = debug_status_get();
         
-        if (debug_status_local == SEQUENCER_DEBUG)
-        {
-            fast_serial_printf("Internal Message: Starting to initialize clocks\r\n");
-        }
-
-
         sequencer_status_set(ARMING);
 
-        // INTERNAL CLOCK //
-        sequencer_clocks_init(
-            sequencer_clock_config,
-            pio_clocks
-        );
+        if (debug_status_local != SEQUENCER_DNDEBUG)
+        {
+            fast_serial_printf("Internal Message: Clock divider: %i\r\n", clock_divider);
 
-        // Add instruction to ouput channel 0
-        sequencer_clock_insert_instructions_internal(
-            &sequencer_clock_config[0],
-            dummy_clock_instruction
-        );
+            // Print clock and pulse configs
+            serial_print_clock_configs(sequencer_clock_config);
+            serial_print_pulse_configs(sequencer_pulse_config);
+        }
 
         if (debug_status_local == SEQUENCER_DEBUG)
         {
-            fast_serial_printf("Internal Message: Starting to configure clocks\r\n");
+            fast_serial_printf("Internal Message: Aborting arming sequence due to debugging level 1\r\n");
+
+            sequencer_status_set(ABORTED);
+
+            // Break current arming sequence and abort
+            continue;
         }
 
-        sequencer_clock_configure(
-            &sequencer_clock_config[0],
-            INTERNAL_CLOCK_PINS[0],
-            EXTERNAL_TRIGGER_PINS[0]
-        );
+
+        if (debug_status_local != SEQUENCER_DNDEBUG)
+        {
+            fast_serial_printf("Internal Message: Starting to configure state machines\r\n");
+        }
 
         sequencer_clock_freerun_sm_config(
             &sequencer_clock_config[0],
             offset_clock_freerun,
             clock_divider
-        );
-
-        if (debug_status_local == SEQUENCER_DEBUG)
-        {
-            fast_serial_printf("Internal Message: Starting to initialize outputs\r\n");
-        }
-
-        // OUTPUT //
-        sequencer_output_init(
-            sequencer_pulse_config,
-            pio_output
-        );
-
-        // Add instruction to ouput channel 0
-        sequencer_output_insert_instructions(
-            &sequencer_pulse_config[0],
-            dummy_output_instruction
-        );
-
-        if (debug_status_local == SEQUENCER_DEBUG)
-        {
-            fast_serial_printf("Internal Message: Starting to configure outputs\r\n");
-        }
-
-        // Set clock ID to 0
-        sequencer_output_configure(
-            &sequencer_pulse_config[0],
-            INTERNAL_CLOCK_PINS[0]
         );
 
 //        sequencer_output_sm_config(
@@ -203,11 +206,8 @@ void core_1_init()
             }
         }
 
-        if (debug_status_local == SEQUENCER_DEBUG)
+        if (debug_status_local != SEQUENCER_DNDEBUG)
         {
-            serial_print_clock_configs(sequencer_clock_config);
-            serial_print_pulse_configs(sequencer_pulse_config);
-
             fast_serial_printf(
                 "DMA clock id %i status: %i\r\n", 
                 0, dma_channel_is_busy(sequencer_clock_config[0].dma_chan)
@@ -233,7 +233,7 @@ void core_1_init()
 //            pio_output_sm_mask
 //        );
 
-        if (debug_status_local == SEQUENCER_DEBUG)
+        if (debug_status_local != SEQUENCER_DNDEBUG)
         {
             fast_serial_printf("Internal Message: Starting clocks state machine\r\n");
         }
@@ -246,7 +246,7 @@ void core_1_init()
         // Stall core until all processes are done
         for (uint32_t i = 0; i < CLOCKS_MAX; ++i)
         {
-            if (debug_status_local == SEQUENCER_DEBUG)
+            if (debug_status_local != SEQUENCER_DNDEBUG)
             {  
             fast_serial_printf("Internal Message: Entering stall for clock id: %i\r\n", i);
             }
@@ -259,7 +259,7 @@ void core_1_init()
             while(dma_channel_is_busy(sequencer_clock_config[i].dma_chan)){ }
         }
 
-        if (debug_status_local == SEQUENCER_DEBUG)
+        if (debug_status_local != SEQUENCER_DNDEBUG)
         {
             fast_serial_printf("Internal Message: Cleaning up state machines\r\n");
         }
@@ -289,11 +289,155 @@ void core_1_init()
 //            }
 //     }
 
-        if (debug_status_local == SEQUENCER_DEBUG)
+        if (debug_status_local != SEQUENCER_DNDEBUG)
         {
             fast_serial_printf("Internal Message: Sequencer reset to IDLE status\r\n");
         }
         
         sequencer_status_set(IDLE);
     }
+}
+
+
+bool clock_divider_set(
+    uint32_t clock_divider_copy
+) {
+    // Make sure the clock divider is supported
+    if ((clock_divider_copy > CLOCK_DIVIDER_MAX) ||
+        (clock_divider_copy == 0))
+    {
+        return 0;
+    }
+
+    clock_divider = clock_divider_copy;
+
+    return 1;
+}
+
+
+// For now, clock IDs and trigger IDs have the same range (e.g., [0..2])
+bool clock_id_validate(
+    uint32_t clock_id
+) {
+    // Make sure the internal clock ID is supported
+    for (uint32_t i = 0; i < CLOCKS_MAX; i++)
+    {
+        uint32_t supported_clock_id = INTERNAL_CLOCK_IDS[i];
+
+        if (clock_id == supported_clock_id)
+        {
+            return 1;
+        }
+    }
+
+    return 0;
+}
+
+
+bool clock_pin_trigger_set(
+    uint32_t clock_id,
+    uint32_t trigger_pin_id
+) {
+
+    // Validate clock ID
+    if(!clock_id_validate(clock_id))
+    {
+        return 0;
+    }
+
+    // Validate trigger ID (same as clock ID)
+    if(!clock_id_validate(trigger_pin_id))
+    {
+        return 0;
+    }
+
+    sequencer_clock_config[clock_id].trigger_pin = EXTERNAL_TRIGGER_PINS[trigger_pin_id];
+
+    return 1;
+}
+
+
+bool clock_reps_trigger_set(
+    uint32_t clock_id,
+    uint32_t trigger_reps
+) {
+    // Validate clock ID
+    if (!clock_id_validate(clock_id))
+    {
+        return 0;
+    }
+
+    // Validate repitition number
+    if ((trigger_reps > ITERATIONS_MAX) ||
+        (trigger_reps == 0))
+    {
+        return 0;
+    }
+
+    sequencer_clock_config[clock_id].trigger_reps = trigger_reps;
+
+    return 1;
+}
+
+
+bool clock_trigger_instructions_load(
+    uint32_t clock_id,
+    uint32_t trigger_skips,
+    uint32_t trigger_delay
+) {
+
+    // Validate clock ID
+    if(!clock_id_validate(clock_id))
+    {
+        return 0;
+    }
+
+    // Validate trigger skips
+    if ((trigger_skips > TRIGGER_SKIPS_MAX) ||
+        (trigger_skips == 0))
+    {
+        return 0;
+    }
+
+    // Validate trigger delay
+    if (trigger_delay == 0)
+    {
+        return 0;
+    }
+
+    // Create trigger instructions buffer
+    uint32_t instructions[CLOCK_TRIGGERS_MAX] = {0};
+
+    instructions[0] = trigger_skips;
+    instructions[1] = trigger_delay;
+
+    sequencer_clock_insert_instructions_triggered(
+        &sequencer_clock_config[clock_id],
+        instructions
+    );
+
+    return 1;
+}
+
+
+bool pulse_pin_clock_set(
+    uint32_t pulse_id,
+    uint32_t clock_id
+) {
+
+    // Validate clock ID
+    if(!clock_id_validate(pulse_id))
+    {
+        return 0;
+    }
+
+    // Validate trigger ID (same as clock ID)
+    if(!clock_id_validate(clock_id))
+    {
+        return 0;
+    }
+
+    sequencer_pulse_config[pulse_id].clock_pin = INTERNAL_CLOCK_PINS[clock_id];
+
+    return 1;
 }

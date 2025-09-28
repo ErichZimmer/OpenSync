@@ -17,5 +17,6 @@ struct clock_config
     int dma_chan;
     uint32_t instructions[CLOCK_INSTRUCTIONS_MAX];
     uint32_t trigger_config[CLOCK_TRIGGERS_MAX];
+    uint32_t trigger_reps;
     bool active;
 };
