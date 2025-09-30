@@ -62,6 +62,7 @@ void sequencer_clocks_init(
         config_array[i].trigger_pin = EXTERNAL_TRIGGER_PINS[i];
         config_array[i].trigger_reps = 0;
         config_array[i].active = false;
+        config_array[i].configured = false;
     }
 }
 
@@ -238,7 +239,7 @@ void sequencer_clock_freerun_sm_config(
 
     sequencer_clock_freerun_dma_configure(config);
 
-    config -> active = true;
+    config -> configured = true;
 }
 
 
@@ -276,7 +277,7 @@ void sequencer_clock_triggered_sm_config(
         config
     );
 
-    config -> active = true;
+    config -> configured = true;
 }
 
 
@@ -324,5 +325,5 @@ void sequencer_clock_free(
     sequencer_clock_sm_free(config);
 //    sequencer_clock_config_reset(config);
 
-    config -> active = false;
+    config -> configured = false;
 }

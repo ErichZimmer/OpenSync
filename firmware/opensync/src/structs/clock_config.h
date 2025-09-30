@@ -19,4 +19,5 @@ struct clock_config
     uint32_t trigger_config[CLOCK_TRIGGERS_MAX];
     uint32_t trigger_reps;
     bool active;
+    bool configured;
 };

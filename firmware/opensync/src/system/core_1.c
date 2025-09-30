@@ -50,7 +50,7 @@ void core_1_init()
 
     // Create some clock pattern
     dummy_clock_instruction[0] = reps; // The amount of reps to perform
-    dummy_clock_instruction[1] = 10; // the repition rate (must be higher than the total duration of the pulse sequencer)
+    dummy_clock_instruction[1] = 10; // the repition delay (controls rate) (must be higher than the total duration of the pulse sequencer)
 
     // Make an array of ones to insert a dummy program
     uint32_t dummy_output_instruction[PULSE_INSTRUCTIONS_MAX] = {0};
@@ -131,6 +131,16 @@ void core_1_init()
         INTERNAL_CLOCK_PINS[0]
     );
 
+    // Enable clock and pulse channels to be used
+    clock_sequencer_state_set(
+        0, // clock channel 0
+        1 // enabled
+    );
+
+//    pulse_sequencer_state_set(
+//        0, // Output channel 0
+//        1 // enabled
+//    );
 
     multicore_fifo_push_blocking(0);
 
@@ -166,31 +176,63 @@ void core_1_init()
             continue;
         }
 
-
         if (debug_status_local != SEQUENCER_DNDEBUG)
         {
             fast_serial_printf("Internal Message: Starting to configure state machines\r\n");
         }
 
-        sequencer_clock_freerun_sm_config(
-            &sequencer_clock_config[0],
-            offset_clock_freerun,
-            clock_divider
-        );
+        for (uint32_t i = 0; i < CLOCKS_MAX; i++)
+        {
+            if (sequencer_clock_config[i].active == true)
+            {
+                if (debug_status_local != SEQUENCER_DNDEBUG)
+                {
+                    fast_serial_printf("Internal Message: Starting to configure clock state machine %i\r\n", i);
+                }
 
-//        sequencer_output_sm_config(
-//            &sequencer_pulse_config[0],
-//            offset_output,
-//            clock_divider,
-//            reps
-//        );
+                sequencer_clock_freerun_sm_config(
+                    &sequencer_clock_config[i],
+                    offset_clock_freerun,
+                    clock_divider
+                );
+            }
+        }
+
+        for (uint32_t i = 0; i < CLOCKS_MAX; i++)
+        {
+            if (sequencer_pulse_config[i].active == true)
+            {
+                if(!sequencer_pulse_validate(&sequencer_pulse_config[i]))
+                {
+                    if (debug_status_local != SEQUENCER_DNDEBUG)
+                    {
+                        fast_serial_printf("Internal Message: Invalid pulse sequencer configuration for channel  %i\r\n", i);
+                    }
+
+                    sequencer_status_set(ABORT_REQUESTED);
+                    break;
+                }
+
+                if (debug_status_local != SEQUENCER_DNDEBUG)
+                {
+                    fast_serial_printf("Internal Message: Starting to configure output state machine for channel %i\r\n", i);
+                }
+
+                sequencer_output_sm_config(
+                    &sequencer_pulse_config[0],
+                    offset_output,
+                    clock_divider,
+                    reps
+                );
+            }
+        }
 
         uint pio_clocks_sm_mask = 0;
         uint pio_output_sm_mask = 0;
 
         for (uint32_t i = 0; i < CLOCKS_MAX; i++)
         {
-            if (sequencer_clock_config[i].active == true)
+            if (sequencer_clock_config[i].configured == true)
             {
                 pio_clocks_sm_mask |= 1u << i;
             }
@@ -198,7 +240,7 @@ void core_1_init()
 
         for (uint32_t i = 0; i < CLOCKS_MAX; i++)
         {
-            if (sequencer_pulse_config[i].active == true)
+            if (sequencer_pulse_config[i].configured == true)
             {
                 pio_output_sm_mask |= 1u << i;
             }
@@ -212,49 +254,52 @@ void core_1_init()
             );       
         }
 
-        sequencer_status_set(RUNNING);
-
-//        pio_enable_sm_multi_mask_in_sync(
-//            pio_clocks,
-//            0u,
-//            pio_clocks_sm_mask,
-//            pio_output_sm_mask
-//        );
-
-//        if (debug_status_local == SEQUENCER_DEBUG)
-//        {
-//            fast_serial_printf("Internal Message: Starting outputs state machine\r\n");
-//        }
-
-//        pio_enable_sm_mask_in_sync(
-//            pio_output,
-//            pio_output_sm_mask
-//        );
-
-        if (debug_status_local != SEQUENCER_DNDEBUG)
+        if (sequencer_status_get() != ABORT_REQUESTED)
         {
-            fast_serial_printf("Internal Message: Starting clocks state machine\r\n");
-        }
+            sequencer_status_set(RUNNING);
 
-        pio_enable_sm_mask_in_sync(
-            pio_clocks,
-            pio_clocks_sm_mask
-        );
+    //        pio_enable_sm_multi_mask_in_sync(
+    //            pio_clocks,
+    //            0u,
+    //            pio_clocks_sm_mask,
+    //            pio_output_sm_mask
+    //        );
 
-        // Stall core until all processes are done
-        for (uint32_t i = 0; i < CLOCKS_MAX; ++i)
-        {
-            if (debug_status_local != SEQUENCER_DNDEBUG)
-            {  
-            fast_serial_printf("Internal Message: Entering stall for clock id: %i\r\n", i);
-            }
-
-            if (sequencer_clock_config[i].active != true)
+            if (debug_status_local == SEQUENCER_DEBUG)
             {
-                continue;
+                fast_serial_printf("Internal Message: Starting outputs state machines\r\n");
             }
 
-            while(dma_channel_is_busy(sequencer_clock_config[i].dma_chan)){ }
+            pio_enable_sm_mask_in_sync(
+                pio_output,
+                pio_output_sm_mask
+            );
+
+            if (debug_status_local != SEQUENCER_DNDEBUG)
+            {
+                fast_serial_printf("Internal Message: Starting clocks state machines\r\n");
+            }
+
+            pio_enable_sm_mask_in_sync(
+                pio_clocks,
+                pio_clocks_sm_mask
+            );
+
+            // Stall core until all processes are done
+            for (uint32_t i = 0; i < CLOCKS_MAX; ++i)
+            {
+                if (debug_status_local != SEQUENCER_DNDEBUG)
+                {  
+                fast_serial_printf("Internal Message: Entering stall for clock id: %i\r\n", i);
+                }
+
+                if (sequencer_clock_config[i].configured != true)
+                {
+                    continue;
+                }
+
+                while(dma_channel_is_busy(sequencer_clock_config[i].dma_chan)){ }
+            }
         }
 
         if (debug_status_local != SEQUENCER_DNDEBUG)
@@ -262,12 +307,20 @@ void core_1_init()
             fast_serial_printf("Internal Message: Cleaning up state machines\r\n");
         }
 
-        sequencer_status_set(DISARMING);
+        if (sequencer_status_get() != ABORT_REQUESTED)
+        {
+            sequencer_status_set(DISARMING);
+        }
+        
+        else
+        {
+            sequencer_status_set(ABORTING);
+        }
 
         // Cleanup clock configs
         for (uint32_t i = 0; i < CLOCKS_MAX; ++i)
         {
-            if (sequencer_clock_config[i].active == true)
+            if (sequencer_clock_config[i].configured == true)
             {
                 sequencer_clock_sm_free(
                     &sequencer_clock_config[i]
@@ -275,25 +328,60 @@ void core_1_init()
             }
         }
             
-
         // Cleanup output configs
-//        for (uint32_t i = 0; i < CLOCKS_MAX; ++i)
-//        {
-//            if (sequencer_pulse_config[i].active == true)
-//            {
-//                sequencer_output_sm_free(
-//                    &sequencer_pulse_config[i]
-//                );
-//            }
-//     }
+        for (uint32_t i = 0; i < CLOCKS_MAX; ++i)
+        {
+            if (sequencer_pulse_config[i].configured == true)
+            {
+                sequencer_output_sm_free(
+                    &sequencer_pulse_config[i]
+                );
+            }
+        }
+        
 
         if (debug_status_local != SEQUENCER_DNDEBUG)
         {
             fast_serial_printf("Internal Message: Sequencer reset to IDLE status\r\n");
         }
         
-        sequencer_status_set(IDLE);
+        if (sequencer_status_get() != ABORT_REQUESTED)
+        {
+            sequencer_status_set(IDLE);
+        }
+        
+        else
+        {
+            sequencer_status_set(ABORTED);
+        }
     }
+}
+
+
+
+bool sequencer_pulse_validate(
+    struct pulse_config* config
+) {
+    const uint32_t FLAG_OFFSET = 2;
+     const uint32_t TERM_FLAG = 0;
+
+    // Check to see if all delay instructions are non-zero
+    for (uint32_t i = 1; i < PULSE_INSTRUCTIONS_MAX - FLAG_OFFSET; i = i + 2)
+    {
+        if (config -> instructions[i] == TERM_FLAG)
+        {
+            return 0;
+        }
+    }
+
+    // Validate terminator flags
+    if ((config -> instructions[PULSE_INSTRUCTIONS_MAX - FLAG_OFFSET] != TERM_FLAG) ||
+        (config -> instructions[PULSE_INSTRUCTIONS_MAX - FLAG_OFFSET + 1] != TERM_FLAG))
+    {
+        return 0;
+    }
+
+    return 1;
 }
 
 
@@ -350,6 +438,22 @@ bool clock_pin_trigger_set(
     }
 
     sequencer_clock_config[clock_id].trigger_pin = EXTERNAL_TRIGGER_PINS[trigger_pin_id];
+
+    return 1;
+}
+
+
+bool clock_sequencer_state_set(
+    uint32_t clock_id,
+    bool clock_state
+) {
+    // Validate clock ID
+    if (!clock_id_validate(clock_id))
+    {
+        return 0;
+    }
+
+    sequencer_clock_config[clock_id].active = clock_state;
 
     return 1;
 }
@@ -438,6 +542,39 @@ bool clock_instructions_load(
 }
 
 
+bool clock_sequencer_state_reset(
+    uint32_t clock_id
+) {
+    // Validate clock ID
+    if(!clock_id_validate(clock_id))
+    {
+        return 0;
+    }
+
+    sequencer_clock_config_reset(
+        &sequencer_clock_config[clock_id]
+    );
+
+    return 1;
+}
+
+
+bool pulse_sequencer_state_set(
+    uint32_t pulse_id,
+    bool pulse_state
+) {
+    // Validate pulse ID (same as clock ID)
+    if (!clock_id_validate(pulse_id))
+    {
+        return 0;
+    }
+
+    sequencer_pulse_config[pulse_id].active = pulse_state;
+
+    return 1;
+}
+
+
 bool pulse_pin_clock_set(
     uint32_t pulse_id,
     uint32_t clock_id
@@ -474,6 +611,22 @@ bool pulse_instructions_load(
     sequencer_output_insert_instructions(
         &sequencer_pulse_config[pulse_id],
         instructions
+    );
+
+    return 1;
+}
+
+bool pulse_sequencer_state_reset(
+    uint32_t pulse_id
+) {
+    // Validate pulse ID (same as clock ID)
+    if(!clock_id_validate(pulse_id))
+    {
+        return 0;
+    }
+
+    sequencer_output_config_reset(
+        &sequencer_pulse_config[pulse_id]
     );
 
     return 1;

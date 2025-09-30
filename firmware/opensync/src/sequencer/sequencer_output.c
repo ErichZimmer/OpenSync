@@ -37,6 +37,7 @@ void sequencer_output_init(
         config_array[i].sm = i;
         config_array[i].clock_pin = INTERNAL_CLOCK_PINS[i];
         config_array[i].active = false;
+        config_array[i].configured = false;
     }
 }
 
@@ -133,7 +134,7 @@ void sequencer_output_sm_config(
         reps
     );
 
-    config -> active = true;
+    config -> configured = true;
 }
 
 
@@ -170,7 +171,7 @@ void sequencer_output_free(
 ) {
     sequencer_output_dma_free(config);
     sequencer_output_sm_free(config);
-    sequencer_output_config_reset(config);
+//    sequencer_output_config_reset(config);
 
-    config -> active = false;
+    config -> configured = false;
 }

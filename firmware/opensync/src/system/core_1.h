@@ -12,7 +12,13 @@
 #include "status/debug_status.h"
 #include "serial/serial_int_output.h"
 
+extern const uint32_t ARM_SEQUENCER;
+
 void core_1_init();
+
+bool sequencer_pulse_validate(
+    struct pulse_config* config
+);
 
 bool clock_divider_set(
     uint32_t clock_divider_copy
@@ -20,6 +26,11 @@ bool clock_divider_set(
 
 bool clock_id_validate(
     uint32_t clock_id
+);
+
+bool clock_sequencer_state_set(
+    uint32_t clock_id,
+    bool clock_state
 );
 
 bool clock_pin_trigger_set(
@@ -43,6 +54,15 @@ bool clock_instructions_load(
     uint32_t instructions[CLOCK_INSTRUCTIONS_MAX]
 );
 
+bool clock_sequencer_state_reset(
+    uint32_t clock_id
+);
+
+bool pulse_sequencer_state_set(
+    uint32_t pulse_id,
+    bool pulse_state
+);
+
 bool pulse_pin_clock_set(
     uint32_t pulse_id,
     uint32_t clock_id
@@ -51,4 +71,8 @@ bool pulse_pin_clock_set(
 bool pulse_instructions_load(
     uint32_t pulse_id,
     uint32_t instructions[PULSE_INSTRUCTIONS_MAX]
+);
+
+bool pulse_sequencer_state_reset(
+    uint32_t pulse_id
 );

@@ -1,25 +1,27 @@
 #include "core_2.h"
-#include "hardware/gpio.h"
 
 // Serial buffer//
 #define SERIAL_BUFFER_SIZE 256
 char serial_buf[SERIAL_BUFFER_SIZE];
 
+const uint32_t CMD_LEN = 4;
+const uint32_t CMD_DETECTED = 0;
+
 
 void core_2_init()
 {
-    // Register sequencer_status mutex
+    // Register sequencer status mutexes
     sequencer_status_register();
 	debug_status_register();
 
     // Initialize serial interface
 	fast_serial_init();
 
-	// Intialize sequencer core
+	// Intialize sequencer cores
 	multicore_launch_core1(core_1_init);
     multicore_fifo_pop_blocking();
 
-	// Set status to off
+	// Set status to idle
 	sequencer_status_set(IDLE);
 
     while(1)
@@ -33,26 +35,26 @@ void core_2_init()
 		uint32_t status_copy = sequencer_status_get();
 
 		// Check command to see if it is at least four letters
-		if(buf_len < 4)
+		if(buf_len < CMD_LEN)
         {
-			fast_serial_printf("Invalid command: %s\r\n", serial_buf);
+			fast_serial_printf("Invalid Request: Invalid command %s\r\n", serial_buf);
 			continue;
 		}
 
         // Get version
-        if(strncmp(serial_buf, "vers", 4) == 0)
+        if(strncmp(serial_buf, "vers", CMD_LEN) == CMD_DETECTED)
         {
 			serial_print_version();
 		}
 
         // Get system status
-		else if(strncmp(serial_buf, "stat", 4) == 0)
+		else if(strncmp(serial_buf, "stat", CMD_LEN) == CMD_DETECTED)
         {
 			serial_print_status();
 		}
 
         // Set abortion
-		else if(strncmp(serial_buf, "stop", 4) == 0)
+		else if(strncmp(serial_buf, "stop", CMD_LEN) == CMD_DETECTED)
         {
 			if(status_copy == RUNNING || status_copy == ARMING){
 				sequencer_status_set(ABORT_REQUESTED);
@@ -70,13 +72,13 @@ void core_2_init()
 		}
 
         // Return system frequencies
-		else if(strncmp(serial_buf, "freq", 4) == 0)
+		else if(strncmp(serial_buf, "freq", CMD_LEN) == CMD_DETECTED)
         {
 			serial_print_freqs();
 		}
 
 		// Set debug staus
-		else if(strncmp(serial_buf, "dbug", 4) == 0)
+		else if(strncmp(serial_buf, "dbug", CMD_LEN) == CMD_DETECTED)
         {
             uint32_t debug_status_local = 0;
 
@@ -98,7 +100,7 @@ void core_2_init()
 		}
 
 		// Set clock divider
-		else if(strncmp(serial_buf, "cdiv", 4) == 0)
+		else if(strncmp(serial_buf, "cdiv", CMD_LEN) == CMD_DETECTED)
         {
             uint32_t clock_divider_local = 0;
 
@@ -119,8 +121,64 @@ void core_2_init()
 			fast_serial_printf("ok\r\n");
 		}
 
+		// Activate clock ID (Clock ACTivate --> CACT)
+		else if(strncmp(serial_buf, "cact", CMD_LEN) == CMD_DETECTED)
+        {
+            uint32_t clock_id = 0;
+			uint32_t clock_state = 0;
+
+            int parsed = sscanf(serial_buf, "%*s %i %i", &clock_id, &clock_state);
+
+            if(parsed < 2){
+				fast_serial_printf("Invalid request: Invalid input\r\n");
+				continue;
+			}
+
+			if(clock_state > 1){
+				fast_serial_printf("Invalid request: Invalid clock state\r\n");
+				continue;
+			}
+
+			bool success = clock_sequencer_state_set(
+				clock_id,
+				(bool) clock_state
+			);
+
+			if (!success){
+				fast_serial_printf("Invalid request: Failed to set clock channel state\r\n");
+				continue;
+			}
+			
+			fast_serial_printf("ok\r\n");
+		}
+
+		// Reset clock ID (Clock ReSeT --> CRST)
+		else if(strncmp(serial_buf, "crst", CMD_LEN) == CMD_DETECTED)
+        {
+            uint32_t clock_id = 0;
+
+            int parsed = sscanf(serial_buf, "%*s %i", &clock_id);
+
+            if(parsed < 1){
+				fast_serial_printf("Invalid request: Invalid input\r\n");
+				continue;
+			}
+
+
+			bool success = clock_sequencer_state_reset(
+				clock_id
+			);
+
+			if (!success){
+				fast_serial_printf("Invalid request: Failed to reset clock channel state\r\n");
+				continue;
+			}
+			
+			fast_serial_printf("ok\r\n");
+		}
+
 		// Set clock external trigger pins
-		else if(strncmp(serial_buf, "tset", 4) == 0)
+		else if(strncmp(serial_buf, "tset", CMD_LEN) == CMD_DETECTED)
         {
             uint32_t clock_id = 0;
 			uint32_t trigger_pin_id = 0;
@@ -146,7 +204,7 @@ void core_2_init()
 		}
 
 		// Set clock external trigger repitions
-		else if(strncmp(serial_buf, "trep", 4) == 0)
+		else if(strncmp(serial_buf, "trep", CMD_LEN) == CMD_DETECTED)
         {
             uint32_t clock_id = 0;
 			uint32_t trigger_reps = 0;
@@ -172,7 +230,7 @@ void core_2_init()
 		}
 
 		// Load external trigger instructions (Trigger LoaD Instructions --> TLDI)
-		else if(strncmp(serial_buf, "tldi", 4) == 0)
+		else if(strncmp(serial_buf, "tldi", CMD_LEN) == CMD_DETECTED)
         {
             uint32_t clock_id = 0;
 			uint32_t trigger_skips = 0;
@@ -201,7 +259,7 @@ void core_2_init()
 		}
 
 		// Load clock instructions (Clock LoaD Instructions --> CLDI)
-		else if(strncmp(serial_buf, "cldi", 4) == 0)
+		else if(strncmp(serial_buf, "cldi", CMD_LEN) == CMD_DETECTED)
         {
             uint32_t clock_id = 0;
 
@@ -231,7 +289,7 @@ void core_2_init()
                     if(buf_len >= 4)
                     {
                         // Exit if requested
-                        if(strncmp(serial_buf, "exit", 4) == 0)
+                        if(strncmp(serial_buf, "exit", CMD_LEN) == CMD_DETECTED)
                         {
                             break;
                         }
@@ -242,7 +300,7 @@ void core_2_init()
 				} while (num_elements < 2); // Simple validation; repeat until we get what we want
 
                 // Self explanatory
-				if(strncmp(serial_buf, "exit", 4) == 0)
+				if(strncmp(serial_buf, "exit", CMD_LEN) == CMD_DETECTED)
                 {
 					break;
 				}
@@ -274,11 +332,67 @@ void core_2_init()
 			fast_serial_printf("ok\r\n");
 		}
 
-		// Set pulse sequencer internal clock pins
-		else if(strncmp(serial_buf, "pset", 4) == 0)
+		// Activate pulse ID (Pulse ACTivate --> PACT)
+		else if(strncmp(serial_buf, "pact", CMD_LEN) == CMD_DETECTED)
         {
             uint32_t pulse_id = 0;
-			uint clock_id = 0;
+			uint32_t pulse_state = 0;
+
+            int parsed = sscanf(serial_buf, "%*s %i %i", &pulse_id, &pulse_state);
+
+            if(parsed < 2){
+				fast_serial_printf("Invalid request: Invalid input\r\n");
+				continue;
+			}
+
+			if(pulse_state > 1){
+				fast_serial_printf("Invalid request: Invalid clock state\r\n");
+				continue;
+			}
+
+			bool success = pulse_sequencer_state_set(
+				pulse_id,
+				(bool) pulse_state
+			);
+
+			if (!success){
+				fast_serial_printf("Invalid request: Failed to set clock channel state\r\n");
+				continue;
+			}
+			
+			fast_serial_printf("ok\r\n");
+		}
+
+		// Reset pulse channel (Pulse ReSeT --> CRST)
+		else if(strncmp(serial_buf, "prst", CMD_LEN) == CMD_DETECTED)
+        {
+            uint32_t pulse_id = 0;
+
+            int parsed = sscanf(serial_buf, "%*s %i", &pulse_id);
+
+            if(parsed < 1){
+				fast_serial_printf("Invalid request: Invalid input\r\n");
+				continue;
+			}
+
+
+			bool success = pulse_sequencer_state_reset(
+				pulse_id
+			);
+
+			if (!success){
+				fast_serial_printf("Invalid request: Failed to reset pulse channel state\r\n");
+				continue;
+			}
+			
+			fast_serial_printf("ok\r\n");
+		}
+
+		// Set pulse sequencer internal clock pins
+		else if(strncmp(serial_buf, "pset", CMD_LEN) == CMD_DETECTED)
+        {
+            uint32_t pulse_id = 0;
+			uint32_t clock_id = 0;
 
             int parsed = sscanf(serial_buf, "%*s %i %i", &pulse_id, &clock_id);
 
@@ -301,7 +415,7 @@ void core_2_init()
 		}
 
 		// Load pulse instructions (Pulse LoaD Instructions --> PLDI)
-		else if(strncmp(serial_buf, "pldi", 4) == 0)
+		else if(strncmp(serial_buf, "pldi", CMD_LEN) == CMD_DETECTED)
         {
             uint32_t pulse_id = 0;
 
@@ -337,6 +451,10 @@ void core_2_init()
 				instruction_buffer[i] = 1; // 1 cycle delay
 			}
 
+			// Make sure last two elements are zero
+			instruction_buffer[PULSE_INSTRUCTIONS_MAX - 1] = 0;
+			instruction_buffer[PULSE_INSTRUCTIONS_MAX - 2] = 0;
+
 			// Fill instruction buffer
 			uint32_t instruction_flag_count = 2;
 			uint32_t instruction_count = 0;
@@ -353,7 +471,7 @@ void core_2_init()
                     if(buf_len >= 4)
                     {
                         // Exit if requested
-                        if(strncmp(serial_buf, "exit", 4) == 0)
+                        if(strncmp(serial_buf, "exit", CMD_LEN) == CMD_DETECTED)
                         {
                             break;
                         }
@@ -364,7 +482,7 @@ void core_2_init()
 				} while (num_elements < 2); // Simple validation; repeat until we get what we want
 
                 // Self explanatory
-				if(strncmp(serial_buf, "exit", 4) == 0)
+				if(strncmp(serial_buf, "exit", CMD_LEN) == CMD_DETECTED)
                 {
 					break;
 				}
@@ -391,7 +509,7 @@ void core_2_init()
                 instruction_count++;
 			}
 
-			// Make sure the final instructions are zero
+			// Make sure the final instructions are zero (again)
 			instruction_buffer[PULSE_INSTRUCTIONS_MAX - 1] = 0;
 			instruction_buffer[PULSE_INSTRUCTIONS_MAX - 2] = 0;
 
@@ -410,9 +528,9 @@ void core_2_init()
 		}
 
 		// Fire sequencer with current settings
-		else if(strncmp(serial_buf, "fire", 4) == 0)
+		else if(strncmp(serial_buf, "fire", CMD_LEN) == CMD_DETECTED)
         {
-			multicore_fifo_push_blocking(1);
+			multicore_fifo_push_blocking(ARM_SEQUENCER);
 			fast_serial_printf("ok\r\n");
 		}
 

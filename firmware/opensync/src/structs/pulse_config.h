@@ -16,4 +16,5 @@ struct pulse_config
     int dma_chan;
     uint32_t instructions[PULSE_INSTRUCTIONS_MAX];
     bool active;
+    bool configured;
 };
