@@ -59,7 +59,7 @@ void sequencer_clocks_init(
         config_array[i].pio = clock_pio;
         config_array[i].sm = i;
         config_array[i].clock_pin = INTERNAL_CLOCK_PINS[i];
-        config_array[i].trigger_pin = EXTERNAL_TRIGGER_PINS[i];
+        config_array[i].trigger_pin = EXTERNAL_TRIGGER_PINS[0]; // All clocks should default to same trigger pin
         config_array[i].trigger_reps = 0;
         config_array[i].active = false;
         config_array[i].configured = false;
@@ -113,6 +113,10 @@ void sequencer_clock_config_reset(
         config,
         CLOCK_TRIGGERS_DEFAULT
     );
+
+    config -> trigger_pin = EXTERNAL_TRIGGER_PINS[0];
+    config -> trigger_reps = 0;
+    config -> active = false;
 }
 
 

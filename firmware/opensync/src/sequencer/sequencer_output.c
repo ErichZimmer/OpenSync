@@ -35,7 +35,7 @@ void sequencer_output_init(
     {
         config_array[i].pio = clock_pio;
         config_array[i].sm = i;
-        config_array[i].clock_pin = INTERNAL_CLOCK_PINS[i];
+        config_array[i].clock_pin = INTERNAL_CLOCK_PINS[0]; // Default to all using the same internal pin
         config_array[i].active = false;
         config_array[i].configured = false;
     }
@@ -68,6 +68,9 @@ void sequencer_output_config_reset(
         config,
         PULSE_INSTRUCTIONS_DEFAULT
     );
+
+    config -> clock_pin = INTERNAL_CLOCK_PINS[0];
+    config -> active = false;
 }
 
 

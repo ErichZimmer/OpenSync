@@ -468,7 +468,7 @@ void core_2_init()
                 {
 					buf_len = fast_serial_read_until(serial_buf, SERIAL_BUFFER_SIZE, '\n');
 
-                    if(buf_len >= 4)
+                    if(buf_len >= CMD_LEN)
                     {
                         // Exit if requested
                         if(strncmp(serial_buf, "exit", CMD_LEN) == CMD_DETECTED)

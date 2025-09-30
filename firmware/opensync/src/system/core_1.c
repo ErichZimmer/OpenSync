@@ -495,14 +495,7 @@ bool clock_trigger_instructions_load(
     }
 
     // Validate trigger skips
-    if ((trigger_skips > TRIGGER_SKIPS_MAX) ||
-        (trigger_skips == 0))
-    {
-        return 0;
-    }
-
-    // Validate trigger delay
-    if (trigger_delay == 0)
+    if (trigger_skips > TRIGGER_SKIPS_MAX)
     {
         return 0;
     }

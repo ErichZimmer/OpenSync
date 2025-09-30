@@ -39,10 +39,10 @@ void serial_print_clock_triggers(
     for (uint32_t i = 0; i < CLOCK_TRIGGERS_MAX; i = i + 2)
     {
         uint32_t inst_num = i / 2;
-        uint32_t reps = config -> instructions[i];
+        uint32_t skips = config -> instructions[i];
         uint32_t delay = config -> instructions[i+1];
 
-        fast_serial_printf("Trigger instruction %i: skips=%i, delay=%i\r\n", inst_num, reps, delay);
+        fast_serial_printf("Trigger instruction %i: skips=%i, delay=%i\r\n", inst_num, skips, delay);
     }
 }
 
