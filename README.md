@@ -113,6 +113,7 @@ Will be determined after the first milestone of this project.
 - [x] Add three internal timers that can be mapped to pulse sequences
 - [x] Add the ability to count and skip external triggers (usefull for phase-locked stuff like rotor blades)
 - [x] Add second external trigger and output port masking
+- [ ] Use ICs for sub-ns jitter compensation
 - [ ] Add POST bootup validation (not really necessary, but why not)
 - [ ] Add video examples on YouTube
 - [ ] Learn power electronics (this semester)
