@@ -86,6 +86,12 @@ void sequencer_output_dma_configure(
 	channel_config_set_read_increment(&dma_config, true);
 	channel_config_set_write_increment(&dma_config, false);
 
+    // Set read increment size
+    channel_config_set_transfer_data_size(
+        &dma_config, 
+        DMA_SIZE_32
+    );
+
     // Set data transfer request signal
 	channel_config_set_dreq(
         &dma_config, 
@@ -114,12 +120,22 @@ void sequencer_output_sm_config(
     uint clock_divider,
     uint32_t reps
 ) {
+    pio_claim_sm_mask(
+        config -> pio,
+        1u << config -> sm
+    );
 
     // Make sure the state machine is disabled
 	pio_sm_set_enabled(
         config -> pio, 
         config -> sm, 
         false
+    );
+
+    // Reset the state machine to default state
+    pio_sm_restart(
+        config -> pio, 
+        config -> sm
     );
 
     sequencer_pulser_sm_helper_init(
@@ -148,6 +164,10 @@ void sequencer_output_dma_free(
         config -> dma_chan
     );
 
+    dma_channel_cleanup(
+        config -> dma_chan
+    );
+
     dma_channel_unclaim(
         config -> dma_chan
     );
@@ -158,6 +178,11 @@ void sequencer_output_sm_free(
     struct pulse_config* config
 ) {
     pio_sm_drain_tx_fifo(
+        config -> pio,
+        config -> sm
+    );
+
+    pio_sm_clear_fifos(
         config -> pio,
         config -> sm
     );
@@ -174,7 +199,6 @@ void sequencer_output_free(
 ) {
     sequencer_output_dma_free(config);
     sequencer_output_sm_free(config);
-//    sequencer_output_config_reset(config);
 
     config -> configured = false;
 }

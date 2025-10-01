@@ -327,7 +327,6 @@ void sequencer_clock_free(
 ) {
     sequencer_clock_dma_free(config);
     sequencer_clock_sm_free(config);
-//    sequencer_clock_config_reset(config);
 
     config -> configured = false;
 }
