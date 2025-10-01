@@ -4,7 +4,7 @@ An open source synchronizer for the velocimetry of fluids using a Raspberry Pi m
 ![Example Timing Graph for Diode Laser](demos/timing/opensync_demo_timing.png)
 
 # ATTENTION
-Due to timeline conflicts with an ongoing internship, the project schedule has been extended to allow for resources to be allocated for university courses, an internship, and this project. The new schedule can be seen [here](https://github.com/ErichZimmer/OpenSync/blob/main/documents/SDLC/stage_1/feasibility.md#22-project-schedule).
+Due to timeline conflicts with an ongoing internship, the project schedule has been extended to allow for resources to be allocated for university courses, an internship, and this project. The new schedule can be seen [here](documents/SDLC/2_planning/schedule_refined.md).
 
 # NOTICE
 This is for a future project for an undergraduate course (that will be completed 2 semesters from now). The course is over embedded systems and programming design, and I'll think it will greatly enhance the code for the synchronizer. Currently, this repository is going to be left blank until I obtain a 2 or 4 channel >100MHz oscilloscope. Also, I decided to shift towards using a portion of the PrawnDO firmware (reference 3) for the serial interface due to performance and flexibility. The project schedule and details can be read in the [SDLC documentation](documents/SDLC).
