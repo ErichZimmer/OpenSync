@@ -262,6 +262,7 @@ void core_2_init()
 		else if(strncmp(serial_buf, "cldi", CMD_LEN) == CMD_DETECTED)
         {
             uint32_t clock_id = 0;
+			bool abort = false; // Abort is used to exit out in case invalid inputs are detected
 
 			int parsed = sscanf(serial_buf, "%*s %i", &clock_id);
 
@@ -282,22 +283,28 @@ void core_2_init()
             {
 				uint32_t reps = 0, delay = 0, num_elements = 0;
 
-				do
-                {
-					buf_len = fast_serial_read_until(serial_buf, SERIAL_BUFFER_SIZE, '\n');
 
-                    if(buf_len >= 4)
-                    {
-                        // Exit if requested
-                        if(strncmp(serial_buf, "exit", CMD_LEN) == CMD_DETECTED)
-                        {
-                            break;
-                        }
-                    }
+				buf_len = fast_serial_read_until(serial_buf, SERIAL_BUFFER_SIZE, '\n');
 
-                    num_elements = sscanf(serial_buf, "%i %i", &reps, &delay);
+				if(buf_len >= 4)
+				{
+					// Exit if requested
+					if(strncmp(serial_buf, "exit", CMD_LEN) == CMD_DETECTED)
+					{
+						break;
+					}
+				}
 
-				} while (num_elements < 2); // Simple validation; repeat until we get what we want
+                num_elements = sscanf(serial_buf, "%i %i", &reps, &delay);
+
+				if (num_elements < 2)
+				{
+					fast_serial_printf("Invalid Request: Invalid input\r\n");
+					abort = true;
+
+					break;
+				}
+
 
                 // Self explanatory
 				if(strncmp(serial_buf, "exit", CMD_LEN) == CMD_DETECTED)
@@ -316,6 +323,12 @@ void core_2_init()
 
                 instruction_buffer[instruction_count] = delay;
                 instruction_count++;
+			}
+
+			// Exit out if abort is true (which is the case for invalid inputs)
+			if (abort)
+			{
+				continue;
 			}
 
 			// Load instructions into clock
@@ -418,6 +431,7 @@ void core_2_init()
 		else if(strncmp(serial_buf, "pldi", CMD_LEN) == CMD_DETECTED)
         {
             uint32_t pulse_id = 0;
+			bool abort = false; // Abort is used to exit out in case invalid inputs are detected
 
 			int parsed = sscanf(serial_buf, "%*s %i", &pulse_id);
 
@@ -464,22 +478,26 @@ void core_2_init()
             {
 				uint32_t output = 0, delay = 0, num_elements = 0;
 
-				do
-                {
-					buf_len = fast_serial_read_until(serial_buf, SERIAL_BUFFER_SIZE, '\n');
+				buf_len = fast_serial_read_until(serial_buf, SERIAL_BUFFER_SIZE, '\n');
 
-                    if(buf_len >= CMD_LEN)
-                    {
-                        // Exit if requested
-                        if(strncmp(serial_buf, "exit", CMD_LEN) == CMD_DETECTED)
-                        {
-                            break;
-                        }
-                    }
+				if(buf_len >= CMD_LEN)
+				{
+					// Exit if requested
+					if(strncmp(serial_buf, "exit", CMD_LEN) == CMD_DETECTED)
+					{
+						break;
+					}
+				}
 
-                    num_elements = sscanf(serial_buf, "%i %i", &output, &delay);
+                num_elements = sscanf(serial_buf, "%i %i", &output, &delay);
 
-				} while (num_elements < 2); // Simple validation; repeat until we get what we want
+				if (num_elements < 2)
+				{
+					fast_serial_printf("Invalid Request: Invalid input\r\n");
+					abort = true;
+					
+					break;
+				}
 
                 // Self explanatory
 				if(strncmp(serial_buf, "exit", CMD_LEN) == CMD_DETECTED)
@@ -491,6 +509,8 @@ void core_2_init()
                 if(output & ~OUT_MASK)
                 {
                     fast_serial_printf("Invalid Request: Invalid output state: %i\r\n", output);
+					abort = true;
+
                     break;
                 }
 
@@ -498,6 +518,7 @@ void core_2_init()
                 if(delay < (PULSE_INSTRUCTION_OFFSET + 1) && delay != SEQUENCE_FLAG_END)
                 {
                     fast_serial_printf("Invalid Request: invalid delay (cycles): %i\r\n", delay);
+					abort = true;
 
                     break;
                 }
@@ -512,6 +533,12 @@ void core_2_init()
 			// Make sure the final instructions are zero (again)
 			instruction_buffer[PULSE_INSTRUCTIONS_MAX - 1] = 0;
 			instruction_buffer[PULSE_INSTRUCTIONS_MAX - 2] = 0;
+
+			// exit out if abort is true (set by invalid input)
+			if (abort)
+			{
+				continue;
+			}
 
 			// Load instructions into clock
 			bool success = pulse_instructions_load(
