@@ -16,19 +16,19 @@ This idea was inspired by the use of an Arduino Uno to send TTL pulses to two Ar
 OpenSync is a simple and low-cost synchronizer based on microcontroller technology. Due to the intrinsic nature of microcontrollers compared to more advanced devices (e.g., field programmable gate arrays), most complex features that are typical of commercial propietary devices such as gating, external trigger manipulation, etc are not implemented. However, OpenSync remains sufficiently flexible and provides enough support for most users' needs when performing a PIV experiment. This is because OpenSync is an arbitrary pulse generator under-the-hood which allows for rather complex pulse sequences to be synthesized through simple output port manipulation. Additionally, three (3) independent internal clocks can be utilized to allow for relatively advanced pulse timing. While this implementation for a synchronizer may be quite restrictive at times, it is what makes OpenSync so simple!
 
 ## Specs
- - **Main PLL Frequency**: overclocked to 336 MHz
+ - **Main PLL Frequency**: overclocked to 250 MHz
  - **Output Channels**: 12
  - **Input Channel(s)**: 3
  - **Internal Synchronization Clocks**: 3
  - **I/O Channel Voltage**: 5V @ 50 Ohm
- - **I/O Resolution**: 1 clock cycle (~3ns * clock divider)
- - **Min Pulse Width**: 5 clock cycles (~15ns * clock divider)
- - **Max Pulse Width**: 2^32 - 1 clock cycles (~13s * clock divider)
- - **Ext. Trigger Min Pulse Width**: 5 clock cycles (~15ns * clock divider)
- - **Ext. Trigger Jitter**: 2 clock cycles (~6ns * clock divider)
+ - **I/O Resolution**: 1 clock cycle (4 ns * clock divider)
+ - **Min Pulse Width**: 5 clock cycles (20 ns * clock divider)
+ - **Max Pulse Width**: 2^32 - 1 clock cycles (~17 s * clock divider)
+ - **Ext. Trigger Min Pulse Width**: 5 clock cycles (20 ns * clock divider)
+ - **Ext. Trigger Jitter**: 2 clock cycles (8 ns * clock divider)
  - **Max Pulse Sequence Length**: 64 instructions
  - **Pulse Sequence Repetition**: Up to 500,000 iterations
- - **Pulse Sequence Repetition Jitter**: up to 5 clock cycles (up to ~15ns * clock divider)
+ - **Pulse Sequence Repetition Jitter**: up to 4 clock cycles (up to 16 ns * clock divider)
  - All powered via USB!
 
 
