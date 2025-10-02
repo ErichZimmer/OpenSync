@@ -10,7 +10,10 @@ const uint32_t CMD_DETECTED = 0;
 
 void core_2_init()
 {
-    // Register sequencer status mutexes
+	// Set stsrem clock speed
+	overlcok_system_set();
+
+	// Register sequencer status mutexes
     sequencer_status_register();
 	debug_status_register();
 

@@ -11,6 +11,7 @@
 #include "hardware/dma.h"
 
 // Local //
+#include "overclock/overclock.h"
 #include "structs/clock_config.h"
 #include "structs/pulse_config.h"
 #include "sequencer/sequencer_clock.h"

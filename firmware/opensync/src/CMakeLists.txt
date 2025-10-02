@@ -4,6 +4,7 @@ set(PRAWN_DO_DIR ${PROJECT_SOURCE_DIR}/external/prawn_do)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 set(OPENSYNC_SOURCE
+    ${CMAKE_CURRENT_SOURCE_DIR}/overclock/overclock.c
     ${CMAKE_CURRENT_SOURCE_DIR}/sequencer/sequencer_common.c
     ${CMAKE_CURRENT_SOURCE_DIR}/sequencer/sequencer_clock.c
     ${CMAKE_CURRENT_SOURCE_DIR}/sequencer/sequencer_output.c
