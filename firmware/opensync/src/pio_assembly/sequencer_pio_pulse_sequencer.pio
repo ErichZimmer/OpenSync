@@ -95,7 +95,7 @@ void sequencer_pulser_sm_helper_init(
     // Setup clock clock divider
     sm_config_set_clkdiv(
         &config,
-        clock_divider
+        (float) clock_divider
     );
 
     pio_sm_init(
