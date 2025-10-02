@@ -176,10 +176,10 @@ void core_1_init()
             continue;
         }
 
-        if (debug_status_local != SEQUENCER_DNDEBUG)
-        {
-            fast_serial_printf("Internal Message: Starting to configure state machines\r\n");
-        }
+        debug_message_print(
+            debug_status_local,
+            "Internal Message: Starting to configure state machines\r\n"
+        );
 
         for (uint32_t i = 0; i < CLOCKS_MAX; i++)
         {
@@ -265,20 +265,20 @@ void core_1_init()
     //            pio_output_sm_mask
     //        );
 
-            if (debug_status_local == SEQUENCER_DEBUG)
-            {
-                fast_serial_printf("Internal Message: Starting outputs state machines\r\n");
-            }
+            debug_message_print(
+                debug_status_local,
+                "Internal Message: Starting outputs state machines\r\n"
+            );
 
             pio_enable_sm_mask_in_sync(
                 pio_output,
                 pio_output_sm_mask
             );
 
-            if (debug_status_local != SEQUENCER_DNDEBUG)
-            {
-                fast_serial_printf("Internal Message: Starting clocks state machines\r\n");
-            }
+            debug_message_print(
+                debug_status_local,
+                "Internal Message: Starting clocks state machines\r\n"
+            );
 
             pio_enable_sm_mask_in_sync(
                 pio_clocks,
@@ -302,10 +302,10 @@ void core_1_init()
             }
         }
 
-        if (debug_status_local != SEQUENCER_DNDEBUG)
-        {
-            fast_serial_printf("Internal Message: Cleaning up state machines\r\n");
-        }
+        debug_message_print(
+            debug_status_local,
+            "Internal Message: Cleaning up state machines\r\n"
+        );
 
         if (sequencer_status_get() != ABORT_REQUESTED)
         {
@@ -339,11 +339,10 @@ void core_1_init()
             }
         }
         
-
-        if (debug_status_local != SEQUENCER_DNDEBUG)
-        {
-            fast_serial_printf("Internal Message: Sequencer reset to IDLE status\r\n");
-        }
+        debug_message_print(
+            debug_status_local,
+            "Internal Message: Sequencer reset to IDLE status\r\n"
+        );
         
         if (sequencer_status_get() != ABORT_REQUESTED)
         {
@@ -357,6 +356,16 @@ void core_1_init()
     }
 }
 
+
+void debug_message_print(
+    uint32_t debug_status_local,
+    char* message
+) {
+    if (debug_status_local != SEQUENCER_DNDEBUG)
+    {
+        fast_serial_printf(message);
+    }
+}
 
 
 bool sequencer_pulse_validate(

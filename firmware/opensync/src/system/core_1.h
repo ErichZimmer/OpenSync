@@ -16,6 +16,11 @@ extern const uint32_t ARM_SEQUENCER;
 
 void core_1_init();
 
+void debug_message_print(
+    uint32_t debug_status_local,
+    char* message
+);
+
 bool sequencer_pulse_validate(
     struct pulse_config* config
 );
