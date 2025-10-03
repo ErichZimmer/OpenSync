@@ -16,7 +16,7 @@ DEFAULT_OUTPUT_STATE = 0
 TERMINATION_FLAG = 0
 
 __all__ = [
-    'convert_pulse_params'
+    'convert_pulse_inst'
 ]
 
 
@@ -142,13 +142,11 @@ def _output_delay_cycles(output_delays: list[float]) -> list[int]:
     
 
 def _reps_khz_to_delay_micros(
-    reps_khz: float,
-    output_delay_microseconds: list[float]
+    reps_khz: list[float],
 ) -> float:
-    total_delay_microseconds = sum(output_delay_microseconds[:-1])
-    delay_reps_microsecond = (1 / reps_khz) * 1000
+    delay_microseconds = [(1 / delay) * 1000 for delay in reps_khz]
 
-    return delay_reps_microsecond - total_delay_microseconds
+    return delay_microseconds
 
 
 def _conversion_delay_bugfix(
@@ -162,7 +160,7 @@ def _conversion_delay_bugfix(
     return output_delay
 
 
-def _conversion_pad_unused_instrutions(
+def _conversion_pad_unused_instructions(
     output_state: list[int],
     output_delay: list[int]
 ):
@@ -179,14 +177,13 @@ def _conversion_pad_unused_instrutions(
     return output_state, output_delay
 
 
-def convert_pulse_params(pulse_params: dict) -> Tuple[list[int], list[int]]:
+def convert_pulse_inst(pulse_params: dict) -> Tuple[list[int], list[int]]:
     """Convert pulse parameters into output states and delays.
 
     This function takes a dictionary of pulse parameters and converts them
     into two lists: one representing the output states for each pulse and
     another representing the corresponding delays in cycles. The conversion
-    includes handling external trigger settings and calculating delays based
-    on the sequence repetition rate.
+    includes calculating delays based on the sequence repetition rate.
 
     Parameters
     ----------
@@ -204,9 +201,43 @@ def convert_pulse_params(pulse_params: dict) -> Tuple[list[int], list[int]]:
     output_delay_cycles = _output_delay_cycles(output_delay_microseconds)
     
     output_delay_cycles = _conversion_delay_bugfix(output_delay_cycles)
-    output_state, output_delay_cycles = _conversion_pad_unused_instrutions(
+
+    output_state, output_delay_cycles = _conversion_pad_unused_instructions(
         output_state,
         output_delay_cycles
     )
 
     return output_state, output_delay_cycles
+
+
+def convert_clock_inst(clock_params: dict) -> Tuple[list[int], list[int]]:
+    """Convert clock parameters into reps and delays.
+
+    This function takes a dictionary of clock parameters and converts them
+    into two lists: one representing the repitions for each pulse and
+    another representing the corresponding delays in cycles. The conversion
+    includes handling external trigger settings and calculating delays based
+    on the sequence repetition rate.
+
+    Parameters
+    ----------
+    pulse_params : dict
+        A dictionary containing pulse parameters from `get_pulse_params`.
+
+    Returns
+    -------
+    reps : list[int]
+        A list of integers representing the repititions for each pulse.
+    delay : list[int]
+        A list of integers representing the corresponding delays in cycles.
+    """
+    # NOTE: only single instructions are used for now
+    reps = clock_params['reps_iter']
+    delays = clock_params['reps_khz']
+    delays_trigger = [clock_params['ext_trigger_delay']]
+
+    delay_micros = _reps_khz_to_delay_micros(delays)
+    delay_cycles = _output_delay_cycles(delay_micros)
+    trigger_delay_cycles = _output_delay_cycles(delays_trigger)
+
+    return reps, delay_cycles, trigger_delay_cycles[0]

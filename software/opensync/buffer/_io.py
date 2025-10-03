@@ -1,24 +1,26 @@
-from ..communication._io import EOL, device_comm_write, _get_response, _parse_response 
+from ..communication._io import device_comm_write
+from ..pulsing._conversion import convert_clock_inst
+from ..pulsing._clock_container import MAX_SKIPS
 
 
 __all__ = [
-    'device_buffer_load',
-    'device_buffer_clear',
-    'device_buffer_size',
-    'device_buffer_dump'
+    'device_clock_inst_freerun_load',
+    'device_clock_inst_triggered_load'
+    'device_clock_reset',
+    'device_buffer_pulse_load',
+    'device_pulse_reset'
 ]
 
 
-def device_buffer_load(
+def device_clock_inst_freerun_load(
     device: 'opensync',
-    output_state: list[int], 
-    output_delay: list[int]
+    clock_params: 'clock_params'
 ) -> list[str]:
-    """Load a list of output states and delays to an OpenSync device.
+    """Load a list of trps and delays to an OpenSync device.
 
     This function communicates with an OpenSync device over USB using serial
-    communication. It sends a list of output states and corresponding delays
-    to the device, which are used to control the device's operation. The
+    communication. It sends a list of reps and corresponding delays to the
+    device, which are used to control the device's operation. The
     function ensures that the lengths of the output states and delays are
     the same before proceeding with the communication.
 
@@ -26,14 +28,8 @@ def device_buffer_load(
     ----------
     device : 'opensync'
         An instance of the OpenSync device that will receive the commands.
-    output_state : list[int]
-        A list of integers representing the output states to be loaded into
-        the device. Each integer corresponds to a specific state for the
-        synchronizer output.
-    output_delay : list[int]
-        A list of integers representing the delays (in cycles) associated
-        with each output state. The length of this list must match the length
-        of the output_state list.
+    clock_params : dict
+        A dictionary containing clock parameters from `get_clock_params`.
 
     Returns
     -------
@@ -42,45 +38,113 @@ def device_buffer_load(
         after executing the load command. Each string corresponds to a 
         response from the device.
 
-    Raises
-    ------
-    ValueError
-        If the lengths of the output_state and output_delay lists do not
-        match.
-
     Notes
     -----
     - The function sends a 'load' command to the device followed by pairs
-      of output states and delays. After sending the commands, it sends an 
+      of clock reps and delays. After sending the commands, it sends an 
       'exit' command to terminate the communication.
-    - The function currently skips certain checks for faster load times,
-      which may need to be addressed in future implementations.
-    - If an error occurs during the command execution, the command may
-      register as invalid.
+    - If an error occurs during the command execution, the command will exit
+      prematurely and return the recieved error.
 
     """
-    state_len = len(output_state)
-    delay_len = len(output_delay)
+    clock_id = clock_params['clock_id']
+
+    # Convert delay instructions to cycles in ns
+    reps_inst, delay_inst = convert_clock_inst(clock_params)
+
+    # Validate that reps and delays have equal length for variable timing
+    reps_len = len(reps_inst)
+    delay_len = len(delay_inst)
     
-    if state_len != delay_len:
-        raise ValueError(
-            f'Output state and delay size mismatch: {state_len} vs {delay_len}'
+    if reps_len != delay_len:
+        msg = f'Reps and delay size mismatch: {reps_len} vs {delay_len}'
+        raise ValueError(msg)
+
+    # Open access to instruction buffer
+    device_comm_write(
+        device,
+        f'cldi {clock_id}'
+    )
+
+    for reps, cycles in zip(reps_inst, delay_inst):
+        resp = device_comm_write(
+            device,
+            f'{reps} {cycles}'
         )
+
+        # If an invalid response is returned, halt and return that response
+        if 'Invalid' in resp[0]:
+            return resp
         
-    # Skip checks for faster load times
-    device.write(('load' + EOL).encode())
-    for bit, cycles in zip(output_state, output_delay):
-      device.write((f'{bit} {cycles}' + EOL).encode())
+    resp = device_comm_write(
+        device,
+        'exit'
+    )
 
-    # TODO: fix? 
-    # If an error occurs, this command registers as invalid.
-    device.write(('exit' + EOL).encode())
-
-    return _parse_response(_get_response(device))
+    return resp
 
 
-def device_buffer_clear(device: 'opensync') -> list[str]:
-    """Clear the device buffer of the OpenSync device.
+def device_clock_inst_triggered_load(
+    device: 'opensync',
+    clock_params: 'clock_params'
+) -> list[str]:
+    """Load external trigger config to an OpenSync device.
+
+    This function communicates with an OpenSync device over USB using serial
+    communication. It sends the external trigger config uration to the device,
+    which is used to control the device's operation.
+
+    Parameters
+    ----------
+    device : 'opensync'
+        An instance of the OpenSync device that will receive the commands.
+    clock_params : dict
+        A dictionary containing clock parameters from `get_clock_params`.
+
+    Returns
+    -------
+    response : list[str]
+        A list of strings containing the responses from the OpenSync device
+        after executing the load command. Each string corresponds to a 
+        response from the device.
+
+    """
+    clock_id = clock_params['clock_id']
+
+    # Convert delay instructions to cycles in ns
+    _, _, trigger_delay_inst = convert_clock_inst(clock_params)
+
+    trigger_skips = clock_params['ext_trigger_skips']
+    trigger_reps = clock_params['reps_iter'][0] # only use the first index for triggered reps
+
+    # Validate trigger count    
+    if trigger_skips > MAX_SKIPS:
+        msg = 'Trigger skips size too high'
+        raise ValueError(msg)
+
+    # Open access to trigger buffer
+    resp = device_comm_write(
+        device,
+        f'tldi {clock_id} {trigger_skips} {trigger_delay_inst}'
+    )
+
+    if 'Invalid' in resp[0]:
+        return resp
+    
+    # Now load reps
+    resp = device_comm_write(
+        device,
+        f'treps {clock_id} {trigger_reps}'
+    )
+    
+    return resp
+
+
+def device_clock_reset(
+    device: 'opensync',
+    clock_params: 'clock_params'
+    ) -> list[str]:
+    """Clear the clock state of the OpenSync device.
 
     This function sends a command to the OpenSync device to clear its buffer.
 
@@ -95,47 +159,7 @@ def device_buffer_clear(device: 'opensync') -> list[str]:
         A list of strings containing the responses from the OpenSync device
         after executing the clear command.
     """
-    command = 'uset' # uset is short for unset
-    return device_comm_write(device, command)
+    clock_id = clock_params['clock_id']
 
-
-def device_buffer_size(device: 'opensync') -> list[str]:
-    """Retrieve the size of the device buffer from the OpenSync device.
-
-    This function sends a command to the OpenSync device to get the current
-    size of its buffer.
-
-    Parameters
-    ----------
-    device : 'opensync'
-        An instance of the OpenSync device that will receive the command.
-
-    Returns
-    -------
-    response : list[str]
-        A list of strings containing the responses from the OpenSync device
-        after executing the size command.
-    """
-    command = 'size'
-    return device_comm_write(device, command)
-
-
-def device_buffer_dump(device: 'opensync') -> list[str]:
-    """Dump the contents of the device buffer from the OpenSync device.
-
-    This function sends a command to the OpenSync device to retrieve the
-    current contents of its buffer.
-
-    Parameters
-    ----------
-    device : 'opensync'
-        An instance of the OpenSync device that will receive the command.
-
-    Returns
-    -------
-    response : list[str]
-        A list of strings containing the responses from the OpenSync device
-        after executing the dump command.
-    """
-    command = 'dump'
+    command = f'crst {clock_id}' 
     return device_comm_write(device, command)

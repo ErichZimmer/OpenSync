@@ -1,5 +1,6 @@
 VALID_CLOCK_IDS = [0, 1, 2]
-MAX_CLOCK_DIVIDER = 2**16 - 1
+MAX_CLOCK_DIVIDER = 65200
+MAX_CLOCK_INST = 64
 MAX_ITERATIONS = 500000
 MIN_ITERATIONS = 1
 MIN_FREQUENCY = 0
@@ -59,8 +60,8 @@ def get_clock_params() -> dict:
         'ext_trigger_id': 0,
         'ext_trigger_skips': 0,
         'ext_trigger_delay': 0.0,
-        'reps_khz': 0.01,
-        'reps_iter': 10
+        'reps_khz': [0.01],
+        'reps_iter': [10]
     }
         
     return clock_params
@@ -302,7 +303,7 @@ def config_reps_hz(
         raise ValueError(msg)
         
     khz = hertz / 1000
-    clock_params['reps_khz'] = khz
+    clock_params['reps_khz'] = [khz]
     
     return clock_params
 
@@ -338,6 +339,6 @@ def config_reps_iter(
         msg = f'Invalid number of sequence iterations. Got {iterations}'
         raise ValueError(msg)
         
-    clock_params['reps_iter'] = iterations
+    clock_params['reps_iter'] = [iterations]
     
     return clock_params
