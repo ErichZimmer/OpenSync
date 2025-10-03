@@ -102,6 +102,28 @@ void core_2_init()
 			fast_serial_printf("ok\r\n");
 		}
 
+		// Set clock type
+		else if(strncmp(serial_buf, "ctyp", CMD_LEN) == CMD_DETECTED)
+        {
+            uint32_t requested_type = 0;
+
+            int parsed = sscanf(serial_buf, "%*s %i", &requested_type);
+
+            if(parsed < 1){
+				fast_serial_printf("Invalid request: Invalid input\r\n");
+				continue;
+			}
+
+			bool success = sequencer_clock_type_set(requested_type);
+
+			if (!success){
+				fast_serial_printf("Invalid request: Failed to set clock type\r\n");
+				continue;
+			}
+			
+			fast_serial_printf("ok\r\n");
+		}
+
 		// Set clock divider
 		else if(strncmp(serial_buf, "cdiv", CMD_LEN) == CMD_DETECTED)
         {

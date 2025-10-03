@@ -250,8 +250,6 @@ void sequencer_clock_freerun_sm_config(
 void sequencer_clock_triggered_sm_config(
     struct clock_config* config,
     uint offset,
-    uint pin_out,
-    uint pin_triggwer,
     uint clock_divider
 ) {
 
@@ -272,8 +270,8 @@ void sequencer_clock_triggered_sm_config(
         config -> pio,
         config -> sm,
         offset,
-        pin_out,
-        pin_triggwer,
+        config -> clock_pin,
+        config -> trigger_pin,
         clock_divider
     );
 

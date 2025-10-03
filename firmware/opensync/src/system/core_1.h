@@ -21,8 +21,24 @@ void debug_message_print(
     char* message
 );
 
+void debug_message_print_i(
+    uint32_t debug_status_local,
+    char* message,
+    int num
+);
+
+void sequencer_clock_sm_config_active();
+
+void sequencer_output_sm_config_active();
+
+void sequencer_sm_active_free();
+
 bool sequencer_pulse_validate(
     struct pulse_config* config
+);
+
+bool sequencer_clock_type_set(
+    uint32_t requested_type
 );
 
 bool clock_divider_set(
