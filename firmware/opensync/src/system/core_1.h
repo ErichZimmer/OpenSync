@@ -41,12 +41,18 @@ bool sequencer_clock_type_set(
     uint32_t requested_type
 );
 
+bool clock_id_validate(
+    uint32_t clock_id
+);
+
 bool clock_divider_set(
+    uint32_t clock_id,
     uint32_t clock_divider_copy
 );
 
-bool clock_id_validate(
-    uint32_t clock_id
+bool pulse_divider_set(
+    uint32_t pulse_id,
+    uint32_t clock_divider_copy
 );
 
 bool clock_sequencer_state_set(

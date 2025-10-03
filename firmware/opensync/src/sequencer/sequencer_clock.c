@@ -61,6 +61,7 @@ void sequencer_clocks_init(
         config_array[i].clock_pin = INTERNAL_CLOCK_PINS[i];
         config_array[i].trigger_pin = EXTERNAL_TRIGGER_PINS[0]; // All clocks should default to same trigger pin
         config_array[i].trigger_reps = 0;
+        config_array[i].clock_divider = CLOCK_DIV_DEFAULT;
         config_array[i].active = false;
         config_array[i].configured = false;
     }
@@ -79,7 +80,7 @@ void sequencer_clock_configure(
 }
 
 
-void  sequencer_clock_insert_instructions_internal(
+void sequencer_clock_insert_instructions_internal(
     struct clock_config* config,
     uint32_t instructions[CLOCK_INSTRUCTIONS_MAX]
 ) {
@@ -116,6 +117,7 @@ void sequencer_clock_config_reset(
 
     config -> trigger_pin = EXTERNAL_TRIGGER_PINS[0];
     config -> trigger_reps = 0;
+    config -> clock_divider = CLOCK_DIV_DEFAULT;
     config -> active = false;
 }
 
@@ -212,8 +214,7 @@ void sequencer_clock_triggered_dma_configure(
 
 void sequencer_clock_freerun_sm_config(
     struct clock_config* config,
-    uint offset,
-    uint clock_divider
+    uint offset
 ) {
     pio_claim_sm_mask(
         config -> pio,
@@ -238,7 +239,7 @@ void sequencer_clock_freerun_sm_config(
         config -> sm,
         offset,
         config -> clock_pin,
-        clock_divider
+        config -> clock_divider
     );
 
     sequencer_clock_freerun_dma_configure(config);
@@ -249,8 +250,7 @@ void sequencer_clock_freerun_sm_config(
 
 void sequencer_clock_triggered_sm_config(
     struct clock_config* config,
-    uint offset,
-    uint clock_divider
+    uint offset
 ) {
 
     // Make sure the state machine is disabled
@@ -272,7 +272,7 @@ void sequencer_clock_triggered_sm_config(
         offset,
         config -> clock_pin,
         config -> trigger_pin,
-        clock_divider
+        config -> clock_divider
     );
 
     sequencer_clock_triggered_dma_configure(

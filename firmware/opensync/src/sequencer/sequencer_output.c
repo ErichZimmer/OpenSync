@@ -36,6 +36,7 @@ void sequencer_output_init(
         config_array[i].pio = clock_pio;
         config_array[i].sm = i;
         config_array[i].clock_pin = INTERNAL_CLOCK_PINS[0]; // Default to all using the same internal pin
+        config_array[i].clock_divider = CLOCK_DIV_DEFAULT;
         config_array[i].active = false;
         config_array[i].configured = false;
     }
@@ -70,6 +71,7 @@ void sequencer_output_config_reset(
     );
 
     config -> clock_pin = INTERNAL_CLOCK_PINS[0];
+    config -> clock_divider = CLOCK_DIV_DEFAULT;
     config -> active = false;
 }
 
@@ -117,7 +119,6 @@ void sequencer_output_dma_configure(
 void sequencer_output_sm_config(
     struct pulse_config* config,
     uint offset,
-    uint clock_divider,
     uint32_t reps
 ) {
     pio_claim_sm_mask(
@@ -145,7 +146,7 @@ void sequencer_output_sm_config(
         OUTPUT_PIN_BASE,
         OUTPUT_PIN_COUNT,
         config -> clock_pin,
-        clock_divider
+        config -> clock_divider
     );
 
     sequencer_output_dma_configure(

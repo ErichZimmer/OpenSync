@@ -14,15 +14,13 @@ const uint32_t CLOCK_TRIGGERED = 1;
 
 static uint32_t clock_type = CLOCK_FREERUN;
 
-static uint clock_divider = 60000;
-
 PIO pio_clocks = pio0;
 PIO pio_output = pio1;
 
-uint reps = 50;
-
 const uint32_t ARM_SEQUENCER = 1;
 
+uint clock_divider = 65200;
+uint reps = 50;
 
 void core_1_init()
 {
@@ -153,6 +151,17 @@ void core_1_init()
 
     // Set clock to freerun
     sequencer_clock_type_set(CLOCK_FREERUN);
+
+    // Set clock dividers
+    clock_divider_set(
+        0,
+        clock_divider
+    );
+
+    pulse_divider_set(
+        0,
+        clock_divider
+    );
 
     multicore_fifo_push_blocking(0);
 
@@ -353,16 +362,14 @@ void sequencer_clock_sm_config_active()
             {
                 sequencer_clock_freerun_sm_config(
                     &sequencer_clock_config[i],
-                    offset_clock_freerun,
-                    clock_divider
+                    offset_clock_freerun
                 );
             }
             else // Perhaps, make sure that the clock_type is correct?
             {
                 sequencer_clock_triggered_sm_config(
                     &sequencer_clock_config[i],
-                    offset_clock_freerun,
-                    clock_divider
+                    offset_clock_freerun
                 );
             }
         }
@@ -399,7 +406,6 @@ void sequencer_output_sm_config_active()
             sequencer_output_sm_config(
                 &sequencer_pulse_config[0],
                 offset_output,
-                clock_divider,
                 reps
             );
         }
@@ -474,22 +480,6 @@ bool sequencer_clock_type_set(
 }
 
 
-bool clock_divider_set(
-    uint32_t clock_divider_copy
-) {
-    // Make sure the clock divider is supported
-    if ((clock_divider_copy > CLOCK_DIVIDER_MAX) ||
-        (clock_divider_copy == 0))
-    {
-        return 0;
-    }
-
-    clock_divider = clock_divider_copy;
-
-    return 1;
-}
-
-
 // For now, clock IDs and trigger IDs have the same range (e.g., [0..2])
 bool clock_id_validate(
     uint32_t clock_id
@@ -506,6 +496,52 @@ bool clock_id_validate(
     }
 
     return 0;
+}
+
+
+bool clock_divider_set(
+    uint32_t clock_id,
+    uint32_t clock_divider_copy
+) {
+    // Validate clock ID
+    if(!clock_id_validate(clock_id))
+    {
+        return 0;
+    }
+
+    // Make sure the clock divider is supported
+    if ((clock_divider_copy > CLOCK_DIVIDER_MAX) ||
+        (clock_divider_copy == 0))
+    {
+        return 0;
+    }
+
+    sequencer_clock_config[clock_id].clock_divider = clock_divider_copy;
+
+    return 1;
+}
+
+
+bool pulse_divider_set(
+    uint32_t pulse_id,
+    uint32_t clock_divider_copy
+) {
+    // Validate clock ID
+    if(!clock_id_validate(pulse_id))
+    {
+        return 0;
+    }
+
+    // Make sure the clock divider is supported
+    if ((clock_divider_copy > CLOCK_DIVIDER_MAX) ||
+        (clock_divider_copy == 0))
+    {
+        return 0;
+    }
+
+    sequencer_pulse_config[pulse_id].clock_divider = clock_divider_copy;
+
+    return 1;
 }
 
 

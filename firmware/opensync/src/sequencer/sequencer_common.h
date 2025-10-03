@@ -8,6 +8,7 @@ enum {
 };
 
 extern const uint32_t OUT_MASK;
+extern const uint32_t CLOCK_DIV_DEFAULT;
 extern const uint32_t SEQUENCE_FLAG_END;
 extern const uint32_t ITERATIONS_MAX;
 extern const uint32_t TRIGGER_SKIPS_MAX;

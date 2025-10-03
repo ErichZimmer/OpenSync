@@ -44,7 +44,6 @@ void sequencer_output_dma_configure(
 void sequencer_output_sm_config(
     struct pulse_config* config,
     uint offset,
-    uint clock_divider,
     uint32_t reps
 );
 

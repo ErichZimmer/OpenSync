@@ -134,9 +134,10 @@ void core_2_init()
 		// Set clock divider
 		else if(strncmp(serial_buf, "cdiv", CMD_LEN) == CMD_DETECTED)
         {
+			uint32_t clock_id = 0;
             uint32_t clock_divider_local = 0;
 
-            int parsed = sscanf(serial_buf, "%*s %i", &clock_divider_local);
+            int parsed = sscanf(serial_buf, "%*s %i %i", &clock_id, &clock_divider_local);
 
             if(parsed < ARGS_MIN_SINGLE)
 			{
@@ -144,7 +145,10 @@ void core_2_init()
 				continue;
 			}
 
-			bool success = clock_divider_set(clock_divider_local);
+			bool success = clock_divider_set(
+				clock_id,
+				clock_divider_local
+			);
 
 			if (!success)
 			{
@@ -419,6 +423,34 @@ void core_2_init()
 			if (!success)
 			{
 				fast_serial_printf("Invalid request: Failed to set clock channel state\r\n");
+				continue;
+			}
+			
+			fast_serial_printf("ok\r\n");
+		}
+
+		// Set pulse clock divider
+		else if(strncmp(serial_buf, "pdiv", CMD_LEN) == CMD_DETECTED)
+        {
+			uint32_t pulse_id = 0;
+            uint32_t clock_divider_local = 0;
+
+            int parsed = sscanf(serial_buf, "%*s %i %i", &pulse_id, &clock_divider_local);
+
+            if(parsed < ARGS_MIN_SINGLE)
+			{
+				fast_serial_printf("Invalid request: Invalid input\r\n");
+				continue;
+			}
+
+			bool success = pulse_divider_set(
+				pulse_id,
+				clock_divider_local
+			);
+
+			if (!success)
+			{
+				fast_serial_printf("Invalid request: Failed to set pulse clock divider\r\n");
 				continue;
 			}
 			
