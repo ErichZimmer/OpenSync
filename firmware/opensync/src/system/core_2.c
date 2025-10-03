@@ -7,10 +7,14 @@ char serial_buf[SERIAL_BUFFER_SIZE];
 const uint32_t CMD_LEN = 4;
 const uint32_t CMD_DETECTED = 0;
 
+const uint32_t ARGS_MIN_SINGLE = 1;
+const uint32_t ARGS_MIN_DOUBLE = 2;
+const uint32_t ARGS_MIN_TRIPLE = 3;
+
 
 void core_2_init()
 {
-	// Set stsrem clock speed
+	// Set system clock speed
 	overlcok_system_set();
 
 	// Register sequencer status mutexes
@@ -87,13 +91,13 @@ void core_2_init()
 
             int parsed = sscanf(serial_buf, "%*s %d", &debug_status_local);
 
-            if(parsed < 1)
+            if(parsed < ARGS_MIN_SINGLE)
 			{
 				fast_serial_printf("Invalid request: Invalid input\r\n");
 				continue;
 			}
 
-            if ((debug_status_local < 0) || (debug_status_local > 2))
+            if (debug_status_local > 2)
             {
                 fast_serial_printf("Invalid request: Debug status must be between 0 and 2\r\n");
 				continue;
@@ -110,7 +114,7 @@ void core_2_init()
 
             int parsed = sscanf(serial_buf, "%*s %i", &requested_type);
 
-            if(parsed < 1)
+            if(parsed < ARGS_MIN_SINGLE)
 			{
 				fast_serial_printf("Invalid request: Invalid input\r\n");
 				continue;
@@ -134,7 +138,7 @@ void core_2_init()
 
             int parsed = sscanf(serial_buf, "%*s %i", &clock_divider_local);
 
-            if(parsed < 1)
+            if(parsed < ARGS_MIN_SINGLE)
 			{
 				fast_serial_printf("Invalid request: Invalid input\r\n");
 				continue;
@@ -159,7 +163,7 @@ void core_2_init()
 
             int parsed = sscanf(serial_buf, "%*s %i %i", &clock_id, &clock_state);
 
-            if(parsed < 2)
+            if(parsed < ARGS_MIN_DOUBLE)
 			{
 				fast_serial_printf("Invalid request: Invalid input\r\n");
 				continue;
@@ -191,7 +195,7 @@ void core_2_init()
 
             int parsed = sscanf(serial_buf, "%*s %i", &clock_id);
 
-            if(parsed < 1)
+            if(parsed < ARGS_MIN_SINGLE)
 			{
 				fast_serial_printf("Invalid request: Invalid input\r\n");
 				continue;
@@ -219,7 +223,7 @@ void core_2_init()
 
             int parsed = sscanf(serial_buf, "%*s %i %i", &clock_id, &trigger_pin_id);
 
-            if(parsed < 2)
+            if(parsed < ARGS_MIN_DOUBLE)
 			{
 				fast_serial_printf("Invalid request: Invalid input\r\n");
 				continue;
@@ -247,7 +251,7 @@ void core_2_init()
 
             int parsed = sscanf(serial_buf, "%*s %d %d", &clock_id, &trigger_reps);
 
-            if(parsed < 2)
+            if(parsed < ARGS_MIN_DOUBLE)
 			{
 				fast_serial_printf("Invalid request: Invalid input\r\n");
 				continue;
@@ -276,7 +280,7 @@ void core_2_init()
 
             int parsed = sscanf(serial_buf, "%*s %i %i %i", &clock_id, &trigger_skips, &trigger_delay);
 
-            if(parsed < 3)
+            if(parsed < ARGS_MIN_TRIPLE)
 			{
 				fast_serial_printf("Invalid request: Invalid input\r\n");
 				continue;
@@ -306,7 +310,7 @@ void core_2_init()
 
 			int parsed = sscanf(serial_buf, "%*s %i", &clock_id);
 
-			if(parsed < 1)
+			if(parsed < ARGS_MIN_SINGLE)
 			{
 				fast_serial_printf("Invalid request: Invalid input\r\n");
 				continue;
@@ -337,7 +341,7 @@ void core_2_init()
 
                 num_elements = sscanf(serial_buf, "%i %i", &reps, &delay);
 
-				if (num_elements < 2)
+				if (num_elements < ARGS_MIN_DOUBLE)
 				{
 					fast_serial_printf("Invalid Request: Invalid input\r\n");
 					abort = true;
@@ -345,8 +349,7 @@ void core_2_init()
 					break;
 				}
 
-
-                // Self explanatory
+                // Exit out of instruction loop
 				if(strncmp(serial_buf, "exit", CMD_LEN) == CMD_DETECTED)
                 {
 					break;
@@ -355,6 +358,8 @@ void core_2_init()
 				if (reps > ITERATIONS_MAX)
 				{
                     fast_serial_printf("Invalid Request: Invalid repition count: %i\r\n", reps);
+					abort = true;
+
                     break;
                 }
 
@@ -394,7 +399,7 @@ void core_2_init()
 
             int parsed = sscanf(serial_buf, "%*s %i %i", &pulse_id, &pulse_state);
 
-            if(parsed < 2)
+            if(parsed < ARGS_MIN_DOUBLE)
 			{
 				fast_serial_printf("Invalid request: Invalid input\r\n");
 				continue;
@@ -420,19 +425,18 @@ void core_2_init()
 			fast_serial_printf("ok\r\n");
 		}
 
-		// Reset pulse channel (Pulse ReSeT --> CRST)
+		// Reset pulse channel (Pulse ReSeT --> PRST)
 		else if(strncmp(serial_buf, "prst", CMD_LEN) == CMD_DETECTED)
         {
             uint32_t pulse_id = 0;
 
             int parsed = sscanf(serial_buf, "%*s %i", &pulse_id);
 
-            if(parsed < 1)
+            if(parsed < ARGS_MIN_SINGLE)
 			{
 				fast_serial_printf("Invalid request: Invalid input\r\n");
 				continue;
 			}
-
 
 			bool success = pulse_sequencer_state_reset(
 				pulse_id
@@ -455,7 +459,7 @@ void core_2_init()
 
             int parsed = sscanf(serial_buf, "%*s %i %i", &pulse_id, &clock_id);
 
-            if(parsed < 2)
+            if(parsed < ARGS_MIN_DOUBLE)
 			{
 				fast_serial_printf("Invalid request: Invalid input\r\n");
 				continue;
@@ -483,7 +487,7 @@ void core_2_init()
 
 			int parsed = sscanf(serial_buf, "%*s %i", &pulse_id);
 
-			if(parsed < 1)
+			if(parsed < ARGS_MIN_SINGLE)
 			{
 				fast_serial_printf("Invalid request: Invalid input\r\n");
 				continue;
@@ -514,8 +518,8 @@ void core_2_init()
 			}
 
 			// Make sure last two elements are zero
-			instruction_buffer[PULSE_INSTRUCTIONS_MAX - 1] = 0;
-			instruction_buffer[PULSE_INSTRUCTIONS_MAX - 2] = 0;
+			instruction_buffer[PULSE_INSTRUCTIONS_MAX - 1] = SEQUENCE_FLAG_END;
+			instruction_buffer[PULSE_INSTRUCTIONS_MAX - 2] = SEQUENCE_FLAG_END;
 
 			// Fill instruction buffer
 			uint32_t instruction_flag_count = 2;
@@ -539,7 +543,7 @@ void core_2_init()
 
                 num_elements = sscanf(serial_buf, "%i %i", &output, &delay);
 
-				if (num_elements < 2)
+				if (num_elements < ARGS_MIN_DOUBLE)
 				{
 					fast_serial_printf("Invalid Request: Invalid input\r\n");
 					abort = true;
@@ -579,8 +583,8 @@ void core_2_init()
 			}
 
 			// Make sure the final instructions are zero (again)
-			instruction_buffer[PULSE_INSTRUCTIONS_MAX - 1] = 0;
-			instruction_buffer[PULSE_INSTRUCTIONS_MAX - 2] = 0;
+			instruction_buffer[PULSE_INSTRUCTIONS_MAX - 1] = SEQUENCE_FLAG_END;
+			instruction_buffer[PULSE_INSTRUCTIONS_MAX - 2] = SEQUENCE_FLAG_END;
 
 			// exit out if abort is true (set by invalid input)
 			if (abort)
