@@ -87,7 +87,8 @@ void core_2_init()
 
             int parsed = sscanf(serial_buf, "%*s %d", &debug_status_local);
 
-            if(parsed < 1){
+            if(parsed < 1)
+			{
 				fast_serial_printf("Invalid request: Invalid input\r\n");
 				continue;
 			}
@@ -109,14 +110,16 @@ void core_2_init()
 
             int parsed = sscanf(serial_buf, "%*s %i", &requested_type);
 
-            if(parsed < 1){
+            if(parsed < 1)
+			{
 				fast_serial_printf("Invalid request: Invalid input\r\n");
 				continue;
 			}
 
 			bool success = sequencer_clock_type_set(requested_type);
 
-			if (!success){
+			if (!success)
+			{
 				fast_serial_printf("Invalid request: Failed to set clock type\r\n");
 				continue;
 			}
@@ -131,14 +134,16 @@ void core_2_init()
 
             int parsed = sscanf(serial_buf, "%*s %i", &clock_divider_local);
 
-            if(parsed < 1){
+            if(parsed < 1)
+			{
 				fast_serial_printf("Invalid request: Invalid input\r\n");
 				continue;
 			}
 
 			bool success = clock_divider_set(clock_divider_local);
 
-			if (!success){
+			if (!success)
+			{
 				fast_serial_printf("Invalid request: Failed to set clock divider\r\n");
 				continue;
 			}
@@ -154,12 +159,14 @@ void core_2_init()
 
             int parsed = sscanf(serial_buf, "%*s %i %i", &clock_id, &clock_state);
 
-            if(parsed < 2){
+            if(parsed < 2)
+			{
 				fast_serial_printf("Invalid request: Invalid input\r\n");
 				continue;
 			}
 
-			if(clock_state > 1){
+			if(clock_state > 1)
+			{
 				fast_serial_printf("Invalid request: Invalid clock state\r\n");
 				continue;
 			}
@@ -184,7 +191,8 @@ void core_2_init()
 
             int parsed = sscanf(serial_buf, "%*s %i", &clock_id);
 
-            if(parsed < 1){
+            if(parsed < 1)
+			{
 				fast_serial_printf("Invalid request: Invalid input\r\n");
 				continue;
 			}
@@ -194,7 +202,8 @@ void core_2_init()
 				clock_id
 			);
 
-			if (!success){
+			if (!success)
+			{
 				fast_serial_printf("Invalid request: Failed to reset clock channel state\r\n");
 				continue;
 			}
@@ -210,7 +219,8 @@ void core_2_init()
 
             int parsed = sscanf(serial_buf, "%*s %i %i", &clock_id, &trigger_pin_id);
 
-            if(parsed < 2){
+            if(parsed < 2)
+			{
 				fast_serial_printf("Invalid request: Invalid input\r\n");
 				continue;
 			}
@@ -220,7 +230,8 @@ void core_2_init()
 				trigger_pin_id
 			);
 
-			if (!success){
+			if (!success)
+			{
 				fast_serial_printf("Invalid request: Failed to set clock trigger pin\r\n");
 				continue;
 			}
@@ -236,7 +247,8 @@ void core_2_init()
 
             int parsed = sscanf(serial_buf, "%*s %d %d", &clock_id, &trigger_reps);
 
-            if(parsed < 2){
+            if(parsed < 2)
+			{
 				fast_serial_printf("Invalid request: Invalid input\r\n");
 				continue;
 			}
@@ -246,7 +258,8 @@ void core_2_init()
 				trigger_reps
 			);
 
-			if (!success){
+			if (!success)
+			{
 				fast_serial_printf("Invalid request: Failed to set clock trigger reps\r\n");
 				continue;
 			}
@@ -263,7 +276,8 @@ void core_2_init()
 
             int parsed = sscanf(serial_buf, "%*s %i %i %i", &clock_id, &trigger_skips, &trigger_delay);
 
-            if(parsed < 3){
+            if(parsed < 3)
+			{
 				fast_serial_printf("Invalid request: Invalid input\r\n");
 				continue;
 			}
@@ -275,7 +289,8 @@ void core_2_init()
 				trigger_delay
 			);
 
-			if (!success){
+			if (!success)
+			{
 				fast_serial_printf("Invalid request: Failed to load clock trigger instructions\r\n");
 				continue;
 			}
@@ -362,7 +377,8 @@ void core_2_init()
 				instruction_buffer
 			);
 
-			if (!success){
+			if (!success)
+			{
 				fast_serial_printf("Invalid request: Failed to load clock instructions\r\n");
 				continue;
 			}
@@ -378,12 +394,14 @@ void core_2_init()
 
             int parsed = sscanf(serial_buf, "%*s %i %i", &pulse_id, &pulse_state);
 
-            if(parsed < 2){
+            if(parsed < 2)
+			{
 				fast_serial_printf("Invalid request: Invalid input\r\n");
 				continue;
 			}
 
-			if(pulse_state > 1){
+			if(pulse_state > 1)
+			{
 				fast_serial_printf("Invalid request: Invalid clock state\r\n");
 				continue;
 			}
@@ -393,7 +411,8 @@ void core_2_init()
 				(bool) pulse_state
 			);
 
-			if (!success){
+			if (!success)
+			{
 				fast_serial_printf("Invalid request: Failed to set clock channel state\r\n");
 				continue;
 			}
@@ -408,7 +427,8 @@ void core_2_init()
 
             int parsed = sscanf(serial_buf, "%*s %i", &pulse_id);
 
-            if(parsed < 1){
+            if(parsed < 1)
+			{
 				fast_serial_printf("Invalid request: Invalid input\r\n");
 				continue;
 			}
@@ -418,7 +438,8 @@ void core_2_init()
 				pulse_id
 			);
 
-			if (!success){
+			if (!success)
+			{
 				fast_serial_printf("Invalid request: Failed to reset pulse channel state\r\n");
 				continue;
 			}
@@ -434,7 +455,8 @@ void core_2_init()
 
             int parsed = sscanf(serial_buf, "%*s %i %i", &pulse_id, &clock_id);
 
-            if(parsed < 2){
+            if(parsed < 2)
+			{
 				fast_serial_printf("Invalid request: Invalid input\r\n");
 				continue;
 			}
@@ -444,7 +466,8 @@ void core_2_init()
 				clock_id
 			);
 
-			if (!success){
+			if (!success)
+			{
 				fast_serial_printf("Invalid request: Failed to set internal clock pin\r\n");
 				continue;
 			}
@@ -571,7 +594,8 @@ void core_2_init()
 				instruction_buffer
 			);
 
-			if (!success){
+			if (!success)
+			{
 				fast_serial_printf("Invalid request: Failed to load pulse instructions\r\n");
 				continue;
 			}
