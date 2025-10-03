@@ -203,6 +203,7 @@ void core_1_init()
         sequencer_clock_sm_config_active();
         sequencer_output_sm_config_active();
 
+        // Set masks for active state machines
         uint pio_clocks_sm_mask = 0;
         uint pio_output_sm_mask = 0;
 
@@ -222,6 +223,7 @@ void core_1_init()
             }
         }
 
+        // Start the state machines
         if (sequencer_status_get() != ABORT_REQUESTED)
         {
             sequencer_status_set(RUNNING);
@@ -267,7 +269,8 @@ void core_1_init()
                     continue;
                 }
 
-                while(dma_channel_is_busy(sequencer_clock_config[i].dma_chan)){ }
+                while((dma_channel_is_busy(sequencer_clock_config[i].dma_chan)) &&
+                       (sequencer_status_get() != ABORT_REQUESTED)){ }
             }
         }
 
