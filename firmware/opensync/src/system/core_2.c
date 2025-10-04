@@ -327,10 +327,17 @@ void core_2_init()
 			uint32_t instruction_count = 0;
 			uint32_t instruction_count_max = CLOCK_INSTRUCTIONS_MAX;
 
-			while(instruction_count < instruction_count_max)
+			while(true)
             {
-				uint32_t reps = 0, delay = 0, num_elements = 0;
+				if (!(instruction_count < instruction_count_max))
+				{
+					fast_serial_printf("Invalid Request: Invalid instruction count (overflow)\r\n");
+					abort = true;
+					
+					break;
+				}
 
+				uint32_t reps = 0, delay = 0, num_elements = 0;
 
 				buf_len = fast_serial_read_until(serial_buf, SERIAL_BUFFER_SIZE, '\n');
 
@@ -372,6 +379,9 @@ void core_2_init()
 
                 instruction_buffer[instruction_count] = delay;
                 instruction_count++;
+
+				// Everything is good so far, so return an ok
+				fast_serial_printf("ok\r\n");
 			}
 
 			// Exit out if abort is true (which is the case for invalid inputs)
@@ -558,8 +568,16 @@ void core_2_init()
 			uint32_t instruction_count = 0;
 			uint32_t instruction_count_max = PULSE_INSTRUCTIONS_MAX - instruction_flag_count;
 
-			while(instruction_count < instruction_count_max)
+			while(true)
             {
+				if (!(instruction_count < instruction_count_max))
+				{
+					fast_serial_printf("Invalid Request: Invalid instruction count (overflow)\r\n");
+					abort = true;
+					
+					break;
+				}
+
 				uint32_t output = 0, delay = 0, num_elements = 0;
 
 				buf_len = fast_serial_read_until(serial_buf, SERIAL_BUFFER_SIZE, '\n');
@@ -601,7 +619,7 @@ void core_2_init()
 				// Validate delay cycles
                 if(delay < (PULSE_INSTRUCTION_OFFSET + 1) && delay != SEQUENCE_FLAG_END)
                 {
-                    fast_serial_printf("Invalid Request: invalid delay (cycles): %i\r\n", delay);
+                    fast_serial_printf("Invalid Request: Invalid delay (cycles): %i\r\n", delay);
 					abort = true;
 
                     break;
@@ -612,6 +630,9 @@ void core_2_init()
 
                 instruction_buffer[instruction_count] = delay;
                 instruction_count++;
+
+				// Everything is good so far, so return an ok
+				fast_serial_printf("ok\r\n");
 			}
 
 			// Make sure the final instructions are zero (again)
@@ -648,7 +669,7 @@ void core_2_init()
 
 		else
 		{
-			fast_serial_printf("Invalid request\r\n");
+			fast_serial_printf("Invalid Request: Command not found\r\n");
 		}
     }
 }
