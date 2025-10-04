@@ -42,10 +42,12 @@ The RP2350 microcontroller houses 12 state machines split between 3 PIO blocks. 
 ## 3.1 Core 1
 
 ## 3.1.1 PIO Block 1
-In order to precisely control the cyclic nature of the pulse sequencer, PIO block 1 is dedicated in whole to generating internal clock signals that control the pulse generator. PIO block 1 houses both the freerun and externally triggered internal clock sources which enables clock configuration capabilities that are typically non-trivial on microcontroller architecture to be implemented. 
+In order to precisely control the cyclic nature of the pulse sequencer, PIO block 1 is dedicated in whole to generating internal clock signals that control the pulse generator. PIO block 1 houses both the freerun and externally triggered internal clock sources which enables clock configuration capabilities that are typically non-trivial on microcontroller architecture to be implemented. The clock configuration is broken up into two types: a free running clock and an externally triggered clock. The free running clock is a simple program which generates a 10 cycle square wave at a set repitition frequency dictated by the intruction-to-instruction delay. The free running clock can be controlled using two instructions from a buffer of 64 instructions. The first instruction dictates the amount of repititions to perform while the second instruction influences the instruction-to-instruction delay to control the repitition frequency in kilohertz as seen in Firgure 1. This effectively allows for one to control the frequency of a pulse sequence with variable repitition frequencies with up to 32 different frequencies. By taking advantage of this buffered execution of clock instructions, a variable timing scheme that changes the repitition frequency with time to match some accelerating fluid/object can be readily idealized.
 
 Figure 1. Timing Diagram for Freerun Clock Signal Generator
 ![Timing Graph for Freerun Clock Signal Generator](assets/images/sequencer_pio_clock_freerun_flowchart.png)
+
+A key feature of microcontroller architectures is the ability to bit-bang output channels using a single instruction. While bit-banging may have the propensity to increase jitter compared to other forms of output control, the use of a single instruction was deemed more important. This is because single-instruction output control allows for one to implement an arbitrary pulse generator using minimal PIO assembly instructions while enabling the use of buffered executions to provide a means to arbitrarily modify each output channel in a very flexible manner.
 
 Figure 2. Timing Diagram for Triggered Clock Signal Generator
 ![Timing Graph for Triggered Clock Signal Generator](assets/images/sequencer_pio_clock_triggered_flowchart.png)
