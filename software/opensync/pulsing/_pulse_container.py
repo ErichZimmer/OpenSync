@@ -10,6 +10,7 @@ PULSE_SEQUENCE_SIZE = 2
 __all__ = [
     'get_pulse_params',
     'config_pulse_id',
+    'config_pulse_clock_id',
     'config_pulse_divider',
     'insert_pulse',
     'insert_pulse_many'
@@ -39,6 +40,8 @@ def get_pulse_params() -> dict:
         of the dictionary includes:
         - 'pulse_id': An integer between 0 and 2 representing the pulse
            channel to use (default is 0).
+        - 'clock_id': An integer between 0 and 2 representing the clock
+           channel to use (default is 0).
         - 'clock_divider' : int
             An integer representing the clock divider (default is 1).
         - 'channel_X' : list[float]
@@ -48,6 +51,7 @@ def get_pulse_params() -> dict:
     """
     pulse_params = {
         'pulse_id': 0,
+        'clock_id': 0,
         'clock_divider': 1,
         'channel_0': [],
         'channel_1': [],
@@ -77,7 +81,37 @@ def config_pulse_id(
 ) -> dict:
     """Configure which pulse channel to use.
 
-    This function updates the clock pararameters by selecting which clock
+    This function updates the pulse pararameters by selecting which clock
+    channel to use for the internal timing and execution of the pulse
+    parameters.
+
+    pulse_params : dict
+        A dictionary containing pulse parameters from `get_pulse_params`.
+    channel_id : int
+        The index of the pulse channel to which the pulse parameters will be
+        executed. Valid pulse ids are 0, 1, and 2.
+
+    Returns
+    -------
+    pulse_params : dict
+        The updated pulse parameters dictionary.
+    
+    """
+    if channel_id not in VALID_CLOCK_IDS:
+        msg = f'Invalid pulse channel selected. Got {channel_id}'
+        raise ValueError(msg)
+
+    pulse_params['pulse_id'] = channel_id
+
+    return pulse_params
+
+def config_pulse_clock_id(
+    pulse_params: dict,
+    channel_id: int=0
+) -> dict:
+    """Configure which clock channel to use for pulsing.
+
+    This function updates the pulse pararameters by selecting which clock
     channel to use for the internal timing and execution of the pulse
     parameters.
 
@@ -85,7 +119,7 @@ def config_pulse_id(
         A dictionary containing pulse parameters from `get_pulse_params`.
     channel_id : int
         The index of the clock channel to which the pulse parameters will be
-        controlled. Valid pulse ids are 0, 1, and 2.
+        controlled. Valid clock ids are 0, 1, and 2.
 
     Returns
     -------
@@ -97,7 +131,7 @@ def config_pulse_id(
         msg = f'Invalid clock channel selected. Got {channel_id}'
         raise ValueError(msg)
 
-    pulse_params['pulse_id'] = channel_id
+    pulse_params['clock_id'] = channel_id
 
     return pulse_params
     

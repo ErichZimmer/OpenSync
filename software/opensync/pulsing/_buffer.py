@@ -222,6 +222,7 @@ def device_pulse_inst_load(
 
     """
     pulse_id = pulse_params['pulse_id']
+    clock_id = pulse_params['clock_id']
     clock_divider = pulse_params['clock_divider']
 
     # Convert delay instructions to cycles in ns
@@ -255,6 +256,15 @@ def device_pulse_inst_load(
     resp = device_comm_write(
         device,
         'exit'
+    )
+
+    if 'ok' not in resp[0].lower():
+        return resp
+
+    # Now load internal clock trigger channel
+    resp = device_comm_write(
+        device,
+        f'pset {pulse_id} {clock_id}'
     )
 
     if 'ok' not in resp[0].lower():
