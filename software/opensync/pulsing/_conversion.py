@@ -13,9 +13,10 @@ import warnings
 MAX_PULSE_INSTRUCTION_PAIRS = 31 # 62 total instructions supported + 2 term. flags
 MIN_PULSE_CYCLE_WIDTH = 5
 DEFAULT_OUTPUT_STATE = 0
-TERMINATION_FLAG = 0
+
 
 __all__ = [
+    'convert_clock_inst',
     'convert_pulse_inst'
 ]
 
@@ -160,23 +161,6 @@ def _conversion_delay_bugfix(
     return output_delay
 
 
-def _conversion_pad_unused_instructions(
-    output_state: list[int],
-    output_delay: list[int]
-):
-    while len(output_state) < MAX_PULSE_INSTRUCTION_PAIRS:
-        output_state.append(DEFAULT_OUTPUT_STATE)
-        
-    while len(output_delay) < MAX_PULSE_INSTRUCTION_PAIRS:
-        output_delay.append(MIN_PULSE_CYCLE_WIDTH)
-        
-    # Add termination lfags to the pulse sequence
-    output_state.append(TERMINATION_FLAG)
-    output_delay.append(TERMINATION_FLAG)
-
-    return output_state, output_delay
-
-
 def convert_pulse_inst(pulse_params: dict) -> Tuple[list[int], list[int]]:
     """Convert pulse parameters into output states and delays.
 
@@ -201,11 +185,6 @@ def convert_pulse_inst(pulse_params: dict) -> Tuple[list[int], list[int]]:
     output_delay_cycles = _output_delay_cycles(output_delay_microseconds)
     
     output_delay_cycles = _conversion_delay_bugfix(output_delay_cycles)
-
-    output_state, output_delay_cycles = _conversion_pad_unused_instructions(
-        output_state,
-        output_delay_cycles
-    )
 
     return output_state, output_delay_cycles
 

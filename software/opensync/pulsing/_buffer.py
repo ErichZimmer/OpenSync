@@ -5,7 +5,7 @@ from ._clock_container import MAX_SKIPS, VALID_CLOCK_IDS
 
 __all__ = [
     'device_clock_inst_freerun_load',
-    'device_clock_inst_triggered_load'
+    'device_clock_inst_triggered_load',
     'device_clock_reset',
     'device_pulse_inst_load',
     'device_pulse_reset',
@@ -52,7 +52,7 @@ def device_clock_inst_freerun_load(
     clock_divider = clock_params['clock_divider']
 
     # Convert delay instructions to cycles in ns
-    reps_inst, delay_inst = convert_clock_inst(clock_params)
+    reps_inst, delay_inst, _ = convert_clock_inst(clock_params)
 
     # Validate that reps and delays have equal length for variable timing
     reps_len = len(reps_inst)
@@ -65,7 +65,8 @@ def device_clock_inst_freerun_load(
     # Open access to instruction buffer
     device_comm_write(
         device,
-        f'cldi {clock_id}'
+        f'cldi {clock_id}',
+        output=False
     )
 
     for reps, cycles in zip(reps_inst, delay_inst):
@@ -75,7 +76,7 @@ def device_clock_inst_freerun_load(
         )
 
         # If an invalid response is returned, halt and return that response
-        if 'invalid' in resp[0].lower():
+        if 'ok' not in resp[0].lower():
             return resp
         
     resp = device_comm_write(
@@ -83,7 +84,8 @@ def device_clock_inst_freerun_load(
         'exit'
     )
 
-    if 'invalid' in resp[0].lower():
+    # If an invalid response is returned, halt and return that response
+    if 'ok' not in resp[0].lower():
         return resp
     
     # Now load clock divider
@@ -236,7 +238,8 @@ def device_pulse_inst_load(
     # Open access to instruction buffer
     device_comm_write(
         device,
-        f'pldi {pulse_id}'
+        f'pldi {pulse_id}', 
+        output=False
     )
 
     for output, cycles in zip(output_inst, delay_inst):
@@ -246,7 +249,7 @@ def device_pulse_inst_load(
         )
 
         # If an invalid response is returned, halt and return that response
-        if 'invalid' in resp[0].lower():
+        if 'ok' not in resp[0].lower():
             return resp
         
     resp = device_comm_write(
@@ -254,7 +257,7 @@ def device_pulse_inst_load(
         'exit'
     )
 
-    if 'invalid' in resp[0].lower():
+    if 'ok' not in resp[0].lower():
         return resp
     
     # Now load clock divider
@@ -265,6 +268,7 @@ def device_pulse_inst_load(
 
     return resp
 
+    
 def device_pulse_reset(
     device: 'opensync',
     pulse_params: 'pulse_params'
@@ -312,12 +316,12 @@ def device_reset_all(
     resp = []
     # Reset all clock channels
     for channel_id in VALID_CLOCK_IDS:
-        command = f'crst {channel_id}
+        command = f'crst {channel_id}'
         resp.append(device_comm_write(device, command))
 
     # Reset all pulse channels
     for channel_id in VALID_CLOCK_IDS:
-        command = f'prst {channel_id}
+        command = f'prst {channel_id}'
         resp.append(device_comm_write(device, command))
 
     return resp

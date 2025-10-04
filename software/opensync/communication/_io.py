@@ -93,6 +93,7 @@ def device_comm_open(port: str) -> 'opensync':
 def device_comm_write(
     device: 'opensync',
     command: str, 
+    output: bool=True,
     eol: str=EOL
 ) -> list[str]:
     """Send a command to the OpenSync device.
@@ -106,6 +107,8 @@ def device_comm_write(
         An instance of the OpenSync device to which the command will be sent.
     command : str
         The command string to be sent to the device.
+    output : bool
+        Return the retrieved device output if expecting one.
     eol : str, optional
         The end-of-line character(s) to append to the command
         (default is '\\r\\n').
@@ -120,8 +123,9 @@ def device_comm_write(
 
     # Send command terminated in CRLF or any other terminator
     device.write(command.encode())
-
-    return _parse_response(_get_response(device))
+    
+    if output:
+        return _parse_response(_get_response(device))
 
     
 def device_comm_close(device: 'opensync') -> None:
