@@ -21,7 +21,7 @@ At the heart of OpenSync relies the RP2354b microcontroller engineered by the Ra
 Another advantage that the RP2354b microcontrollers have against their peers is its dual-core nature. Dual-core microcontrollers allow for further specialization of processes that exist simutaneously and harmoneously. In the case for OpenSync, a dual-core optmized system would be able to handle both serial commands and pulse sequencing without unwarranted conflicts. Such features makes the RP2354b microcontroller a suitable platform to utilize for the OpenSync project.
 
 ## 2. Primary Design
-OpenSync's sequencer heavily utilizes PIO blocks and state machines to accomplish its goal of producing very reliable pulse timing characteristics. The basic design principle is quite simple: one PIO block focus on generating internal clock signals and another PIO block focuses on pulse timing and output. Each PIO block can hold up to 32 instructions of which the available instruction are listed below. Please note that these instructions are written in a subset of assembly calles pioasm (PIO assembly).
+OpenSync's sequencer heavily utilizes PIO blocks and state machines to accomplish its goal of producing very reliable pulse timing characteristics. The basic design principle is quite simple: one PIO block focus on generating internal clock signals and another PIO block focuses on pulse timing and output. Each PIO block can hold up to 32 instructions of which the available instruction are listed below. Please note that these instructions are written in a subset of assembly calles pioasm (PIO assembly) with the most important instructions listed in Table 1. It should be mentioned that each instruction takes exactly one clock cycle to execute unless the state machine is stalled. This allows for simple and exact timing information to be imparted into a state machine through PIO assembly directives and DMA buffers.
 
 Table 1. PIO Assembly Instructions
 | Instruction | Use |
@@ -35,7 +35,7 @@ Table 1. PIO Assembly Instructions
 | pull | Pull from transciever of FIFO |
 | wait | Conditional stall |
 
-It should be mentioned that each instruction takes exactly one clock cycle to execute unless the state machine is stalled. This allows for simple and exact timing information to be imparted into a state machine through PIO assembly directives and DMA buffers.
+The RP2350 microcontroller houses 12 state machines split between 3 PIO blocks. These state machines are the backbone of the synchronizing device and effectively allow for 12 independent PIO programs to run in parallel. This is important as state machines allow for complex programs, which otherwise may require FPGAs, can be implemented in simple pio assembly directives. In the case for the OpenSync synchronizer, PIO blocks and their associated state machines allow for timing-critical components of a synchronizer to be implemented by dedicating PIO blocks to specific tasks (e.g., clock timings and arbitrary pulse generation). By dedicating a PIO block for each task in the pulse sequencer, a complex timing device can be easily implemented in microcontroller architecture.
 
 ## 3. Primary Implementation
 
