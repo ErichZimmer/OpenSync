@@ -90,7 +90,7 @@ def device_system_test(device: 'opensync') -> None:
     -------
     None
     """
-    EXPECTED_CLOCK_MAIN_FREQ = 400000 # KHz
+    EXPECTED_CLOCK_MAIN_FREQ = 250000 # KHz
     CLOCK_MAIN_INDEX = 3
     VALID_RESPONSE = 'ok'
     INVALID_RESPONSE = 'Invalid Response'
@@ -123,10 +123,7 @@ def device_system_test(device: 'opensync') -> None:
     resp = device_get_version(device)
     
 
-def device_system_fire(
-    device: 'opensync',
-    reps: int
-) -> list[str]:
+def device_system_fire(device: 'opensync') -> list[str]:
     """Execute a pulse sequence from the OpenSync device buffer.
 
     This function sends a command to the OpenSync device to execute a fire
@@ -136,8 +133,6 @@ def device_system_fire(
     ----------
     device : 'opensync'
         An instance of the OpenSync device on which to execute the command.
-    reps : int
-        The number of repetitions for the fire command.
 
     Returns
     -------
@@ -145,7 +140,7 @@ def device_system_fire(
         A list of strings containing the response from the device after
         executing the command.
     """
-    command = 'fire ' + str(reps)
+    command = 'fire'
     return device_comm_write(device, command)
 
 

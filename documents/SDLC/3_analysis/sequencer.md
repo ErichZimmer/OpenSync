@@ -39,7 +39,10 @@ It should be mentioned that each instruction takes exactly one clock cycle to ex
 
 ## 3. Primary Implementation
 
-## 3.1 PIO Block 1
+## 3.1 Core 1
+
+## 3.1.1 PIO Block 1
+In order to precisely control the cyclic nature of the pulse sequencer, PIO block 1 is dedicated in whole to generating internal clock signals that control the pulse generator. PIO block 1 houses both the freerun and externally triggered internal clock sources which enables clock configuration capabilities that are typically non-trivial on microcontroller architecture to be implemented. 
 
 Figure 1. Timing Diagram for Freerun Clock Signal Generator
 ![Timing Graph for Freerun Clock Signal Generator](assets/images/sequencer_pio_clock_freerun_flowchart.png)
@@ -47,7 +50,34 @@ Figure 1. Timing Diagram for Freerun Clock Signal Generator
 Figure 2. Timing Diagram for Triggered Clock Signal Generator
 ![Timing Graph for Triggered Clock Signal Generator](assets/images/sequencer_pio_clock_triggered_flowchart.png)
 
-
-## 3.2 PIO Block 2
+## 3.1.2 PIO Block 2
 Figure 3. Timing Diagram for Pulse Sequencer
 ![Timing Graph for Pulse Sequencer](assets/images/sequencer_pio_pulse_sequence_flowchart.png)
+
+## 3.2 Core 2
+
+## 3.2.1 Serial Interface
+Since the RP2350 microcontroller has a dual-core architecture, the second core can be dedicated solely to the serial interface. The serial interface allows for a computer to communicate with an OpenSync device in order to transfer user-specified pulsing requirements to the device. Due to the somewhat complex nature of the implementation of a synchronizing device, several serial commands are required to allow for optimal utilization of hardware resources. 
+
+Table 2. Serial Interface Instructions
+| Instruction | Use |
+| --- | --- |
+| vers | Retrieve device firmware version |
+| stat | Retrieve the system status from the device |
+| freq | Retrieve the system frequencies |
+| fire | Start pulse sequence progression |
+| stop | Stop pulse sequence progression |
+| dbug | Set debug status (0, 1, 2) |
+| ctyp | Set clock type (freerun, triggered) |
+| cdiv | Set clock divider |
+| cact | Set clock status (0, 1) |
+| crst | Set clock config to default |
+| tset | Set external trigger pin |
+| trep | Set external trigger reps |
+| tldi | Load external trigger instructions to device |
+| cldi | Load clock config instructions to device |
+| pldi | Load pulse config instructions to device |
+| pact | Set pulse config status (0, 1) |
+| pdiv | Set pulse config clock divider |
+| pset | Set pulse config internal clock trigger pin |
+| prst | Set pulse config to default |
