@@ -47,12 +47,14 @@ In order to precisely control the cyclic nature of the pulse sequencer, PIO bloc
 Figure 1. Timing Diagram for Freerun Clock Signal Generator
 ![Timing Graph for Freerun Clock Signal Generator](assets/images/sequencer_pio_clock_freerun_flowchart.png)
 
-A key feature of microcontroller architectures is the ability to bit-bang output channels using a single instruction. While bit-banging may have the propensity to increase jitter compared to other forms of output control, the use of a single instruction was deemed more important. This is because single-instruction output control allows for one to implement an arbitrary pulse generator using minimal PIO assembly instructions while enabling the use of buffered executions to provide a means to arbitrarily modify each output channel in a very flexible manner.
+Certain experimental situations require the use of external triggers in order to time pulse sequences with physical events. External trigger events are often quite simple and require minimal resources to implment. An example of a simple external trigger scenario is the synchronization of a pulse sequencer with fan blades. A fan blade can rotate a quite fast revolutions per minute, so certain trigger signals must be skipped to allow the measurement system time to prepare for a measurement. By assuming a fan blade has some mechanism to send trigger signals, a synchronizing device can count and skip the necessary trigger signals to achieve a desired measurement frequency that is withing the scope of the current measurement system. In other situations, there may be a need to delay the trigger signal from the external trigger such that a specific feature can be measured in the measurement domain. The designed PIO program (as seen in Figure 2.) implements both trigger skips and delays in order to allow for ample flexibility to meet specific experimental needs.
 
 Figure 2. Timing Diagram for Triggered Clock Signal Generator
 ![Timing Graph for Triggered Clock Signal Generator](assets/images/sequencer_pio_clock_triggered_flowchart.png)
 
 ## 3.1.2 PIO Block 2
+A key feature of microcontroller architectures is the ability to bit-bang output channels using a single instruction. While bit-banging may have the propensity to increase jitter compared to other forms of output control, the use of a single instruction was deemed more important. This is because single-instruction output control allows for one to implement an arbitrary pulse generator using minimal PIO assembly instructions while enabling the use of buffered executions to provide a means to arbitrarily modify each output channel in a very flexible manner. To allow for the arbitrarily controlled outputs to provide meaningful pulse sequences, a delay loop is utilized which controls the instruction-to-instruction delay. By utilizing arbitrarily controlled outputs and delays, almost any type of square wave pattern can be implemented on low-cost hardware such as that provided by OpenSync devices.
+
 Figure 3. Timing Diagram for Pulse Sequencer
 ![Timing Graph for Pulse Sequencer](assets/images/sequencer_pio_pulse_sequence_flowchart.png)
 
