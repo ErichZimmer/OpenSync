@@ -101,6 +101,9 @@ void core_1_init()
     dummy_output_instruction[PULSE_INSTRUCTIONS_MAX - 1] = 0;
     dummy_output_instruction[PULSE_INSTRUCTIONS_MAX - 2] = 0;
 
+    // set clock channel to use
+    uint32_t channel_to_use = 0;
+
     // INTERNAL CLOCK //
     sequencer_clocks_init(
         sequencer_clock_config,
@@ -109,12 +112,12 @@ void core_1_init()
 
     // Add instruction to ouput channel 0
     sequencer_clock_insert_instructions_internal(
-        &sequencer_clock_config[0],
+        &sequencer_clock_config[channel_to_use],
         dummy_clock_instruction
     );
 
     sequencer_clock_configure(
-        &sequencer_clock_config[0],
+        &sequencer_clock_config[channel_to_use],
         INTERNAL_CLOCK_PINS[0],
         EXTERNAL_TRIGGER_PINS[0],
         0
@@ -128,24 +131,24 @@ void core_1_init()
 
     // Add instruction to ouput channel 0
     sequencer_output_insert_instructions(
-        &sequencer_pulse_config[0],
+        &sequencer_pulse_config[channel_to_use],
         dummy_output_instruction
     );
 
     // Set clock ID to 0
     sequencer_output_configure(
-        &sequencer_pulse_config[0],
+        &sequencer_pulse_config[channel_to_use],
         INTERNAL_CLOCK_PINS[0]
     );
 
     // Enable clock and pulse channels to be used
     clock_sequencer_state_set(
-        0, // clock channel 0
+        channel_to_use, // clock channel 0
         1 // enabled
     );
 
 //    pulse_sequencer_state_set(
-//        0, // Output channel 0
+//        channel_to_use, // Output channel 0
 //        1 // enabled
 //    );
 
@@ -154,12 +157,12 @@ void core_1_init()
 
     // Set clock dividers
     clock_divider_set(
-        0,
+        channel_to_use,
         clock_divider
     );
 
     pulse_divider_set(
-        0,
+        channel_to_use,
         clock_divider
     );
 
@@ -212,30 +215,14 @@ void core_1_init()
         sequencer_clock_sm_config_active();
         sequencer_output_sm_config_active();
 
-        // Set masks for active state machines
-        uint pio_clocks_sm_mask = 0;
-        uint pio_output_sm_mask = 0;
-
-        for (uint32_t i = 0; i < CLOCKS_MAX; i++)
-        {
-            if (sequencer_clock_config[i].configured == true)
-            {
-                pio_clocks_sm_mask |= 1u << i;
-            }
-        }
-
-        for (uint32_t i = 0; i < CLOCKS_MAX; i++)
-        {
-            if (sequencer_pulse_config[i].configured == true)
-            {
-                pio_output_sm_mask |= 1u << i;
-            }
-        }
-
         // Start the state machines
         if (sequencer_status_get() != ABORT_REQUESTED)
         {
             sequencer_status_set(RUNNING);
+
+            // Get masks for all active state mahcines
+            uint pio_clocks_sm_mask = sequencer_clock_sm_mask_get();
+            uint pio_output_sm_mask = sequencer_output_sm_mask_get();
 
     //        pio_enable_sm_multi_mask_in_sync(
     //            pio_clocks,
@@ -265,22 +252,7 @@ void core_1_init()
             );
 
             // Stall core until all processes are done
-            for (uint32_t i = 0; i < CLOCKS_MAX; ++i)
-            {
-                debug_message_print_i(
-                    debug_status_local,
-                    "Internal Message: Entering stall for clock id: %i\r\n",
-                    i
-                );
-
-                if (sequencer_clock_config[i].configured != true)
-                {
-                    continue;
-                }
-
-                while((dma_channel_is_busy(sequencer_clock_config[i].dma_chan)) &&
-                       (sequencer_status_get() != ABORT_REQUESTED)){ }
-            }
+            sequencer_clock_sm_stall();
         }
 
         debug_message_print(
@@ -344,16 +316,17 @@ void debug_message_print_i(
 }
 
 
+// NOTE: Has debug messages incl.
 void sequencer_clock_sm_config_active()
 {
-    uint32_t debug_status_local = debug_status_get();
+    uint32_t debug_status_local_func = debug_status_get();
 
     for (uint32_t i = 0; i < CLOCKS_MAX; i++)
     {
         if (sequencer_clock_config[i].active == true)
         {
             debug_message_print_i(
-                debug_status_local,
+                debug_status_local_func,
                 "Internal Message: Starting to configure clock state machine %i\r\n",
                 i
             );
@@ -377,9 +350,10 @@ void sequencer_clock_sm_config_active()
 }
 
 
+// NOTE: Has debug messages incl.
 void sequencer_output_sm_config_active()
 {
-    uint32_t debug_status_local = debug_status_get();
+    uint32_t debug_status_local_func = debug_status_get();
 
     for (uint32_t i = 0; i < CLOCKS_MAX; i++)
     {
@@ -388,7 +362,7 @@ void sequencer_output_sm_config_active()
             if(!sequencer_pulse_validate(&sequencer_pulse_config[i]))
             {
                 debug_message_print_i(
-                    debug_status_local,
+                    debug_status_local_func,
                     "Internal Message: Invalid pulse sequencer configuration for channel  %i\r\n",
                     i
                 );
@@ -398,7 +372,7 @@ void sequencer_output_sm_config_active()
             }
 
             debug_message_print_i(
-                debug_status_local,
+                debug_status_local_func,
                 "Internal Message: Starting to configure output state machine for channel %i\r\n",
                 i
             );
@@ -409,6 +383,61 @@ void sequencer_output_sm_config_active()
                 reps
             );
         }
+    }
+}
+
+
+uint sequencer_clock_sm_mask_get()
+{
+    uint pio_clocks_sm_mask = 0;
+    for (uint32_t i = 0; i < CLOCKS_MAX; i++)
+    {
+        if (sequencer_clock_config[i].configured == true)
+        {
+            pio_clocks_sm_mask |= 1u << i;
+        }
+    }
+
+    return pio_clocks_sm_mask;
+}
+
+
+uint sequencer_output_sm_mask_get()
+{
+    uint pio_output_sm_mask = 0;
+
+    for (uint32_t i = 0; i < CLOCKS_MAX; i++)
+    {
+        if (sequencer_pulse_config[i].configured == true)
+        {
+            pio_output_sm_mask |= 1u << i;
+        }
+    }
+
+    return pio_output_sm_mask;
+}
+
+
+// NOTE: Has debug messages incl.
+void sequencer_clock_sm_stall()
+{
+    uint32_t debug_status_local_func = debug_status_get();
+
+    for (uint32_t i = 0; i < CLOCKS_MAX; ++i)
+    {
+        debug_message_print_i(
+            debug_status_local_func,
+            "Internal Message: Entering stall for clock id: %i\r\n",
+            i
+        );
+
+        if (sequencer_clock_config[i].configured != true)
+        {
+            continue;
+        }
+
+        while((dma_channel_is_busy(sequencer_clock_config[i].dma_chan)) &&
+                (sequencer_status_get() != ABORT_REQUESTED)){ }
     }
 }
 

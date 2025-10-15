@@ -8,6 +8,12 @@ void serial_print_version()
     fast_serial_printf("Version: %s\r\n", OPENSYNC_VERSION);
 }
 
+// Dump device type
+void serial_print_device_type()
+{
+    fast_serial_printf("Device: OpenSync\r\n");
+}
+
 // Dump system status
 void serial_print_status()
 {

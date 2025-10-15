@@ -20,6 +20,8 @@
 
 void serial_print_version();
 
+void serial_print_device_type();
+
 void serial_print_status();
 
 void serial_print_clock_configs(

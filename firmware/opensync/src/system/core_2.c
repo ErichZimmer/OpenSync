@@ -54,6 +54,12 @@ void core_2_init()
 			serial_print_version();
 		}
 
+		// Get device type
+        if(strncmp(serial_buf, "type", CMD_LEN) == CMD_DETECTED)
+        {
+			serial_print_device_type();
+		}
+
         // Get system status
 		else if(strncmp(serial_buf, "stat", CMD_LEN) == CMD_DETECTED)
         {
@@ -617,7 +623,7 @@ void core_2_init()
                 }
 
 				// Validate delay cycles
-                if(delay < (PULSE_INSTRUCTION_OFFSET + 1) && delay != SEQUENCE_FLAG_END)
+                if(delay < (PULSE_INSTRUCTION_OFFSET + 1))
                 {
                     fast_serial_printf("Invalid Request: Invalid delay (cycles): %i\r\n", delay);
 					abort = true;

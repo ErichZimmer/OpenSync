@@ -31,6 +31,12 @@ void sequencer_clock_sm_config_active();
 
 void sequencer_output_sm_config_active();
 
+uint sequencer_clock_sm_mask_get();
+
+uint sequencer_output_sm_mask_get();
+
+void sequencer_clock_sm_stall();
+
 void sequencer_sm_active_free();
 
 bool sequencer_pulse_validate(

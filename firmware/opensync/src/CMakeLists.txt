@@ -2,6 +2,7 @@
 set(PRAWN_DO_DIR ${PROJECT_SOURCE_DIR}/external/prawn_do)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/usb_desc)
 
 set(OPENSYNC_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/overclock/overclock.c
@@ -13,6 +14,7 @@ set(OPENSYNC_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/serial/serial_int_output.c
     ${CMAKE_CURRENT_SOURCE_DIR}/system/core_1.c
     ${CMAKE_CURRENT_SOURCE_DIR}/system/core_2.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/usb_desc/usb_descriptors.c
     ${CMAKE_CURRENT_SOURCE_DIR}/version/opensync_version.c
 )
 
