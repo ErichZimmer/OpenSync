@@ -1,4 +1,4 @@
-from serial import Serial
+from serial import Serial, SerialException
 from serial.tools import list_ports
 from contextlib import contextmanager
 
@@ -28,12 +28,29 @@ def _get_response(device: 'opensync') -> str:
 def _parse_response(response: str) -> list[str]:
     return [line.decode().replace(EOL, '') for line in response]
 
+
+def _check_if_opensync(device: 'device') -> bool:
+    resp = device_comm_write(
+        device,
+        'type'
+    )
+
+    # Make sure everything is lowercase
+    resp = resp.lower()
+
+    # Check if 'opensync' is in the response(s)
+    for response in resp:
+        if EXPECTED in response:
+            return True
+            
+    return False
     
+
 def device_comm_search() -> list[str]:
     """Search for available serial ports.
 
     This function scans the system for available serial ports and returns
-    a list of devices that are currently connected.
+    a list of devices that match the OpenSync signature.
 
     Returns
     -------
@@ -43,17 +60,32 @@ def device_comm_search() -> list[str]:
 
     Example
     -------
-    >>> connected_ports = device_comm_search()
-    >>> print(connected_ports)
-    ['COM3', 'COM4']
+    >>> opensync_port = device_comm_search()
+    >>> print(opensync_port)
+    ['COM3']
     """
+    EXPECTED = 'opensync'
+    
     comlist = list_ports.comports()
 
+    # Get all com active ports
     connected = []
     for port in comlist:
         connected.append(port.device)
 
-    return connected
+    # Probe each one to find an OpenSync Device
+    devices = []
+    for port in connected:
+        try:
+            with device_comm_managed(port) as device:
+                # Probe port for an acceptable response
+                if _check_if_opensync(port):
+                    devices.append(port)
+                
+        except SerialException:
+            pass
+
+    return devices
 
 
 def device_comm_open(port: str) -> 'opensync':
