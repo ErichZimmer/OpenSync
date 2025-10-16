@@ -30,17 +30,18 @@ def _parse_response(response: str) -> list[str]:
 
 
 def _check_if_opensync(device: 'device') -> bool:
+    EXPECTED = 'opensync'
+    
     resp = device_comm_write(
         device,
         'type'
     )
 
-    # Make sure everything is lowercase
-    resp = resp.lower()
+
 
     # Check if 'opensync' is in the response(s)
     for response in resp:
-        if EXPECTED in response:
+        if EXPECTED in response.lower():
             return True
             
     return False
@@ -50,7 +51,7 @@ def device_comm_search() -> list[str]:
     """Search for available serial ports.
 
     This function scans the system for available serial ports and returns
-    a list of devices that match the OpenSync signature.
+    a list of devices that are currently connected.
 
     Returns
     -------
@@ -64,8 +65,6 @@ def device_comm_search() -> list[str]:
     >>> print(opensync_port)
     ['COM3']
     """
-    EXPECTED = 'opensync'
-    
     comlist = list_ports.comports()
 
     # Get all com active ports
@@ -79,7 +78,7 @@ def device_comm_search() -> list[str]:
         try:
             with device_comm_managed(port) as device:
                 # Probe port for an acceptable response
-                if _check_if_opensync(port):
+                if _check_if_opensync(device):
                     devices.append(port)
                 
         except SerialException:
