@@ -55,7 +55,7 @@ void core_2_init()
 		}
 
 		// Get device type
-        if(strncmp(serial_buf, "type", CMD_LEN) == CMD_DETECTED)
+        else if(strncmp(serial_buf, "type", CMD_LEN) == CMD_DETECTED)
         {
 			serial_print_device_type();
 		}
