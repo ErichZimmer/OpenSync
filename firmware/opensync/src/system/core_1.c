@@ -198,7 +198,7 @@ void core_1_init()
 
         debug_message_print_i(
             debug_status_local,
-            "Internal Message: Sequencer clock type (0=freerun; 1=triggered) = %i\r\n",
+            "Internal Message: Sequencer clock type (0=freerun; 1=triggered)=%i\r\n",
             clock_type
         );
 
