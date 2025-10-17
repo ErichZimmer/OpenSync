@@ -1,7 +1,7 @@
 #pragma once
 
 #include <stdint.h>
-#include "pico/mutex.h"
+
 
 // Device status
 extern const uint32_t SEQUENCER_DNDEBUG;

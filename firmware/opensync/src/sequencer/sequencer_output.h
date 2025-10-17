@@ -1,12 +1,12 @@
 #pragma once
 
 #include <stdint.h>
-#include "hardware/dma.h"
 #include "hardware/pio.h"
 
 #include "structs/clock_config.h"
 #include "structs/pulse_config.h"
 #include "sequencer_common.h"
+
 
 uint sequencer_program_output_add(
     PIO pio_clock

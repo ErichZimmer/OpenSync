@@ -1,5 +1,9 @@
 #include "debug_status.h"
 
+#include <stdint.h>
+#include "pico/mutex.h"
+ 
+
 // Device status
 const uint32_t SEQUENCER_DNDEBUG = 0;
 const uint32_t SEQUENCER_DEBUG = 1;

@@ -1,5 +1,9 @@
 #include "sequencer_status.h"
 
+#include <stdint.h>
+#include "pico/mutex.h"
+
+
 // Device status
 const uint32_t IDLE = 0;
 const uint32_t ARMING = 1;

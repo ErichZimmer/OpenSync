@@ -1,7 +1,6 @@
 #pragma once
 
 #include <stdint.h>
-#include "hardware/dma.h"
 #include "hardware/pio.h"
 
 #include "structs/clock_config.h"

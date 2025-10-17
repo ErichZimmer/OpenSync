@@ -1,6 +1,15 @@
 #include "sequencer_clock.h"
+
+#include "hardware/pio.h"
+#include "hardware/dma.h"
+#include <stdint.h>
+
+#include "structs/clock_config.h"
+#include "sequencer_common.h"
+
 #include "sequencer_pio_clock_freerun.pio.h"
 #include "sequencer_pio_clock_triggered.pio.h"
+
 
 // Sequence stuff
 uint32_t CLOCK_INSTRUCTIONS_DEFAULT[CLOCK_INSTRUCTIONS_MAX] = {0};

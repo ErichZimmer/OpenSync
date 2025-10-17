@@ -1,5 +1,8 @@
 #include "sequencer_common.h"
 
+#include <stdint.h>
+
+
 // Used for user input validation
 const uint32_t OUT_MASK = ((1u << OUTPUT_PIN_COUNT) - 1) << OUTPUT_PIN_BASE;
 

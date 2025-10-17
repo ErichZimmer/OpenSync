@@ -1,4 +1,19 @@
 #include "serial_int_output.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include "pico/stdio.h"
+#include "hardware/clocks.h"
+#include "hardware/structs/pll.h"
+#include "hardware/structs/clocks.h"
+
+#include "fast_serial.h"
+
+#include "version/opensync_version.h"
+#include "structs/clock_config.h"
+#include "structs/pulse_config.h"
 #include "status/sequencer_status.h"
 
 
