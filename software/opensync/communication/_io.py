@@ -37,8 +37,6 @@ def _check_if_opensync(device: 'device') -> bool:
         'type'
     )
 
-
-
     # Check if 'opensync' is in the response(s)
     for response in resp:
         if EXPECTED in response.lower():
