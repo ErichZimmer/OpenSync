@@ -13,4 +13,6 @@ firmware/opensync/build
 
 demos/videos/*
 documents/manual/*
-software/docs/*
+software/docs/*.py
+software/docs/*.txt
+software/docs/*.md
