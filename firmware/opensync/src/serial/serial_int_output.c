@@ -77,9 +77,10 @@ void serial_print_clock_configs(
     {
         fast_serial_printf("Clock config ID: %i\r\n", i);
         fast_serial_printf("Clock config sm: %i\r\n", config_array[i].sm);
+        fast_serial_printf("Clock config DMA channel: %i\r\n", config_array[i].dma_chan);
+        fast_serial_printf("Pulse config clock divider: %i\r\n", config_array[i].clock_divider);
         fast_serial_printf("Clock config clock pin: %i\r\n", config_array[i].clock_pin);
         fast_serial_printf("Clock config trigger pin: %i\r\n", config_array[i].trigger_pin);
-        fast_serial_printf("Clock config DMA channel: %i\r\n", config_array[i].dma_chan);
         serial_print_clock_instructions(
             &config_array[i]
         );
@@ -118,8 +119,9 @@ void serial_print_pulse_configs(
     {
         fast_serial_printf("Pulse config ID: %i\r\n", i);
         fast_serial_printf("Pulse config sm: %i\r\n", config_array[i].sm);
-        fast_serial_printf("Pulse config pulse pin: %i\r\n", config_array[i].clock_pin);
         fast_serial_printf("Pulse config DMA channel: %i\r\n", config_array[i].dma_chan);
+        fast_serial_printf("Pulse config clock divider: %i\r\n", config_array[i].clock_divider);
+        fast_serial_printf("Pulse config pulse pin: %i\r\n", config_array[i].clock_pin);
         serial_print_pulse_instructions(
             &config_array[i]
         );

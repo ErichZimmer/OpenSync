@@ -204,8 +204,6 @@ void core_1_init()
 
         if (debug_status_local != SEQUENCER_DNDEBUG)
         {
-            fast_serial_printf("Internal Message: Clock divider: %i\r\n", clock_divider);
-
             // Print clock and pulse configs
             serial_print_clock_configs(sequencer_clock_config);
             serial_print_pulse_configs(sequencer_pulse_config);
