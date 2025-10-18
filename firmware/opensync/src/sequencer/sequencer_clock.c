@@ -322,6 +322,13 @@ void sequencer_clock_sm_free(
         config -> sm
     );
 
+    // Ensure that all outputs are low
+    pio_sm_set_pins(
+        config -> pio,
+        config -> sm,
+        0 // 0 = low
+    );
+
     pio_sm_unclaim(
         config -> pio,
         config -> sm
