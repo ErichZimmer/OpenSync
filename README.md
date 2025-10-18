@@ -9,10 +9,7 @@ Due to timeline conflicts with an ongoing internship, the project schedule has b
 # NOTICE
 This is for a future project for an undergraduate course (that will be completed 2 semesters from now). The course is over embedded systems and programming design, and I'll think it will greatly enhance the code for the synchronizer. Currently, this repository is going to be left blank until I obtain a 2 or 4 channel >100MHz oscilloscope. Also, I decided to shift towards using a portion of the PrawnDO firmware (reference 3) for the serial interface due to performance and flexibility. The project schedule and details can be read in the [SDLC documentation](documents/SDLC).
 
-## The Plan
-This idea was inspired by the use of an Arduino Uno to send TTL pulses to two Arducam ~1 MP monochrome global shutter cameras on one of my previouse experiments. However, that implementation used a simple loop that was hard-coded. To increase flexibility, a serial I/O interface should be created so that the user can change the parameters of the synchronizer while the device is on (not operating, though, as that could cause damage to lab equipment and maybe even the synchronizer itself). Due to the dynamic nature of the serial interface, optimization from hard-coding would be lost which could cause a loss in temporal resolution and accuracy. However, very efficient execution of instructions could be done using programmable input/output (PIO) on a RP2350-based microcontroller (e.g., Pico 2). The RP2350 could be used as an effective 8-channel arbitrary pulse generator with jitter as low as one clock cycle (10ns to 4ns). The dual-core nature of the RP2350 allows for one core to be dedicated to IO and another to the serial interface, thus alleviating the aforementioned issues with Arduino microcontrollers. The synchronizer is programmed using an 8 bit word (one bit for each channel) and a 32 bit word (delay to next instruction). The RP2350 supports a few thousand instructions, so great flexibility could be achieved. An external trigger (optional) could be used to execute the pulse sequence along with internal timing based on repitition in Hertz. The entire system can be 3D printed and soldered in-house in as little as an afternoon. This system would also allow for the use of up to 4 cameras in addition to a dual-head YAG/YLF laser.
-
-## Design
+## Purpose
 OpenSync is a simple and low-cost synchronizer based on microcontroller technology. Due to the intrinsic nature of microcontrollers compared to more advanced devices (e.g., field programmable gate arrays), most complex features that are typical of commercial propietary devices such as gating, external trigger manipulation, etc are not implemented. However, OpenSync remains sufficiently flexible and provides enough support for most users' needs when performing a PIV experiment. This is because OpenSync is an arbitrary pulse generator under-the-hood which allows for rather complex pulse sequences to be synthesized through simple output port manipulation. Additionally, three (3) independent internal clocks can be utilized to allow for relatively advanced pulse timing. While this implementation for a synchronizer may be quite restrictive at times, it is what makes OpenSync so simple!
 
 ## Specs
@@ -31,6 +28,7 @@ OpenSync is a simple and low-cost synchronizer based on microcontroller technolo
  - **Pulse Sequence Repetition**: Up to 500,000 iterations
  - **Pulse Sequence Jitter**:  ~0.5 ns
  - **Pulse Sequence Repetition Jitter**: up to 4 clock cycles (up to 16 ns * clock divider)
+ - **Max Clock Divider**: 65200 (pulse-to-pulse distances up to ~311 hours)
  - All powered via USB!
 
 
