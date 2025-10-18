@@ -18,7 +18,7 @@ struct clock_config
     uint32_t instructions[CLOCK_INSTRUCTIONS_MAX];
     uint32_t trigger_config[CLOCK_TRIGGERS_MAX];
     uint32_t trigger_reps;
-    uint32_t clock_divider;
+    uint clock_divider;
     bool active;
     bool configured;
 };

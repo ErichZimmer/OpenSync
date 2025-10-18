@@ -558,7 +558,7 @@ bool clock_divider_set(
         return 0;
     }
 
-    sequencer_clock_config[clock_id].clock_divider = clock_divider_copy;
+    sequencer_clock_config[clock_id].clock_divider = (uint) clock_divider_copy;
 
     return 1;
 }
@@ -581,7 +581,7 @@ bool pulse_divider_set(
         return 0;
     }
 
-    sequencer_pulse_config[pulse_id].clock_divider = clock_divider_copy;
+    sequencer_pulse_config[pulse_id].clock_divider = (uint) clock_divider_copy;
 
     return 1;
 }

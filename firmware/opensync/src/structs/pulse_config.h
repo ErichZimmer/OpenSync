@@ -15,7 +15,7 @@ struct pulse_config
     uint clock_pin;
     int dma_chan;
     uint32_t instructions[PULSE_INSTRUCTIONS_MAX];
-    uint32_t clock_divider;
+    uint clock_divider;
     bool active;
     bool configured;
 };
