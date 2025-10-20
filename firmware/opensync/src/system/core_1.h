@@ -33,6 +33,8 @@ void sequencer_clock_sm_stall();
 
 void sequencer_sm_active_free();
 
+bool sequencer_pulse_conflict_check();
+
 bool sequencer_pulse_validate(
     struct pulse_config* config
 );

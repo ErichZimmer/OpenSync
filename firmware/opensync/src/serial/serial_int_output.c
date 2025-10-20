@@ -60,8 +60,8 @@ void serial_print_clock_triggers(
     for (uint32_t i = 0; i < CLOCK_TRIGGERS_MAX; i = i + 2)
     {
         uint32_t inst_num = i / 2;
-        uint32_t skips = config -> instructions[i];
-        uint32_t delay = config -> instructions[i+1];
+        uint32_t skips = config -> trigger_config[i];
+        uint32_t delay = config -> trigger_config[i+1];
 
         fast_serial_printf("Trigger instruction %i: skips=%i, delay=%i\r\n", inst_num, skips, delay);
     }
@@ -121,7 +121,7 @@ void serial_print_pulse_configs(
         fast_serial_printf("Pulse config sm: %i\r\n", config_array[i].sm);
         fast_serial_printf("Pulse config dma channel: %i\r\n", config_array[i].dma_chan);
         fast_serial_printf("Pulse config clock divider: %i\r\n", config_array[i].clock_divider);
-        fast_serial_printf("Pulse config pulse pin: %i\r\n", config_array[i].clock_pin);
+        fast_serial_printf("Pulse config clock pin: %i\r\n", config_array[i].clock_pin);
         serial_print_pulse_instructions(
             &config_array[i]
         );

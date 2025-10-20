@@ -34,9 +34,6 @@ PIO pio_output = pio1;
 
 const uint32_t ARM_SEQUENCER = 1;
 
-uint clock_divider = 65200;
-uint reps = 50;
-
 void core_1_init()
 {
     // Freerun PIO clock program
@@ -52,133 +49,6 @@ void core_1_init()
     // Sequencer PIO pulse program
     offset_output = sequencer_program_output_add(
         pio_output
-    );
-
-    // Make an array of ones to insert a dummy program 
-    uint32_t dummy_clock_instruction[CLOCK_INSTRUCTIONS_MAX] = {0};
-
-    // Add some random instructions to output
-    /*
-    Important Note:
-    The clock output instruction are broken up into two parts: the pulse
-    frequency and the amount of repitions to perform. For instance, every even 
-    instruction starting from zero (e.g., 0, 2, 4, 6, 8...) sets the pulse
-    repition amount. The repitition frequency is set at every odd instruction
-    index (e.g., 1, 3, 5, 7, 9...).
-
-    A repition instruction of zero skips the instruction pair, so zeros are okay here.
-    */
-
-
-    // Create some clock pattern
-    dummy_clock_instruction[0] = reps; // The amount of reps to perform
-    dummy_clock_instruction[1] = 10; // the repition delay (controls rate) (must be higher than the total duration of the pulse sequencer)
-
-    // Make an array of ones to insert a dummy program
-    uint32_t dummy_output_instruction[PULSE_INSTRUCTIONS_MAX] = {0};
-
-    // Add some random instructions to output
-    /*
-    Important Note:
-    The pulse output instruction are broken up into two parts: the output
-    state and the delay duration to the next instruction. For instance,
-    every even instruction starting from zero (e.g., 0, 2, 4, 6, 8...) sets
-    the output state. Only the first 12 bits are used to set the output state
-    while the rest are discarded. The delay instructions are at every odd
-    instruction index (e.g., 1, 3, 5, 7, 9...) and are used in a delay loop.
-    The final two instruction at the end of the instruction buffer are used
-    to set the output state to idle and a terminating flag.
-    
-    // DO NOT FORGET TO SET THE TERMINATING FLAGS (0) AND MAKE SURE ALL OTHER INSTRUCTIONS ARE NON-ZERO!!!!
-    */
-
-    // Set all delay instructions to 1 (they can't be zero)
-    for (int i = 1; i < PULSE_INSTRUCTIONS_MAX; i += 2)
-    {
-        dummy_output_instruction[i] = 1; // 1 cycle delay
-    }
-
-    // Create some pulse pattern
-    dummy_output_instruction[0] = 2048; // Channel 12 square wave
-    dummy_output_instruction[1] = 100;
-                                  
-    dummy_output_instruction[2] = 1024; // Channel 11 square wave
-    dummy_output_instruction[3] = 100;
-
-    dummy_output_instruction[4] = 512; // Channel 10 square wave
-    dummy_output_instruction[5] = 100;
-
-    dummy_output_instruction[6] = 2560; // Channel 10 and 12
-    dummy_output_instruction[7] = 100;
-
-
-    // Make sure the final instructions are zero
-    dummy_output_instruction[PULSE_INSTRUCTIONS_MAX - 1] = 0;
-    dummy_output_instruction[PULSE_INSTRUCTIONS_MAX - 2] = 0;
-
-    // set clock channel to use
-    uint32_t channel_to_use = 0;
-
-    // INTERNAL CLOCK //
-    sequencer_clocks_init(
-        sequencer_clock_config,
-        pio_clocks
-    );
-
-    // Add instruction to ouput channel 0
-    sequencer_clock_insert_instructions_internal(
-        &sequencer_clock_config[channel_to_use],
-        dummy_clock_instruction
-    );
-
-    sequencer_clock_configure(
-        &sequencer_clock_config[channel_to_use],
-        INTERNAL_CLOCK_PINS[0],
-        EXTERNAL_TRIGGER_PINS[0],
-        0
-    );
-
-    // OUTPUT //
-    sequencer_output_init(
-        sequencer_pulse_config,
-        pio_output
-    );
-
-    // Add instruction to ouput channel 0
-    sequencer_output_insert_instructions(
-        &sequencer_pulse_config[channel_to_use],
-        dummy_output_instruction
-    );
-
-    // Set clock ID to 0
-    sequencer_output_configure(
-        &sequencer_pulse_config[channel_to_use],
-        INTERNAL_CLOCK_PINS[0]
-    );
-
-    // Enable clock and pulse channels to be used
-    clock_sequencer_state_set(
-        channel_to_use, // clock channel 0
-        1 // enabled
-    );
-
-//    pulse_sequencer_state_set(
-//        channel_to_use, // Output channel 0
-//        1 // enabled
-//    );
-
-    // Set clock to freerun
-    sequencer_clock_type_set(CLOCK_FREERUN);
-
-    // Set clock dividers
-    clock_divider_set(
-        channel_to_use,
-        clock_divider
-    );
-
-    pulse_divider_set(
-        channel_to_use,
-        clock_divider
     );
 
     multicore_fifo_push_blocking(0);
@@ -221,11 +91,17 @@ void core_1_init()
 
         debug_message_print(
             debug_status_local,
-            "Internal Message: Starting to configure state machines\r\n"
+            "Internal Message: Starting to configure clock state machines\r\n"
         );
 
         // Configure all active channels
         sequencer_clock_sm_config_active();
+
+        debug_message_print(
+            debug_status_local,
+            "Internal Message: Starting to configure output state machines\r\n"
+        );
+
         sequencer_output_sm_config_active();
 
         // Start the state machines
@@ -291,7 +167,7 @@ void core_1_init()
             "Internal Message: Sequencer reset to IDLE status\r\n"
         );
         
-        if (sequencer_status_get() != ABORT_REQUESTED)
+        if (sequencer_status_get() != ABORTING)
         {
             sequencer_status_set(IDLE);
         }
@@ -366,7 +242,18 @@ void sequencer_clock_sm_config_active()
 // NOTE: Has debug messages incl.
 void sequencer_output_sm_config_active()
 {
+    uint32_t reps = ITERATIONS_MAX; // 500,000 reps is the maximum supported.
     uint32_t debug_status_local_func = debug_status_get();
+
+    if (!sequencer_pulse_conflict_check())
+    {
+        debug_message_print(
+            debug_status_local_func,
+            "Internal Message: Invalid pulse sequencer configuration (channel conflicts)\r\n"
+        );
+
+        sequencer_status_set(ABORT_REQUESTED);
+    }
 
     for (uint32_t i = 0; i < CLOCKS_MAX; i++)
     {
@@ -376,7 +263,7 @@ void sequencer_output_sm_config_active()
             {
                 debug_message_print_i(
                     debug_status_local_func,
-                    "Internal Message: Invalid pulse sequencer configuration for channel  %i\r\n",
+                    "Internal Message: Invalid pulse sequencer configuration for channel %i\r\n",
                     i
                 );
 
@@ -478,6 +365,52 @@ void sequencer_sm_active_free()
             );
         }
     }
+}
+
+
+bool sequencer_pulse_conflict_check()
+{
+    #define NUM_BITS 32
+    const uint32_t MAX_BITS = 1;
+
+    uint32_t channel_state[CLOCKS_MAX][NUM_BITS] = {0};
+
+    // Accumulate all the bit information into a 2D array
+    for (uint32_t chan_id = 0; chan_id < CLOCKS_MAX; chan_id++)
+    {
+        for (uint32_t i = 0; i < PULSE_INSTRUCTIONS_MAX; i++)
+        {
+            uint32_t state = sequencer_pulse_config[chan_id].instructions[i];
+
+            // The binary array is backwards, but this doesn't matter since we are only looking for nums > 1
+            uint32_t j = 0;
+            while (state > 0)
+            {
+                channel_state[chan_id][j] = state % 2;
+                state /= 2;
+
+                j++;
+            }
+        }
+    }
+
+    // Check the array sums for values > 1 which indicates that there is a channel conflict
+    for (uint32_t i = 0; i < NUM_BITS; i++)
+    {
+        uint32_t channel_sum = 0;
+
+        for (uint32_t chan_id = 0; chan_id < CLOCKS_MAX; chan_id++)
+        {
+            channel_sum += channel_state[chan_id][i];
+        }
+
+        if (channel_sum > MAX_BITS)
+        {
+            return 0;
+        }
+    }
+
+    return 1;
 }
 
 
