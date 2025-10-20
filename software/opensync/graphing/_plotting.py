@@ -1,7 +1,7 @@
 from matplotlib import pyplot as plt
 import numpy as np
 
-from ..pulsing import get_channel_ids, get_max_pulse, get_used_channels
+from ..pulsing import _get_channel_ids, _get_max_pulse, _get_used_channels
 
 
 __all__ = [
@@ -15,8 +15,8 @@ def _plot_pulses(
 ) -> None:
     offset = 0.1
     
-    channels = get_channel_ids(pulse_params)
-    max_pulse = get_max_pulse(pulse_params)
+    channels = _get_channel_ids(pulse_params)
+    max_pulse = _get_max_pulse(pulse_params)
 
     for i, channel in enumerate(channels):
         pulse = pulse_params[channel]['data']
@@ -84,8 +84,8 @@ def get_pulse_plot(
     )
 
     # Set y label tick markers to channel names
-    num_channels = get_used_channels(pulse_params)
-    y_labels = [pulse_params[channel]['name'] for channel in get_channel_ids(pulse_params)]
+    num_channels = _get_used_channels(pulse_params)
+    y_labels = [pulse_params[channel]['name'] for channel in _get_channel_ids(pulse_params)]
     y_labels = y_labels[:num_channels]
     
     axis.set_yticks(range(len(y_labels)))

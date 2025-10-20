@@ -2,7 +2,7 @@ from copy import deepcopy
 from numpy import inf as INF
 from typing import Tuple
 
-from ._utils import get_channel_ids
+from ._utils import _get_channel_ids
 from ..communication import CLOCK_CYCLE
 from ..error_handles import DeviceBufferSizeWarning
 
@@ -16,8 +16,8 @@ DEFAULT_OUTPUT_STATE = 0
 
 
 __all__ = [
-    'convert_clock_inst',
-    'convert_pulse_inst'
+    '_convert_clock_inst',
+    '_convert_pulse_inst'
 ]
 
 
@@ -66,7 +66,7 @@ def _convert_pulse_params(pulse_params: dict) -> Tuple[list[int], list[int]]:
     OUTPUT_STATE_MASK = '000000000000'
     eps = 0.00001
     
-    channels = get_channel_ids(pulse_params)
+    channels = _get_channel_ids(pulse_params)
 
     # Create a nested list so we can pop output delays as needed
     detected_pulses = []
@@ -161,7 +161,7 @@ def _conversion_delay_bugfix(
     return output_delay
 
 
-def convert_pulse_inst(pulse_params: dict) -> Tuple[list[int], list[int]]:
+def _convert_pulse_inst(pulse_params: dict) -> Tuple[list[int], list[int]]:
     """Convert pulse parameters into output states and delays.
 
     This function takes a dictionary of pulse parameters and converts them
@@ -189,7 +189,7 @@ def convert_pulse_inst(pulse_params: dict) -> Tuple[list[int], list[int]]:
     return output_state, output_delay_cycles
 
 
-def convert_clock_inst(clock_params: dict) -> Tuple[list[int], list[int]]:
+def _convert_clock_inst(clock_params: dict) -> Tuple[list[int], list[int]]:
     """Convert clock parameters into reps and delays.
 
     This function takes a dictionary of clock parameters and converts them

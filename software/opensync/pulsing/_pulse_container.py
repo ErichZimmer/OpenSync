@@ -1,6 +1,6 @@
 from typing import Tuple
 from ..error_handles import PulseParamsSize
-from ._utils import get_channel_ids
+from ._utils import _get_channel_ids
 from ._clock_container import VALID_CLOCK_IDS, MAX_CLOCK_DIVIDER
 
 MIN_PULSE_TRAIN_SIZE = 1
@@ -67,7 +67,7 @@ def get_pulse_params() -> dict:
         'channel_11': [],
     }
 
-    channels = get_channel_ids(pulse_params)
+    channels = _get_channel_ids(pulse_params)
 
     for channel in channels:
         pulse_params[channel] = _get_empty_container(name=channel)
@@ -213,7 +213,7 @@ def insert_pulse(
     second pulse sequence is omitted.
     
     """
-    channel = get_channel_ids(pulse_params)[channel_id]
+    channel = _get_channel_ids(pulse_params)[channel_id]
 
     pulse_train = [
         rising_edge_1,
@@ -271,7 +271,7 @@ def insert_pulse_many(
         raised.
     
     """
-    channel = get_channel_ids(pulse_params)[channel_id]
+    channel = _get_channel_ids(pulse_params)[channel_id]
     
     pulse_train_size = len(pulse_train)
     if pulse_train_size < MIN_PULSE_TRAIN_SIZE:

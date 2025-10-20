@@ -1,11 +1,11 @@
 __all__ = [
-    'get_channel_ids',
-    'get_max_pulse',
-    'get_used_channels'
+    '_get_channel_ids',
+    '_get_max_pulse',
+    '_get_used_channels'
 ]
 
 
-def get_channel_ids(pulse_params: dict) -> list[str]:
+def _get_channel_ids(pulse_params: dict) -> list[str]:
     """Retrieve the list of channel IDs from the pulse parameters.
 
     This function extracts and returns the channel IDs from the provided
@@ -24,7 +24,7 @@ def get_channel_ids(pulse_params: dict) -> list[str]:
     return list(pulse_params.keys())[3:]
 
 
-def get_max_pulse(pulse_params: dict) -> int:
+def _get_max_pulse(pulse_params: dict) -> int:
     """Get the maximum pulse value from the pulse parameters.
 
     This function iterates through the channels in the pulse parameters
@@ -42,7 +42,7 @@ def get_max_pulse(pulse_params: dict) -> int:
         The maximum pulse value found across all channels. Returns 0 if
         no pulses are found.
     """
-    channels = get_channel_ids(pulse_params)
+    channels = _get_channel_ids(pulse_params)
     max_pulse = 0
     
     for channel in channels:
@@ -58,7 +58,7 @@ def get_max_pulse(pulse_params: dict) -> int:
     return max_pulse
 
 
-def get_used_channels(pulse_params: dict) -> int:
+def _get_used_channels(pulse_params: dict) -> int:
     """Count the number of channels that have pulse data.
 
     This function iterates through the channels in the pulse parameters
@@ -74,7 +74,7 @@ def get_used_channels(pulse_params: dict) -> int:
     used_channels : int
         The number of channels that have pulse data entries.
     """
-    channels = get_channel_ids(pulse_params)
+    channels = _get_channel_ids(pulse_params)
 
     used_channels = 0
     

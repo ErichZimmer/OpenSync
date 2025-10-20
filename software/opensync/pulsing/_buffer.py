@@ -1,19 +1,21 @@
 from ..communication._io import device_comm_write
-from ._conversion import convert_clock_inst, convert_pulse_inst
+from ._conversion import _convert_clock_inst, _convert_pulse_inst
 from ._clock_container import MAX_SKIPS, VALID_CLOCK_IDS
 
 
 __all__ = [
-    'device_clock_inst_freerun_load',
-    'device_clock_inst_triggered_load',
+    '_device_clock_inst_freerun_load',
+    '_device_clock_inst_triggered_load',
+    '_device_clock_config_load',
+    '_device_pulse_inst_load',
+    '_device_pulse_config_load',
     'device_clock_reset',
-    'device_pulse_inst_load',
     'device_pulse_reset',
     'device_reset_all'
 ]
 
 
-def device_clock_inst_freerun_load(
+def _device_clock_inst_freerun_load(
     device: 'opensync',
     clock_params: 'clock_params'
 ) -> list[str]:
@@ -49,10 +51,9 @@ def device_clock_inst_freerun_load(
 
     """
     clock_id = clock_params['clock_id']
-    clock_divider = clock_params['clock_divider']
 
     # Convert delay instructions to cycles in ns
-    reps_inst, delay_inst, _ = convert_clock_inst(clock_params)
+    reps_inst, delay_inst, _ = _convert_clock_inst(clock_params)
 
     # Validate that reps and delays have equal length for variable timing
     reps_len = len(reps_inst)
@@ -84,20 +85,10 @@ def device_clock_inst_freerun_load(
         'exit'
     )
 
-    # If an invalid response is returned, halt and return that response
-    if 'ok' not in resp[0].lower():
-        return resp
-    
-    # Now load clock divider
-    resp = device_comm_write(
-        device,
-        f'cdiv {clock_id} {clock_divider}'
-    )
-
     return resp
 
 
-def device_clock_inst_triggered_load(
+def _device_clock_inst_triggered_load(
     device: 'opensync',
     clock_params: 'clock_params'
 ) -> list[str]:
@@ -125,11 +116,10 @@ def device_clock_inst_triggered_load(
     clock_id = clock_params['clock_id']
 
     # Convert delay instructions to cycles in ns
-    _, _, trigger_delay_inst = convert_clock_inst(clock_params)
+    _, _, trigger_delay_inst = _convert_clock_inst(clock_params)
 
     trigger_skips = clock_params['ext_trigger_skips']
     trigger_reps = clock_params['reps_iter'][0] # only use the first index for triggered reps
-    clock_divider = clock_params['clock_divider']
 
     # Validate trigger count    
     if trigger_skips > MAX_SKIPS:
@@ -142,7 +132,7 @@ def device_clock_inst_triggered_load(
         f'tldi {clock_id} {trigger_skips} {trigger_delay_inst}'
     )
 
-    if 'invalid' in resp[0].lower():
+    if 'ok' not in resp[0].lower():
         return resp
     
     # Now load reps
@@ -150,45 +140,67 @@ def device_clock_inst_triggered_load(
         device,
         f'treps {clock_id} {trigger_reps}'
     )
-
-    if 'invalid' in resp[0].lower():
-        return resp
-    
-    # Now load clock divider
-    resp = device_comm_write(
-        device,
-        f'cdiv {clock_id} {clock_divider}'
-    )
     
     return resp
 
-
-def device_clock_reset(
+def _device_clock_config_load(
     device: 'opensync',
     clock_params: 'clock_params'
-    ) -> list[str]:
-    """Clear the clock state of the OpenSync device.
-
-    This function sends a command to the OpenSync device to reset its buffer.
-
+) -> list[str]:
+    """
     Parameters
     ----------
     device : 'opensync'
-        An instance of the OpenSync device that will receive the command.
+        An instance of the OpenSync device that will receive the commands.
+    pulse_params : dict
+        A dictionary containing pulse parameters from get_pulse_params`.
 
     Returns
     -------
     response : list[str]
-        A list of strings containing the responses from the OpenSync device
-        after executing the reset command.
     """
     clock_id = clock_params['clock_id']
+    clock_divider = clock_params['clock_divider']
+    trigger_id = clock_params['ext_trigger_id']
+    clock_type = int(clock_params['ext_trigger'] != 'disable')
 
-    command = f'crst {clock_id}' 
-    return device_comm_write(device, command)
+    # Activate clock channel
+    resp = device_comm_write(
+        device,
+        f'cact {clock_id} 1'
+    )
+
+    if 'ok' not in resp[0].lower():
+        return resp
+        
+    # Load clock divider
+    resp = device_comm_write(
+        device,
+        f'cdiv {clock_id} {clock_divider}'
+    )
+
+    if 'ok' not in resp[0].lower():
+        return resp
+
+    # Load external trigger pin
+    resp = device_comm_write(
+        device,
+        f'tset {clock_id} {trigger_id}'
+    )
+
+    if 'ok' not in resp[0].lower():
+        return resp
+
+    # Load clock type
+    resp = device_comm_write(
+        device,
+        f'ctyp {clock_id} {clock_type}'
+    )    
+
+    return resp
 
 
-def device_pulse_inst_load(
+def _device_pulse_inst_load(
     device: 'opensync',
     pulse_params: 'pulse_params'
 ) -> list[str]:
@@ -226,7 +238,7 @@ def device_pulse_inst_load(
     clock_divider = pulse_params['clock_divider']
 
     # Convert delay instructions to cycles in ns
-    output_inst, delay_inst = convert_pulse_inst(pulse_params)
+    output_inst, delay_inst = _convert_pulse_inst(pulse_params)
 
     # Validate that outputs and delays have equal length for variable timing
     output_len = len(output_inst)
@@ -261,7 +273,7 @@ def device_pulse_inst_load(
     if 'ok' not in resp[0].lower():
         return resp
 
-    # Now load internal clock trigger channel
+    # Now load clock trigger channel
     resp = device_comm_write(
         device,
         f'pset {pulse_id} {clock_id}'
@@ -277,6 +289,78 @@ def device_pulse_inst_load(
     )
 
     return resp
+
+
+def _device_pulse_config_load(
+    device: 'opensync',
+    pulse_params: 'pulse_params'
+) -> list[str]:
+    """
+    Parameters
+    ----------
+    device : 'opensync'
+        An instance of the OpenSync device that will receive the commands.
+    pulse_params : dict
+        A dictionary containing pulse parameters from get_pulse_params`.
+
+    Returns
+    -------
+    response : list[str]
+    """
+    pulse_id = pulse_params['pulse_id']
+    trigger_id = pulse_params['clock_id']
+    clock_divider = pulse_params['clock_divider']
+
+    # Activate output pulse channel
+    resp = device_comm_write(
+        device,
+        f'pact {pulse_id} 1'
+    )
+    
+    if 'ok' not in resp[0].lower():
+        return resp
+        
+    # Load clock divider
+    resp = device_comm_write(
+        device,
+        f'pdiv {pulse_id} {clock_divider}'
+    )
+
+    if 'ok' not in resp[0].lower():
+        return resp
+
+    # Load clock trigger pin
+    resp = device_comm_write(
+        device,
+        f'pset {pulse_id} {trigger_id}'
+    )
+
+    return resp
+
+
+def device_clock_reset(
+    device: 'opensync',
+    clock_params: 'clock_params'
+    ) -> list[str]:
+    """Clear the clock state of the OpenSync device.
+
+    This function sends a command to the OpenSync device to reset its buffer.
+
+    Parameters
+    ----------
+    device : 'opensync'
+        An instance of the OpenSync device that will receive the command.
+
+    Returns
+    -------
+    response : list[str]
+        A list of strings containing the responses from the OpenSync device
+        after executing the reset command.
+    """
+    clock_id = clock_params['clock_id']
+
+    command = f'crst {clock_id}' 
+    return device_comm_write(device, command)
 
     
 def device_pulse_reset(
@@ -305,8 +389,7 @@ def device_pulse_reset(
 
 
 def device_reset_all(
-    device: 'opensync',
-    pulse_params: 'pulse_params'
+    device: 'opensync'
     ) -> list[str]:
     """Clear all pulse and clock states of the OpenSync device.
 

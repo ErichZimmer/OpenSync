@@ -3,16 +3,16 @@ from ..error_handles import DeviceSystemError
 
 
 __all__ = [
-    'device_get_version',
-    'device_get_freq',
-    'device_get_status',
+    'device_system_version',
+    'device_system_freq',
+    'device_system_status',
     'device_system_test',
     'device_system_fire',
     'device_system_stop'
 ]
 
 
-def device_get_version(device: 'opensync') -> list[str]:
+def device_system_version(device: 'opensync') -> list[str]:
     """Retrieve the version information from the OpenSync device.
 
     This function sends a command to the OpenSync device to obtain its
@@ -33,7 +33,7 @@ def device_get_version(device: 'opensync') -> list[str]:
     return device_comm_write(device, command)
 
 
-def device_get_freq(device: 'opensync') -> list[str]:
+def device_system_freq(device: 'opensync') -> list[str]:
     """Retrieve the frequency information from the OpenSync device.
 
     This function sends a command to the OpenSync device to obtain its
@@ -55,7 +55,7 @@ def device_get_freq(device: 'opensync') -> list[str]:
     return device_comm_write(device, command)
 
     
-def device_get_status(device: 'opensync') -> list[str]:
+def device_system_status(device: 'opensync') -> list[str]:
     """Retrieve the current status from the OpenSync device.
 
     This function sends a command to the OpenSync device to obtain its
@@ -95,9 +95,14 @@ def device_system_test(device: 'opensync') -> None:
     VALID_RESPONSE = 'ok'
     INVALID_RESPONSE = 'Invalid Response'
 
+    # Test for valid commands
+    command = 'vers'
+    resp = device_comm_write(device, command)
+    
     if resp[-1] != VALID_RESPONSE:
         raise DeviceSystemError(
-            'OpenSync device recieved an unexpected response for valid command'
+            'OpenSync device recieved an unexpected response for valid ' +
+            'command'
         )
 
     # Test for invalid commands
@@ -110,18 +115,15 @@ def device_system_test(device: 'opensync') -> None:
             'command'
         )
         
-    # Test main clock frequency
-    resp = device_get_freq(device)
+    # Check main clock frequency
+    resp = device_system_freq(device)
     main_clock_freq = resp[CLOCK_MAIN_INDEX]
 
     if main_clock_freq != EXPECTED_CLOCK_MAIN_FREQ:
         raise DeviceSystemError(
             'OpenSync device is operating at an unsupport clock frequency'
         )
-
-    # Test for valid commands
-    resp = device_get_version(device)
-    
+        
 
 def device_system_fire(device: 'opensync') -> list[str]:
     """Execute a pulse sequence from the OpenSync device buffer.
