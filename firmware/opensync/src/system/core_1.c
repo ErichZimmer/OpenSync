@@ -51,6 +51,16 @@ void core_1_init()
         pio_output
     );
 
+    sequencer_clocks_init(
+        sequencer_clock_config,
+        pio_clocks
+    );
+
+    sequencer_output_init(
+        sequencer_pulse_config,
+        pio_output
+    );
+
     multicore_fifo_push_blocking(0);
 
     while(true)
