@@ -10,10 +10,10 @@ Due to timeline conflicts with an ongoing internship, the project schedule has b
 OpenSync is a simple and low-cost synchronizer based on microcontroller technology. Due to the intrinsic nature of microcontrollers compared to more advanced devices (e.g., field programmable gate arrays), most complex features that are typical of commercial propietary devices such as gating, external trigger manipulation, etc are not implemented. However, OpenSync remains sufficiently flexible and provides enough support for most users' needs when performing a PIV experiment. This is because OpenSync is an arbitrary pulse generator under-the-hood which allows for rather complex pulse sequences to be synthesized through simple output port manipulation. Additionally, three (3) independent internal clocks can be utilized to allow for relatively advanced pulse timing. While this implementation for a synchronizer may be quite restrictive at times, it is what makes OpenSync so simple!
 
 ## Specs
- - **Crystal Oscillator Frequency**: 12 MHz
- - **Main PLL Frequency**: overclocked to 250 MHz
+ - **Crystal Oscillator Frequency**: 12 
+ - **System Frequency**: 250 MHz (4 ns resolution)
  - **Output Channels**: 12
- - **Input Channel(s)**: 3
+ - **Input Channels**: 3
  - **Internal Synchronization Clocks**: 3
  - **I/O Channel Voltage**: 5V @ 50 Ohm
  - **I/O Resolution**: 1 clock cycle (4 ns * clock divider)
