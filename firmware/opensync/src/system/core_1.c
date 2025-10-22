@@ -244,6 +244,12 @@ void sequencer_clock_sm_config_active()
                     offset_clock_freerun
                 );
             }
+
+            debug_message_print_i(
+                debug_status_local_func,
+                "Internal Message: Finished configuring clock state machine %i\r\n",
+                i
+            );
         }
     }
 }
@@ -291,6 +297,12 @@ void sequencer_output_sm_config_active()
                 &sequencer_pulse_config[0],
                 offset_output,
                 reps
+            );
+
+            debug_message_print_i(
+                debug_status_local_func,
+                "Internal Message: Finished configuring output state machine for channel %i\r\n",
+                i
             );
         }
     }

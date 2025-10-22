@@ -26,7 +26,7 @@ pulse_delay_store:
 
 pulse_trigger_output:
     set pins, 1 [9] ; 10 cycles pulse width (9 cycles + 1) (see SDLC docs on why)
-    set pins, 0
+    set pins, 0 
 
 pulse_trigger_delay:
     jmp y-- pulse_trigger_delay
@@ -34,48 +34,3 @@ pulse_trigger_delay:
 pulse_trigger_reset:
     jmp x-- pulse_delay_store
 .wrap
-
-% c-sdk {
-
-void sequencer_freerun_sm_helper_init(
-    PIO pio, uint sm, 
-    uint offset, 
-    uint pin_out,
-    uint clock_divider
-) {
-//    assert(clock_divider < 65500);
-
-    // Initialize gpio pin
-    pio_gpio_init(pio, pin_out);
-
-    // Set output pin direction as output
-	pio_sm_set_consecutive_pindirs(
-        pio, sm,
-		pin_out,
-		1, // only one pin is used
-        true
-    );
-
-    // Get config for pio state machine
-	pio_sm_config config = sequencer_pio_clock_freerun_program_get_default_config(offset);
-
-    // Set output pins of config to output pins
-	sm_config_set_set_pins(
-        &config,
-        pin_out, 
-        1 // only one pin is used
-    );
-
-    // Setup clock clock divider
-    sm_config_set_clkdiv(
-        &config,
-        (float) clock_divider
-    );
-
-    pio_sm_init(
-        pio, sm,
-        offset,
-        &config
-    );
-}
-%}

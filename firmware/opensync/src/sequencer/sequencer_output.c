@@ -114,14 +114,87 @@ void sequencer_output_dma_configure(
         )
     );
 
+//    channel_config_set_ring(
+//        &dma_config,
+//        false,
+//        9
+//    );
+
 	// Start dma with the selected channel, generated config
 	dma_channel_configure(
         config -> dma_chan,
         &dma_config,
 		&config -> pio->txf[config -> sm], // Source pointer
 		&config -> instructions, // Instruction read address
-		PULSE_INSTRUCTIONS_MAX * reps, // Number of instructions * reps to perform
+		PULSE_INSTRUCTIONS_MAX*reps, // Number of instructions
 		true // Start transfers immediately
+    );
+}
+
+
+void sequencer_pulser_sm_helper_init(
+    PIO pio, uint sm, 
+    uint offset, 
+    uint pin_out_base,
+    uint pin_out_count,
+    uint pin_trig, 
+    uint clock_divider
+) {
+    assert(clock_divider < 65535);
+
+    // Initialize GPIO pins
+    for(uint i = 0; i < pin_out_count; i++)
+    {
+		pio_gpio_init(pio, pin_out_base + i);
+	}
+
+    // Set output pins direction to output
+    pio_sm_set_consecutive_pindirs(
+        pio, sm,
+		pin_out_base,
+		pin_out_count,
+        true
+    );
+
+    // Get config for pio state machine
+	pio_sm_config config = sequencer_pio_pulser_program_get_default_config(offset);
+
+    // Set output pins of config to output pins
+	sm_config_set_out_pins(
+        &config,
+        pin_out_base, 
+        pin_out_count
+    );
+
+    /* Note:
+       The GPIO clock trigger pins would be already initialized by the
+       clock PIO programs. DO NOT RECONFIGURE PIN DIRCTIONS!!!
+    */
+    
+    // Set clock trigger pins of config to input pins
+    sm_config_set_in_pins(
+        &config,
+        pin_trig
+    );
+
+    // Setup autopull for 32 bit words
+    sm_config_set_out_shift(
+        &config, 
+        true, 
+        true, 
+        32
+    );
+
+    // Setup clock clock divider
+    sm_config_set_clkdiv(
+        &config,
+        (float) clock_divider
+    );
+
+    pio_sm_init(
+        pio, sm,
+        offset,
+        &config
     );
 }
 
@@ -170,7 +243,7 @@ void sequencer_output_sm_config(
 
 void sequencer_output_dma_free(
     struct pulse_config* config
-) {
+) { 
     dma_channel_abort(
         config -> dma_chan
     );
@@ -198,16 +271,16 @@ void sequencer_output_sm_free(
         config -> sm
     );
 
+    pio_sm_unclaim(
+        config -> pio,
+        config -> sm
+    );
+
     // Ensure that all outputs are low
     pio_sm_set_pins(
         config -> pio,
         config -> sm,
         0 // 0 = low
-    );
-
-    pio_sm_unclaim(
-        config -> pio,
-        config -> sm
     );
 }
 
@@ -215,6 +288,16 @@ void sequencer_output_sm_free(
 void sequencer_output_free(
     struct pulse_config* config
 ) {
+    pio_sm_set_enabled(
+        config -> pio,
+        config -> sm,
+        false
+    );
+    pio_sm_restart(
+        config -> pio,
+        config -> sm
+    );
+
     sequencer_output_dma_free(config);
     sequencer_output_sm_free(config);
 

@@ -59,6 +59,21 @@ void sequencer_clock_triggered_dma_configure(
     struct clock_config* config
 );
 
+void sequencer_freerun_sm_helper_init(
+    PIO pio, uint sm, 
+    uint offset, 
+    uint pin_out,
+    uint clock_divider
+);
+
+void sequencer_triggered_sm_helper_init(
+    PIO pio, uint sm, 
+    uint offset, 
+    uint pin_out,
+    uint pin_trig, 
+    uint clock_divider
+);
+
 void sequencer_clock_freerun_sm_config(
     struct clock_config* config,
     uint offset

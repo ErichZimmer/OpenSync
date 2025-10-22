@@ -15,6 +15,7 @@
 uint32_t CLOCK_INSTRUCTIONS_DEFAULT[CLOCK_INSTRUCTIONS_MAX] = {0};
 uint32_t CLOCK_TRIGGERS_DEFAULT[CLOCK_TRIGGERS_MAX] = {0};
 
+
 uint sequencer_program_freerun_add(
     PIO pio_clock
 ) {
@@ -221,6 +222,111 @@ void sequencer_clock_triggered_dma_configure(
 }
 
 
+void sequencer_freerun_sm_helper_init(
+    PIO pio, uint sm, 
+    uint offset, 
+    uint pin_out,
+    uint clock_divider
+) {
+    // Initialize gpio pin
+    pio_gpio_init(pio, pin_out);
+
+    // Set output pin direction as output
+	pio_sm_set_consecutive_pindirs(
+        pio, sm,
+		pin_out,
+		1, // only one pin is used
+        true
+    );
+
+    // Get config for pio state machine
+	pio_sm_config config = sequencer_pio_clock_freerun_program_get_default_config(offset);
+
+    // Set output pins of config to output pins
+	sm_config_set_set_pins(
+        &config,
+        pin_out, 
+        1 // only one pin is used
+    );
+
+    // Setup clock clock divider
+    sm_config_set_clkdiv(
+        &config,
+        (float) clock_divider
+    );
+
+    pio_sm_init(
+        pio, sm,
+        offset,
+        &config
+    );
+}
+
+
+void sequencer_triggered_sm_helper_init(
+    PIO pio, uint sm, 
+    uint offset, 
+    uint pin_out,
+    uint pin_trig, 
+    uint clock_divider
+) {
+    // Initialize GPIO pin
+    pio_gpio_init(pio, pin_out);
+    pio_gpio_init(pio, pin_trig);
+
+    // Set pin directions
+    pio_sm_set_consecutive_pindirs(
+        pio, sm,
+		pin_out,
+		1, // only one pin is used
+        true // output direction
+    );
+
+	pio_sm_set_consecutive_pindirs(
+        pio, sm,
+		pin_trig,
+		1, // only one pin is used
+        false // input direction
+    );
+
+    // Get config for pio state machine
+	pio_sm_config config = sequencer_pio_clock_triggered_program_get_default_config(offset);	
+
+    // Set output pins of config to output pins
+	sm_config_set_set_pins(
+        &config,
+        pin_out, 
+        1 // only one pin is used
+    );
+
+    // Set trigger pins of config to input pins
+    sm_config_set_in_pins(
+        &config,
+        pin_trig
+    );
+
+    // Setup autopull for 32 bit words
+    sm_config_set_out_shift(
+        &config, 
+        true, 
+        true, 
+        32
+    );
+
+    // Setup clock clock divider
+    sm_config_set_clkdiv(
+        &config,
+        (float) clock_divider
+    );
+
+    pio_sm_init(
+        pio, sm,
+        offset,
+        &config
+    );
+}
+
+
 void sequencer_clock_freerun_sm_config(
     struct clock_config* config,
     uint offset
@@ -339,6 +445,11 @@ void sequencer_clock_sm_free(
 void sequencer_clock_free(
     struct clock_config* config
 ) {
+    pio_sm_set_enabled(
+        config -> pio,
+        config -> sm,
+        false
+    );
     sequencer_clock_dma_free(config);
     sequencer_clock_sm_free(config);
 
