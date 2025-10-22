@@ -4,8 +4,10 @@ from contextlib import contextmanager
 
 
 BAUDRATE = 19200
-READ_TIMEOUT = 0.25
-WRITE_TIMEOUT = 0.25
+READ_TIMEOUT = 0.1
+WRITE_TIMEOUT = 0.1
+READ_TIMEOUT_FAST = 0.02
+WRITE_TIMEOUT_FAST = 0.01
 CLOCK_CYCLE = 4.0 # clock cycle in nanoseconds
 EOL = '\r\n'
 
@@ -85,7 +87,10 @@ def device_comm_search() -> list[str]:
     return devices
 
 
-def device_comm_open(port: str) -> 'opensync':
+def device_comm_open(
+    port: str,
+    fast: bool=False
+) -> 'opensync':
     """Open a connection to a specified serial port.
 
     This function initializes a new OpenSync device connection on the
@@ -96,6 +101,8 @@ def device_comm_open(port: str) -> 'opensync':
     port : str
         The name of the serial port to which the OpenSync device will
         connect.
+    fast : bool
+        If enabled, decrease the serial response wait time by over half.
 
     Returns:
     -------
@@ -108,11 +115,18 @@ def device_comm_open(port: str) -> 'opensync':
     SerialException
         If the connection to the specified port cannot be established.
     """
+    if fast:
+        read_timeout = READ_TIMEOUT_FAST
+        write_timeout = WRITE_TIMEOUT_FAST
+    else:
+        read_timeout = READ_TIMEOUT
+        write_timeout = WRITE_TIMEOUT
+        
     device = Serial()
     device.baudrate = BAUDRATE
     device.port = port
-    device.timeout = READ_TIMEOUT
-    device.write_timeout = WRITE_TIMEOUT
+    device.timeout = read_timeout
+    device.write_timeout = write_timeout
     
     device.open()
 
@@ -176,7 +190,10 @@ def device_comm_close(device: 'opensync') -> None:
 
 
 @contextmanager
-def device_comm_managed(port: str) -> None:
+def device_comm_managed(
+    port: str,
+    fast: bool=False
+) -> None:
     """Context manager for managing the OpenSync device connection.
 
     This context manager opens a connection to the specified serial port
@@ -188,6 +205,8 @@ def device_comm_managed(port: str) -> None:
     port : str
         The name of the serial port to which the OpenSync device will
         connect.
+    fast : bool
+        If enabled, decrease the serial response wait time by over half.
 
     Yields
     -------
@@ -195,7 +214,10 @@ def device_comm_managed(port: str) -> None:
         An instance of the OpenSync device that is connected to the
         specified port.
     """
-    device = device_comm_open(port)
+    device = device_comm_open(
+        port,
+        fast
+    )
     
     try:
         yield device

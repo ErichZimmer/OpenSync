@@ -11,7 +11,7 @@ __all__ = [
     '_device_pulse_config_load',
     'device_clock_reset',
     'device_pulse_reset',
-    'device_reset_all'
+    'device_timing_reset'
 ]
 
 
@@ -162,7 +162,7 @@ def _device_clock_config_load(
     clock_id = clock_params['clock_id']
     clock_divider = clock_params['clock_divider']
     trigger_id = clock_params['ext_trigger_id']
-    clock_type = int(clock_params['ext_trigger'] != 'disable')
+    clock_type = int(clock_params['ext_trigger'] == 'enabled')
 
     # Activate clock channel
     resp = device_comm_write(
@@ -194,7 +194,7 @@ def _device_clock_config_load(
     # Load clock type
     resp = device_comm_write(
         device,
-        f'ctyp {clock_id} {clock_type}'
+        f'ctyp {clock_type}'
     )    
 
     return resp
@@ -388,7 +388,7 @@ def device_pulse_reset(
     return device_comm_write(device, command)
 
 
-def device_reset_all(
+def device_timing_reset(
     device: 'opensync'
     ) -> list[str]:
     """Clear all pulse and clock states of the OpenSync device.

@@ -12,10 +12,10 @@ def device_params_load(
     device: 'opensync',
     clock_params: list['clock_params'],
     pulse_params: list['pulse_params'],
-    reset: bool=False
+    reset: bool=True
 ):
     if reset == True:
-        _buffer.device_reset_all(
+        _buffer.device_timing_reset(
             device
         )
     

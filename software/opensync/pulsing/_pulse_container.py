@@ -272,19 +272,24 @@ def insert_pulse_many(
     
     """
     channel = _get_channel_ids(pulse_params)[channel_id]
+    pulse_data = []
     
     pulse_train_size = len(pulse_train)
     if pulse_train_size < MIN_PULSE_TRAIN_SIZE:
         msg = f'Invalid pulse train size of {pulse_train_size}'
         raise PulseParamsSize(msg)
 
+    # Check for pulse train size and append
     for sequence in pulse_train:
         sequence_size = len(sequence)
         if sequence_size != PULSE_SEQUENCE_SIZE:
             msg = f'Invalid pulse sequence size of {sequence_size} detected'
             raise PulseParamsSize(msg)
 
-    pulse_params[channel]['data'] = pulse_train
+        # If we made it this far, the evrything should be a-okay
+        pulse_data += sequence
+
+    pulse_params[channel]['data'] = pulse_data
 
     if channel_name != None:
         pulse_params[channel]['name'] = channel_name
