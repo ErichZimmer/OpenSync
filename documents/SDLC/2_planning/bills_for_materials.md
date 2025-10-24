@@ -16,6 +16,5 @@ In order to better facilitate the design and construction of a novel open source
 | Atten ST-990 Soldering Station | $110.00 | No | Soldering station | It's cheap; needed for soldering connectors |
 | Amphenol MUSBD511N1 | $12.30$ | No | USB Type B Connector | Secure USB connection for serial interfacing |
 | Wurth Elektronik SMB Connectors | $6.53/$$81.48 | No | 15x 50 Ohm SMB connectors | I like the look of them |
-| Schurter Pushbutton Switch | #33.53 | No | LED push button power switch | Because I like LEDs |
 
-### Expected minimum bill total: $576.31
+### Expected minimum bill total: $631.6
