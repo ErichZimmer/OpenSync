@@ -11,7 +11,7 @@ In order to better facilitate the design and construction of a novel open source
 ## Bill for Materials
 | Equipment/Material] | Cost (USD) Each/Total | Aquired | Desription | Justification | 
 | --- | --- | --- | --- | --- |
-| Rigol DS1202Z-E | $339.00 | No | 2-channel 200 MHz osciliscope | Verification of pulse timing and oepration |
+| Siglent SDS804X-HD | $428.00 | Yes | 4-channel 70 MHz osciliscope | Verification of pulse timing and oepration; easy to hack to 200 MHz |
 | 3D Printer | N/A | Yes | Filament and 12k resin 3D-printer | Fabrication of electrical housing and mounts |
 | Atten ST-990 Soldering Station | $110.00 | No | Soldering station | It's cheap; needed for soldering connectors |
 | Amphenol MUSBD511N1 | $12.30$ | No | USB Type B Connector | Secure USB connection for serial interfacing |
