@@ -261,6 +261,21 @@ void sequencer_output_dma_free(
 void sequencer_output_sm_free(
     struct pulse_config* config
 ) {
+    // Ensure that all outputs are low
+    pio_sm_set_pins(
+        config -> pio,
+        config -> sm,
+        0 // 0 = low
+    );
+
+    // Deinit all outputs
+    for (uint32_t i = 0; i < OUTPUT_PIN_COUNT; ++i)
+    {
+        gpio_deinit(
+            OUTPUT_PIN_BASE + i
+        );
+    }
+
     pio_sm_drain_tx_fifo(
         config -> pio,
         config -> sm
@@ -275,13 +290,6 @@ void sequencer_output_sm_free(
         config -> pio,
         config -> sm
     );
-
-    // Ensure that all outputs are low
-    pio_sm_set_pins(
-        config -> pio,
-        config -> sm,
-        0 // 0 = low
-    );
 }
 
 
@@ -292,10 +300,6 @@ void sequencer_output_free(
         config -> pio,
         config -> sm,
         false
-    );
-    pio_sm_restart(
-        config -> pio,
-        config -> sm
     );
 
     sequencer_output_dma_free(config);
