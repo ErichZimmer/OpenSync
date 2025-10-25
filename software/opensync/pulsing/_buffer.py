@@ -194,7 +194,7 @@ def _device_clock_config_load(
     # Load clock type
     resp = device_comm_write(
         device,
-        f'ctyp {clock_type}'
+        f'ctyp {clock_id} {clock_type}'
     )    
 
     return resp

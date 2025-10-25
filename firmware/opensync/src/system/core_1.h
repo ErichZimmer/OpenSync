@@ -40,6 +40,7 @@ bool sequencer_pulse_validate(
 );
 
 bool sequencer_clock_type_set(
+     uint32_t clock_id,
     uint32_t requested_type
 );
 

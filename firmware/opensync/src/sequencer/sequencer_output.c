@@ -90,6 +90,8 @@ void sequencer_output_dma_configure(
     struct pulse_config* config,
     uint32_t reps
 ) {
+    const uint RING_BUFF_SIZE_POWER = 9;
+
     config -> dma_chan = dma_claim_unused_channel(true);
     
     dma_channel_config dma_config = dma_channel_get_default_config(config -> dma_chan);
@@ -114,11 +116,11 @@ void sequencer_output_dma_configure(
         )
     );
 
-//    channel_config_set_ring(
-//        &dma_config,
-//        false,
-//        9
-//    );
+    channel_config_set_ring(
+        &dma_config,
+        false,
+        RING_BUFF_SIZE_POWER
+    );
 
 	// Start dma with the selected channel, generated config
 	dma_channel_configure(
@@ -126,7 +128,7 @@ void sequencer_output_dma_configure(
         &dma_config,
 		&config -> pio->txf[config -> sm], // Source pointer
 		&config -> instructions, // Instruction read address
-		PULSE_INSTRUCTIONS_MAX*reps, // Number of instructions
+		PULSE_INSTRUCTIONS_MAX*10000, // Number of instructions
 		true // Start transfers immediately
     );
 }

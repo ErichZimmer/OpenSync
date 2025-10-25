@@ -77,6 +77,7 @@ void serial_print_clock_configs(
     {
         fast_serial_printf("Clock config id: %i\r\n", i);
         fast_serial_printf("Clock config is active: %i\r\n", config_array[i].active);
+        fast_serial_printf("Clock config clock type: %i\r\n", config_array[i].clock_type);
         fast_serial_printf("Clock config clock divider: %i\r\n", config_array[i].clock_divider);
         fast_serial_printf("Clock config sm: %i\r\n", config_array[i].sm);
         fast_serial_printf("Clock config dma channel: %i\r\n", config_array[i].dma_chan);

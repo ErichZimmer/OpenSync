@@ -24,11 +24,6 @@ static uint offset_output = 0;
 static struct clock_config sequencer_clock_config[CLOCKS_MAX];
 static struct pulse_config sequencer_pulse_config[CLOCKS_MAX];
 
-const uint32_t CLOCK_FREERUN = 0;
-const uint32_t CLOCK_TRIGGERED = 1;
-
-static uint32_t clock_type = CLOCK_FREERUN;
-
 PIO pio_clocks = pio0;
 PIO pio_output = pio1;
 
@@ -75,12 +70,6 @@ void core_1_init()
         uint32_t debug_status_local = debug_status_get();
         
         sequencer_status_set(ARMING);
-
-        debug_message_print_i(
-            debug_status_local,
-            "Internal Message: Sequencer clock type (0=freerun; 1=triggered)=%i\r\n",
-            clock_type
-        );
 
         if (debug_status_local != SEQUENCER_DNDEBUG)
         {
@@ -230,20 +219,10 @@ void sequencer_clock_sm_config_active()
                 i
             );
 
-            if (clock_type == CLOCK_FREERUN)
-            {
-                sequencer_clock_freerun_sm_config(
-                    &sequencer_clock_config[i],
-                    offset_clock_freerun
-                );
-            }
-            else // Perhaps, make sure that the clock_type is correct?
-            {
-                sequencer_clock_triggered_sm_config(
-                    &sequencer_clock_config[i],
-                    offset_clock_freerun
-                );
-            }
+            sequencer_clock_sm_config(
+                &sequencer_clock_config[i],
+                offset_clock_freerun
+            );
 
             debug_message_print_i(
                 debug_status_local_func,
@@ -461,22 +440,6 @@ bool sequencer_pulse_validate(
     return 1;
 }
 
-
-bool sequencer_clock_type_set(
-    uint32_t requested_type
-) {
-    // Clock types can either be one or zero
-    if (requested_type > 2)
-    {
-        return 0;
-    }
-
-    clock_type = requested_type;
-
-    return 1;
-}
-
-
 // For now, clock IDs and trigger IDs have the same range (e.g., [0..2])
 bool clock_id_validate(
     uint32_t clock_id
@@ -493,6 +456,29 @@ bool clock_id_validate(
     }
 
     return 0;
+}
+
+
+bool sequencer_clock_type_set(
+    uint32_t clock_id,
+    uint32_t requested_type
+) {
+
+    // Validate clock ID
+    if(!clock_id_validate(clock_id))
+    {
+        return 0;
+    }
+
+    // Clock types must be zero to max enum type (CLOCK_TRIGGERED in this case)
+    if (requested_type > CLOCK_TRIGGERED)
+    {
+        return 0;
+    }
+
+    sequencer_clock_config[clock_id].clock_type = requested_type;
+
+    return 1;
 }
 
 

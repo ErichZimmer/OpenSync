@@ -139,17 +139,21 @@ void core_2_init()
 		// Set clock type
 		else if(strncmp(serial_buf, "ctyp", CMD_LEN) == CMD_DETECTED)
         {
+			uint32_t clock_id = 0;
             uint32_t requested_type = 0;
 
-            int parsed = sscanf(serial_buf, "%*s %i", &requested_type);
+            int parsed = sscanf(serial_buf, "%*s %i %i", &clock_id, &requested_type);
 
-            if(parsed < ARGS_MIN_SINGLE)
+            if(parsed < ARGS_MIN_DOUBLE)
 			{
 				fast_serial_printf("Invalid Request: Invalid input\r\n");
 				continue;
 			}
 
-			bool success = sequencer_clock_type_set(requested_type);
+			bool success = sequencer_clock_type_set(
+				clock_id,
+				requested_type
+			);
 
 			if (!success)
 			{

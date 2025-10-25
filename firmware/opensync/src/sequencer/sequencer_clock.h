@@ -51,11 +51,7 @@ void sequencer_clock_config_reset(
     struct clock_config* config
 );
 
-void sequencer_clock_freerun_dma_configure(
-    struct clock_config* config
-);
-
-void sequencer_clock_triggered_dma_configure(
+void sequencer_clock_dma_configure(
     struct clock_config* config
 );
 
@@ -74,12 +70,7 @@ void sequencer_triggered_sm_helper_init(
     uint clock_divider
 );
 
-void sequencer_clock_freerun_sm_config(
-    struct clock_config* config,
-    uint offset
-);
-
-void sequencer_clock_triggered_sm_config(
+void sequencer_clock_sm_config(
     struct clock_config* config,
     uint offset
 );

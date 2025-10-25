@@ -132,7 +132,7 @@ void sequencer_clock_config_reset(
 }
 
 
-void sequencer_clock_freerun_dma_configure(
+void sequencer_clock_dma_configure(
     struct clock_config* config
 ) {
     config -> dma_chan = dma_claim_unused_channel(true);
@@ -164,61 +164,40 @@ void sequencer_clock_freerun_dma_configure(
             true
         )
     );
-
-	// Start dma with the selected channel, generated config
-	dma_channel_configure(
-        config -> dma_chan,
-        &dma_config,
-		&config -> pio->txf[config -> sm], // Source pointer
-		config -> instructions, // Instruction read address
-		CLOCK_INSTRUCTIONS_MAX, // Number of instructions
-		true // Do not start automatically
-    );
-}
-
-
-void sequencer_clock_triggered_dma_configure(
-    struct clock_config* config
-) {
-    config -> dma_chan = dma_claim_unused_channel(true);
     
-    dma_channel_config dma_config = dma_channel_get_default_config(config -> dma_chan);
 
-    // Enable read increment and disable write increment
-	channel_config_set_read_increment(
-        &dma_config, 
-        true
-    );
-	channel_config_set_write_increment(
-        &dma_config, 
-        false
-    );
+    switch(config -> clock_type)
+    {
+        case CLOCK_FREERUN:
+            // Start dma with the selected channel, generated config
+            dma_channel_configure(
+                config -> dma_chan,
+                &dma_config,
+                &config -> pio->txf[config -> sm], // Source pointer
+                config -> instructions, // Instruction read address
+                CLOCK_INSTRUCTIONS_MAX, // Number of instructions
+                true // Do not start automatically
+            );
 
-    // Set read increment size
-    channel_config_set_transfer_data_size(
-        &dma_config, 
-        DMA_SIZE_32
-    );
+            break;
 
-    // Set data transfer request signal
-	channel_config_set_dreq(
-        &dma_config, 
-        pio_get_dreq(
-            config -> pio, 
-            config -> sm, 
-            true
-        )
-    );
+        case CLOCK_TRIGGERED:
+            // Start dma with the selected channel, generated config
+            dma_channel_configure(
+                config -> dma_chan,
+                &dma_config,
+                &config -> pio->txf[config -> sm], // Source pointer
+                config -> trigger_config, // Instruction read address
+                CLOCK_TRIGGERS_MAX * config -> trigger_reps, // Number of instructions * reps to perform
+                true // Start transfers immediately
+            );
 
-	// Start dma with the selected channel, generated config
-	dma_channel_configure(
-        config -> dma_chan,
-        &dma_config,
-		&config -> pio->txf[config -> sm], // Source pointer
-		config -> trigger_config, // Instruction read address
-		CLOCK_TRIGGERS_MAX * config -> trigger_reps, // Number of instructions * reps to perform
-		true // Start transfers immediately
-    );
+            break;
+
+        default:
+            // We should never get to this point.
+            return;
+    }
 }
 
 
@@ -327,7 +306,7 @@ void sequencer_triggered_sm_helper_init(
 }
 
 
-void sequencer_clock_freerun_sm_config(
+void sequencer_clock_sm_config(
     struct clock_config* config,
     uint offset
 ) {
@@ -349,48 +328,37 @@ void sequencer_clock_freerun_sm_config(
         config -> sm
     );
 
-    sequencer_freerun_sm_helper_init(
-        config -> pio, 
-        config -> sm,
-        offset,
-        config -> clock_pin,
-        config -> clock_divider
-    );
+    switch(config -> clock_type)
+    {
+        case CLOCK_FREERUN:
+            sequencer_freerun_sm_helper_init(
+                config -> pio, 
+                config -> sm,
+                offset,
+                config -> clock_pin,
+                config -> clock_divider
+            );
 
-    sequencer_clock_freerun_dma_configure(config);
+            break;
 
-    config -> configured = true;
-}
+        case CLOCK_TRIGGERED:
+            sequencer_triggered_sm_helper_init(
+                config -> pio,
+                config -> sm,
+                offset,
+                config -> clock_pin,
+                config -> trigger_pin,
+                config -> clock_divider
+            );
 
+            break;
 
-void sequencer_clock_triggered_sm_config(
-    struct clock_config* config,
-    uint offset
-) {
+        default:
+            // We should never get to this point...
+            return;
+    }
 
-    // Make sure the state machine is disabled
-	pio_sm_set_enabled(
-        config -> pio, 
-        config -> sm, 
-        false
-    );
-
-    // Reset the state machine to default state
-    pio_sm_restart(
-        config -> pio, 
-        config -> sm
-    );
-
-    sequencer_triggered_sm_helper_init(
-        config -> pio,
-        config -> sm,
-        offset,
-        config -> clock_pin,
-        config -> trigger_pin,
-        config -> clock_divider
-    );
-
-    sequencer_clock_triggered_dma_configure(
+    sequencer_clock_dma_configure(
         config
     );
 
@@ -418,6 +386,13 @@ void sequencer_clock_dma_free(
 void sequencer_clock_sm_free(
     struct clock_config* config
 ) {
+    // Ensure that all outputs are low
+    pio_sm_set_pins(
+        config -> pio,
+        config -> sm,
+        0 // 0 = low
+    );
+
     pio_sm_drain_tx_fifo(
         config -> pio,
         config -> sm
@@ -428,7 +403,7 @@ void sequencer_clock_sm_free(
         config -> sm
     );
 
-    // Ensure that all outputs are low
+    // Ensure that all outputs are low (again)
     pio_sm_set_pins(
         config -> pio,
         config -> sm,
