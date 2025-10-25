@@ -4,6 +4,7 @@
 | Date | Version | Change | 
 | --- | --- | --- |
 | 9/10/2025 | 0.1.0 | Intitial publishment. |
+| 10/24/2025 | 0.1.0 | Obtained oscilliscope |
 
 ## Executive Summary
 In order to better facilitate the design and construction of a novel open source synchronizing device, it is important to identify equipment and materials that may be required to ensure that the project runs smoothly and successfully. Since this project includes both software and hardware aspects, it would be beneficial to list necessary equipment and materials due to its tight budget. As such, a table of (would be) aquired equipment and materials is presented in this document.
