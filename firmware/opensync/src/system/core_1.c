@@ -112,32 +112,37 @@ void core_1_init()
             uint pio_clocks_sm_mask = sequencer_clock_sm_mask_get();
             uint pio_output_sm_mask = sequencer_output_sm_mask_get();
 
-    //        pio_enable_sm_multi_mask_in_sync(
-    //            pio_clocks,
-    //            0u,
-    //            pio_clocks_sm_mask,
-    //            pio_output_sm_mask
-    //        );
-
             debug_message_print(
                 debug_status_local,
-                "Internal Message: Starting outputs state machines\r\n"
+                "Internal Message: Starting all active state machines\r\n"
             );
 
-            pio_enable_sm_mask_in_sync(
-                pio_output,
+            pio_enable_sm_multi_mask_in_sync(
+                pio_clocks,
+                0u,
+                pio_clocks_sm_mask,
                 pio_output_sm_mask
             );
 
-            debug_message_print(
-                debug_status_local,
-                "Internal Message: Starting clocks state machines\r\n"
-            );
+//            debug_message_print(
+//                debug_status_local,
+//                "Internal Message: Starting outputs state machines\r\n"
+//            );
 
-            pio_enable_sm_mask_in_sync(
-                pio_clocks,
-                pio_clocks_sm_mask
-            );
+//            pio_enable_sm_mask_in_sync(
+//                pio_output,
+//                pio_output_sm_mask
+//            );
+
+//            debug_message_print(
+//                debug_status_local,
+//                "Internal Message: Starting clocks state machines\r\n"
+//            );
+
+//            pio_enable_sm_mask_in_sync(
+//                pio_clocks,
+//                pio_clocks_sm_mask
+//            );
 
             // Stall core until all processes are done
             sequencer_clock_sm_stall();

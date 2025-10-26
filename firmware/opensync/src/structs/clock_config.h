@@ -3,7 +3,7 @@
 #include <stdint.h>
 #include "hardware/pio.h"
 
-#define CLOCK_INSTRUCTIONS_MAX 64
+#define CLOCK_INSTRUCTIONS_MAX 16
 #define CLOCK_TRIGGERS_MAX 2
 #define CLOCKS_MAX 3
 
