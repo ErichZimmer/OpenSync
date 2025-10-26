@@ -91,10 +91,7 @@ If successfull, no errors or warnings should be produced. Please note that all c
 
 
 ## Known Erratas
- - The RP2350 microcontroller has a known latching problem on GPIO inputs (errata 9). This is minimized by an 8k resistor. As such, external triggering should be limited to around 1 MHz and >100ns pulse durations at peak operating frequency.
- - If two clock channels modify the same output channel, the clock channel with the highest priority will modify that output channel.
- - If a pulse sequence is longer than the clock trigger rate, the system will become unstable for one pulse sequence iteration before correcting itself.
- - Pulsing at frequencies >1MHz could incur cross-talk and other noise between output channels (yet to be validated).
+ - Pulsing at frequencies >1MHz could incur cross-talk and other noise between output channels (PCB design yet to be validated).
 
 ## Context
 https://groups.google.com/g/openpiv-users/c/xi7qt28IGEE
@@ -106,7 +103,7 @@ Will be determined after the first milestone of this project.
 - [x] Add timing plot utilities
 - [x] Add device containerization for customization
 - [x] Add the ability to change channel names
-- [ ] Add the ability to disable output channels (necessary?)
+- [x] Add the ability to disable output channels (necessary?)
 - [x] Add three internal timers that can be mapped to pulse sequences
 - [x] Add the ability to count and skip external triggers (usefull for phase-locked stuff like rotor blades)
 - [x] Add second external trigger and output port masking
@@ -114,7 +111,7 @@ Will be determined after the first milestone of this project.
 - [ ] Add POST bootup validation (not really necessary, but why not)
 - [ ] Add video examples on YouTube
 - [ ] Learn power electronics (this semester)
-- [ ] Validate against an osciliscope (WIP on obtaining one)
+- [ ] Validate against an osciliscope
 
 ## References
  1. Radim Hošák, & Miroslav Ježek. (2018). Arbitrary digital pulse sequence generator with delay-loop timing. Review of Scientific Instruments, 89(4). https://doi.org/10.1063/1.5019685
