@@ -356,7 +356,7 @@ void sequencer_sm_active_free()
     {
         if (sequencer_clock_config[i].configured == true)
         {
-            sequencer_clock_sm_free(
+            sequencer_clock_free(
                 &sequencer_clock_config[i]
             );
         }
@@ -367,7 +367,7 @@ void sequencer_sm_active_free()
     {
         if (sequencer_pulse_config[i].configured == true)
         {
-            sequencer_output_sm_free(
+            sequencer_output_free(
                 &sequencer_pulse_config[i]
             );
         }
