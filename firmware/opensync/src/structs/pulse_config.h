@@ -3,7 +3,8 @@
 #include <stdint.h>
 #include "hardware/pio.h"
 
-#define PULSE_INSTRUCTIONS_MAX 128
+#define PULSE_INSTRUCTIONS_MAX 64
+#define PULSE_ITERATIONS_MAX 500000
 
 
 struct pulse_config

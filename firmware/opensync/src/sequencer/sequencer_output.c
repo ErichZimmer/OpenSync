@@ -87,10 +87,9 @@ void sequencer_output_config_reset(
 
 
 void sequencer_output_dma_configure(
-    struct pulse_config* config,
-    uint32_t reps
+    struct pulse_config* config
 ) {
-    const uint RING_BUFF_SIZE_POWER = 9;
+    const uint RING_BUFF_SIZE_POWER = 8; //log(2)(PULSE_INSTRUCTIONS_MAX * 4)
 
     config -> dma_chan = dma_claim_unused_channel(true);
     
@@ -128,13 +127,13 @@ void sequencer_output_dma_configure(
         &dma_config,
 		&config -> pio->txf[config -> sm], // Source pointer
 		&config -> instructions, // Instruction read address
-		PULSE_INSTRUCTIONS_MAX*10000, // Number of instructions
+		PULSE_INSTRUCTIONS_MAX * PULSE_ITERATIONS_MAX, // Number of instructions repeated the maximum amount of times
 		true // Start transfers immediately
     );
 }
 
 
-void sequencer_pulser_sm_helper_init(
+void sequencer_output_sm_helper_init(
     PIO pio, uint sm, 
     uint offset, 
     uint pin_out_base,
@@ -187,6 +186,12 @@ void sequencer_pulser_sm_helper_init(
         32
     );
 
+    // Combine read and transmit FIFO to increase performance
+    sm_config_set_fifo_join(
+        &config, 
+        PIO_FIFO_JOIN_TX
+    );
+
     // Setup clock clock divider
     sm_config_set_clkdiv(
         &config,
@@ -203,8 +208,7 @@ void sequencer_pulser_sm_helper_init(
 
 void sequencer_output_sm_config(
     struct pulse_config* config,
-    uint offset,
-    uint32_t reps
+    uint offset
 ) {
     pio_claim_sm_mask(
         config -> pio,
@@ -224,7 +228,7 @@ void sequencer_output_sm_config(
         config -> sm
     );
 
-    sequencer_pulser_sm_helper_init(
+    sequencer_output_sm_helper_init(
         config -> pio,
         config -> sm,
         offset,
@@ -235,8 +239,7 @@ void sequencer_output_sm_config(
     );
 
     sequencer_output_dma_configure(
-        config,
-        reps
+        config
     );
 
     config -> configured = true;

@@ -237,7 +237,6 @@ void sequencer_clock_sm_config_active()
 // NOTE: Has debug messages incl.
 void sequencer_output_sm_config_active()
 {
-    uint32_t reps = ITERATIONS_MAX; // 500,000 reps is the maximum supported.
     uint32_t debug_status_local_func = debug_status_get();
 
     if (!sequencer_pulse_conflict_check())
@@ -274,8 +273,7 @@ void sequencer_output_sm_config_active()
 
             sequencer_output_sm_config(
                 &sequencer_pulse_config[0],
-                offset_output,
-                reps
+                offset_output
             );
 
             debug_message_print_i(

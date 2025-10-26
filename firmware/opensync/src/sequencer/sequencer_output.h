@@ -37,11 +37,10 @@ void sequencer_output_config_reset(
 );
 
 void sequencer_output_dma_configure(
-    struct pulse_config* config,
-    uint32_t reps
+    struct pulse_config* config
 );
 
-void sequencer_pulser_sm_helper_init(
+void sequencer_output_sm_helper_init(
     PIO pio, uint sm, 
     uint offset, 
     uint pin_out_base,
@@ -52,8 +51,7 @@ void sequencer_pulser_sm_helper_init(
 
 void sequencer_output_sm_config(
     struct pulse_config* config,
-    uint offset,
-    uint32_t reps
+    uint offset
 );
 
 void sequencer_output_dma_free(
