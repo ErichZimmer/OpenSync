@@ -407,7 +407,13 @@ void core_2_init()
                     break;
                 }
 
-                instruction_buffer[instruction_count] = reps -CLOCK_INSTRUCTION_OFFSET;
+				// Reduce repitions by one if greater than one iteration due to the way the PIO program works
+				if (reps > 1)
+				{
+					reps -= CLOCK_INSTRUCTION_OFFSET;
+				}
+
+                instruction_buffer[instruction_count] = reps;
                 instruction_count++;
 
                 instruction_buffer[instruction_count] = delay;
