@@ -336,7 +336,10 @@ void sequencer_clock_sm_stall()
         }
 
         while((dma_channel_is_busy(sequencer_clock_config[i].dma_chan)) &&
-                (sequencer_status_get() != ABORT_REQUESTED)){ }
+            (sequencer_status_get() != ABORT_REQUESTED))
+            {
+                sleep_us(100);
+            }
     }
 }
 

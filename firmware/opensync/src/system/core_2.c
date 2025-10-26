@@ -661,7 +661,7 @@ void core_2_init()
                 instruction_buffer[instruction_count] = output;
                 instruction_count++;
 
-                instruction_buffer[instruction_count] = delay;
+                instruction_buffer[instruction_count] = delay - PULSE_INSTRUCTION_OFFSET;
                 instruction_count++;
 
 				// Everything is good so far, so return an ok
