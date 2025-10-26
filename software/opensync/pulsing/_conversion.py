@@ -10,7 +10,7 @@ import warnings
 
 
 # Simple pulse sequences should not be larger than 30 instructions pairs.
-MAX_PULSE_INSTRUCTION_PAIRS = 63 # 126 total instructions supported + 2 term. flags
+MAX_PULSE_INSTRUCTION_PAIRS = 31 # 31 * 2 = 62 total instructions supported + 2 term. flags
 MIN_PULSE_CYCLE_WIDTH = 5
 DEFAULT_OUTPUT_STATE = 0
 
