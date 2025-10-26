@@ -407,7 +407,7 @@ void core_2_init()
                     break;
                 }
 
-                instruction_buffer[instruction_count] = reps;
+                instruction_buffer[instruction_count] = reps -CLOCK_INSTRUCTION_OFFSET;
                 instruction_count++;
 
                 instruction_buffer[instruction_count] = delay;
