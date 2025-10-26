@@ -20,8 +20,8 @@ struct clock_config
     uint trigger_pin;
     uint32_t clock_type;
     int dma_chan;
-    uint32_t instructions[CLOCK_INSTRUCTIONS_MAX];
-    uint32_t trigger_config[CLOCK_TRIGGERS_MAX];
+    uint32_t __attribute__((aligned(CLOCK_INSTRUCTIONS_MAX * sizeof(uint32_t)))) instructions[CLOCK_INSTRUCTIONS_MAX];
+    uint32_t __attribute__((aligned(CLOCK_TRIGGERS_MAX * sizeof(uint32_t)))) trigger_config[CLOCK_TRIGGERS_MAX];
     uint32_t trigger_reps;
     uint clock_divider;
     bool active;
