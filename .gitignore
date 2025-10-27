@@ -3,7 +3,6 @@
 *.so
 *.o
 *.ipynb_checkpoints
-*.vscode
 .coverage
 __pycache__
 
@@ -11,6 +10,7 @@ firmware/opensync/.vscode
 firmware/opensync/build
 
 
+.vscode/*
 demos/videos/*
 documents/manual/*
 software/docs/*.py
