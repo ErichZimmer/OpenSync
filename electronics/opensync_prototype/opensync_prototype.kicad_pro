@@ -415,6 +415,10 @@
     [
       "1cb4b724-597c-4248-8518-89ecf4cdd3ac",
       "Microcontroller and Ext. Clock"
+    ],
+    [
+      "73ed134d-44af-4d5d-a859-f740472c6953",
+      "Power and Data"
     ]
   ],
   "text_variables": {}
