@@ -1,0 +1,15 @@
+(kicad_sch
+	(version 20250114)
+	(generator "eeschema")
+	(generator_version "9.0")
+	(uuid "482318f8-3209-4edc-b08b-8a51b63b58fe")
+	(paper "A4")
+	(title_block
+		(title "Output Ports")
+		(date "2025-10-31")
+		(rev "0.1")
+		(company "OpenPIV Consortium")
+		(comment 1 "Output ports for each output channel")
+	)
+	(lib_symbols)
+)
