@@ -9,6 +9,7 @@ __pycache__
 firmware/opensync/.vscode
 firmware/opensync/build
 
+*-backups/*
 
 .vscode/*
 demos/videos/*
