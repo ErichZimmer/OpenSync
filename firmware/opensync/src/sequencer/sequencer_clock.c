@@ -137,6 +137,8 @@ void sequencer_clock_config_reset(
 void sequencer_clock_dma_configure(
     struct clock_config* config
 ) {
+    const uint RING_BUFF_SIZE_POWER = 3; //log(2)(CLOCK_TRIGGERS_MAX * 4)
+
     config -> dma_chan = dma_claim_unused_channel(true);
     
     dma_channel_config dma_config = dma_channel_get_default_config(config -> dma_chan);
@@ -184,6 +186,12 @@ void sequencer_clock_dma_configure(
             break;
 
         case CLOCK_TRIGGERED:
+            channel_config_set_ring(
+                &dma_config,
+                false,
+                RING_BUFF_SIZE_POWER
+            );
+
             // Start dma with the selected channel, generated config
             dma_channel_configure(
                 config -> dma_chan,
