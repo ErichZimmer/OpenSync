@@ -54,6 +54,48 @@
 		)
 	)
 	(sheet
+		(at 157.48 102.87)
+		(size 44.45 27.94)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "371fce6d-ac19-491d-b1fc-27f5ac1440e8")
+		(property "Sheetname" "Output Ports"
+			(at 157.48 102.1584 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "output_ports.kicad_sch"
+			(at 157.48 131.3946 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "opensync_prototype"
+				(path "/97d97b34-a2f9-4e5e-9870-299ade25a4f4"
+					(page "5")
+				)
+			)
+		)
+	)
+	(sheet
 		(at 54.61 66.04)
 		(size 45.72 27.94)
 		(exclude_from_sim no)
@@ -91,6 +133,48 @@
 			(project "opensync_prototype"
 				(path "/97d97b34-a2f9-4e5e-9870-299ade25a4f4"
 					(page "3")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 157.48 66.04)
+		(size 44.45 27.94)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "ce4daf0f-5e68-458e-b8c1-0d90d8678163")
+		(property "Sheetname" "Input Ports"
+			(at 157.48 65.3284 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "input_ports.kicad_sch"
+			(at 157.48 94.5646 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "opensync_prototype"
+				(path "/97d97b34-a2f9-4e5e-9870-299ade25a4f4"
+					(page "4")
 				)
 			)
 		)

@@ -2876,7 +2876,7 @@
 	)
 	(text "12 MHz Cystal Oscillator"
 		(exclude_from_sim no)
-		(at 41.656 124.968 0)
+		(at 39.624 130.81 0)
 		(effects
 			(font
 				(size 1.27 1.27)
