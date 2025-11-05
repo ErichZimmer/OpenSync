@@ -24,10 +24,10 @@ trigger_pulse_wait:
     wait 0 pin 0 ; make sure the falling edge is recieved first
     wait 1 pin 0 ; then wait for the rising edge
     
-;trigger_pulse_skip:
+trigger_pulse_skip:
     jmp x-- trigger_pulse_wait
 
-;trigger_pulse_delay:
+trigger_pulse_delay:
     jmp y-- trigger_pulse_delay
 
 trigger_pulse_start:
