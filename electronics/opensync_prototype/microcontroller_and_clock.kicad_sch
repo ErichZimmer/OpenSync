@@ -5606,6 +5606,26 @@
 		)
 		(uuid "ff930206-a4b2-4182-b8ba-1f2a2b839778")
 	)
+	(label "OUTPUT_7"
+		(at 172.72 118.11 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "082e2a38-f7c0-4a20-8269-91fcc568b7db")
+	)
+	(label "OUTPUT_1"
+		(at 172.72 102.87 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "0dd4cb97-cfd7-445c-85dd-820c1791db91")
+	)
 	(label "XOUT"
 		(at 68.58 166.37 0)
 		(effects
@@ -5626,6 +5646,26 @@
 		)
 		(uuid "2d2e6d30-53da-48e5-b3fe-9587b464e1d3")
 	)
+	(label "OUTPUT_3"
+		(at 172.72 107.95 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "3d482bda-e2e4-4a3e-b14a-50e91c919725")
+	)
+	(label "OUTPUT_5"
+		(at 172.72 113.03 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "46540196-5196-4b62-b986-ed96abb52e47")
+	)
 	(label "CLOCK_2"
 		(at 171.45 62.23 0)
 		(effects
@@ -5635,6 +5675,16 @@
 			(justify left bottom)
 		)
 		(uuid "46891f6c-8da7-43f5-ad9a-c8b0cf124048")
+	)
+	(label "OUTPUT_2"
+		(at 172.72 105.41 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "476fe2a7-ef50-411e-94c3-3346fa971d2c")
 	)
 	(label "RUN"
 		(at 93.98 102.87 0)
@@ -5646,6 +5696,16 @@
 		)
 		(uuid "4ac9551f-3df1-4c4c-90f4-55c744fed705")
 	)
+	(label "OUTPUT_6"
+		(at 172.8998 115.57 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "4c0f24ac-f769-4ed4-be3c-366584a80345")
+	)
 	(label "QSPL_SS"
 		(at 92.71 60.96 0)
 		(effects
@@ -5656,6 +5716,26 @@
 		)
 		(uuid "5543f1e6-ffc0-46be-91e9-ba94df1e448c")
 	)
+	(label "OUTPUT_9"
+		(at 172.72 123.19 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "577cb9c7-045c-440d-95ac-2ab4b835adb0")
+	)
+	(label "TRIGGER_1"
+		(at 172.72 95.25 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "603ee4ba-bb66-4623-9c1a-52b6d6b1b691")
+	)
 	(label "XIN"
 		(at 66.04 135.89 0)
 		(effects
@@ -5665,6 +5745,26 @@
 			(justify left bottom)
 		)
 		(uuid "67df0ecb-105b-418c-a4e9-1cd1b7cb20ef")
+	)
+	(label "OUTPUT_12"
+		(at 172.72 130.81 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "69addf9c-5857-4b19-8191-da9552226df6")
+	)
+	(label "OUTPUT_4"
+		(at 172.72 110.49 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "78279f74-01e1-426b-ba2e-d47d09f2cadd")
 	)
 	(label "CLOCK_3"
 		(at 171.45 64.77 0)
@@ -5695,6 +5795,56 @@
 			(justify left bottom)
 		)
 		(uuid "b4576614-e6fd-4b45-8ee7-208daa3e5858")
+	)
+	(label "TRIGGER_3"
+		(at 172.72 100.33 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "b4de32d9-0b64-4c68-b177-12f6ff06ad30")
+	)
+	(label "OUTPUT_11"
+		(at 172.72 128.27 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "c0ff3c92-03c8-4582-a232-8535719d71c9")
+	)
+	(label "TRIGGER_2"
+		(at 172.72 97.79 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "ca795ee3-c580-4cce-947d-534df0f9fe67")
+	)
+	(label "OUTPUT_8"
+		(at 172.8453 120.65 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "ddee9303-198f-4825-9791-519152dacdf6")
+	)
+	(label "OUTPUT_10"
+		(at 172.72 125.73 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "f6abd474-2630-44e2-aca7-8609f619bd37")
 	)
 	(hierarchical_label "TRIGGER_2"
 		(shape input)
