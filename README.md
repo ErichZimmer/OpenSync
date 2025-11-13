@@ -26,7 +26,7 @@ OpenSync is a simple and low-cost synchronizer based on microcontroller technolo
  - **Pulse Sequence Single-Channel Jitter**:  typically < 0.1 ns
  - **Pulse Sequence Inter-Channel Jitter**:  typically < 0.8 ns
  - **Pulse Sequence Repetition Jitter**: up to 4 clock cycles (up to 16 ns * clock divider)
- - **Max Clock Divider**: 65200 (pulse-to-pulse distances up to ~311 hours)
+ - **Max Clock Divider**: 65500 (pulse-to-pulse distances up to ~311 hours)
  - All powered via USB!
 
 
