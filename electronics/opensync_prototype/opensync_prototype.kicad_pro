@@ -752,8 +752,20 @@
       "Input Ports"
     ],
     [
-      "371fce6d-ac19-491d-b1fc-27f5ac1440e8",
-      "Output Ports"
+      "ffae930e-37d3-493c-8424-22c8f25b93ee",
+      "Output Ports 1 to 3"
+    ],
+    [
+      "fd1e8d9b-3d04-4c35-bae5-e4f4bf9a3606",
+      "Output Ports 4 to 6"
+    ],
+    [
+      "bb1f8d74-94ec-42aa-ab1c-e98924492055",
+      "Output Ports 7 to 9"
+    ],
+    [
+      "a12131d3-ee0f-4a6d-a02d-e428e81ed0aa",
+      "Output Ports 10 to 12"
     ]
   ],
   "text_variables": {}
