@@ -2772,7 +2772,7 @@
 				)
 			)
 		)
-		(property "Value" "24"
+		(property "Value" "27"
 			(at 105.41 62.23 90)
 			(effects
 				(font
@@ -3296,7 +3296,7 @@
 				)
 			)
 		)
-		(property "Value" "24"
+		(property "Value" "27"
 			(at 105.664 67.31 90)
 			(effects
 				(font

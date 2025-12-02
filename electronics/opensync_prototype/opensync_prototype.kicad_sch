@@ -11,6 +11,16 @@
 		(company "OpenPIV Consortium")
 	)
 	(lib_symbols)
+	(text "Output Ports 9 to 16 will go Here Once Designed"
+		(exclude_from_sim no)
+		(at 177.292 128.524 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "8451897e-a812-4a60-b053-31c7c48b39ea")
+	)
 	(wire
 		(pts
 			(xy 78.74 59.69) (xy 105.41 59.69)
@@ -23,17 +33,7 @@
 	)
 	(wire
 		(pts
-			(xy 149.86 124.46) (xy 176.53 124.46)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "10eec100-d846-4952-8e9b-75bf6d309493")
-	)
-	(wire
-		(pts
-			(xy 149.86 110.49) (xy 176.53 110.49)
+			(xy 149.86 101.6) (xy 176.53 101.6)
 		)
 		(stroke
 			(width 0)
@@ -53,27 +53,7 @@
 	)
 	(wire
 		(pts
-			(xy 149.86 59.69) (xy 176.53 59.69)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "404fc0b5-ad9e-408d-ac95-07e99d776de1")
-	)
-	(wire
-		(pts
-			(xy 149.86 129.54) (xy 176.53 129.54)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "4337c1b6-fc5a-4d30-af7c-0106af2429a7")
-	)
-	(wire
-		(pts
-			(xy 149.86 107.95) (xy 176.53 107.95)
+			(xy 149.86 99.06) (xy 176.53 99.06)
 		)
 		(stroke
 			(width 0)
@@ -93,16 +73,6 @@
 	)
 	(wire
 		(pts
-			(xy 149.86 113.03) (xy 176.53 113.03)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "6cc5e014-d34e-40a7-8477-477a0859936f")
-	)
-	(wire
-		(pts
 			(xy 149.86 80.01) (xy 176.53 80.01)
 		)
 		(stroke
@@ -110,16 +80,6 @@
 			(type default)
 		)
 		(uuid "6e12f113-ba7b-433a-a58b-0d18509484c9")
-	)
-	(wire
-		(pts
-			(xy 149.86 62.23) (xy 176.53 62.23)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "76448e18-9d52-4e5a-b3dc-ef505c1efaa6")
 	)
 	(wire
 		(pts
@@ -133,7 +93,7 @@
 	)
 	(wire
 		(pts
-			(xy 149.86 91.44) (xy 176.53 91.44)
+			(xy 149.86 82.55) (xy 176.53 82.55)
 		)
 		(stroke
 			(width 0)
@@ -163,16 +123,6 @@
 	)
 	(wire
 		(pts
-			(xy 149.86 127) (xy 176.53 127)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "d633215c-11f8-49d5-b5ae-dbc0ffeaff07")
-	)
-	(wire
-		(pts
 			(xy 149.86 57.15) (xy 176.53 57.15)
 		)
 		(stroke
@@ -183,7 +133,7 @@
 	)
 	(sheet
 		(at 105.41 54.61)
-		(size 44.45 77.47)
+		(size 44.45 96.52)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
@@ -207,7 +157,7 @@
 			)
 		)
 		(property "Sheetfile" "microcontroller_and_clock.kicad_sch"
-			(at 105.41 132.6646 0)
+			(at 105.41 151.7146 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -246,7 +196,7 @@
 			)
 		)
 		(pin "OUTPUT_4" output
-			(at 149.86 91.44 0)
+			(at 149.86 82.55 0)
 			(uuid "bd732850-c9b0-43f0-b980-e713eece00c0")
 			(effects
 				(font
@@ -276,7 +226,7 @@
 			)
 		)
 		(pin "OUTPUT_7" output
-			(at 149.86 107.95 0)
+			(at 149.86 99.06 0)
 			(uuid "3c84ac7d-2cca-4f46-b413-3fe8ab42f8d7")
 			(effects
 				(font
@@ -286,48 +236,8 @@
 			)
 		)
 		(pin "OUTPUT_8" output
-			(at 149.86 110.49 0)
+			(at 149.86 101.6 0)
 			(uuid "958257fb-a1b6-47c7-8259-1ac1f3fe0c3c")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(pin "OUTPUT_9" output
-			(at 149.86 113.03 0)
-			(uuid "8aa14629-a9da-4493-9531-0ba799f977ef")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(pin "OUTPUT_10" output
-			(at 149.86 124.46 0)
-			(uuid "99149519-8ac4-4a31-81a9-e85b70552607")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(pin "OUTPUT_11" output
-			(at 149.86 127 0)
-			(uuid "ec6935b4-862a-4e9d-9da4-dd55e9f76173")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(pin "OUTPUT_12" output
-			(at 149.86 129.54 0)
-			(uuid "7e123de7-fc53-4af8-b4e4-ba4d37e690b1")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -338,26 +248,6 @@
 		(pin "TRIGGER_1" input
 			(at 149.86 57.15 0)
 			(uuid "ced4272e-a850-469a-92f9-93cfd3e5bb1c")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(pin "TRIGGER_2" input
-			(at 149.86 59.69 0)
-			(uuid "93a70603-e1d4-4105-bf6b-3de837e08f6a")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(pin "TRIGGER_3" input
-			(at 149.86 62.23 0)
-			(uuid "5470131e-b967-482a-817d-acfc742b044e")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -389,6 +279,130 @@
 			(project "opensync_prototype"
 				(path "/97d97b34-a2f9-4e5e-9870-299ade25a4f4"
 					(page "2")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 33.02 72.39)
+		(size 45.72 15.24)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "43184533-95b5-46af-915f-575c8f5ba9d2")
+		(property "Sheetname" "Mounting Holes"
+			(at 33.02 71.6784 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "mount_holes.kicad_sch"
+			(at 33.02 88.2146 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "opensync_prototype"
+				(path "/97d97b34-a2f9-4e5e-9870-299ade25a4f4"
+					(page "7")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 176.53 72.39)
+		(size 44.45 12.7)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "5f2b3b40-876a-4c13-908f-abe480357577")
+		(property "Sheetname" "Output Ports 1 to 4"
+			(at 176.53 71.6784 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "output_ports_1_to_4.kicad_sch"
+			(at 176.53 85.6746 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "OUTPUT_1" input
+			(at 176.53 74.93 180)
+			(uuid "15679724-fbfa-4754-bdb4-39d4ffa56d00")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "OUTPUT_2" input
+			(at 176.53 77.47 180)
+			(uuid "fded86d3-de62-4f18-80db-54fce03162ae")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "OUTPUT_3" input
+			(at 176.53 80.01 180)
+			(uuid "4c1166f6-3179-47b6-873f-094ef0c753a4")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "OUTPUT_4" input
+			(at 176.53 82.55 180)
+			(uuid "711c63db-f529-4279-a799-6608d04fbe6a")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(instances
+			(project "opensync_prototype"
+				(path "/97d97b34-a2f9-4e5e-9870-299ade25a4f4"
+					(page "5")
 				)
 			)
 		)
@@ -456,150 +470,6 @@
 		)
 	)
 	(sheet
-		(at 176.53 121.92)
-		(size 45.72 10.16)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(stroke
-			(width 0.1524)
-			(type solid)
-		)
-		(fill
-			(color 0 0 0 0.0000)
-		)
-		(uuid "a12131d3-ee0f-4a6d-a02d-e428e81ed0aa")
-		(property "Sheetname" "Output Ports 10 to 12"
-			(at 176.53 121.2084 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left bottom)
-			)
-		)
-		(property "Sheetfile" "output_ports_10_to_12.kicad_sch"
-			(at 176.53 132.6646 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left top)
-			)
-		)
-		(pin "OUTPUT_10" input
-			(at 176.53 124.46 180)
-			(uuid "8e9595a9-4ebe-4909-b86d-78ea71e5d538")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(pin "OUTPUT_11" input
-			(at 176.53 127 180)
-			(uuid "ffb6ed3d-8153-4be4-832b-ba97cd695e6f")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(pin "OUTPUT_12" input
-			(at 176.53 129.54 180)
-			(uuid "e7b1af68-e839-46f1-b401-24a459061653")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(instances
-			(project "opensync_prototype"
-				(path "/97d97b34-a2f9-4e5e-9870-299ade25a4f4"
-					(page "8")
-				)
-			)
-		)
-	)
-	(sheet
-		(at 176.53 105.41)
-		(size 45.72 10.16)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(stroke
-			(width 0.1524)
-			(type solid)
-		)
-		(fill
-			(color 0 0 0 0.0000)
-		)
-		(uuid "bb1f8d74-94ec-42aa-ab1c-e98924492055")
-		(property "Sheetname" "Output Ports 7 to 9"
-			(at 176.53 104.6984 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left bottom)
-			)
-		)
-		(property "Sheetfile" "output_ports_7_to_9.kicad_sch"
-			(at 176.53 116.1546 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left top)
-			)
-		)
-		(pin "OUTPUT_7" input
-			(at 176.53 107.95 180)
-			(uuid "b57d6da1-774a-4997-9852-52db9f49d90a")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(pin "OUTPUT_8" input
-			(at 176.53 110.49 180)
-			(uuid "31662077-0924-40af-bf5d-4b801e7992dc")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(pin "OUTPUT_9" input
-			(at 176.53 113.03 180)
-			(uuid "dc1a1455-b5f0-4bb8-9687-6da7fe5942b8")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(instances
-			(project "opensync_prototype"
-				(path "/97d97b34-a2f9-4e5e-9870-299ade25a4f4"
-					(page "7")
-				)
-			)
-		)
-	)
-	(sheet
 		(at 176.53 54.61)
 		(size 44.45 10.16)
 		(exclude_from_sim no)
@@ -634,28 +504,8 @@
 			)
 		)
 		(pin "TRIGGER_1" output
-			(at 176.53 62.23 180)
-			(uuid "cb09b253-b034-4b8c-b405-2d6eecd9f6ef")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(pin "TRIGGER_2" output
-			(at 176.53 59.69 180)
-			(uuid "c7992784-855a-4aee-9e98-b119962d86d4")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(pin "TRIGGER_3" output
 			(at 176.53 57.15 180)
-			(uuid "aa1b9d84-a481-42d3-adf9-921ece0d3234")
+			(uuid "cb09b253-b034-4b8c-b405-2d6eecd9f6ef")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -672,8 +522,8 @@
 		)
 	)
 	(sheet
-		(at 176.53 88.9)
-		(size 45.72 10.16)
+		(at 176.53 91.44)
+		(size 44.45 12.7)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
@@ -686,9 +536,9 @@
 		(fill
 			(color 0 0 0 0.0000)
 		)
-		(uuid "fd1e8d9b-3d04-4c35-bae5-e4f4bf9a3606")
-		(property "Sheetname" "Output Ports 4 to 6"
-			(at 176.53 88.1884 0)
+		(uuid "d85c7db6-ec4a-4151-bbe7-17c493e14422")
+		(property "Sheetname" "Output Ports 5 to 8"
+			(at 176.53 90.7284 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -696,8 +546,8 @@
 				(justify left bottom)
 			)
 		)
-		(property "Sheetfile" "output_ports_4_to_6.kicad_sch"
-			(at 176.53 99.6446 0)
+		(property "Sheetfile" "output_ports_5_to_8.kicad_sch"
+			(at 176.53 104.7246 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -705,19 +555,9 @@
 				(justify left top)
 			)
 		)
-		(pin "OUTPUT_4" input
-			(at 176.53 91.44 180)
-			(uuid "402e3c3c-0bca-43c9-815c-c7dd8b5738de")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
 		(pin "OUTPUT_5" input
 			(at 176.53 93.98 180)
-			(uuid "ac0dbe2c-01a2-4c70-8d97-4c2f51862618")
+			(uuid "2fef1523-06a7-46ce-954f-e117a5fb4e44")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -727,7 +567,7 @@
 		)
 		(pin "OUTPUT_6" input
 			(at 176.53 96.52 180)
-			(uuid "36cc3d28-14ba-493c-8f96-781abb2d7927")
+			(uuid "2e8cd893-f7c0-4672-ae55-01f965d38832")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -735,51 +575,9 @@
 				(justify left)
 			)
 		)
-		(instances
-			(project "opensync_prototype"
-				(path "/97d97b34-a2f9-4e5e-9870-299ade25a4f4"
-					(page "6")
-				)
-			)
-		)
-	)
-	(sheet
-		(at 176.53 72.39)
-		(size 44.45 10.16)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(stroke
-			(width 0.1524)
-			(type solid)
-		)
-		(fill
-			(color 0 0 0 0.0000)
-		)
-		(uuid "ffae930e-37d3-493c-8424-22c8f25b93ee")
-		(property "Sheetname" "Output Ports 1 to 3"
-			(at 176.53 71.6784 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left bottom)
-			)
-		)
-		(property "Sheetfile" "output_ports_1_to_3.kicad_sch"
-			(at 176.53 83.1346 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left top)
-			)
-		)
-		(pin "OUTPUT_1" input
-			(at 176.53 74.93 180)
-			(uuid "395acbf5-9272-4df4-8589-7b9463032287")
+		(pin "OUTPUT_7" input
+			(at 176.53 99.06 180)
+			(uuid "5bed2076-86bf-4ea0-8c62-04164f1a4071")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -787,19 +585,9 @@
 				(justify left)
 			)
 		)
-		(pin "OUTPUT_2" input
-			(at 176.53 77.47 180)
-			(uuid "7dbb714b-5140-4ec8-a9fb-88fe574c3899")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(pin "OUTPUT_3" input
-			(at 176.53 80.01 180)
-			(uuid "309106d7-f2fa-47bd-8ec8-8d84982cf1b8")
+		(pin "OUTPUT_8" input
+			(at 176.53 101.6 180)
+			(uuid "87478fb9-dddc-46f2-97be-6dc07d54f87f")
 			(effects
 				(font
 					(size 1.27 1.27)

@@ -37,9 +37,9 @@
         "other_text_thickness": 0.15,
         "other_text_upright": false,
         "pads": {
-          "drill": 0.8,
-          "height": 1.27,
-          "width": 2.54
+          "drill": 3.2,
+          "height": 3.2,
+          "width": 3.2
         },
         "silk_line_width": 0.1,
         "silk_text_italic": false,
@@ -130,7 +130,7 @@
         "max_error": 0.005,
         "min_clearance": 0.0,
         "min_connection": 0.0,
-        "min_copper_edge_clearance": 0.5,
+        "min_copper_edge_clearance": 1.0,
         "min_groove_width": 0.0,
         "min_hole_clearance": 0.25,
         "min_hole_to_hole": 0.25,
@@ -752,20 +752,16 @@
       "Input Ports"
     ],
     [
-      "ffae930e-37d3-493c-8424-22c8f25b93ee",
-      "Output Ports 1 to 3"
+      "5f2b3b40-876a-4c13-908f-abe480357577",
+      "Output Ports 1 to 4"
     ],
     [
-      "fd1e8d9b-3d04-4c35-bae5-e4f4bf9a3606",
-      "Output Ports 4 to 6"
+      "d85c7db6-ec4a-4151-bbe7-17c493e14422",
+      "Output Ports 5 to 8"
     ],
     [
-      "bb1f8d74-94ec-42aa-ab1c-e98924492055",
-      "Output Ports 7 to 9"
-    ],
-    [
-      "a12131d3-ee0f-4a6d-a02d-e428e81ed0aa",
-      "Output Ports 10 to 12"
+      "43184533-95b5-46af-915f-575c8f5ba9d2",
+      "Mounting Holes"
     ]
   ],
   "text_variables": {}
