@@ -3,17 +3,14 @@ An open source synchronizer for the velocimetry of fluids using a Raspberry Pi m
 
 ![Example Timing Graph for Diode Laser](demos/timing/opensync_demo_timing.png)
 
-# ATTENTION
-Due to timeline conflicts with an ongoing internship, the project schedule has been extended to allow for resources to be allocated for university courses, an internship, and this project. The new schedule can be seen [here](documents/SDLC/2_planning/schedule_refined.md).
-
 ## Purpose
 OpenSync is a simple and low-cost synchronizer based on microcontroller technology. Due to the intrinsic nature of microcontrollers compared to more advanced devices (e.g., field programmable gate arrays), most complex features that are typical of commercial propietary devices such as gating, external trigger manipulation, etc are not implemented. However, OpenSync remains sufficiently flexible and provides enough support for most users' needs when performing a PIV experiment. This is because OpenSync is an arbitrary pulse generator under-the-hood which allows for rather complex pulse sequences to be synthesized through simple output port manipulation. Additionally, three (3) independent internal clocks can be utilized to allow for relatively advanced pulse timing. While this implementation for a synchronizer may be quite restrictive at times, it is what makes OpenSync so simple!
 
 ## Specs
  - **Crystal Oscillator Frequency**: 12 MHz
  - **System Frequency**: 250 MHz (4 ns resolution)
- - **Output Channels**: 12
- - **Input Channels**: 3
+ - **Output Channels**: 8
+ - **Input Channels**: 1
  - **Internal Synchronization Clocks**: 3
  - **I/O Channel Voltage**: 5V @ 50 Ohm
  - **I/O Resolution**: 1 clock cycle (4 ns * clock divider)
@@ -24,15 +21,14 @@ OpenSync is a simple and low-cost synchronizer based on microcontroller technolo
  - **Max Pulse Sequence Length**: 32 instruction pairs
  - **Pulse Sequence Repetition**: Up to 500,000 iterations
  - **Pulse Sequence Single-Channel Jitter**:  typically < 0.1 ns
- - **Pulse Sequence Inter-Channel Jitter**:  typically < 0.8 ns
+ - **Pulse Sequence Inter-Channel Jitter**:  typically < 0.3 ns
  - **Pulse Sequence Repetition Jitter**: up to 4 clock cycles (up to 16 ns * clock divider)
  - **Max Clock Divider**: 65500 (pulse-to-pulse distances up to ~311 hours)
  - All powered via USB!
 
 
 ## Advanced Features
- - Three (3) independent clocks mapped to all 12 output channels
- - Each clock can be mapped to one of three input channels
+ - Three (3) independent clocks mapped to all 8 output channels
  - Variable timing for each internal clock
  - Each clock can skip certain number of external triggers
  - Each clock can add delay between external trigger signal and pulse sequence signal 
