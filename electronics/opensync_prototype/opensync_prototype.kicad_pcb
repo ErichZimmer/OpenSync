@@ -1035,7 +1035,7 @@
 		(descr "Capacitor SMD 0402 (1005 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
 		(tags "capacitor")
 		(property "Reference" "C23"
-			(at 2.25 -1.16 0)
+			(at 1.7 1.4 0)
 			(layer "F.SilkS")
 			(uuid "543bc1ad-aac6-4e83-b0cd-dbbd2baa11b6")
 			(effects
@@ -1986,7 +1986,7 @@
 		(descr "Capacitor SMD 0402 (1005 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
 		(tags "capacitor")
 		(property "Reference" "C5"
-			(at 0 -1.85 0)
+			(at 0 1.935 0)
 			(layer "F.SilkS")
 			(uuid "1b9bc44c-38ca-45bd-97c9-d7ba34a88dc1")
 			(effects
@@ -16933,7 +16933,7 @@
 		(descr "Capacitor SMD 0402 (1005 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
 		(tags "capacitor")
 		(property "Reference" "C11"
-			(at 0 -1.16 0)
+			(at 1.285 1.7 0)
 			(layer "F.SilkS")
 			(uuid "fb83ca38-ec3b-4a53-9419-51face84b06f")
 			(effects
@@ -23989,6 +23989,19 @@
 		(layer "Edge.Cuts")
 		(uuid "9c211d59-1efd-4f80-8db3-19976d07ffbc")
 	)
+	(gr_text "LED\nIndicators"
+		(at 209.2 117.4 0)
+		(layer "F.SilkS")
+		(uuid "037ca724-0501-4691-b751-609e61dc3cc4")
+		(effects
+			(font
+				(size 1.5 1.5)
+				(thickness 0.3)
+				(bold yes)
+			)
+			(justify left bottom)
+		)
+	)
 	(gr_text "OpenPIV © 2025\nOpenSync v0.1"
 		(at 68.2 62.8 0)
 		(layer "F.SilkS")
@@ -23997,19 +24010,6 @@
 			(font
 				(size 4 4)
 				(thickness 0.8)
-				(bold yes)
-			)
-			(justify left bottom)
-		)
-	)
-	(gr_text "The Following Features Will Be Inc. Here\n - Safety Interlock\n - Power LED\n - Error LED"
-		(at 174.2 81.8 0)
-		(layer "F.SilkS")
-		(uuid "2653569d-8a4f-49a5-ae89-551aa331a0cf")
-		(effects
-			(font
-				(size 1.5 1.5)
-				(thickness 0.3)
 				(bold yes)
 			)
 			(justify left bottom)
@@ -24053,6 +24053,19 @@
 			(justify left bottom)
 		)
 	)
+	(gr_text "Safety\nInterlock"
+		(at 166.8 55.6 0)
+		(layer "F.SilkS")
+		(uuid "e8421f9d-a9f9-40f2-a5e7-4500ef1ad548")
+		(effects
+			(font
+				(size 1.5 1.5)
+				(thickness 0.3)
+				(bold yes)
+			)
+			(justify left bottom)
+		)
+	)
 	(gr_text "USB"
 		(at 141.5 55.5 0)
 		(layer "F.SilkS")
@@ -24063,6 +24076,93 @@
 				(thickness 0.1)
 			)
 			(justify left bottom)
+		)
+	)
+	(zone
+		(net 6)
+		(net_name "+1V1")
+		(layer "F.Cu")
+		(uuid "401badc5-7828-4773-b23e-f686774b9376")
+		(hatch edge 0.5)
+		(priority 3)
+		(connect_pads
+			(clearance 0.2)
+		)
+		(min_thickness 0.2)
+		(filled_areas_thickness no)
+		(fill
+			(thermal_gap 0.3)
+			(thermal_bridge_width 0.3)
+		)
+		(polygon
+			(pts
+				(xy 128.2 91.6) (xy 134.4 91.6) (xy 134.4 97.6) (xy 128.2 97.6)
+			)
+		)
+	)
+	(zone
+		(net 2)
+		(net_name "GND")
+		(layer "B.Cu")
+		(uuid "32bc9d58-28ca-44d7-811a-373c783d506a")
+		(hatch edge 0.5)
+		(priority 2)
+		(connect_pads
+			(clearance 1)
+		)
+		(min_thickness 0.2)
+		(filled_areas_thickness no)
+		(fill
+			(thermal_gap 0.2)
+			(thermal_bridge_width 0.2)
+		)
+		(polygon
+			(pts
+				(xy 62 45) (xy 222 45) (xy 222 145) (xy 62 145)
+			)
+		)
+	)
+	(zone
+		(net 2)
+		(net_name "GND")
+		(layer "In1.Cu")
+		(uuid "17a161a4-5154-4325-b589-6fa51913d523")
+		(hatch edge 0.5)
+		(connect_pads
+			(clearance 1)
+		)
+		(min_thickness 0.2)
+		(filled_areas_thickness no)
+		(fill
+			(thermal_gap 0.2)
+			(thermal_bridge_width 0.2)
+		)
+		(polygon
+			(pts
+				(xy 62 45) (xy 222 45) (xy 222 145) (xy 62 145)
+			)
+		)
+	)
+	(zone
+		(net 10)
+		(net_name "+5V")
+		(layer "In2.Cu")
+		(uuid "777a12ef-6a7a-48ef-950d-1c4a04a9673a")
+		(hatch edge 0.5)
+		(priority 1)
+		(connect_pads
+			(clearance 1)
+		)
+		(min_thickness 0.2)
+		(filled_areas_thickness no)
+		(fill
+			(thermal_gap 0.2)
+			(thermal_bridge_width 0.2)
+		)
+		(polygon
+			(pts
+				(xy 62 45) (xy 222 45) (xy 222 145) (xy 62 145)
+			)
 		)
 	)
 	(embedded_fonts no)
