@@ -3,7 +3,7 @@
 	(generator "pcbnew")
 	(generator_version "9.0")
 	(general
-		(thickness 1.6)
+		(thickness 1.5842)
 		(legacy_teardrops no)
 	)
 	(paper "A4")
@@ -59,29 +59,29 @@
 			)
 			(layer "dielectric 1"
 				(type "prepreg")
-				(thickness 0.1)
+				(thickness 0.0994)
 				(material "FR4")
 				(epsilon_r 4.5)
 				(loss_tangent 0.02)
 			)
 			(layer "In1.Cu"
 				(type "copper")
-				(thickness 0.035)
+				(thickness 0.0152)
 			)
 			(layer "dielectric 2"
 				(type "core")
-				(thickness 1.24)
+				(thickness 1.265)
 				(material "FR4")
 				(epsilon_r 4.5)
 				(loss_tangent 0.02)
 			)
 			(layer "In2.Cu"
 				(type "copper")
-				(thickness 0.035)
+				(thickness 0.0152)
 			)
 			(layer "dielectric 3"
 				(type "prepreg")
-				(thickness 0.1)
+				(thickness 0.0994)
 				(material "FR4")
 				(epsilon_r 4.5)
 				(loss_tangent 0.02)
@@ -16363,7 +16363,7 @@
 		(descr "SOIC, 16 Pin (JEDEC MS-013AA, https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/soic_wide-rw/rw_16.pdf), generated with kicad-footprint-generator ipc_gullwing_generator.py")
 		(tags "SOIC SO")
 		(property "Reference" "U3"
-			(at 0 -6.1 90)
+			(at -0.05 -7.145 180)
 			(layer "F.SilkS")
 			(uuid "616e393f-8acf-4c21-9a58-10274d4ddfdc")
 			(effects
