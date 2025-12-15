@@ -22,7 +22,7 @@ An open source synchronizer for the velocimetry of fluids using a Raspberry Pi m
  - **I/O Resolution**: 4 ns * clock divider
  - **Pulse Width**: 20 ns to ~17 s (~1.3 ms to ~311 h with max clock divider)
  - **Max Pulse Sequence Length**: 32 instruction pairs
- - **Pulse Sequence Repetition**: Up to 500,000 iterations
+ - **Max Pulse Sequence Repetition**: 500,000 iterations
  - **Single-Channel Jitter**:  typically < 0.1 ns
  - **Inter-Channel Jitter**:  typically < 0.3 ns
  - **Rise/Fall Time**: typically < 4 ns

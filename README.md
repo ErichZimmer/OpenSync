@@ -11,8 +11,6 @@ OpenSync is a simple and low-cost synchronizer based on microcontroller technolo
  - **Output Channels**: 8
  - **Input Channels**: 1
  - **I/O Channel Voltage**: 5V @ 50 Ohm
- - **I/O Resolution**: 1 clock cycle (4 ns * clock divider)
- - **Max Pulse Sequence Length**: 32 instruction pairs
 
 For a more detailed specification, please read the [datasheet](documents/datasheet/opensync_datasheet_markdown.md).
 
