@@ -23969,8 +23969,8 @@
 		(uuid "11429b44-5d5d-4b6b-afb7-22e351cd8570")
 	)
 	(gr_rect
-		(start 207.6 108.1)
-		(end 222 124.7)
+		(start 178.7 45)
+		(end 193.1 61.6)
 		(stroke
 			(width 0.1)
 			(type solid)
@@ -23978,6 +23978,17 @@
 		(fill no)
 		(layer "F.SilkS")
 		(uuid "280673d1-92bc-4190-bfbc-a2e68f17c48a")
+	)
+	(gr_rect
+		(start 193.2 45)
+		(end 207.6 61.6)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.SilkS")
+		(uuid "e1d3f160-bc96-4f3b-93d0-d63046aec7bf")
 	)
 	(gr_rect
 		(start 62 45)
@@ -23990,8 +24001,8 @@
 		(layer "Edge.Cuts")
 		(uuid "9c211d59-1efd-4f80-8db3-19976d07ffbc")
 	)
-	(gr_text "LED\nIndicators"
-		(at 209.2 117.4 0)
+	(gr_text "Green LED\nIndicator"
+		(at 180.6 55.6 0)
 		(layer "F.SilkS")
 		(uuid "037ca724-0501-4691-b751-609e61dc3cc4")
 		(effects
@@ -24039,6 +24050,19 @@
 				(thickness 0.1)
 			)
 			(justify bottom)
+		)
+	)
+	(gr_text "Red LED\nIndicator"
+		(at 195.1 55.6 0)
+		(layer "F.SilkS")
+		(uuid "93f1ce72-6478-4e4a-b64b-c757ccc88fea")
+		(effects
+			(font
+				(size 1.5 1.5)
+				(thickness 0.3)
+				(bold yes)
+			)
+			(justify left bottom)
 		)
 	)
 	(gr_text "Reboot"
