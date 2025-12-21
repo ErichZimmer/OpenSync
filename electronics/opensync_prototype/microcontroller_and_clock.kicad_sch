@@ -5304,6 +5304,16 @@
 		)
 		(uuid "885ed226-ecc1-4f50-b0cf-6c8757c28569")
 	)
+	(label "VREG_LX"
+		(at 93.98 50.8 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "b27a21a8-ad5e-4faa-83f4-dced7e3374f2")
+	)
 	(label "XOUT"
 		(at 93.98 90.17 0)
 		(effects
@@ -10121,7 +10131,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "RP2350_80QFN_minimal:L_pol_2016"
 			(at 43.18 45.72 0)
 			(effects
 				(font
