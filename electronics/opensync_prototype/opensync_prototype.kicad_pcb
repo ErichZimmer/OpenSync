@@ -11281,6 +11281,17 @@
 			(uuid "735c6f16-dd26-4f7b-91f7-4a196b0eb940")
 		)
 		(embedded_fonts no)
+		(model "${KIPRJMOD}/library/61400416121/STP_61400416121.stp"
+			(offset
+				(xyz 0 0 5)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz -0 -180 -0)
+			)
+		)
 	)
 	(footprint "RP2350_80QFN_minimal:C_0402_1005Metric_small_pads"
 		(layer "F.Cu")
