@@ -18,7 +18,8 @@ For a more detailed specification, please read the [datasheet](documents/datashe
  - Three (3) independent clocks mapped to all 8 output channels
  - Variable timing for each internal clock
  - Each clock can skip certain number of external triggers
- - Each clock can add delay between external trigger signal and pulse sequence signal 
+ - Each clock can add delay between external trigger signal and pulse sequence signal
+ - Internal clocks and pulse sequncers can have different clock dividers
 
 ## File Architecture
 ```
