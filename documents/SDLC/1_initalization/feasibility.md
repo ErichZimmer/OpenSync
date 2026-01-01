@@ -1,6 +1,6 @@
 <div align="center">
 
-# On the Feasibility of an Open-Source 12-Channel Synchronizer
+# On the Feasibility of an Open-Source 16-Channel Synchronizer
 
 
 
@@ -19,7 +19,8 @@ On the behalf of the\
 | 5/30/2025 | 0.2.0 | Elaboration on proposed solution. |
 | 6/8/2025 | 0.3.0 | Updated design due to RP2350 limitations. |
 | 6/10/2025 | 0.4.0 | Finished the solutions section. |
-| 9/2/2025 | 0.4.1 | Deadline exttension |
+| 9/2/2025 | 0.4.1 | Deadline extension. |
+| 12/31/2025 | 0.5.0 | Updated design. |
  
 ## Table of Contents
  1. Introduction
@@ -73,7 +74,7 @@ The proposed solution is based on microcontroller architecture and utilizes a so
 
 The ideal synchronizer should have enough flexibility and output channels to accommodate most users' needs while remaining simple to operate. The vast majority of PIV experiments utilize an actively q-switched dual-oscillator neodymium-doped yttrium aluminum garnet (Nd:YAG) laser and a singular camera (Raffel et al., 2018). Dual oscillator PIV lasers require a minimum of four output channels to control the laser pump and active q-switch for each laser oscillator. Additionally, many studies make use of stereoscopic PIV which can readily extend single-view planar PIV by using a second camera and simple triangulation algorithms to reconstruct the velocities in the third dimension (Raffel et al., 2018). For more advanced techniques such as tomographic-PIV (tomo-PIV), at least four cameras are necessary to obtain reliable volumetric data from an experimental volume. This would require a minimum of eight output channels in order to allow for the complete control over both the cameras and laser.
 
-Since most PIV experiments do not require greater than 12 independent outputs to synchronize an experiment, the proposed solution implements 12 output channels that can be mapped to an arbitrary pulse generator. However, synchronizers that are to be used in PIV experiments require more complexity than a mere arbitrary pulse generator. For instance, some experiments may need to be phase synchronized in order to obtain any meaningful data. This necessitates the inclusion of an external trigger to the synchronizing device which would control the execution of the arbitrary pulse generator. While this solution is simple enough to function as a synchronizer for most PIV experiments, more complex PIV experiments require further features in order to make an open-source synchronizer feasible. Based on the results from Starkey et al. (2024), it would be advantageous to include both an internal synchronizing clock and arbitrary pulse generating function inside a singular device. The combination of these two features could allow for rather complex pulse sequences and timing schemes to be readily implemented without the need of relying on commercial hardware. This in turn could make the open-source synchronizer a viable alternative to its commercial counterparts when limited funding needs to be taken into account.
+Since most PIV experiments do not require greater than 16 independent outputs to synchronize an experiment, the proposed solution implements 16 output channels that can be mapped to an arbitrary pulse generator. However, synchronizers that are to be used in PIV experiments require more complexity than a mere arbitrary pulse generator. For instance, some experiments may need to be phase synchronized in order to obtain any meaningful data. This necessitates the inclusion of an external trigger to the synchronizing device which would control the execution of the arbitrary pulse generator. While this solution is simple enough to function as a synchronizer for most PIV experiments, more complex PIV experiments require further features in order to make an open-source synchronizer feasible. Based on the results from Starkey et al. (2024), it would be advantageous to include both an internal synchronizing clock and arbitrary pulse generating function inside a singular device. The combination of these two features could allow for rather complex pulse sequences and timing schemes to be readily implemented without the need of relying on commercial hardware. This in turn could make the open-source synchronizer a viable alternative to its commercial counterparts when limited funding needs to be taken into account.
 
 While the firmware design of the synchronizer is quite important, it is important to consider the availability of hardware components that would be used in the synchronizer device. All electrical components should have an active product status and be readily available with minimal costs and lead-times. Additionally, all parts that need to be manufactured in-house must remain simple enough to require minimal expertise to do so. In this particular case, an emphasis is placed on additive manufacturing technology (e.g., 3D printing) for hardware parts such as device enclosures and face plates. This would hopefully allow for synchronizer devices to be easily constructed in-house that are both professional in appearance and minimal in cost-of-ownership.
 
