@@ -92,11 +92,9 @@ Will be determined after the first milestone of this project.
 - [x] Add three internal timers that can be mapped to pulse sequences
 - [x] Add the ability to count and skip external triggers (usefull for phase-locked stuff like rotor blades)
 - [x] Add second external trigger and output port masking
-- [ ] Use ICs for sub-ns jitter compensation
-- [ ] Add POST bootup validation (not really necessary, but why not)
+- [ ] Update firmware and software to reflect new design 
+- [ ] Validate prototypes against an osciliscope
 - [ ] Add video examples on YouTube
-- [ ] Learn power electronics (this semester)
-- [ ] Validate against an osciliscope
 
 ## References
  1. Radim Hošák, & Miroslav Ježek. (2018). Arbitrary digital pulse sequence generator with delay-loop timing. Review of Scientific Instruments, 89(4). https://doi.org/10.1063/1.5019685
