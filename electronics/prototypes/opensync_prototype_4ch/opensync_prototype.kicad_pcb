@@ -2314,7 +2314,7 @@
 		(descr "JST SH series connector, SM03B-SRSS-TB (http://www.jst-mfg.com/product/pdf/eng/eSH.pdf), generated with kicad-footprint-generator")
 		(tags "connector JST SH horizontal")
 		(property "Reference" "J12"
-			(at 0 -3.98 0)
+			(at -4.3 -0.6 0)
 			(layer "F.SilkS")
 			(uuid "d6cbb09e-18d4-4ede-94fe-272e666fceee")
 			(effects
@@ -2599,7 +2599,7 @@
 			(uuid "2a72e44c-cd3d-4525-a3b9-f28af5258951")
 		)
 		(embedded_fonts no)
-		(model "${KICAD9_3DMODEL_DIR}/Connector_JST.3dshapes/JST_SH_SM03B-SRSS-TB_1x03-1MP_P1.00mm_Horizontal.wrl"
+		(model "${KIPRJMOD}/library/SM03B-SRSS-TB_LF__SN_/SM03B-SRSS-TB_LF__SN_.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -2607,7 +2607,7 @@
 				(xyz 1 1 1)
 			)
 			(rotate
-				(xyz 0 0 0)
+				(xyz -90 -0 -0)
 			)
 		)
 	)
@@ -20762,7 +20762,7 @@
 		)
 	)
 	(gr_text "SWD"
-		(at 133.8 121.4 0)
+		(at 133.8 121.9 0)
 		(layer "F.SilkS")
 		(uuid "5b1d458f-df24-40b9-b787-76931a541480")
 		(effects
