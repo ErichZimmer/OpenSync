@@ -1174,6 +1174,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C10425"
+			(at 138.43 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "3"
 			(uuid "691d4b29-66d5-4947-9e32-2722ee234dbf")
 		)
@@ -1203,10 +1212,9 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "653ebe5f-74b1-4c25-878d-8700476a20b6")
 		(property "Reference" "R27"
-			(at 107.95 71.1199 0)
+			(at 106.934 72.39 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1215,7 +1223,7 @@
 			)
 		)
 		(property "Value" "47k"
-			(at 107.95 73.6599 0)
+			(at 105.41 74.168 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1250,6 +1258,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C176117"
+			(at 105.41 72.39 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "b1060337-90f0-41b5-bad7-81cd026af850")
 		)
@@ -1273,10 +1290,9 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "696b0080-010b-4c53-a0e5-607680531924")
 		(property "Reference" "R13"
-			(at 114.3 59.69 90)
+			(at 114.3 64.008 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1284,7 +1300,7 @@
 			)
 		)
 		(property "Value" "470"
-			(at 114.3 62.23 90)
+			(at 114.3 66.04 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1310,6 +1326,15 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 114.3 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C482182"
 			(at 114.3 66.04 0)
 			(effects
 				(font
@@ -1451,6 +1476,14 @@
 					(size 1.27 1.27)
 				)
 				(hide yes)
+			)
+		)
+		(property "LCSC" ""
+			(at 77.47 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
 			)
 		)
 		(pin "4"
@@ -1723,6 +1756,15 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 158.75 57.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C60474"
 			(at 158.75 57.15 0)
 			(effects
 				(font

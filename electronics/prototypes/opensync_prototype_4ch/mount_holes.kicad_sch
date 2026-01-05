@@ -150,6 +150,14 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" ""
+			(at 125.73 114.3 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(instances
 			(project ""
 				(path "/97d97b34-a2f9-4e5e-9870-299ade25a4f4/43184533-95b5-46af-915f-575c8f5ba9d2"
@@ -212,6 +220,14 @@
 					(size 1.27 1.27)
 				)
 				(hide yes)
+			)
+		)
+		(property "LCSC" ""
+			(at 154.94 114.3 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
 			)
 		)
 		(instances
@@ -278,6 +294,14 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" ""
+			(at 153.67 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(instances
 			(project ""
 				(path "/97d97b34-a2f9-4e5e-9870-299ade25a4f4/43184533-95b5-46af-915f-575c8f5ba9d2"
@@ -340,6 +364,14 @@
 					(size 1.27 1.27)
 				)
 				(hide yes)
+			)
+		)
+		(property "LCSC" ""
+			(at 125.73 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
 			)
 		)
 		(instances
