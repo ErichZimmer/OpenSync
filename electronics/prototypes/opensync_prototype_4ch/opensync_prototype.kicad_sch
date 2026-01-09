@@ -33,6 +33,16 @@
 	)
 	(wire
 		(pts
+			(xy 78.74 100.33) (xy 105.41 100.33)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1cb8ad3e-bec2-4df1-9832-155ca57b0bfa")
+	)
+	(wire
+		(pts
 			(xy 149.86 77.47) (xy 176.53 77.47)
 		)
 		(stroke
@@ -70,6 +80,26 @@
 			(type default)
 		)
 		(uuid "999737fd-24c3-4045-bf21-0636d543743b")
+	)
+	(wire
+		(pts
+			(xy 78.74 105.41) (xy 105.41 105.41)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a3e0f98d-14b9-4c65-87b9-f518b148181b")
+	)
+	(wire
+		(pts
+			(xy 78.74 102.87) (xy 105.41 102.87)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ae4d3f16-1ece-446b-bdd6-c69c72d415ed")
 	)
 	(wire
 		(pts
@@ -195,6 +225,36 @@
 				(justify left)
 			)
 		)
+		(pin "ERROR_LED" output
+			(at 105.41 100.33 180)
+			(uuid "b35f3e62-1eac-4c52-b218-09e2b001bda6")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "INTERLOCK_LED" output
+			(at 105.41 102.87 180)
+			(uuid "e795c7ee-d039-4eff-9fec-d9b2e61b6e2a")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "SAFETY_INTERLOCK" input
+			(at 105.41 105.41 180)
+			(uuid "8e4d05c3-6451-408f-b922-5f920d800ead")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
 		(instances
 			(project "opensync_prototype"
 				(path "/97d97b34-a2f9-4e5e-9870-299ade25a4f4"
@@ -240,7 +300,7 @@
 		(instances
 			(project "opensync_prototype"
 				(path "/97d97b34-a2f9-4e5e-9870-299ade25a4f4"
-					(page "7")
+					(page "6")
 				)
 			)
 		)
@@ -385,6 +445,78 @@
 			(project "opensync_prototype"
 				(path "/97d97b34-a2f9-4e5e-9870-299ade25a4f4"
 					(page "3")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 32.385 97.79)
+		(size 46.355 10.16)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "79ebd117-17d7-497a-b46c-4bc296be8206")
+		(property "Sheetname" "LEDs and Interlock"
+			(at 32.385 97.0784 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "indicators_and_interlock.kicad_sch"
+			(at 32.385 108.5346 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "ERROR_LED" input
+			(at 78.74 100.33 0)
+			(uuid "68b892ec-f1e6-4ad8-9cc8-bfe2c823546d")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "INTERLOCK_LED" input
+			(at 78.74 102.87 0)
+			(uuid "1e43b4ba-17dc-4101-87cb-ef2d0f4fcd07")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "SAFETY_INTERLOCK" output
+			(at 78.74 105.41 0)
+			(uuid "779c5df2-5858-4f39-b32d-fa93a6df7f42")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(instances
+			(project "opensync_prototype"
+				(path "/97d97b34-a2f9-4e5e-9870-299ade25a4f4"
+					(page "7")
 				)
 			)
 		)
