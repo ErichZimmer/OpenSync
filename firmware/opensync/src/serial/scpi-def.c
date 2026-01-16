@@ -12,12 +12,13 @@
 #include "scpi_clock_sequencer.h"
 #include "scpi_pulse_sequencer.h"
 
-
 static char scpi_input_buffer[SCPI_INPUT_BUFFER_LENGTH];
 
 scpi_error_t scpi_error_queue_data[SCPI_ERROR_QUEUE_SIZE];
 scpi_t scpi_context;
 
+static char serial[2 * PICO_UNIQUE_BOARD_ID_SIZE_BYTES + 1];
+static bool unique_initialised = false;
 
 /**
  * Reimplement IEEE488.2 *TST?
@@ -108,17 +109,13 @@ scpi_interface_t scpi_interface = {
     .flush = NULL,
 };
 
-void scpi_instrument_init() {
-    // buffer to hold flash ID
-    static char serial[2 * PICO_UNIQUE_BOARD_ID_SIZE_BYTES + 1];
-    static bool unique_initialised = false;
-    if (! unique_initialised) {
+void scpi_instrument_init()
+{
+    if (! unique_initialised)
+    {
         pico_get_unique_board_id_string(serial, sizeof(serial));
         unique_initialised = true;
     }
-
-   // initInstrument(); 
-
     
      SCPI_Init(
         &scpi_context,
