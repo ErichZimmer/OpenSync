@@ -825,6 +825,7 @@ scpi_result_t SCPI_ClockTriggerInstructionsQ(
     // Allocate some variables
     int32_t numbers[1] = {0};
     uint32_t clock_id = 0;
+    uint32_t instruction_buffer[CLOCK_TRIGGERS_MAX + 1] = {0};
 
     // Get system status
     uint32_t status_copy = sequencer_status_get();
@@ -865,10 +866,14 @@ scpi_result_t SCPI_ClockTriggerInstructionsQ(
     // Retrieve clock sequencer container
     struct clock_config* config_array = sequencer_clock_config_get();
 
+    instruction_buffer[0] = config_array[clock_id].trigger_config[0]; // skips
+    instruction_buffer[1] = config_array[clock_id].trigger_config[1]; // delay
+    instruction_buffer[2] = config_array[clock_id].trigger_reps; // reps
+
     SCPI_ResultArrayUInt32(
         context,
-        config_array[clock_id].trigger_config,
-        CLOCK_TRIGGERS_MAX,
+        instruction_buffer,
+        CLOCK_TRIGGERS_MAX + 1,
         0 // what is scpi array format??
     );
 
