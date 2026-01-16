@@ -1,3 +1,6 @@
 [submodule "firmware/opensync/external/scpi-parser"]
 	path = firmware/opensync/external/scpi-parser
 	url = https://github.com/j123b567/scpi-parser.git
+[submodule "firmware/prototype/opensync_interface/external/scpi-parser"]
+	path = firmware/prototype/opensync_interface/external/scpi-parser
+	url = https://github.com/j123b567/scpi-parser.git
