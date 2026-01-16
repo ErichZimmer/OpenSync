@@ -3,7 +3,7 @@
 #include "scpi/scpi.h"
 
 
-#define INSTRUMENT_PULS_COMMANDS \
+#define INSTRUMENT_CLOCK_COMMANDS \
     {.pattern = "CLOCk#:ENABle", .callback = SCPI_ClockEnable,}, \
     {.pattern = "CLOCk#:DISAble", .callback = SCPI_ClockDisable,}, \
     {.pattern = "CLOCk#:STATus?", .callback = SCPI_ClockStatusQ,}, \

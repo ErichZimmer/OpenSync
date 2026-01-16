@@ -73,7 +73,7 @@ const scpi_command_t scpi_commands[] = {
     INSTRUMENT_SYST_COMMANDS
 
     /* OpenSync device clock sequencer settings */
-    INSTRUMENT_PULS_COMMANDS
+    INSTRUMENT_CLOCK_COMMANDS
 
     /* OpenSync device pulse sequencer settings */
     INSTRUMENT_PULSE_COMMANDS
