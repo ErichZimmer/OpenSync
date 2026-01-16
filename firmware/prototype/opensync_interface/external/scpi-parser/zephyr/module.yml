@@ -1,3 +1,0 @@
-name: scpi-parser
-build:
-  cmake: zephyr
