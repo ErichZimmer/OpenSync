@@ -111,6 +111,7 @@ scpi_interface_t scpi_interface = {
 
 void scpi_instrument_init()
 {
+    // From USBTMC Pico
     if (! unique_initialised)
     {
         pico_get_unique_board_id_string(serial, sizeof(serial));

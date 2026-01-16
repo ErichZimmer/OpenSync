@@ -1,3 +1,3 @@
 # OpenSync SCPI Interface Prototype
 
-This was a quick SCPI interface test using [scpi-parser](https://github.com/j123b567/scpi-parser) by Jan Breuer. This repository is basically a copy of his parser guide from [here](https://www.jaybee.cz/scpi-parser/basic/instrument/).
+This was a quick SCPI interface test using [scpi-parser](https://github.com/j123b567/scpi-parser) by Jan Breuer. This repository is basically a copy of his parser guide from [here](https://www.jaybee.cz/scpi-parser/basic/instrument/) and [USBTMC Pico](https://github.com/jancumps/pico_scpi_usbtmc_labtool) SCPI tool for LabView.
