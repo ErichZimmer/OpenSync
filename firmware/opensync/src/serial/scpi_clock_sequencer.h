@@ -16,7 +16,7 @@
     {.pattern = "CLOCk#:TRIGger:MODe:RISing", .callback = SCPI_ClockTriggerRisingEdge,}, \
     {.pattern = "CLOCk#:TRIGger:INSTructions", .callback = SCPI_ClockTriggerInstructions,}, \
     {.pattern = "CLOCk#:TRIGger:INSTructions?", .callback = SCPI_ClockTriggerInstructionsQ,}, \
-    {.pattern = "CLOCk#:RESet", .callback = SCPI_PulseReset,}, \
+    {.pattern = "CLOCk#:RESet", .callback = SCPI_ClockReset,}, \
 
 scpi_result_t SCPI_ClockEnable(
     scpi_t* context
@@ -66,6 +66,6 @@ scpi_result_t SCPI_ClockTriggerInstructionsQ(
     scpi_t* context
 );
 
-scpi_result_t SCPI_PulseReset(
+scpi_result_t SCPI_ClockReset(
     scpi_t* context
 );
