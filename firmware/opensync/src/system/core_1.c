@@ -208,6 +208,15 @@ void debug_message_print_i(
     }
 }
 
+struct clock_config* sequencer_clock_config_get()
+{
+    return sequencer_clock_config;
+}
+
+struct pulse_config* sequencer_pulse_config_get()
+{
+    return sequencer_pulse_config;
+}
 
 // NOTE: Has debug messages incl.
 void sequencer_clock_sm_config_active()

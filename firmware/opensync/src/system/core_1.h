@@ -10,6 +10,10 @@ extern const uint32_t ARM_SEQUENCER;
 
 void core_1_init();
 
+struct clock_config* sequencer_clock_config_get();
+
+struct pulse_config* sequencer_pulse_config_get();
+
 void debug_message_print(
     uint32_t debug_status_local,
     char* message

@@ -34,4 +34,4 @@ project(opensync C CXX ASM)
 pico_sdk_init()
 
 # add project directories
- add_subdirectory(src)
+add_subdirectory(src)

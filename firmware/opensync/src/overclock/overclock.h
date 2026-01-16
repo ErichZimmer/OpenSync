@@ -1,1 +1,3 @@
-void overlcok_system_set();
+#pragma once
+
+void overclock_system_set();

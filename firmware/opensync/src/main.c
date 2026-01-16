@@ -5,5 +5,5 @@ int main()
 {
 	core_2_init();
 
-    return 1;
+    return 0;
 }

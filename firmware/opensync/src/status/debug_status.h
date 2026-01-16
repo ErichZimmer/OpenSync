@@ -6,6 +6,7 @@
 // Device status
 extern const uint32_t SEQUENCER_DNDEBUG;
 extern const uint32_t SEQUENCER_DEBUG;
+extern const uint32_t SEQUENCER_DEBUG_ALL;
 
 void debug_status_register(void);
 
