@@ -44,15 +44,12 @@ scpi_result_t SCPI_SystemDebug(
     // Define variables
     uint32_t debug_status_local = 0;
 
-    // Get system status
-    uint32_t status_copy = sequencer_status_get();
-
     // If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
-    if( !((status_copy == IDLE) || (status_copy == ABORTED )))
+    if (is_running())
     {
         SCPI_ErrorPush(
             context, 
-            SCPI_ERROR_SYSTEM_ERROR
+            SCPI_ERROR_PROGRAM_CURRENTLY_RUNNING
         );
 
         return SCPI_RES_ERR;
@@ -117,6 +114,7 @@ scpi_result_t SCPI_SystemFrequencyQ(
     uint f_clk_adc = frequency_count_khz(CLOCKS_FC0_SRC_VALUE_CLK_ADC);
 
     // We can't use %d, so printf to local buffer then send to SCPI interface
+    // TODO: Make this prettier
     snprintf(
         output_buffer, 
         sizeof output_buffer,
@@ -150,15 +148,12 @@ clk_adc = %ukHz",
 scpi_result_t SCPI_SystemStart(
     scpi_t* context
 ) {
-    // Get system status
-    uint32_t status_copy = sequencer_status_get();
-
     // If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
-    if( !((status_copy == IDLE) || (status_copy == ABORTED)))
+    if (is_running())
     {
         SCPI_ErrorPush(
             context, 
-            SCPI_ERROR_SYSTEM_ERROR
+            SCPI_ERROR_PROGRAM_CURRENTLY_RUNNING
         );
 
         return SCPI_RES_ERR;
@@ -181,11 +176,11 @@ scpi_result_t SCPI_SystemStop(
     uint32_t status_copy = sequencer_status_get();
 
     // If the system status *is* 0 (IDLE) or 5 (ABORTED), return an error
-    if( ((status_copy == IDLE) || (status_copy == ABORTED)))
+    if (!is_running())
     {
         SCPI_ErrorPush(
             context, 
-            SCPI_ERROR_SYSTEM_ERROR
+            SCPI_ERROR_PROGRAM_CURRENTLY_RUNNING
         );
 
         return SCPI_RES_ERR;
@@ -219,15 +214,12 @@ scpi_result_t SCPI_SystemStop(
 scpi_result_t SCPI_SystemReset(
     scpi_t* context
 ) {
-    // Get system status
-    uint32_t status_copy = sequencer_status_get();
-
     // If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
-    if ( !((status_copy == IDLE) || (status_copy == ABORTED)))
+    if (is_running())
     {
         SCPI_ErrorPush(
             context, 
-            SCPI_ERROR_SYSTEM_ERROR
+            SCPI_ERROR_PROGRAM_CURRENTLY_RUNNING
         );
 
         return SCPI_RES_ERR;
@@ -256,3 +248,49 @@ scpi_result_t SCPI_SystemReset(
 
     return SCPI_RES_OK;
 }
+
+
+/*
+// Test device to make sure it is working
+scpi_result_t SCPI_SystemTest(
+    scpi_t* context
+) {
+    // some expected values
+    const uint32_t VALID_CLOCK_SPEED = 0;
+    const uint32_t VALID_PLL_SPEED = 0;
+
+    // If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
+    if (is_running())
+    {
+        SCPI_ErrorPush(
+            context, 
+            SCPI_ERROR_PROGRAM_CURRENTLY_RUNNING
+        );
+
+        return SCPI_RES_ERR;
+    }
+
+    // Reset clock containers
+    for(uint32_t clock_id = 0; clock_id < CLOCKS_MAX; clock_id++)
+    {
+        clock_sequencer_state_reset(
+            clock_id
+        );
+    }
+
+    // Reset pulse containers
+    for(uint32_t pulse_id = 0; pulse_id < CLOCKS_MAX; pulse_id++)
+    {
+        pulse_sequencer_state_reset(
+            pulse_id
+        );
+    }
+
+    // Finally, set sebug and sequencer status to default
+    // TODO: Add reset functions for each
+    sequencer_status_set(IDLE);
+    debug_status_set(SEQUENCER_DNDEBUG);
+
+    return SCPI_RES_OK;
+}
+*/

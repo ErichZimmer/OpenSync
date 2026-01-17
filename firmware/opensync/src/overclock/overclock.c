@@ -16,5 +16,5 @@ void overclock_system_set()
     sleep_ms(100);
 
     // Set PLL frequency to 250 MHz
-    set_sys_clock_khz(250000, true);
+    set_sys_clock_hz(250 * MHZ, true);
 }

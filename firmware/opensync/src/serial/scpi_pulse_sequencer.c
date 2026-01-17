@@ -10,20 +10,12 @@
 #include "system/core_1.h"
 #include "structs/clock_config.h"
 #include "structs/pulse_config.h"
-#include "status/sequencer_status.h"
 #include "sequencer/sequencer_common.h"
 #include "scpi_common.h"
 
-
 #define STATUS_ON TRUE
 #define STATUS_OFF FALSE
-// #define MAX_DIGITS 5
 
-// const char DELIMITER = ',';
-// const char VALID_CONVERSION = '\0';
-// const uint32_t BASE_10 = 10;
-// const uint32_t OFFSET_OUTPUT = 0;
-// const uint32_t OFFSET_INST = 2;
 const uint32_t OFFSET_TERM = 2; // offset from last valid instruction of buffer
 
 
@@ -35,15 +27,12 @@ scpi_result_t SCPI_PulseEnable(
     int32_t numbers[1] = {0};
     uint32_t pulse_id = 0;
 
-    // Get system status
-    uint32_t status_copy = sequencer_status_get();
-
     // If the system status is note (IDLE) or 5 (ABORTED), return an error
-    if( !((status_copy == IDLE) || (status_copy == ABORTED)))
+    if (is_running())
     {
         SCPI_ErrorPush(
             context, 
-            SCPI_ERROR_SYSTEM_ERROR
+            SCPI_ERROR_PROGRAM_CURRENTLY_RUNNING
         );
 
         return SCPI_RES_ERR;
@@ -62,7 +51,7 @@ scpi_result_t SCPI_PulseEnable(
 
     // Validate the ID
     // NOTE: We use clock id validate due to clock id and pulse id sharign same ids
-    if(!clock_id_validate(pulse_id))
+    if (!clock_id_validate(pulse_id))
     {
         SCPI_ErrorPush(
             context, 
@@ -79,7 +68,7 @@ scpi_result_t SCPI_PulseEnable(
     );
 
     // If for some wierd reason we failed, raise an error
-    if(!success)
+    if (!success)
     {
         SCPI_ErrorPush(
             context, 
@@ -101,15 +90,12 @@ scpi_result_t SCPI_PulseDisable(
     int32_t numbers[1] = {0};
     uint32_t pulse_id = 0;
 
-    // Get system status
-    uint32_t status_copy = sequencer_status_get();
-
     // If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
-    if( !((status_copy == IDLE) || (status_copy == ABORTED)))
+    if (is_running())
     {
         SCPI_ErrorPush(
             context, 
-            SCPI_ERROR_SYSTEM_ERROR
+            SCPI_ERROR_PROGRAM_CURRENTLY_RUNNING
         );
 
         return SCPI_RES_ERR;
@@ -128,7 +114,7 @@ scpi_result_t SCPI_PulseDisable(
 
     // Validate the ID
     // NOTE: We use clock id validate due to clock id and pulse id sharign same ids
-    if(!clock_id_validate(pulse_id))
+    if (!clock_id_validate(pulse_id))
     {
         SCPI_ErrorPush(
             context, 
@@ -145,7 +131,7 @@ scpi_result_t SCPI_PulseDisable(
     );
 
     // If for some wierd reason we failed, raise an error
-    if(!success)
+    if (!success)
     {
         SCPI_ErrorPush(
             context, 
@@ -167,20 +153,6 @@ scpi_result_t SCPI_PulseStatusQ(
     int32_t numbers[1] = {0};
     uint32_t pulse_id = 0;
 
-    // Get system status
-    uint32_t status_copy = sequencer_status_get();
-
-    // If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
-    if( !((status_copy == IDLE) || (status_copy == ABORTED)))
-    {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_SYSTEM_ERROR
-        );
-
-        return SCPI_RES_ERR;
-    }
-
     // Get pulse sequencer ID
     SCPI_CommandNumbers(
         context,
@@ -194,7 +166,7 @@ scpi_result_t SCPI_PulseStatusQ(
 
     // Validate the ID
     // NOTE: We use clock id validate due to clock id and pulse id sharign same ids
-    if(!clock_id_validate(pulse_id))
+    if (!clock_id_validate(pulse_id))
     {
         SCPI_ErrorPush(
             context, 
@@ -229,15 +201,12 @@ scpi_result_t SCPI_PulseClockDivider(
     uint32_t pulse_id = 0;
     uint32_t clock_divider = 1;
 
-    // Get system status
-    uint32_t status_copy = sequencer_status_get();
-
     // !If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
-    if( !((status_copy == IDLE) || (status_copy == ABORTED)))
+    if (is_running())
     {
         SCPI_ErrorPush(
             context, 
-            SCPI_ERROR_SYSTEM_ERROR
+            SCPI_ERROR_PROGRAM_CURRENTLY_RUNNING
         );
 
         return SCPI_RES_ERR;
@@ -256,7 +225,7 @@ scpi_result_t SCPI_PulseClockDivider(
 
     // Validate the ID
     // NOTE: We use clock id validate due to clock id and pulse id sharign same ids
-    if(!clock_id_validate(pulse_id))
+    if (!clock_id_validate(pulse_id))
     {
         SCPI_ErrorPush(
             context, 
@@ -267,7 +236,7 @@ scpi_result_t SCPI_PulseClockDivider(
     }
 
     // Now get the clock divider if present
-    if(!SCPI_ParamUInt32(context, &clock_divider, TRUE))
+    if (!SCPI_ParamUInt32(context, &clock_divider, TRUE))
     {
         return SCPI_RES_ERR;
     }
@@ -278,7 +247,7 @@ scpi_result_t SCPI_PulseClockDivider(
     );
 
     // If for some wierd reason we failed, raise an error
-    if(!success)
+    if (!success)
     {
         SCPI_ErrorPush(
             context, 
@@ -300,20 +269,6 @@ scpi_result_t SCPI_PulseClockDividerQ(
     int32_t numbers[1] = {0};
     uint32_t pulse_id = 0;
 
-    // Get system status
-    uint32_t status_copy = sequencer_status_get();
-
-    // If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
-    if( !((status_copy == IDLE) || (status_copy == ABORTED)))
-    {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_SYSTEM_ERROR
-        );
-
-        return SCPI_RES_ERR;
-    }
-
     // Get pulse sequencer ID
     SCPI_CommandNumbers(
         context,
@@ -327,7 +282,7 @@ scpi_result_t SCPI_PulseClockDividerQ(
 
     // Validate the ID
     // NOTE: We use clock id validate due to clock id and pulse id sharign same ids
-    if(!clock_id_validate(pulse_id))
+    if (!clock_id_validate(pulse_id))
     {
         SCPI_ErrorPush(
             context, 
@@ -363,15 +318,12 @@ scpi_result_t SCPI_PulsePin(
     uint32_t param = 0;
     uint clock_pin_id = 0;
 
-    // Get system status
-    uint32_t status_copy = sequencer_status_get();
-
     // !If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
-    if( !((status_copy == IDLE) || (status_copy == ABORTED)))
+    if (is_running())
     {
         SCPI_ErrorPush(
             context, 
-            SCPI_ERROR_SYSTEM_ERROR
+            SCPI_ERROR_PROGRAM_CURRENTLY_RUNNING
         );
 
         return SCPI_RES_ERR;
@@ -390,7 +342,7 @@ scpi_result_t SCPI_PulsePin(
 
     // Validate the ID
     // NOTE: We use clock id validate due to clock id and pulse id sharign same ids
-    if(!clock_id_validate(pulse_id))
+    if (!clock_id_validate(pulse_id))
     {
         SCPI_ErrorPush(
             context, 
@@ -401,7 +353,7 @@ scpi_result_t SCPI_PulsePin(
     }
 
     // Now get the clock divider if present
-    if(!SCPI_ParamUInt32(context, &param, TRUE))
+    if (!SCPI_ParamUInt32(context, &param, TRUE))
     {
         return SCPI_RES_ERR;
     }
@@ -414,7 +366,7 @@ scpi_result_t SCPI_PulsePin(
     );
 
     // If for some wierd reason we failed, raise an error
-    if(!success)
+    if (!success)
     {
         SCPI_ErrorPush(
             context, 
@@ -436,20 +388,6 @@ scpi_result_t SCPI_PulsePinQ(
     int32_t numbers[1] = {0};
     uint32_t pulse_id = 0;
 
-    // Get system status
-    uint32_t status_copy = sequencer_status_get();
-
-    // If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
-    if( !((status_copy == IDLE) || (status_copy == ABORTED)))
-    {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_SYSTEM_ERROR
-        );
-
-        return SCPI_RES_ERR;
-    }
-
     // Get pulse sequencer ID
     SCPI_CommandNumbers(
         context,
@@ -463,7 +401,7 @@ scpi_result_t SCPI_PulsePinQ(
 
     // Validate the ID
     // NOTE: We use clock id validate due to clock id and pulse id sharign same ids
-    if(!clock_id_validate(pulse_id))
+    if (!clock_id_validate(pulse_id))
     {
         SCPI_ErrorPush(
             context, 
@@ -489,66 +427,6 @@ scpi_result_t SCPI_PulsePinQ(
     return SCPI_RES_OK;
 }
 
-// SCPI chars need to be parsed into a functional array of integers
-//bool parse_char_to_int(
-//    const char* char_buffer,
-//    uint32_t buffer_len,
-//    uint32_t* instruction_buffer
-//) {
-//    char token_buffer[MAX_DIGITS + 1] = "";
-//    char* endpoint = "";
-//    uint32_t token = 0;
-//    uint32_t i = 0;
-//    uint32_t output_buffer_ind = OFFSET_OUTPUT;
-//
-//    while (i < buffer_len)
-//    {
-//        // Check if output buffer index is still valid
-//        if (output_buffer_ind > PULSE_INSTRUCTIONS_MAX)
-//        {
-//            return 1;
-//        }
-//        
-//        // Get token length
-//        size_t start = i;
-//        while (i < buffer_len && char_buffer[i] != DELIMITER) ++i;
-//        
-//        uint32_t token_length = i - start;
-//        
-//        // Check if the string length is longer than supported number of digits
-//        if (token_length > MAX_DIGITS)
-//        {
-//            return 1;
-//        }
-//        
-//        // Now get token string
-//        strncpy(
-//            token_buffer,
-//            char_buffer + start,
-//            token_length
-//        );
-//        
-//        // Make sure to NULL terminate
-//        token_buffer[token_length] = '\0';
-//        
-//        // Convert string to integer, if possible
-//        token = strtol(token_buffer, &endpoint, BASE_10);
-//        
-//        if (*endpoint != VALID_CONVERSION)
-//        {
-//            return 1;
-//        }
-//        
-//        // Now store this instruction
-//        instruction_buffer[output_buffer_ind] = token;
-//        output_buffer_ind += OFFSET_INST;
-//
-//        if (i < buffer_len && char_buffer[i] == DELIMITER) ++i;
-//    }
-//    
-//    return 0;
-//}
-
 
 // Set instruction output state at pulse sequencer N via char buffer
 scpi_result_t SCPI_PulseInstructions(
@@ -561,15 +439,12 @@ scpi_result_t SCPI_PulseInstructions(
     uint32_t sequence_buffer_size = PULSE_INSTRUCTIONS_MAX;
     size_t buffer_instructions_read = 0;
 
-    // Get system status
-    uint32_t status_copy = sequencer_status_get();
-
     // !If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
-    if( !((status_copy == IDLE) || (status_copy == ABORTED)))
+    if(is_running())
     {
         SCPI_ErrorPush(
             context, 
-            SCPI_ERROR_SYSTEM_ERROR
+            SCPI_ERROR_PROGRAM_CURRENTLY_RUNNING
         );
 
         return SCPI_RES_ERR;
@@ -613,7 +488,7 @@ scpi_result_t SCPI_PulseInstructions(
 
     // Validate the ID
     // NOTE: We use clock id validate due to clock id and pulse id sharign same ids
-    if(!clock_id_validate(pulse_id))
+    if (!clock_id_validate(pulse_id))
     {
         SCPI_ErrorPush(
             context, 
@@ -696,7 +571,7 @@ scpi_result_t SCPI_PulseInstructions(
     );
 
     // If for some wierd reason we failed, raise an error
-    if(!success)
+    if (!success)
     {
         SCPI_ErrorPush(
             context, 
@@ -718,20 +593,6 @@ scpi_result_t SCPI_PulseInstructionsQ(
     int32_t numbers[1] = {0};
     uint32_t pulse_id = 0;
 
-    // Get system status
-    uint32_t status_copy = sequencer_status_get();
-
-    // If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
-    if( !((status_copy == IDLE) || (status_copy == ABORTED)))
-    {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_SYSTEM_ERROR
-        );
-
-        return SCPI_RES_ERR;
-    }
-
     // Get pulse sequencer ID
     SCPI_CommandNumbers(
         context,
@@ -745,7 +606,7 @@ scpi_result_t SCPI_PulseInstructionsQ(
 
     // Validate the ID
     // NOTE: We use clock id validate due to clock id and pulse id sharign same ids
-    if(!clock_id_validate(pulse_id))
+    if (!clock_id_validate(pulse_id))
     {
         SCPI_ErrorPush(
             context, 
@@ -780,15 +641,12 @@ scpi_result_t SCPI_PulseReset(
     int32_t numbers[1] = {0};
     uint32_t pulse_id = 0;
 
-    // Get system status
-    uint32_t status_copy = sequencer_status_get();
-
     // If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
-    if( !((status_copy == IDLE) || (status_copy == ABORTED)))
+    if (is_running())
     {
         SCPI_ErrorPush(
             context, 
-            SCPI_ERROR_SYSTEM_ERROR
+            SCPI_ERROR_PROGRAM_CURRENTLY_RUNNING
         );
 
         return SCPI_RES_ERR;

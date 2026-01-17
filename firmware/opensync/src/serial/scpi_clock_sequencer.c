@@ -9,7 +9,6 @@
 
 #include "system/core_1.h"
 #include "structs/clock_config.h"
-#include "status/sequencer_status.h"
 #include "sequencer/sequencer_common.h"
 #include "scpi_common.h"
 
@@ -29,15 +28,12 @@ scpi_result_t SCPI_ClockEnable(
     int32_t numbers[1] = {0};
     uint32_t clock_id = 0;
 
-    // Get system status
-    uint32_t status_copy = sequencer_status_get();
-
     // If the system status is note (IDLE) or 5 (ABORTED), return an error
-    if (!((status_copy == IDLE) || (status_copy == ABORTED)))
+    if (is_running())
     {
         SCPI_ErrorPush(
             context, 
-            SCPI_ERROR_SYSTEM_ERROR
+            SCPI_ERROR_PROGRAM_CURRENTLY_RUNNING
         );
 
         return SCPI_RES_ERR;
@@ -94,15 +90,12 @@ scpi_result_t SCPI_ClockDisable(
     int32_t numbers[1] = {0};
     uint32_t clock_id = 0;
 
-    // Get system status
-    uint32_t status_copy = sequencer_status_get();
-
     // If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
-    if (!((status_copy == IDLE) || (status_copy == ABORTED)))
+    if (is_running())
     {
         SCPI_ErrorPush(
             context, 
-            SCPI_ERROR_SYSTEM_ERROR
+            SCPI_ERROR_PROGRAM_CURRENTLY_RUNNING
         );
 
         return SCPI_RES_ERR;
@@ -120,7 +113,7 @@ scpi_result_t SCPI_ClockDisable(
     clock_id = (uint32_t) numbers[0];
 
     // Validate the ID
-    if(!clock_id_validate(clock_id))
+    if (!clock_id_validate(clock_id))
     {
         SCPI_ErrorPush(
             context, 
@@ -137,7 +130,7 @@ scpi_result_t SCPI_ClockDisable(
     );
 
     // If for some wierd reason we failed, raise an error
-    if(!success)
+    if (!success)
     {
         SCPI_ErrorPush(
             context, 
@@ -158,20 +151,6 @@ scpi_result_t SCPI_ClockStatusQ(
     // Allocate some variables
     int32_t numbers[1] = {0};
     uint32_t clock_id = 0;
-
-    // Get system status
-    uint32_t status_copy = sequencer_status_get();
-
-    // If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
-    if (!((status_copy == IDLE) || (status_copy == ABORTED)))
-    {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_SYSTEM_ERROR
-        );
-
-        return SCPI_RES_ERR;
-    }
 
     // Get clock sequencer ID
     SCPI_CommandNumbers(
@@ -220,15 +199,12 @@ scpi_result_t SCPI_ClockClockDivider(
     uint32_t clock_id = 0;
     uint32_t clock_divider = 1;
 
-    // Get system status
-    uint32_t status_copy = sequencer_status_get();
-
     // !If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
-    if (!((status_copy == IDLE) || (status_copy == ABORTED)))
+    if (is_running())
     {
         SCPI_ErrorPush(
             context, 
-            SCPI_ERROR_SYSTEM_ERROR
+            SCPI_ERROR_PROGRAM_CURRENTLY_RUNNING
         );
 
         return SCPI_RES_ERR;
@@ -290,20 +266,6 @@ scpi_result_t SCPI_ClockClockDividerQ(
     int32_t numbers[1] = {0};
     uint32_t clock_id = 0;
 
-    // Get system status
-    uint32_t status_copy = sequencer_status_get();
-
-    // If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
-    if (!((status_copy == IDLE) || (status_copy == ABORTED)))
-    {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_SYSTEM_ERROR
-        );
-
-        return SCPI_RES_ERR;
-    }
-
     // Get clock sequencer ID
     SCPI_CommandNumbers(
         context,
@@ -353,20 +315,16 @@ scpi_result_t SCPI_ClockInstructions(
     uint32_t sequence_buffer_size = CLOCK_INSTRUCTIONS_MAX;
     size_t buffer_instructions_read = 0;
 
-    // Get system status
-    uint32_t status_copy = sequencer_status_get();
-
     // !If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
-    if (!((status_copy == IDLE) || (status_copy == ABORTED)))
+    if (is_running())
     {
         SCPI_ErrorPush(
             context, 
-            SCPI_ERROR_SYSTEM_ERROR
+            SCPI_ERROR_PROGRAM_CURRENTLY_RUNNING
         );
 
         return SCPI_RES_ERR;
     }
-
 
     // Get clock sequencer ID
     SCPI_CommandNumbers(
@@ -380,7 +338,7 @@ scpi_result_t SCPI_ClockInstructions(
     clock_id = (uint32_t) numbers[0];
 
     // Validate the ID
-    if(!clock_id_validate(clock_id))
+    if (!clock_id_validate(clock_id))
     {
         SCPI_ErrorPush(
             context, 
@@ -457,7 +415,7 @@ scpi_result_t SCPI_ClockInstructions(
     );
 
     // If for some wierd reason we failed, raise an error
-    if(!success)
+    if (!success)
     {
         SCPI_ErrorPush(
             context, 
@@ -478,20 +436,6 @@ scpi_result_t SCPI_ClockInstructionsQ(
     // Allocate some variables
     int32_t numbers[1] = {0};
     uint32_t clock_id = 0;
-
-    // Get system status
-    uint32_t status_copy = sequencer_status_get();
-
-    // If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
-    if (!((status_copy == IDLE) || (status_copy == ABORTED)))
-    {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_SYSTEM_ERROR
-        );
-
-        return SCPI_RES_ERR;
-    }
 
     // Get clock sequencer ID
     SCPI_CommandNumbers(
@@ -524,16 +468,6 @@ scpi_result_t SCPI_ClockInstructionsQ(
         CLOCK_INSTRUCTIONS_MAX,
         0 // what is scpi array format??
     );
-
-    // Get the instructions of the clock sequencer at clock_id
-//    for (uint32_t i = 0; i < CLOCK_INSTRUCTIONS_MAX; i++)
-//    {
-//        // Return as uint32
-//        SCPI_ResultUInt32(
-//            context,
-//            config_array[clock_id].instructions[i]
-//        );
-//    }
     
     return SCPI_RES_OK;
 }
@@ -546,20 +480,6 @@ scpi_result_t SCPI_ClockTriggerModeQ(
     // Allocate some variables
     int32_t numbers[1] = {0};
     uint32_t clock_id = 0;
-
-    // Get system status
-    uint32_t status_copy = sequencer_status_get();
-
-    // If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
-    if (!((status_copy == IDLE) || (status_copy == ABORTED)))
-    {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_SYSTEM_ERROR
-        );
-
-        return SCPI_RES_ERR;
-    }
 
     // Get clock sequencer ID
     SCPI_CommandNumbers(
@@ -589,7 +509,6 @@ scpi_result_t SCPI_ClockTriggerModeQ(
     // Get the trigger mode of the clock sequencer at clock_id
     uint32_t clock_type = config_array[clock_id].clock_type;
 
-
     SCPI_ResultUInt32(
         context,
         clock_type
@@ -608,15 +527,12 @@ scpi_result_t SCPI_ClockTriggerInternal(
     uint32_t clock_id = 0;
     uint32_t clock_divider = 1;
 
-    // Get system status
-    uint32_t status_copy = sequencer_status_get();
-
     // !If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
-    if (!((status_copy == IDLE) || (status_copy == ABORTED)))
+    if (is_running())
     {
         SCPI_ErrorPush(
             context, 
-            SCPI_ERROR_SYSTEM_ERROR
+            SCPI_ERROR_PROGRAM_CURRENTLY_RUNNING
         );
 
         return SCPI_RES_ERR;
@@ -643,7 +559,6 @@ scpi_result_t SCPI_ClockTriggerInternal(
 
         return SCPI_RES_ERR;
     }
-
 
     bool success = sequencer_clock_type_set(
         clock_id,
@@ -674,15 +589,12 @@ scpi_result_t SCPI_ClockTriggerRisingEdge(
     uint32_t clock_id = 0;
     uint32_t clock_divider = 1;
 
-    // Get system status
-    uint32_t status_copy = sequencer_status_get();
-
     // !If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
-    if (!((status_copy == IDLE) || (status_copy == ABORTED)))
+    if (is_running())
     {
         SCPI_ErrorPush(
             context, 
-            SCPI_ERROR_SYSTEM_ERROR
+            SCPI_ERROR_PROGRAM_CURRENTLY_RUNNING
         );
 
         return SCPI_RES_ERR;
@@ -709,7 +621,6 @@ scpi_result_t SCPI_ClockTriggerRisingEdge(
 
         return SCPI_RES_ERR;
     }
-
 
     bool success = sequencer_clock_type_set(
         clock_id,
@@ -744,15 +655,12 @@ scpi_result_t SCPI_ClockTriggerInstructions(
     uint32_t param = 0;
     bool success = 0;
 
-    // Get system status
-    uint32_t status_copy = sequencer_status_get();
-
     // !If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
-    if( !((status_copy == IDLE) || (status_copy == ABORTED)))
+    if(is_running())
     {
         SCPI_ErrorPush(
             context, 
-            SCPI_ERROR_SYSTEM_ERROR
+            SCPI_ERROR_PROGRAM_CURRENTLY_RUNNING
         );
 
         return SCPI_RES_ERR;
@@ -815,7 +723,7 @@ scpi_result_t SCPI_ClockTriggerInstructions(
     }
 
     // If for some wierd reason we failed, raise an error
-    if(!success)
+    if (!success)
     {
         SCPI_ErrorPush(
             context, 
@@ -837,20 +745,6 @@ scpi_result_t SCPI_ClockTriggerInstructionsQ(
     int32_t numbers[1] = {0};
     uint32_t clock_id = 0;
     uint32_t instruction_buffer[CLOCK_TRIGGERS_MAX + 1] = {0};
-
-    // Get system status
-    uint32_t status_copy = sequencer_status_get();
-
-    // If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
-    if (!((status_copy == IDLE) || (status_copy == ABORTED)))
-    {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_SYSTEM_ERROR
-        );
-
-        return SCPI_RES_ERR;
-    }
 
     // Get clock sequencer ID
     SCPI_CommandNumbers(
@@ -887,16 +781,6 @@ scpi_result_t SCPI_ClockTriggerInstructionsQ(
         CLOCK_TRIGGERS_MAX + 1,
         0 // what is scpi array format??
     );
-
-    // Get the instructions of the clock sequencer at clock_id
-//    for (uint32_t i = 0; i < CLOCK_TRIGGERS_MAX; i++)
-//    {
-//        // Return as uint32
-//        SCPI_ResultUInt32(
-//            context,
-//            config_array[clock_id].instructions[i]
-//        );
-//    }
     
     return SCPI_RES_OK;
 }
@@ -910,15 +794,12 @@ scpi_result_t SCPI_ClockReset(
     int32_t numbers[1] = {0};
     uint32_t clock_id = 0;
 
-    // Get system status
-    uint32_t status_copy = sequencer_status_get();
-
     // If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
-    if( !((status_copy == IDLE) || (status_copy == ABORTED)))
+    if (is_running())
     {
         SCPI_ErrorPush(
             context, 
-            SCPI_ERROR_SYSTEM_ERROR
+            SCPI_ERROR_PROGRAM_CURRENTLY_RUNNING
         );
 
         return SCPI_RES_ERR;
@@ -936,7 +817,7 @@ scpi_result_t SCPI_ClockReset(
     clock_id = (uint32_t) numbers[0];
 
     // Validate the ID
-    if(!clock_id_validate(clock_id))
+    if (!clock_id_validate(clock_id))
     {
         SCPI_ErrorPush(
             context, 

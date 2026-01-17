@@ -55,9 +55,9 @@ pico_set_program_name(opensync "OpenSync")
 pico_set_program_version(opensync "0.1") # this number is irrespective of firmware!?
 
 # Generate PIO headers
- pico_generate_pio_header(opensync ${CMAKE_CURRENT_SOURCE_DIR}/pio_assembly/sequencer_pio_clock_freerun.pio)
- pico_generate_pio_header(opensync ${CMAKE_CURRENT_SOURCE_DIR}/pio_assembly/sequencer_pio_clock_triggered.pio)
- pico_generate_pio_header(opensync ${CMAKE_CURRENT_SOURCE_DIR}/pio_assembly/sequencer_pio_pulse_sequencer.pio)
+pico_generate_pio_header(opensync ${CMAKE_CURRENT_SOURCE_DIR}/pio_assembly/sequencer_pio_clock_freerun.pio)
+pico_generate_pio_header(opensync ${CMAKE_CURRENT_SOURCE_DIR}/pio_assembly/sequencer_pio_clock_triggered.pio)
+pico_generate_pio_header(opensync ${CMAKE_CURRENT_SOURCE_DIR}/pio_assembly/sequencer_pio_pulse_sequencer.pio)
 
 # Enable native USB OTG
 pico_enable_stdio_uart(opensync 0)
@@ -68,6 +68,10 @@ target_include_directories(opensync PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}
     ${PRAWN_DO_DIR}
     ${SCPI_LIB_DIR}/libscpi/inc
+)
+
+target_compile_definitions(opensync PUBLIC
+    USE_FULL_ERROR_LIST
 )
 
 # Add any user requested libraries including the standard library
