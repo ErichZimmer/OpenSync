@@ -115,7 +115,7 @@ def _device_clock_inst_triggered_load(
         raise ValueError(msg)
 
     # Load instructions to device
-    command = f':clock{clock_id}:trigger:instr {trigger_skips},{trigger_delay_inst},{trigger_reps}'
+    command = f':clock{clock_id}:trigger:inst {trigger_skips},{trigger_delay_inst},{trigger_reps}'
     resp = device_comm_write(
         device,
         command
@@ -179,7 +179,15 @@ def _device_clock_config_load(
 #            return resp
 
     # Load clock type
-    command = f':clock{clock_id}:trigger:mode {clock_type}'
+    if clock_type == 0: # Internal trigger
+        mode = 'internal'
+    elif clock_type == 1: # External trigger rising edge
+        mode = 'rising'
+    else:
+        msg = 'Invalid clock type encountered'
+        raise ValueError(msg)
+        
+    command = f':clock{clock_id}:trigger:mode:{mode}'
     resp = device_comm_write(
         device,
         command
@@ -280,7 +288,7 @@ def _device_pulse_config_load(
         if 'error' in msg.lower():
             return resp
         
-    # Load clock divider
+    # Load clock 
     command = f':pulse{pulse_id}:divider {clock_divider}'
     resp = device_comm_write(
         device,

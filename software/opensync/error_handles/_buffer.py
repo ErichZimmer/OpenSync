@@ -1,10 +1,9 @@
 __all__ = [
-    'DeviceBufferSize',
-    'DeviceBufferSizeWarning'
+    'DeviceBufferSizeError',
 ]
 
 
-class DeviceBufferSize(Exception):
+class DeviceBufferSizeError(Exception):
     """The error raised when the buffer size is exceeded.
 
     As implemented, the device buffer can only hold a certain number of

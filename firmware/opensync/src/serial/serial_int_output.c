@@ -26,7 +26,7 @@ void serial_print_clock_instructions(
         uint32_t reps = config -> instructions[i];
         uint32_t delay = config -> instructions[i+1];
 
-        fast_serial_printf("Clock instruction %i: reps=%i, delay=%i\r\n", inst_num, reps, delay);
+        fast_serial_printf("Clock instruction %i: reps=%i; delay=%i\r\n", inst_num, reps, delay);
     }
 }
 
@@ -41,7 +41,7 @@ void serial_print_clock_triggers(
         uint32_t skips = config -> trigger_config[i];
         uint32_t delay = config -> trigger_config[i+1];
 
-        fast_serial_printf("Trigger instruction %i: skips=%i, delay=%i\r\n", inst_num, skips, delay);
+        fast_serial_printf("Trigger instruction %i: skips=%i; delay=%i\r\n", inst_num, skips, delay);
     }
 }
 
@@ -83,7 +83,7 @@ void serial_print_pulse_instructions(
         uint32_t reps = config -> instructions[i];
         uint32_t delay = config -> instructions[i+1];
 
-        fast_serial_printf("Pulse instruction %i: state=%b, delay=%i\r\n", inst_num, reps, delay);
+        fast_serial_printf("Pulse instruction %i: state=%b; delay=%i\r\n", inst_num, reps, delay);
     }
 }
 

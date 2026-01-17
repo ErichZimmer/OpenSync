@@ -1,9 +1,9 @@
 __all__ = [
-    'PulseParamsInvalid'
+    'PulseParamsError'
 ]
 
 
-class PulseParamsInvalid(Exception):
+class PulseParamsError(Exception):
     """The error raised when the pulse parameters are invalid.
 
     As implemented, the pulse parameters container can only hold a certain

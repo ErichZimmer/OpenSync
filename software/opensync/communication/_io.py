@@ -25,12 +25,19 @@ __all__ = [
 
 
 def _get_response(device: 'opensync') -> str:
-    return device.readlines()[0]
+    response = device.readlines()
+    return response
     
 
 def _parse_response(response: str) -> list[str]:
-    response = response.decode().replace(EOL, '')
-    response = response.split(DELIMITER)
+    # Remove terminator
+    response = [resp.decode().replace(EOL, '') for resp in response]
+
+    # Remove commas
+    response = [resp.split(DELIMITER) for resp in response]
+
+    # Flatten the list of response(s)
+    response = [resp for inner in response for resp in inner]
 
     return response
 

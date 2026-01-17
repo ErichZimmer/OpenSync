@@ -93,6 +93,7 @@ size_t SCPI_Write(
     return fwrite(data, 1, len, stdout);
 }
 
+
 int SCPI_Error(scpi_t * context, int_fast16_t err) {
     (void) context;
 

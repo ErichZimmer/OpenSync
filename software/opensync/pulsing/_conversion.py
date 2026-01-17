@@ -4,7 +4,7 @@ from typing import Tuple
 
 from ._utils import _get_channel_ids
 from ..communication import CLOCK_CYCLE
-from ..error_handles import DeviceBufferSizeWarning
+from ..error_handles import DeviceBufferSizeError
 
 import warnings
 
@@ -113,16 +113,12 @@ def _convert_pulse_params(pulse_params: dict) -> Tuple[list[int], list[int]]:
             
         reps += 1
 
-    # Warn about resource management
+    # Raise error about resource management
     if reps > MAX_PULSE_INSTRUCTION_PAIRS:
         msg = 'Device resources has been exausted. The device only supports ' +\
-             f'{MAX_PULSE_INSTRUCTION_PAIRS} instructions pairs. Remaining ' +\
-              'instructions have been ignored'
+             f'{MAX_PULSE_INSTRUCTION_PAIRS} instructions pairs'
         
-        warnings.warn(
-            msg,
-            DeviceBufferSizeWarning
-        )
+        raise DeviceBufferSizeError(msg)
 
     return output_state, output_delay
 

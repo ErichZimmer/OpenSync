@@ -1,5 +1,5 @@
 from typing import Tuple
-from ..error_handles import PulseParamsSize
+from ..error_handles import PulseParamsError
 from ._utils import _get_channel_ids
 from ._clock_container import VALID_CLOCK_IDS, MAX_CLOCK_DIVIDER
 
@@ -277,7 +277,7 @@ def insert_pulse_many(
     pulse_train_size = len(pulse_train)
     if pulse_train_size < MIN_PULSE_TRAIN_SIZE:
         msg = f'Invalid pulse train size of {pulse_train_size}'
-        raise PulseParamsSize(msg)
+        raise PulseParamsError(msg)
 
     # Check for pulse train size and append
     for sequence in pulse_train:

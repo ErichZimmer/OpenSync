@@ -56,21 +56,20 @@ Flashing firmware to OpenSync is extremely simple. Make sure OpenSync is disconn
 ### Self Test
 Import the Python library `opensync` and type in the following command:
 ```python
-from opensync.communication import device_comm_search, device_comm_open, device_comm_close
-from opensync.system import device_system_test
+from opensync import opensync
 
 # Find all open ports
-ports = device_comm_search()
+ports = opensync.device_comm_search()
 print(ports)
 
-# Open serial connection with opensync device
-sync_device = device_comm_open(port="Enter OpenSync USB port connection here")
+# Open serial connection with the first opensync device
+with opensync.device_comm_managed(ports[0], fast=True) as device:
+    # Print manufacturer, model, serial number, and firmware version
+    print(opensync.device_system_version(device))
 
-# Test opensync device status and clocks frequencies
-device_system_test(sync_device)
+    # Perform a system operation test (raises if something goes wrong)
+    opensync.device_system_test(sync_device)
 
-# Important! Close serial connection
-device_comm_close(sync_device)
 ```
 If successfull, no errors or warnings should be produced. Please note that all commands to and from opensync are terminated with CRLF. Additionally, all used output terminals should be validated on an osciliscope for peace-of-mind, allthough this is not strictly necessary.
 
