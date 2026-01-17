@@ -10,6 +10,7 @@ READ_TIMEOUT_FAST = 0.02
 WRITE_TIMEOUT_FAST = 0.01
 CLOCK_CYCLE = 4.0 # clock cycle in nanoseconds
 EOL = '\r\n'
+DELIMITER = ','
 
 
 __all__ = [
@@ -24,11 +25,14 @@ __all__ = [
 
 
 def _get_response(device: 'opensync') -> str:
-    return device.readlines()
+    return device.readlines()[0]
     
 
 def _parse_response(response: str) -> list[str]:
-    return [line.decode().replace(EOL, '') for line in response]
+    response = response.decode().replace(EOL, '')
+    response = response.split(DELIMITER)
+
+    return response
 
 
 def _check_if_opensync(device: 'device') -> bool:
@@ -36,7 +40,7 @@ def _check_if_opensync(device: 'device') -> bool:
     
     resp = device_comm_write(
         device,
-        'type'
+        '*IDN?'
     )
 
     # Check if 'opensync' is in the response(s)

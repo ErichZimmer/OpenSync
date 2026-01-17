@@ -28,8 +28,9 @@ def device_params_load(
         )
         
         # check for errors
-        if 'ok' not in resp[0].lower():
-            return resp
+        for msg in resp:
+            if 'error' in msg.lower():
+                return resp
 
         # Load instructions
         resp = _buffer._device_clock_inst_freerun_load(
@@ -38,8 +39,9 @@ def device_params_load(
         )
         
         # check for errors
-        if 'ok' not in resp[0].lower():
-            return resp
+        for msg in resp:
+            if 'error' in msg.lower():
+                return resp
 
         # Load clock configs
         resp = _buffer._device_clock_config_load(
@@ -48,8 +50,9 @@ def device_params_load(
         )
 
         # check for errors
-        if 'ok' not in resp[0].lower():
-            return resp
+        for msg in resp:
+            if 'error' in msg.lower():
+                return resp
 
     # Load all pulse parameters
     for pls_param in pulse_params:
@@ -60,8 +63,9 @@ def device_params_load(
         )
 
         # check for errors
-        if 'ok' not in resp[0].lower():
-            return resp
+        for msg in resp:
+            if 'error' in msg.lower():
+                return resp
 
         # Load pulse configs
         resp = _buffer._device_pulse_config_load(
@@ -70,7 +74,8 @@ def device_params_load(
         )
 
         # check for errors
-        if 'ok' not in resp[0].lower():
-            return resp
+        for msg in resp:
+            if 'error' in msg.lower():
+                return resp
 
     return resp

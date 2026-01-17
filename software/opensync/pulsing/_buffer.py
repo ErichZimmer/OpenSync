@@ -63,26 +63,14 @@ def _device_clock_inst_freerun_load(
         msg = f'Reps and delay size mismatch: {reps_len} vs {delay_len}'
         raise ValueError(msg)
 
-    # Open access to instruction buffer
-    device_comm_write(
-        device,
-        f'cldi {clock_id}',
-        output=False
-    )
-
-    for reps, cycles in zip(reps_inst, delay_inst):
-        resp = device_comm_write(
-            device,
-            f'{reps} {cycles}'
-        )
-
-        # If an invalid response is returned, halt and return that response
-        if 'ok' not in resp[0].lower():
-            return resp
-        
+    # Get information to send to device
+    instructions = ','.join(str(x) for pair in zip(reps_inst, delay_inst) for x in pair)
+    
+    # Send imformation to clock instruction buffer
+    command = f':clock{clock_id}:inst {instructions}'
     resp = device_comm_write(
         device,
-        'exit'
+        command
     )
 
     return resp
@@ -126,23 +114,16 @@ def _device_clock_inst_triggered_load(
         msg = 'Trigger skips size too high'
         raise ValueError(msg)
 
-    # Open access to trigger buffer
+    # Load instructions to device
+    command = f':clock{clock_id}:trigger:instr {trigger_skips},{trigger_delay_inst},{trigger_reps}'
     resp = device_comm_write(
         device,
-        f'tldi {clock_id} {trigger_skips} {trigger_delay_inst}'
-    )
-
-    if 'ok' not in resp[0].lower():
-        return resp
-    
-    # Now load reps
-    resp = device_comm_write(
-        device,
-        f'treps {clock_id} {trigger_reps}'
+        command
     )
     
     return resp
 
+    
 def _device_clock_config_load(
     device: 'opensync',
     clock_params: 'clock_params'
@@ -165,37 +146,44 @@ def _device_clock_config_load(
     clock_type = int(clock_params['ext_trigger'] == 'enabled')
 
     # Activate clock channel
+    command = f':clock{clock_id}:enable'
     resp = device_comm_write(
         device,
-        f'cact {clock_id} 1'
+        command
     )
 
-    if 'ok' not in resp[0].lower():
-        return resp
+    for msg in resp:
+        if 'error' in msg.lower():
+            return resp
         
     # Load clock divider
+    command = f':clock{clock_id}:divider {clock_divider}'
     resp = device_comm_write(
         device,
-        f'cdiv {clock_id} {clock_divider}'
+        command
     )
 
-    if 'ok' not in resp[0].lower():
-        return resp
+    for msg in resp:
+        if 'error' in msg.lower():
+            return resp
 
     # Load external trigger pin
-    resp = device_comm_write(
-        device,
-        f'tset {clock_id} {trigger_id}'
-    )
-
-    if 'ok' not in resp[0].lower():
-        return resp
+#    command = f':clock{clock_id}:enable'
+#    resp = device_comm_write(
+#        device,
+#        command
+#    )
+#
+#    for msg in resp:
+#        if 'error' in msg.lower():
+#            return resp
 
     # Load clock type
+    command = f':clock{clock_id}:trigger:mode {clock_type}'
     resp = device_comm_write(
         device,
-        f'ctyp {clock_id} {clock_type}'
-    )    
+        command
+    )
 
     return resp
 
@@ -248,44 +236,14 @@ def _device_pulse_inst_load(
         msg = f'Reps and delay size mismatch: {output_len} vs {delay_len}'
         raise ValueError(msg)
 
-    # Open access to instruction buffer
-    device_comm_write(
-        device,
-        f'pldi {pulse_id}', 
-        output=False
-    )
-
-    for output, cycles in zip(output_inst, delay_inst):
-        resp = device_comm_write(
-            device,
-            f'{output} {cycles}'
-        )
-
-        # If an invalid response is returned, halt and return that response
-        if 'ok' not in resp[0].lower():
-            return resp
-        
-    resp = device_comm_write(
-        device,
-        'exit'
-    )
-
-    if 'ok' not in resp[0].lower():
-        return resp
-
-    # Now load clock trigger channel
-    resp = device_comm_write(
-        device,
-        f'pset {pulse_id} {clock_id}'
-    )
-
-    if 'ok' not in resp[0].lower():
-        return resp
+    # Get information to send to device
+    instructions = ','.join(str(x) for pair in zip(output_inst, delay_inst) for x in pair)
     
-    # Now load clock divider
+    # Send imformation to clock instruction buffer
+    command = f':pulse{pulse_id}:inst {instructions}'
     resp = device_comm_write(
         device,
-        f'pdiv {pulse_id} {clock_divider}'
+        command
     )
 
     return resp
@@ -311,28 +269,34 @@ def _device_pulse_config_load(
     trigger_id = pulse_params['clock_id']
     clock_divider = pulse_params['clock_divider']
 
-    # Activate output pulse channel
+   # Activate clock channel
+    command = f':pulse{pulse_id}:enable'
     resp = device_comm_write(
         device,
-        f'pact {pulse_id} 1'
+        command
     )
-    
-    if 'ok' not in resp[0].lower():
-        return resp
+
+    for msg in resp:
+        if 'error' in msg.lower():
+            return resp
         
     # Load clock divider
+    command = f':pulse{pulse_id}:divider {clock_divider}'
     resp = device_comm_write(
         device,
-        f'pdiv {pulse_id} {clock_divider}'
+        command
     )
 
-    if 'ok' not in resp[0].lower():
-        return resp
+    for msg in resp:
+        if 'error' in msg.lower():
+            return resp
+
 
     # Load clock trigger pin
+    command = f':pulse{pulse_id}:pin {trigger_id}'
     resp = device_comm_write(
         device,
-        f'pset {pulse_id} {trigger_id}'
+        command
     )
 
     return resp
@@ -359,7 +323,7 @@ def device_clock_reset(
     """
     clock_id = clock_params['clock_id']
 
-    command = f'crst {clock_id}' 
+    command = f':clock{clock_id}:reset' 
     return device_comm_write(device, command)
 
     
@@ -384,7 +348,7 @@ def device_pulse_reset(
     """
     pulse_id = pulse_params['pulse_id']
 
-    command = f'prst {pulse_id}' 
+    command = f':pulse{pulse_id}:reset' 
     return device_comm_write(device, command)
 
 
@@ -409,12 +373,12 @@ def device_timing_reset(
     resp = []
     # Reset all clock channels
     for channel_id in VALID_CLOCK_IDS:
-        command = f'crst {channel_id}'
+        command = f':clock{channel_id}:reset' 
         resp.append(device_comm_write(device, command))
 
     # Reset all pulse channels
     for channel_id in VALID_CLOCK_IDS:
-        command = f'prst {channel_id}'
+        command = f':pulse{channel_id}:reset' 
         resp.append(device_comm_write(device, command))
 
     return resp

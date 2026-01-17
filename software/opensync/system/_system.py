@@ -29,7 +29,7 @@ def device_system_version(device: 'opensync') -> list[str]:
     response : list[str]
         A list of strings containing the version information of the device.
     """
-    command = 'vers'
+    command = '*IDN?'
     return device_comm_write(device, command)
 
 
@@ -51,7 +51,7 @@ def device_system_freq(device: 'opensync') -> list[str]:
         A list of strings containing the frequency information of the 
         device.
     """
-    command = 'freq'
+    command = ':system:freq?'
     return device_comm_write(device, command)
 
     
@@ -71,7 +71,7 @@ def device_system_status(device: 'opensync') -> list[str]:
     response : list[str]
         A list of strings containing the current status of the device.
     """
-    command = 'stat'
+    command = ':system:status?'
     return device_comm_write(device, command)
 
 
@@ -142,7 +142,7 @@ def device_system_fire(device: 'opensync') -> list[str]:
         A list of strings containing the response from the device after
         executing the command.
     """
-    command = 'fire'
+    command = ':system:start'
     return device_comm_write(device, command)
 
 
@@ -164,5 +164,5 @@ def device_system_stop(device: 'opensync') -> list[str]:
         A list of strings containing the response from the device after
         executing the stop command.
     """
-    command = 'stop'
+    command = ':system:stop'
     return device_comm_write(device, command)
