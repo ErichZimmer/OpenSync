@@ -4,7 +4,9 @@ An open source synchronizer for the velocimetry of fluids using a Raspberry Pi m
 ## GENERAL
  - **Output Channels**: 8
  - **Input Channels**: 1
- - **I/O Channel Voltage**: 5V @ 50 Ohm
+ - **I/O Channel Voltage**: 5V @ 50 ohm
+ - **Output Current**: 50 mA into 50 ohm, 5 mA into 1k ohm
+ - **Output Voltage**: 2.5 V into 50 ohm, 5 V into high impedance
  - **Clock Dividers**: 1, 25, 250, 2,500, 25,000
  - **Communications**: USB 2.0 OTG (On-The-Go)
  
