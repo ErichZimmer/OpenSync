@@ -120,13 +120,13 @@ scpi_result_t SCPI_SystemFrequencyQ(
     snprintf(
         output_buffer, 
         sizeof output_buffer,
-        "pll_sys = %ukHz\r\n\
-pll_usb = %ukHz\r\n\
-rosc = %ukHz\r\n\
-clk_sys = %ukHz\r\n\
-clk_peri = %ukHz\r\n\
-clk_usb = %ukHz\r\n\
-clk_adc = %ukHz\r\n",
+        "pll_sys = %ukHz,\
+pll_usb = %ukHz,\
+rosc = %ukHz,\
+clk_sys = %ukHz,\
+clk_peri = %ukHz,\
+clk_usb = %ukHz,\
+clk_adc = %ukHz",
         f_pll_sys,
         f_pll_usb,
         f_rosc,
