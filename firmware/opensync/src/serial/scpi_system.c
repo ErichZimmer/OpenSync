@@ -106,7 +106,7 @@ scpi_result_t SCPI_SystemFrequencyQ(
     scpi_t* context
 ) {
     // local buffer for sprintf due to scpi limitations
-    char output_buffer[64];
+    char output_buffer[256];
 
     uint f_pll_sys = frequency_count_khz(CLOCKS_FC0_SRC_VALUE_PLL_SYS_CLKSRC_PRIMARY);
     uint f_pll_usb = frequency_count_khz(CLOCKS_FC0_SRC_VALUE_PLL_USB_CLKSRC_PRIMARY);
@@ -116,100 +116,31 @@ scpi_result_t SCPI_SystemFrequencyQ(
     uint f_clk_usb = frequency_count_khz(CLOCKS_FC0_SRC_VALUE_CLK_USB);
     uint f_clk_adc = frequency_count_khz(CLOCKS_FC0_SRC_VALUE_CLK_ADC);
 
-    #ifdef CLOCKS_FC0_SRC_VALUE_CLK_RTC
-        uint f_clk_rtc = frequency_count_khz(CLOCKS_FC0_SRC_VALUE_CLK_RTC);
-    #endif
-
     // We can't use %d, so printf to local buffer then send to SCPI interface
     snprintf(
         output_buffer, 
         sizeof output_buffer,
-        "pll_sys = %ukHz\r\n", f_pll_sys
-    );
-    SCPI_ResultCharacters(
-        context, 
-        output_buffer,
-        strlen(output_buffer)
-    );
-
-    snprintf(
-        output_buffer, 
-        sizeof output_buffer,
-        "pll_usb = %ukHz\r\n", f_pll_usb
-    );
-    SCPI_ResultCharacters(
-        context, 
-        output_buffer,
-        strlen(output_buffer)
+        "pll_sys = %ukHz\r\n\
+pll_usb = %ukHz\r\n\
+rosc = %ukHz\r\n\
+clk_sys = %ukHz\r\n\
+clk_peri = %ukHz\r\n\
+clk_usb = %ukHz\r\n\
+clk_adc = %ukHz\r\n",
+        f_pll_sys,
+        f_pll_usb,
+        f_rosc,
+        f_clk_sys,
+        f_clk_peri,
+        f_clk_usb,
+        f_clk_adc
     );
 
-    snprintf(
-        output_buffer, 
-        sizeof output_buffer,
-        "rosc = %ukHz\r\n", f_rosc
-    );
     SCPI_ResultCharacters(
         context, 
         output_buffer,
         strlen(output_buffer)
     );
-
-    snprintf(
-        output_buffer, 
-        sizeof output_buffer,
-        "clk_sys = %ukHz\r\n", f_clk_sys
-    );
-    SCPI_ResultCharacters(
-        context, 
-        output_buffer,
-        strlen(output_buffer)
-    );
-
-    snprintf(
-        output_buffer, 
-        sizeof output_buffer,
-        "clk_peri = %ukHz\r\n", f_clk_peri
-    );
-    SCPI_ResultCharacters(
-        context, 
-        output_buffer,
-        strlen(output_buffer)
-    );
-
-    snprintf(
-        output_buffer, 
-        sizeof output_buffer,
-        "clk_usb = %ukHz\r\n", f_clk_usb
-    );
-    SCPI_ResultCharacters(
-        context, 
-        output_buffer,
-        strlen(output_buffer)
-    );
-
-    snprintf(
-        output_buffer, 
-        sizeof output_buffer,
-        "clk_adc = %ukHz\r\n", f_clk_adc
-    );
-    SCPI_ResultCharacters(
-        context, 
-        output_buffer,
-        strlen(output_buffer)
-    );
-
-    #ifdef CLOCKS_FC0_SRC_VALUE_CLK_RTC
-    snprintf(
-        output_buffer, 
-        sizeof output_buffer,
-        "clk_rtc = %ukHz\r\n", f_clk_rtc
-    );
-    SCPI_ResultCharacters(
-        context, 
-        output_buffer,
-        strlen(output_buffer)
-    );
-    #endif
 
     return SCPI_RES_OK;
 }

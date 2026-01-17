@@ -593,7 +593,7 @@ scpi_result_t SCPI_PulseInstructions(
     // Set all delay instructions to 1 (they can't be zero)
     for (int i = 1; i < PULSE_INSTRUCTIONS_MAX; i += 2)
     {
-        sequence_buffer[i] = 6; // 6 cycle delay whhich maps to 1 cycle delay after offset
+        sequence_buffer[i] = PULSE_INSTRUCTION_OFFSET + 1; // 6 cycle delay whhich maps to 1 cycle delay after offset
     }
 
     // Make sure last two elements are zero
