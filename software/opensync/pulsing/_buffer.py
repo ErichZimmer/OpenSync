@@ -370,15 +370,21 @@ def device_timing_reset(
         A list of strings containing the responses from the OpenSync device
         after executing the reset command.
     """
-    resp = []
     # Reset all clock channels
     for channel_id in VALID_CLOCK_IDS:
         command = f':clock{channel_id}:reset' 
-        resp.append(device_comm_write(device, command))
+        resp = device_comm_write(device, command)
+
+        for msg in resp:
+            if 'error' in msg.lower():
+                return resp
 
     # Reset all pulse channels
     for channel_id in VALID_CLOCK_IDS:
         command = f':pulse{channel_id}:reset' 
-        resp.append(device_comm_write(device, command))
+        resp = device_comm_write(device, command)
+        for msg in resp:
+            if 'error' in msg.lower():
+                return resp
 
     return resp

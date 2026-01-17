@@ -172,15 +172,12 @@ scpi_result_t SCPI_SystemStart(
 scpi_result_t SCPI_SystemStop(
     scpi_t* context
 ) {
-    // Get system status
-    uint32_t status_copy = sequencer_status_get();
-
     // If the system status *is* 0 (IDLE) or 5 (ABORTED), return an error
     if (!is_running())
     {
         SCPI_ErrorPush(
             context, 
-            SCPI_ERROR_PROGRAM_CURRENTLY_RUNNING
+            SCPI_ERROR_PROGRAM_ERROR
         );
 
         return SCPI_RES_ERR;
@@ -192,11 +189,8 @@ scpi_result_t SCPI_SystemStop(
     // Wait a few milliseconds for system to disarm
     sleep_ms(10); // pause for 10 milliseconds
 
-    // Get new system status
-    status_copy = sequencer_status_get();
-
     // Now check if the system is IDLE or ABORTED
-    if( !((status_copy == IDLE) || (status_copy == ABORTED)))
+    if(is_running())
     {
         SCPI_ErrorPush(
             context, 
