@@ -63,7 +63,7 @@ def _eval_piecewise_function(pulse_data: list, x: float) -> bool:
 
 
 def _convert_pulse_params(pulse_params: dict) -> Tuple[list[int], list[int]]:  
-    OUTPUT_STATE_MASK = '000000000000'
+    OUTPUT_STATE_MASK = '00000000'
     eps = 0.00001
     
     channels = _get_channel_ids(pulse_params)

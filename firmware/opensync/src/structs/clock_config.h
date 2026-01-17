@@ -4,8 +4,10 @@
 #include "hardware/pio.h"
 
 #define CLOCK_INSTRUCTIONS_MAX 16
+// TODO: Rename this
 #define CLOCK_TRIGGERS_MAX 2
 #define CLOCKS_MAX 3
+#define TRIGGERS_MAX 1
 
 enum {
     CLOCK_FREERUN = 0,

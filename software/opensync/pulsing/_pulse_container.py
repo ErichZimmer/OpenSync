@@ -61,10 +61,6 @@ def get_pulse_params() -> dict:
         'channel_5': [],
         'channel_6': [],
         'channel_7': [],
-        'channel_8': [],
-        'channel_9': [],
-        'channel_10': [],
-        'channel_11': [],
     }
 
     channels = _get_channel_ids(pulse_params)
@@ -104,6 +100,7 @@ def config_pulse_id(
     pulse_params['pulse_id'] = channel_id
 
     return pulse_params
+
 
 def config_pulse_clock_id(
     pulse_params: dict,

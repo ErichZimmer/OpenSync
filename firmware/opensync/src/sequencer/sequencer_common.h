@@ -2,10 +2,12 @@
 
 #include <stdint.h>
 
+#include "structs/clock_config.h"
+
 
 enum {
     OUTPUT_PIN_BASE = 0,
-    OUTPUT_PIN_COUNT = 12,
+    OUTPUT_PIN_COUNT = 8,
 };
 
 extern const uint32_t OUT_MASK;
@@ -16,6 +18,6 @@ extern const uint32_t TRIGGER_SKIPS_MAX;
 extern const uint32_t CLOCK_DIVIDER_MAX;
 extern const uint32_t PULSE_INSTRUCTION_OFFSET;
 extern const uint32_t CLOCK_INSTRUCTION_OFFSET;
-extern const uint32_t INTERNAL_CLOCK_IDS[3];
-extern const uint32_t INTERNAL_CLOCK_PINS[3];
-extern const uint32_t EXTERNAL_TRIGGER_PINS[3];
+extern const uint32_t INTERNAL_CLOCK_IDS[CLOCKS_MAX];
+extern const uint32_t INTERNAL_CLOCK_PINS[CLOCKS_MAX];
+extern const uint32_t EXTERNAL_TRIGGER_PINS[TRIGGERS_MAX];

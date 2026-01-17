@@ -554,8 +554,9 @@ bool clock_pin_trigger_set(
         return 0;
     }
 
-    // Validate trigger ID (same as clock ID)
-    if(!clock_id_validate(trigger_pin_id))
+    // Validate trigger ID (can't be larger than or equal to max triggers)
+    // TODO: Make this its own function
+    if(trigger_pin_id >= TRIGGERS_MAX)
     {
         return 0;
     }
