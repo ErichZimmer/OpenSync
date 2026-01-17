@@ -68,7 +68,7 @@ void serial_print_clock_configs(
             &config_array[i]
         );
 
-        fast_serial_printf("Clock config trigger reps: %i\r\n", config_array[i].trigger_reps);
+        fast_serial_printf("Trigger instruction reps: %i\r\n", config_array[i].trigger_reps);
     }
 }
 
