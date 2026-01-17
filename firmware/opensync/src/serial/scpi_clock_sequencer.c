@@ -72,7 +72,7 @@ scpi_result_t SCPI_ClockEnable(
     {
         SCPI_ErrorPush(
             context, 
-            SCPI_ERROR_SYSTEM_ERROR
+            SCPI_ERROR_PARAMETER_ERROR
         );
 
         return SCPI_RES_ERR;
@@ -134,7 +134,7 @@ scpi_result_t SCPI_ClockDisable(
     {
         SCPI_ErrorPush(
             context, 
-            SCPI_ERROR_SYSTEM_ERROR
+            SCPI_ERROR_PARAMETER_ERROR
         );
 
         return SCPI_RES_ERR;
@@ -248,7 +248,7 @@ scpi_result_t SCPI_ClockClockDivider(
     {
         SCPI_ErrorPush(
             context, 
-            SCPI_ERROR_SYSTEM_ERROR
+            SCPI_ERROR_PARAMETER_ERROR
         );
 
         return SCPI_RES_ERR;
@@ -419,7 +419,7 @@ scpi_result_t SCPI_ClockInstructions(
     {
         SCPI_ErrorPush(
             context, 
-            SCPI_ERROR_SYSTEM_ERROR
+            SCPI_ERROR_PARAMETER_ERROR
         );
 
         return SCPI_RES_ERR;
@@ -570,7 +570,7 @@ scpi_result_t SCPI_ClockTriggerInternal(
     {
         SCPI_ErrorPush(
             context, 
-            SCPI_ERROR_SYSTEM_ERROR
+            SCPI_ERROR_PARAMETER_ERROR
         );
 
         return SCPI_RES_ERR;
@@ -632,7 +632,7 @@ scpi_result_t SCPI_ClockTriggerRisingEdge(
     {
         SCPI_ErrorPush(
             context, 
-            SCPI_ERROR_SYSTEM_ERROR
+            SCPI_ERROR_PARAMETER_ERROR
         );
 
         return SCPI_RES_ERR;
@@ -727,7 +727,7 @@ scpi_result_t SCPI_ClockTriggerInstructions(
     {
         SCPI_ErrorPush(
             context, 
-            SCPI_ERROR_SYSTEM_ERROR
+            SCPI_ERROR_PARAMETER_ERROR
         );
 
         return SCPI_RES_ERR;
@@ -836,7 +836,7 @@ scpi_result_t SCPI_ClockReset(
     {
         SCPI_ErrorPush(
             context, 
-            SCPI_ERROR_SYSTEM_ERROR
+            SCPI_ERROR_PARAMETER_ERROR
         );
 
         return SCPI_RES_ERR;

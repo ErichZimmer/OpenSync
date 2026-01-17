@@ -72,7 +72,7 @@ scpi_result_t SCPI_PulseEnable(
     {
         SCPI_ErrorPush(
             context, 
-            SCPI_ERROR_SYSTEM_ERROR
+            SCPI_ERROR_PARAMETER_ERROR
         );
 
         return SCPI_RES_ERR;
@@ -135,7 +135,7 @@ scpi_result_t SCPI_PulseDisable(
     {
         SCPI_ErrorPush(
             context, 
-            SCPI_ERROR_SYSTEM_ERROR
+            SCPI_ERROR_PARAMETER_ERROR
         );
 
         return SCPI_RES_ERR;
@@ -251,7 +251,7 @@ scpi_result_t SCPI_PulseClockDivider(
     {
         SCPI_ErrorPush(
             context, 
-            SCPI_ERROR_SYSTEM_ERROR
+            SCPI_ERROR_PARAMETER_ERROR
         );
 
         return SCPI_RES_ERR;
@@ -370,7 +370,7 @@ scpi_result_t SCPI_PulsePin(
     {
         SCPI_ErrorPush(
             context, 
-            SCPI_ERROR_SYSTEM_ERROR
+            SCPI_ERROR_PARAMETER_ERROR
         );
 
         return SCPI_RES_ERR;
@@ -575,7 +575,7 @@ scpi_result_t SCPI_PulseInstructions(
     {
         SCPI_ErrorPush(
             context, 
-            SCPI_ERROR_SYSTEM_ERROR
+            SCPI_ERROR_PARAMETER_ERROR
         );
 
         return SCPI_RES_ERR;
@@ -684,7 +684,7 @@ scpi_result_t SCPI_PulseReset(
     {
         SCPI_ErrorPush(
             context, 
-            SCPI_ERROR_SYSTEM_ERROR
+            SCPI_ERROR_PARAMETER_ERROR
         );
 
         return SCPI_RES_ERR;
