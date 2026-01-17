@@ -413,6 +413,17 @@ scpi_result_t SCPI_ClockInstructions(
         return SCPI_RES_ERR;
     }
 
+    // Make sure instructions are sent in pairs of two
+    if (buffer_instructions_read % 2)
+    {
+        SCPI_ErrorPush(
+            context, 
+            SCPI_ERROR_TOO_MUCH_DATA
+        );
+
+        return SCPI_RES_ERR;
+    }
+
     // Now, check each value to make sure it is sane
     for (uint32_t i = 0; i < CLOCK_INSTRUCTIONS_MAX; i+=2)
     {

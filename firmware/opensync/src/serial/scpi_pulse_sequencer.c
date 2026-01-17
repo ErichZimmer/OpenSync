@@ -593,7 +593,7 @@ scpi_result_t SCPI_PulseInstructions(
     // Set all delay instructions to 1 (they can't be zero)
     for (int i = 1; i < PULSE_INSTRUCTIONS_MAX; i += 2)
     {
-        sequence_buffer[i] = 1; // 1 cycle delay
+        sequence_buffer[i] = 6; // 6 cycle delay whhich maps to 1 cycle delay after offset
     }
 
     // Make sure last two elements are zero
@@ -646,6 +646,17 @@ scpi_result_t SCPI_PulseInstructions(
         return SCPI_RES_ERR;
     }
 
+    // Make sure instructions are sent in pairs of two
+    if (buffer_instructions_read % 2)
+    {
+        SCPI_ErrorPush(
+            context, 
+            SCPI_ERROR_TOO_MUCH_DATA
+        );
+
+        return SCPI_RES_ERR;
+    }
+
     // Now, check each value to make sure it is sane
     // lol, I noticed a coding format change on if statements, probaby should figure my shit out
     for (uint32_t i = 0; i < PULSE_INSTRUCTIONS_MAX - OFFSET_TERM; i+=2)
@@ -674,6 +685,9 @@ scpi_result_t SCPI_PulseInstructions(
 
             return SCPI_RES_ERR;
         }
+
+        // If all is good, go ahead and offset the delay
+        sequence_buffer[i+1] = delay - PULSE_INSTRUCTION_OFFSET;
     }
 
     bool success = pulse_instructions_load(
