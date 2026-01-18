@@ -1,5 +1,5 @@
 from typing import Tuple
-from ..error_handles import PulseParamsError
+from .._error_handles import PulseParamsError
 from ._utils import _get_channel_ids
 from ._clock_container import VALID_CLOCK_IDS, MAX_CLOCK_DIVIDER
 

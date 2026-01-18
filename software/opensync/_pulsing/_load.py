@@ -1,4 +1,4 @@
-from ..communication import device_comm_write
+from .._communication import device_comm_write
 from . import _buffer
 from . import _conversion as _conv
 

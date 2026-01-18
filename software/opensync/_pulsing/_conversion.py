@@ -3,8 +3,8 @@ from numpy import inf as INF
 from typing import Tuple
 
 from ._utils import _get_channel_ids
-from ..communication import CLOCK_CYCLE
-from ..error_handles import DeviceBufferSizeError
+from .._communication import CLOCK_CYCLE
+from .._error_handles import DeviceBufferSizeError
 
 import warnings
 

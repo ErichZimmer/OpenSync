@@ -1,7 +1,7 @@
 from matplotlib import pyplot as plt
 import numpy as np
 
-from ..pulsing import _get_channel_ids, _get_max_pulse, _get_used_channels
+from .._pulsing import _get_channel_ids, _get_max_pulse, _get_used_channels
 
 
 __all__ = [

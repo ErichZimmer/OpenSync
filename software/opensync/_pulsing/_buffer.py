@@ -1,4 +1,4 @@
-from ..communication._io import device_comm_write
+from .._communication._io import device_comm_write
 from ._conversion import _convert_clock_inst, _convert_pulse_inst
 from ._clock_container import MAX_SKIPS, VALID_CLOCK_IDS
 
