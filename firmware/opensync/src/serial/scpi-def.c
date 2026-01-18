@@ -20,21 +20,6 @@ scpi_t scpi_context;
 static char serial[2 * PICO_UNIQUE_BOARD_ID_SIZE_BYTES + 1];
 static bool unique_initialised = false;
 
-/**
- * Reimplement IEEE488.2 *TST?
- *
- * Result should be 0 if everything is ok
- * Result should be 1 if something goes wrong
- *
- * Return SCPI_RES_OK
- */
-static scpi_result_t My_CoreTstQ(scpi_t * context) {
-
-    SCPI_ResultInt32(context, 0);
-
-    return SCPI_RES_OK;
-}
-
 
 const scpi_command_t scpi_commands[] = {
     /* IEEE Mandated Commands (SCPI std V1999.0 4.1.1) */
@@ -49,7 +34,7 @@ const scpi_command_t scpi_commands[] = {
     { .pattern = "*SRE", .callback = SCPI_CoreSre,},
     { .pattern = "*SRE?", .callback = SCPI_CoreSreQ,},
     { .pattern = "*STB?", .callback = SCPI_CoreStbQ,},
-    { .pattern = "*TST?", .callback = My_CoreTstQ,},
+    { .pattern = "*TST?", .callback = SCPI_SystemTestQ,},
     { .pattern = "*WAI", .callback = SCPI_CoreWai,},
 
     /* Required SCPI commands (SCPI std V1999.0 4.2.1) */ 

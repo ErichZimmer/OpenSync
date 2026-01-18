@@ -7,7 +7,12 @@
 const uint32_t OUT_MASK = ((1u << OUTPUT_PIN_COUNT) - 1) << OUTPUT_PIN_BASE;
 
 // Sequence stuff
-const uint32_t CLOCK_DIV_DEFAULT = 1;
+const uint32_t CLOCK_DIV_RES_HIGH = 1;
+const uint32_t CLOCK_DIV_RES_MED = 25;
+const uint32_t CLOCK_DIV_RES_LOW = 250;
+const uint32_t CLOCK_DIV_RES_VERY_LOW = 2500;
+const uint32_t CLOCK_DIV_RES_VERY_VERY_LOW = 25000;
+const uint32_t CLOCK_DIV_DEFAULT = CLOCK_DIV_RES_HIGH;
 const uint32_t SEQUENCE_FLAG_END = 0;
 const uint32_t ITERATIONS_MAX = 500000;
 const uint32_t TRIGGER_SKIPS_MAX = 500;

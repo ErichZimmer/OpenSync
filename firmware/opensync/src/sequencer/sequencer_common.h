@@ -11,6 +11,11 @@ enum {
 };
 
 extern const uint32_t OUT_MASK;
+extern const uint32_t CLOCK_DIV_RES_HIGH;
+extern const uint32_t CLOCK_DIV_RES_MED;
+extern const uint32_t CLOCK_DIV_RES_LOW;
+extern const uint32_t CLOCK_DIV_RES_VERY_LOW;
+extern const uint32_t CLOCK_DIV_RES_VERY_VERY_LOW;
 extern const uint32_t CLOCK_DIV_DEFAULT;
 extern const uint32_t SEQUENCE_FLAG_END;
 extern const uint32_t ITERATIONS_MAX;

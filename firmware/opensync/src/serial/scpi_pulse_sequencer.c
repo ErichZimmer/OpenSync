@@ -198,6 +198,7 @@ scpi_result_t SCPI_PulseClockDivider(
 ) {
     // Allocate some variables
     int32_t numbers[1] = {0};
+    int32_t choice = 0;
     uint32_t pulse_id = 0;
     uint32_t clock_divider = 1;
 
@@ -235,11 +236,28 @@ scpi_result_t SCPI_PulseClockDivider(
         return SCPI_RES_ERR;
     }
 
+    // Valid clock cycle resolution choices
+    const scpi_choice_def_t options[] = {
+        {"HIGH_res",            CLOCK_DIV_RES_HIGH},
+        {"MED_res",             CLOCK_DIV_RES_MED},
+        {"LOW_res",             CLOCK_DIV_RES_LOW},
+        {"VERY_LOW_res",        CLOCK_DIV_RES_VERY_LOW},
+        {"VERY_VERY_LOW_res",  CLOCK_DIV_RES_VERY_VERY_LOW},
+        SCPI_CHOICE_LIST_END
+    };
+
     // Now get the clock divider if present
-    if (!SCPI_ParamUInt32(context, &clock_divider, TRUE))
-    {
+    if (!SCPI_ParamChoice(
+        context,
+        options,
+        &choice,
+        TRUE
+    )) {
         return SCPI_RES_ERR;
     }
+
+    // Cast choice into usable clock divider type
+    clock_divider = (uint32_t) choice;
 
     bool success = pulse_divider_set(
         pulse_id,

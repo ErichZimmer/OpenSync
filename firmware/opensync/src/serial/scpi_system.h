@@ -11,6 +11,7 @@
     {.pattern = "SYSTem:START", .callback = SCPI_SystemStart,}, \
     {.pattern = "SYSTem:STOP", .callback = SCPI_SystemStop,}, \
     {.pattern = "SYSTem:RESet", .callback = SCPI_SystemReset,}, \
+    {.pattern = "SYSTem:TEST?", .callback = SCPI_SystemTestQ,}, \
 
 scpi_result_t SCPI_SystemStatusQ(
     scpi_t* context
@@ -37,5 +38,9 @@ scpi_result_t SCPI_SystemStop(
 );
 
 scpi_result_t SCPI_SystemReset(
+    scpi_t* context
+);
+
+scpi_result_t SCPI_SystemTestQ(
     scpi_t* context
 );

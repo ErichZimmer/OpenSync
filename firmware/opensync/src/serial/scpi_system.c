@@ -244,14 +244,14 @@ scpi_result_t SCPI_SystemReset(
 }
 
 
-/*
-// Test device to make sure it is working
-scpi_result_t SCPI_SystemTest(
+
+// Test device to make sure it is working (not impl. yet)
+scpi_result_t SCPI_SystemTestQ(
     scpi_t* context
 ) {
     // some expected values
-    const uint32_t VALID_CLOCK_SPEED = 0;
-    const uint32_t VALID_PLL_SPEED = 0;
+//    const uint32_t VALID_CLOCK_SPEED = 0;
+//    const uint32_t VALID_PLL_SPEED = 0;
 
     // If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
     if (is_running())
@@ -264,27 +264,7 @@ scpi_result_t SCPI_SystemTest(
         return SCPI_RES_ERR;
     }
 
-    // Reset clock containers
-    for(uint32_t clock_id = 0; clock_id < CLOCKS_MAX; clock_id++)
-    {
-        clock_sequencer_state_reset(
-            clock_id
-        );
-    }
-
-    // Reset pulse containers
-    for(uint32_t pulse_id = 0; pulse_id < CLOCKS_MAX; pulse_id++)
-    {
-        pulse_sequencer_state_reset(
-            pulse_id
-        );
-    }
-
-    // Finally, set sebug and sequencer status to default
-    // TODO: Add reset functions for each
-    sequencer_status_set(IDLE);
-    debug_status_set(SEQUENCER_DNDEBUG);
+    SCPI_ResultInt32(context, 0);
 
     return SCPI_RES_OK;
 }
-*/
