@@ -141,7 +141,7 @@ def _device_clock_config_load(
     response : list[str]
     """
     clock_id = clock_params['clock_id']
-    clock_divider = clock_params['clock_divider']
+    clock_res = clock_params['clock_res']
     trigger_id = clock_params['ext_trigger_id']
     clock_type = int(clock_params['ext_trigger'] == 'enabled')
 
@@ -157,7 +157,7 @@ def _device_clock_config_load(
             return resp
         
     # Load clock divider
-    command = f':clock{clock_id}:divider {clock_divider}'
+    command = f':clock{clock_id}:divider {clock_res}'
     resp = device_comm_write(
         device,
         command
@@ -231,7 +231,7 @@ def _device_pulse_inst_load(
     """
     pulse_id = pulse_params['pulse_id']
     clock_id = pulse_params['clock_id']
-    clock_divider = pulse_params['clock_divider']
+    clock_res = pulse_params['clock_res']
 
     # Convert delay instructions to cycles in ns
     output_inst, delay_inst = _convert_pulse_inst(pulse_params)
@@ -275,7 +275,7 @@ def _device_pulse_config_load(
     """
     pulse_id = pulse_params['pulse_id']
     trigger_id = pulse_params['clock_id']
-    clock_divider = pulse_params['clock_divider']
+    clock_res = pulse_params['clock_res']
 
    # Activate clock channel
     command = f':pulse{pulse_id}:enable'
@@ -289,7 +289,7 @@ def _device_pulse_config_load(
             return resp
         
     # Load clock 
-    command = f':pulse{pulse_id}:divider {clock_divider}'
+    command = f':pulse{pulse_id}:divider {clock_res}'
     resp = device_comm_write(
         device,
         command

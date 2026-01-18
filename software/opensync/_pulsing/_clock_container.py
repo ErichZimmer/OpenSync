@@ -1,5 +1,11 @@
 VALID_CLOCK_IDS = [0, 1, 2]
-MAX_CLOCK_DIVIDER = 65500
+VALID_CLOCK_DIVIDERS = [
+    'high_', 'high_res',
+    'med_', 'med_res',
+    'low_', 'low_res',
+    'very_low_', 'very_low_res',
+    'very_very_low_', 'very_very_low_res'
+]
 MAX_CLOCK_INST = 64
 MAX_ITERATIONS = 500000
 MIN_ITERATIONS = 1
@@ -12,7 +18,7 @@ MIN_SKIPS = 0
 __all__ = [
     'get_clock_params',
     'config_clock_id',
-    'config_clock_divider',
+    'config_clock_res',
     'config_trigger',
     'config_trigger_id',
     'config_trigger_skips',
@@ -35,27 +41,33 @@ def get_clock_params() -> dict:
     clock_params : dict
         A dictionary containing the default clock parameters. The structure
         of the dictionary includes:
-        - 'clock_id': An integer between 0 and 2 representing the clock
-           channel to use (default is 0).
-        - 'clock_divider': An integer representing the clock divider
-           (default is 1).
-        - 'ext_trigger': A string indicating the external trigger status
-           (default is 'disabled').
-        - 'ext_trigger_id': An integer between 0 and 2 representing the
-           external trigger channel to use (default is 0).
-        - 'ext_trigger_delay': An integer respresenting the number of ext.
-           trigger signals to skip (default is 0).
-        - 'ext_trigger_delay': A float respresenting the delay between the
-           external trigger and the start of the pulse sequence 
-           (default is 0.0).
-        - 'reps_khz': A float representing the repetition rate in kilohertz
-           (default is 0.01 khz).
-        - 'reps_iter': An integer representing the number of iterations to
-           perform (default is 10).
+        - 'clock_id' : int
+            An integer between 0 and 2 representing the clock channel to
+            use (default is 0).
+        - 'clock_res' : str
+            A string representing the clock divider (default is high_res).
+        - 'ext_trigger' : str
+            A string indicating the external trigger status (default is
+            'disabled').
+        - 'ext_trigger_id' : int
+            An integer between 0 and 2 representing the external trigger
+            channel to use (default is 0).
+        - 'ext_trigger_skip' : int
+            An integer respresenting the number of external trigger signals
+            to skip (default is 0).
+        - 'ext_trigger_delay' : float
+            A float respresenting the delay between the external trigger and
+            the start of the pulse sequence (default is 0.0).
+        - 'reps_khz' : float
+            A float representing the repetition rate in kilohertz (default is
+            0.01 khz).
+        - 'reps_iter' : int
+            An integer representing the number of iterations to perform
+            (default is 10).
     """
     clock_params = {
         'clock_id': 0,
-        'clock_divider': 1,
+        'clock_res': 'high_res',
         'ext_trigger': 'disabled',
         'ext_trigger_id': 0,
         'ext_trigger_skips': 0,
@@ -98,11 +110,11 @@ def config_clock_id(
     return clock_params
     
 
-def config_clock_divider(
+def config_clock_res(
     clock_params: dict,
-    clock_divider: int=1
+    clock_res: str='high_res'
 ) -> dict:
-    """Configure the clock divider for a clock channel.
+    """Configure the clock resolution for a clock channel.
 
     This function updates the clock pararameters by modfying the clock
     divider of that particular channel. This effectively slows the clock down
@@ -110,8 +122,28 @@ def config_clock_divider(
 
     clock_params : dict
         A dictionary containing clock parameters from `get_clock_params`.
-    clock_divider : int
-        The amount to divide the main clock. Must be no greater than 2^16-1.
+    clock_res : str
+        The clock divider resolution. The following are accepted values:
+
+        'high_res' (high_)
+            The clock divider is set to 1 effectively allowing for a
+            clock cycle resolution of 4 nanosecondsns.
+
+        'med_res' (med_)
+            The clock divider is set to 25 effectively allowing for a
+            clock cycle resolution of 100 nanoseconds.
+
+        'low_res' (low_)
+            The clock divider is set to 250 effectively allowing for a
+            clock cycle resolution of 1 mirocseconds.
+
+        'very_low_res' (very_low_)
+            The clock divider is set to 2,500 effectively allowing for a
+            clock cycle resolution of 10 mirocseconds.
+
+        'very_very_low_res' (very_very_low_)
+            The clock divider is set to 25,000 effectively allowing for a
+            clock cycle resolution of 100 mirocseconds.
 
     Returns
     -------
@@ -119,11 +151,11 @@ def config_clock_divider(
         The updated clock parameters dictionary.
     
     """
-    if clock_divider < 1 or clock_divider > MAX_CLOCK_DIVIDER:
-        msg = f'Invalid clock divider. Got {clock_divider}'
+    if clock_res.lower() not in VALID_CLOCK_DIVIDERS:
+        msg = f'Invalid clock divider resolution. Got {clock_res}'
         raise ValueError(msg)
 
-    clock_params['clock_divider'] = clock_divider
+    clock_params['clock_res'] = clock_res
 
     return clock_params
     

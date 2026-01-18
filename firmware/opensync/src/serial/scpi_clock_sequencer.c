@@ -223,6 +223,7 @@ scpi_result_t SCPI_ClockClockDivider(
     clock_id = (uint32_t) numbers[0];
 
     // Validate the ID
+    
     if (!clock_id_validate(clock_id))
     {
         SCPI_ErrorPush(
