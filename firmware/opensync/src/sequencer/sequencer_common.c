@@ -7,6 +7,8 @@
 const uint32_t OUT_MASK = ((1u << OUTPUT_PIN_COUNT) - 1) << OUTPUT_PIN_BASE;
 
 // Sequence stuff
+const uint32_t INTERNAL = 0;
+const uint32_t RISING_EDGE = 1;
 const uint32_t CLOCK_DIV_RES_HIGH = 1;
 const uint32_t CLOCK_DIV_RES_MED = 25;
 const uint32_t CLOCK_DIV_RES_LOW = 250;

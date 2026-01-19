@@ -11,6 +11,8 @@ enum {
 };
 
 extern const uint32_t OUT_MASK;
+extern const uint32_t INTERNAL;
+extern const uint32_t RISING_EDGE;
 extern const uint32_t CLOCK_DIV_RES_HIGH;
 extern const uint32_t CLOCK_DIV_RES_MED;
 extern const uint32_t CLOCK_DIV_RES_LOW;

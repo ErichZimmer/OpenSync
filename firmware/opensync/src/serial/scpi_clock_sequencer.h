@@ -11,9 +11,8 @@
     {.pattern = "CLOCk#:DIVider?", .callback = SCPI_ClockClockDividerQ,}, \
     {.pattern = "CLOCk#:INSTructions", .callback = SCPI_ClockInstructions,}, \
     {.pattern = "CLOCk#:INSTructions?", .callback = SCPI_ClockInstructionsQ,}, \
+    {.pattern = "CLOCk#:TRIGger:MODe", .callback = SCPI_ClockTriggerMode,}, \
     {.pattern = "CLOCk#:TRIGger:MODe?", .callback = SCPI_ClockTriggerModeQ,}, \
-    {.pattern = "CLOCk#:TRIGger:MODe:INTernal", .callback = SCPI_ClockTriggerInternal,}, \
-    {.pattern = "CLOCk#:TRIGger:MODe:RISing", .callback = SCPI_ClockTriggerRisingEdge,}, \
     {.pattern = "CLOCk#:TRIGger:INSTructions", .callback = SCPI_ClockTriggerInstructions,}, \
     {.pattern = "CLOCk#:TRIGger:INSTructions?", .callback = SCPI_ClockTriggerInstructionsQ,}, \
     {.pattern = "CLOCk#:RESet", .callback = SCPI_ClockReset,}, \
@@ -46,15 +45,11 @@ scpi_result_t SCPI_ClockInstructionsQ(
     scpi_t* context
 );
 
+scpi_result_t SCPI_ClockTriggerMode(
+    scpi_t* context
+);
+
 scpi_result_t SCPI_ClockTriggerModeQ(
-    scpi_t* context
-);
-
-scpi_result_t SCPI_ClockTriggerInternal(
-    scpi_t* context
-);
-
-scpi_result_t SCPI_ClockTriggerRisingEdge(
     scpi_t* context
 );
 

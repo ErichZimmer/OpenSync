@@ -187,7 +187,7 @@ def _device_clock_config_load(
         msg = 'Invalid clock type encountered'
         raise ValueError(msg)
         
-    command = f':clock{clock_id}:trigger:mode:{mode}'
+    command = f':clock{clock_id}:trigger:mode {mode}'
     resp = device_comm_write(
         device,
         command

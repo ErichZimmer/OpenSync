@@ -16,9 +16,6 @@
 #define STATUS_ON TRUE
 #define STATUS_OFF FALSE
 
-const uint32_t INTERNAL = 0;
-const uint32_t RISING = 1;
-
 
 // Enable a clock sequencer at ID N
 scpi_result_t SCPI_ClockEnable(
@@ -537,14 +534,15 @@ scpi_result_t SCPI_ClockTriggerModeQ(
 }
 
 
-// Set clock trigger mode to internal at clock sequencer N
-scpi_result_t SCPI_ClockTriggerInternal(
+// Set clock trigger mode at clock sequencer N
+scpi_result_t SCPI_ClockTriggerMode(
     scpi_t* context
 ) {
     // Allocate some variables
     int32_t numbers[1] = {0};
+    int32_t choice = 0;
     uint32_t clock_id = 0;
-    uint32_t clock_divider = 1;
+    uint32_t clock_type = 1;
 
     // !If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
     if (is_running())
@@ -579,71 +577,30 @@ scpi_result_t SCPI_ClockTriggerInternal(
         return SCPI_RES_ERR;
     }
 
-    bool success = sequencer_clock_type_set(
-        clock_id,
-        INTERNAL
-    );
+    // Valid clock cycle resolution choices
+    const scpi_choice_def_t options[] = {
+        {"INTernal",        INTERNAL},
+        {"RISING",          RISING_EDGE},
+        {"RISING_EDGE",     RISING_EDGE},
+        SCPI_CHOICE_LIST_END
+    };
 
-    // If for some wierd reason we failed, raise an error
-    if (!success)
-    {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_PARAMETER_ERROR
-        );
-
-        return SCPI_RES_ERR;
-    }
-
-    return SCPI_RES_OK;
-}
-
-
-// Set clock trigger mode to rising at clock sequencer N
-scpi_result_t SCPI_ClockTriggerRisingEdge(
-    scpi_t* context
-) {
-    // Allocate some variables
-    int32_t numbers[1] = {0};
-    uint32_t clock_id = 0;
-    uint32_t clock_divider = 1;
-
-    // !If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
-    if (is_running())
-    {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_PROGRAM_CURRENTLY_RUNNING
-        );
-
-        return SCPI_RES_ERR;
-    }
-
-    // Get clock sequencer ID
-    SCPI_CommandNumbers(
+    // Now get the clock divider if present
+    if (!SCPI_ParamChoice(
         context,
-        numbers, 
-        1, // length (e.g., 1 element array)
-        0 // default value, e.g., clock id 0
-    );
-
-    // Cast numbers to usable int type
-    clock_id = (uint32_t) numbers[0];
-
-    // Validate the ID
-    if (!clock_id_validate(clock_id))
-    {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_INVALID_SUFFIX
-        );
-
+        options,
+        &choice,
+        TRUE
+    )) {
         return SCPI_RES_ERR;
     }
 
+    // Cast to usable type
+    clock_type = (uint32_t) choice;
+
     bool success = sequencer_clock_type_set(
         clock_id,
-        RISING
+        clock_type
     );
 
     // If for some wierd reason we failed, raise an error
