@@ -238,11 +238,16 @@ scpi_result_t SCPI_PulseClockDivider(
 
     // Valid clock cycle resolution choices
     const scpi_choice_def_t options[] = {
-        {"HIGH_res",            CLOCK_DIV_RES_HIGH},
-        {"MED_res",             CLOCK_DIV_RES_MED},
-        {"LOW_res",             CLOCK_DIV_RES_LOW},
-        {"VERY_LOW_res",        CLOCK_DIV_RES_VERY_LOW},
-        {"VERY_VERY_LOW_res",  CLOCK_DIV_RES_VERY_VERY_LOW},
+        {"HIGH",                CLOCK_DIV_RES_HIGH},
+        {"HIGH_RES",            CLOCK_DIV_RES_HIGH},
+        {"MED",                 CLOCK_DIV_RES_MED},
+        {"MED_RES",             CLOCK_DIV_RES_MED},
+        {"LOW",                 CLOCK_DIV_RES_LOW},
+        {"LOW_RES",             CLOCK_DIV_RES_LOW},
+        {"VERY_LOW",            CLOCK_DIV_RES_VERY_LOW},
+        {"VERY_LOW_RES",        CLOCK_DIV_RES_VERY_LOW},
+        {"VERY_VERY_LOW",       CLOCK_DIV_RES_VERY_VERY_LOW},
+        {"VERY_VERY_LOW_RES",   CLOCK_DIV_RES_VERY_VERY_LOW},
         SCPI_CHOICE_LIST_END
     };
 

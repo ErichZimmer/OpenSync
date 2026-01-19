@@ -1,10 +1,10 @@
 VALID_CLOCK_IDS = [0, 1, 2]
 VALID_CLOCK_DIVIDERS = [
-    'high_', 'high_res',
-    'med_', 'med_res',
-    'low_', 'low_res',
-    'very_low_', 'very_low_res',
-    'very_very_low_', 'very_very_low_res'
+    'high', 'high_res',
+    'med', 'med_res',
+    'low', 'low_res',
+    'very_low', 'very_low_res',
+    'very_very_low', 'very_very_low_res'
 ]
 MAX_CLOCK_INST = 64
 MAX_ITERATIONS = 500000
@@ -125,23 +125,23 @@ def config_clock_res(
     clock_res : str
         The clock divider resolution. The following are accepted values:
 
-        'high_res' (high_)
+        'high' or 'high_res'
             The clock divider is set to 1 effectively allowing for a
             clock cycle resolution of 4 nanosecondsns.
 
-        'med_res' (med_)
+        'med' or 'med_res'
             The clock divider is set to 25 effectively allowing for a
             clock cycle resolution of 100 nanoseconds.
 
-        'low_res' (low_)
+        'low' or 'low_res'
             The clock divider is set to 250 effectively allowing for a
             clock cycle resolution of 1 mirocseconds.
 
-        'very_low_res' (very_low_)
+        'very_low' or 'very_low_res'
             The clock divider is set to 2,500 effectively allowing for a
             clock cycle resolution of 10 mirocseconds.
 
-        'very_very_low_res' (very_very_low_)
+        'very_very_low' or 'very_very_low_res'
             The clock divider is set to 25,000 effectively allowing for a
             clock cycle resolution of 100 mirocseconds.
 

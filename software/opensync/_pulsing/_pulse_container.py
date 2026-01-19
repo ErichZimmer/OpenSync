@@ -150,23 +150,23 @@ def config_pulse_res(
     clock_res : str
         The clock divider resolution. The following are accepted values:
 
-        'high_' (high_res)
+        'high' or 'high_res'
             The clock divider is set to 1 effectively allowing for a
             clock cycle resolution of 4 nanosecondsns.
 
-        'med_' (med_res)
+        'med' or 'med_res'
             The clock divider is set to 25 effectively allowing for a
             clock cycle resolution of 100 nanoseconds.
 
-        'low_' (low_res)
+        'low' or 'low_res'
             The clock divider is set to 250 effectively allowing for a
             clock cycle resolution of 1 mirocseconds.
 
-        'very_low_' (very_low_res)
+        'very_low' or 'very_low_res'
             The clock divider is set to 2,500 effectively allowing for a
             clock cycle resolution of 10 mirocseconds.
 
-        'very_very_low_' (very_very_low_res)
+        'very_very_low' or 'very_very_low_res'
             The clock divider is set to 25,000 effectively allowing for a
             clock cycle resolution of 100 mirocseconds.
 
