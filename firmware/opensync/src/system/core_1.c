@@ -714,6 +714,30 @@ bool pulse_pin_clock_set(
     return 1;
 }
 
+
+bool pulse_unit_offset_set(
+    uint32_t pulse_id,
+    uint64_t units_offset
+) {
+
+    // Validate clock ID
+    if(!clock_id_validate(pulse_id))
+    {
+        return 0;
+    }
+
+    // Make sure the offset is never 0
+    if(!units_offset)
+    {
+        return 0;
+    }
+
+    sequencer_pulse_config[pulse_id].unit_offset = units_offset;
+
+    return 1;
+}
+
+
 bool pulse_instructions_load(
     uint32_t pulse_id,
     uint32_t instructions[PULSE_INSTRUCTIONS_MAX]

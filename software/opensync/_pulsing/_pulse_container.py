@@ -3,6 +3,14 @@ from .._error_handles import PulseParamsError
 from ._utils import _get_channel_ids
 from ._clock_container import VALID_CLOCK_IDS, VALID_CLOCK_DIVIDERS
 
+VALID_PULSE_UNITS = [
+    'nano', 'nanosecond',
+    'micro', 'microsecond',
+    'milli', 'millisecond',
+    'sec', 'second',
+    'min', 'minute',
+    'hour'
+]
 MIN_PULSE_TRAIN_SIZE = 1
 PULSE_SEQUENCE_SIZE = 2
 
@@ -12,6 +20,7 @@ __all__ = [
     'config_pulse_id',
     'config_pulse_clock_id',
     'config_pulse_res',
+    'config_pulse_units',
     'insert_pulse',
     'insert_pulse_many'
 ]
@@ -46,6 +55,8 @@ def get_pulse_params() -> dict:
             channel to use (default is 0).
         - 'clock_res' : str
             A string representing the clock divider (default is high_res).
+        - 'pulse_units' : str
+            A string representing the pulse data units..
         - 'channel_X' : list[float]
             A dict of channel name and pulse data for each channel where X 
             is the channel number from 0 to 11.
@@ -55,6 +66,7 @@ def get_pulse_params() -> dict:
         'pulse_id': 0,
         'clock_id': 0,
         'clock_res': 'high_res',
+        'pulse_units': 'microsecond',
         'channel_0': [],
         'channel_1': [],
         'channel_2': [],
@@ -137,7 +149,7 @@ def config_pulse_clock_id(
 
 def config_pulse_res(
     pulse_params: dict,
-    clock_res: str='high_'
+    clock_res: str='high'
 ) -> dict:
     """Configure the clock resolution for a pulse output channel.
 
@@ -145,28 +157,30 @@ def config_pulse_res(
     divider of that particular channel. This effectively slows the clock down
     by dividing the main clock by the clock divider.
 
+    Params
+    ------
     pulse_params : dict
         A dictionary containing pulse parameters from `get_pulse_params`.
     clock_res : str
         The clock divider resolution. The following are accepted values:
 
-        'high' or 'high_res'
+        'high', 'high_res'
             The clock divider is set to 1 effectively allowing for a
             clock cycle resolution of 4 nanosecondsns.
 
-        'med' or 'med_res'
+        'med', 'med_res'
             The clock divider is set to 25 effectively allowing for a
             clock cycle resolution of 100 nanoseconds.
 
-        'low' or 'low_res'
+        'low', 'low_res'
             The clock divider is set to 250 effectively allowing for a
             clock cycle resolution of 1 mirocseconds.
 
-        'very_low' or 'very_low_res'
+        'very_low', 'very_low_res'
             The clock divider is set to 2,500 effectively allowing for a
             clock cycle resolution of 10 mirocseconds.
 
-        'very_very_low' or 'very_very_low_res'
+        'very_very_low', 'very_very_low_res'
             The clock divider is set to 25,000 effectively allowing for a
             clock cycle resolution of 100 mirocseconds.
 
@@ -181,6 +195,54 @@ def config_pulse_res(
         raise ValueError(msg)
 
     pulse_params['clock_res'] = clock_res
+
+    return pulse_params
+
+
+def config_pulse_units(
+    pulse_params: dict,
+    units: str='microsecond'
+) -> dict:
+    """Configure the units for a pulse output channel.
+
+    This function updates the pulse pararameters by modfying the units of
+    the pulse sequencer. This makes it easier to produce either very short
+    or long pulses by simply changing the data units.
+
+    pulse_params : dict
+        A dictionary containing pulse parameters from `get_pulse_params`.
+    units : str
+        The pulse data units. The following are accepted values:
+
+        'nano', 'nanosecond'
+            The pulse data is in nanoseconds.
+
+        'micro', 'microsecond'
+            the pulse data is in microseconds.
+
+        'milli', 'millisecond'
+            the pulse data is in milliseconds.
+
+        'sec', 'seconds'
+            the pulse data is in seconds.
+
+        'min', 'minute'
+            the pulse data is in minutes.
+
+        'hour'
+            the pulse data is in hours.
+
+    Returns
+    -------
+    pulse_params : dict
+        The updated clock parameters dictionary.
+    
+    """
+    if units.lower() not in VALID_PULSE_UNITS:
+        msg = f'Invalid data units. Got {units}'
+        raise ValueError(msg)
+
+    pulse_params['pulse_units'] = units
 
     return pulse_params
 

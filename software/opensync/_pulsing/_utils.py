@@ -21,7 +21,7 @@ def _get_channel_ids(pulse_params: dict) -> list[str]:
     keys : list[str]
         A list of channel IDs (keys) from the pulse parameters dictionary.
     """
-    return list(pulse_params.keys())[3:]
+    return list(pulse_params.keys())[4:]
 
 
 def _get_max_pulse(pulse_params: dict) -> int:

@@ -26,6 +26,7 @@ struct clock_config
     uint32_t __attribute__((aligned(CLOCK_TRIGGERS_MAX     * sizeof(uint32_t)))) trigger_config[CLOCK_TRIGGERS_MAX];
     uint32_t trigger_reps;
     uint clock_divider;
+    uint64_t unit_offset;
     bool active;
     bool configured;
 };

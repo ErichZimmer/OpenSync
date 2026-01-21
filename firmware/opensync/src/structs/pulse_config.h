@@ -20,6 +20,7 @@ struct pulse_config
     int dma_chan;
     uint32_t __attribute__((aligned(PULSE_INSTRUCTIONS_MAX * sizeof(uint32_t)))) instructions[PULSE_INSTRUCTIONS_MAX];
     uint clock_divider;
+    uint64_t unit_offset;
     bool active;
     bool configured;
 };

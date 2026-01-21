@@ -6,6 +6,13 @@ VALID_CLOCK_DIVIDERS = [
     'very_low', 'very_low_res',
     'very_very_low', 'very_very_low_res'
 ]
+VALID_FREQ_UNITS = [
+    'micro', 'microhertz',
+    'milli', 'millihertz',
+    'hertz',
+    'kilo', 'kilohertz',
+    'mega', 'megahertz'
+]
 MAX_CLOCK_INST = 64
 MAX_ITERATIONS = 500000
 MIN_ITERATIONS = 1
@@ -23,7 +30,8 @@ __all__ = [
     'config_trigger_id',
     'config_trigger_skips',
     'config_trigger_delay',
-    'config_reps_hz',
+    'config_reps_freq_units'
+    'config_reps_freq',
     'config_reps_iter'
 ]
 
@@ -58,9 +66,10 @@ def get_clock_params() -> dict:
         - 'ext_trigger_delay' : float
             A float respresenting the delay between the external trigger and
             the start of the pulse sequence (default is 0.0).
-        - 'reps_khz' : float
-            A float representing the repetition rate in kilohertz (default is
-            0.01 khz).
+        - 'reps_freq_units' : str
+            A string representing the repetition rate units.
+        - 'reps_freq' : float
+            A float representing the repetition rate in the selected units.
         - 'reps_iter' : int
             An integer representing the number of iterations to perform
             (default is 10).
@@ -72,7 +81,8 @@ def get_clock_params() -> dict:
         'ext_trigger_id': 0,
         'ext_trigger_skips': 0,
         'ext_trigger_delay': 0.0,
-        'reps_khz': [0.01],
+        'reps_freq_units': 'hertz',
+        'reps_freq': [1.0],
         'reps_iter': [10]
     }
         
@@ -125,23 +135,23 @@ def config_clock_res(
     clock_res : str
         The clock divider resolution. The following are accepted values:
 
-        'high' or 'high_res'
+        'high', 'high_res'
             The clock divider is set to 1 effectively allowing for a
             clock cycle resolution of 4 nanosecondsns.
 
-        'med' or 'med_res'
+        'med', 'med_res'
             The clock divider is set to 25 effectively allowing for a
             clock cycle resolution of 100 nanoseconds.
 
-        'low' or 'low_res'
+        'low', 'low_res'
             The clock divider is set to 250 effectively allowing for a
             clock cycle resolution of 1 mirocseconds.
 
-        'very_low' or 'very_low_res'
+        'very_low', 'very_low_res'
             The clock divider is set to 2,500 effectively allowing for a
             clock cycle resolution of 10 mirocseconds.
 
-        'very_very_low' or 'very_very_low_res'
+        'very_very_low', 'very_very_low_res'
             The clock divider is set to 25,000 effectively allowing for a
             clock cycle resolution of 100 mirocseconds.
 
@@ -302,22 +312,36 @@ def config_trigger_delay(
     return clock_params
         
 
-def config_reps_hz(
+def config_reps_freq_units(
     clock_params: dict,
-    hertz: int
+    units: float
 ) -> dict:
-    """Configure repetition rate.
+    """Configure repetition rate frequency units.
 
     This function updates the clock parameters to set the repetition rate
-    for the timing system in hertz (kHz).
+    units for the timing system.
 
     Parameters
     ----------
-     clock_params : dict
+    clock_params : dict
         A dictionary containing clock parameters from `get_clock_params`.
-    hertz : int
-        The desired repetition rate in hertz (Hz). This value will be
-        converted to kilohertz (kHz) for storage in the clock parameters.
+    units : str
+        The desired repetition rate unit. The following are accpeted values:
+
+        `micro', 'microhertz'
+            The frequency unit for 0.00001 Hz.
+
+        'milli', 'millihertz'
+            The frequency unit for 0.001 Hz.
+
+        'hertz'
+            The frequency unit for standard Hertz (Hz).
+
+        'kilo', 'kilohertz'
+            The frequency unit for 1,000 Hz.
+
+        'mega', 'megahertz'
+            The frequency unit for 1,000,000 Hz.
 
     Returns
     -------
@@ -326,16 +350,50 @@ def config_reps_hz(
     
     Notes
     -----
-    - The function modifies the 'reps_khz' key in the clock_params dictionary
-      to store the repetition rate in kilohertz, calculated by dividing the
-      input hertz value by 1000.
+    - The function modifies the 'reps_freq_units' key in the clock_params
+      dictionary to store the repetition rate units.
     """
-    if hertz < MIN_FREQUENCY:
-        msg = f'Invalid sequence repitition frequency. Got {hertz}'
+    if units not in VALID_FREQ_UNITS:
+        msg = f'Invalid sequence repitition frequency units. Got {units}'
         raise ValueError(msg)
         
-    khz = hertz / 1000
-    clock_params['reps_khz'] = [khz]
+    clock_params['reps_freq_units'] = units
+    
+    return clock_params
+
+
+def config_reps_freq(
+    clock_params: dict,
+    freq: float
+) -> dict:
+    """Configure repetition rate frequency.
+
+    This function updates the clock parameters to set the repetition rate
+    for the timing system in the chosen units.
+
+    Parameters
+    ----------
+    clock_params : dict
+        A dictionary containing clock parameters from `get_clock_params`.
+    freq : float
+        The desired repetition rate in the chosen units.
+
+    Returns
+    -------
+    clock_params : dict
+        The updated clock parameters dictionary.
+    
+    Notes
+    -----
+    - The function modifies the 'reps_freq' key in the clock_params dictionary
+      to store the repetition rate in the chosen units.
+      input hertz value by 1000.
+    """
+    if freq < MIN_FREQUENCY:
+        msg = f'Invalid sequence repitition frequency. Got {freq}'
+        raise ValueError(msg)
+        
+    clock_params['reps_freq'] = [freq]
     
     return clock_params
 
