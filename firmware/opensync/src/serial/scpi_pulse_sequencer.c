@@ -13,8 +13,8 @@
 #include "sequencer/sequencer_common.h"
 #include "scpi_common.h"
 
-#define STATUS_ON TRUE
-#define STATUS_OFF FALSE
+#define STATUS_ON 1
+#define STATUS_OFF 0
 
 enum {
     NANOSECOND = 0,
@@ -32,26 +32,30 @@ const uint32_t sequence_buffer_size = PULSE_INSTRUCTIONS_MAX / 2 - 1;
 
 
 // Function to clear the static buffer cache for output data
-bool pulse_sequencer_cache_output_clear()
+void pulse_sequencer_cache_output_clear()
 {
     for (uint32_t i = 0; i < sequence_buffer_size; i++)
     {
         pulse_sequence_buffer_output[i] = 0;
     }
-
-    return 0;
 }
 
 
 // Function to clear the static buffer cache for delay data
-bool pulse_sequencer_cache_delay_clear()
+void pulse_sequencer_cache_delay_clear()
 {
     for (uint32_t i = 0; i < sequence_buffer_size; i++)
     {
         pulse_sequence_buffer_delay[i] = 0.0;
     }
+}
 
-    return 0;
+
+// Clear all the cache
+void pulse_sequencer_cache_clear()
+{
+    pulse_sequencer_cache_output_clear();
+    pulse_sequencer_cache_delay_clear();
 }
 
 
@@ -100,8 +104,8 @@ scpi_result_t SCPI_PulseStatus(
 
     // Valid clock cycle resolution choices
     const scpi_choice_def_t options[] = {
-        {"ON",  1},
-        {"OFF", 0},
+        {"ON",  STATUS_ON},
+        {"OFF", STATUS_OFF},
         SCPI_CHOICE_LIST_END
     };
 
@@ -812,8 +816,12 @@ scpi_result_t SCPI_PulseDataApply(
         uint32_t output = pulse_sequence_buffer_output[i];
         double delay = pulse_sequence_buffer_delay[i];
 
+         printf("Delay arbotrary: %d\r\n", delay);
+
         // Convert delay into nanoseconds
         delay = delay * (double) unit_offset;
+
+        printf("Delay nanos: %d\r\n", delay);
 
         // Convert nanoseconds to cycles, if possible
         if (!convert_nanos_to_cycles(
@@ -917,14 +925,12 @@ scpi_result_t SCPI_PulseDataQ(
     struct pulse_config* config_array = sequencer_pulse_config_get();
 
     // Get the instructions of the pulse sequencer at pulse_id
-    for (uint32_t i = 0; i < PULSE_INSTRUCTIONS_MAX; i++)
-    {
-        // Return as uint32
-        SCPI_ResultUInt32(
-            context,
-            config_array[pulse_id].instructions[i]
-        );
-    }
+    SCPI_ResultArrayUInt32(
+        context,
+        config_array[pulse_id].instructions,
+        PULSE_INSTRUCTIONS_MAX,
+        0 // what is array format??
+    );
     
     return SCPI_RES_OK;
 }

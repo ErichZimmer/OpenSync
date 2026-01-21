@@ -21,6 +21,8 @@
     {.pattern = "PULSe#:DATA?", .callback = SCPI_PulseDataQ,}, \
     {.pattern = "PULSe#:RESet", .callback = SCPI_PulseReset,}, \
 
+void pulse_sequencer_cache_clear();
+
 scpi_result_t SCPI_PulseStatus(
     scpi_t* context
 );
