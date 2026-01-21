@@ -12,7 +12,6 @@
 
 
 uint32_t PULSE_INSTRUCTIONS_DEFAULT[PULSE_INSTRUCTIONS_MAX] = {0};
-// uint32_t CLOCK_TRIGGERS_DEFAULT[CLOCK_TRIGGERS_MAX] = {0};
 
 
 uint sequencer_program_output_add(
@@ -47,6 +46,7 @@ void sequencer_output_init(
         config_array[i].sm = i;
         config_array[i].clock_pin = INTERNAL_CLOCK_PINS[0]; // Default to all using the same internal pin
         config_array[i].clock_divider = CLOCK_DIV_DEFAULT;
+        config_array[i].unit_offset = UNITS_OFFSET_DEFAULT;
         config_array[i].active = false;
         config_array[i].configured = false;
     }
@@ -82,6 +82,7 @@ void sequencer_output_config_reset(
 
     config -> clock_pin = INTERNAL_CLOCK_PINS[0];
     config -> clock_divider = CLOCK_DIV_DEFAULT;
+    config -> unit_offset = UNITS_OFFSET_DEFAULT;
     config -> active = false;
 }
 

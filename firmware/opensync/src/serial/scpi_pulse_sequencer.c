@@ -513,7 +513,7 @@ scpi_result_t SCPI_PulseUnits(
     switch (choice)
     {
         case NANOSECOND:
-            unit_offset = 1;
+            unit_offset = 1.0;
             break;
         case MICROSECOND:
             unit_offset = 1e3;
@@ -531,7 +531,7 @@ scpi_result_t SCPI_PulseUnits(
             unit_offset = 3.6e12;
             break;
         default:
-            unit_offset = 1;
+            unit_offset = 1.0;
     }
 
     // Cast choice into usable clock divider type
@@ -816,12 +816,8 @@ scpi_result_t SCPI_PulseDataApply(
         uint32_t output = pulse_sequence_buffer_output[i];
         double delay = pulse_sequence_buffer_delay[i];
 
-        printf("Delay arbotrary: %d\r\n", delay);
-
         // Convert delay into nanoseconds
         delay = delay * (double) unit_offset;
-
-        printf("Delay nanos: %d\r\n", delay);
 
         // Convert nanoseconds to cycles, if possible
         if (!convert_nanos_to_cycles(
