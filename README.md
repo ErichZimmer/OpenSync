@@ -6,11 +6,6 @@ An open source synchronizer for the velocimetry of fluids using a Raspberry Pi m
 ## Purpose
 OpenSync is a simple and low-cost synchronizer based on microcontroller technology. Due to the intrinsic nature of microcontrollers compared to more advanced devices (e.g., field programmable gate arrays), most complex features that are typical of commercial propietary devices such as gating, external trigger manipulation, etc are not implemented. However, OpenSync remains sufficiently flexible and provides enough support for most users' needs when performing a PIV experiment. This is because OpenSync is an arbitrary pulse generator under-the-hood which allows for rather complex pulse sequences to be synthesized through simple output port manipulation. Additionally, three (3) independent internal clocks can be utilized to allow for relatively advanced pulse timing. While this implementation for a synchronizer may be quite restrictive at times, it is what makes OpenSync so simple!
 
-
-| Licenses | OSHWA UID |
-| --- | --- |
-| ![osls](LICENSE_PNG.png) | N/A |
-
 ## Basic Specs
  - **System Frequency**: 250 MHz (4 ns resolution)
  - **Output Channels**: 8
@@ -107,5 +102,10 @@ Will be determined after the first milestone of this project.
  4. Stasicki, B. and Ehrenfried, K. and Dieterle, L. and Ludwikowski, K. and Raffel, M.  (2001) Advanced syncronization techniques for complex flow field investigations by means of PIV .    4th Intern. Symposium on Particle Image Velocimetry, Göttingen, Germany, September 17-19, 2001.  
     
 ## Licensing
+
+| Licenses | OSHWA UID |
+| --- | --- |
+| ![osls](LICENSE_PNG.png) | N/A |
+
 - Software: All firmware and software components are covered by the GNU GPLv3 license.
 - Hardware: All hardware is covered by the CERN-OHL-S-v2 license.
