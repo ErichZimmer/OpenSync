@@ -816,7 +816,7 @@ scpi_result_t SCPI_PulseDataApply(
         uint32_t output = pulse_sequence_buffer_output[i];
         double delay = pulse_sequence_buffer_delay[i];
 
-         printf("Delay arbotrary: %d\r\n", delay);
+        printf("Delay arbotrary: %d\r\n", delay);
 
         // Convert delay into nanoseconds
         delay = delay * (double) unit_offset;
