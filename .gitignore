@@ -11,7 +11,6 @@ firmware/opensync/.vscode
 firmware/opensync/build
 
 .vscode/*
-demos/videos/*
 documents/manual/*
 software/docs/*.py
 software/docs/*.txt
