@@ -105,7 +105,7 @@ Will be determined after the first milestone of this project.
 
 | Licenses | OSHWA UID |
 | --- | --- |
-| ![osls](LICENSE_PNG.png) | N/A |
+| ![osls](assets/LICENSE_PNG.png) | N/A |
 
 - Software: All firmware and software components are covered by the GNU GPLv3 license.
 - Hardware: All hardware is covered by the CERN-OHL-S-v2 license.
