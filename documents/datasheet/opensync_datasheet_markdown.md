@@ -22,7 +22,7 @@ An open source synchronizer for the velocimetry of fluids using a Raspberry Pi m
 
 ## CHANNEL TIMING GENERATOR
  - **I/O Resolution**: 4 ns * clock divider (e.g., 4 ns, 100 ns, 1 us, 10 us, 100 us resolution)
- - **Pulse Width**: 20 ns to ~17 s (0.4 ms to ~119 h with max clock divider)
+ - **Pulse Width**: 20 ns to 1 s (0.4 ms to ~30h with max clock divider)
  - **Max Pulse Sequence Length**: 32 instruction pairs
  - **Max Pulse Sequence Repetition**: 500,000 iterations
  - **Single-Channel Jitter**:  typically < 0.1 ns
