@@ -14,8 +14,7 @@
     {.pattern = "CLOCk:DATA:STOre:FREQ?", .callback = SCPI_ClockDataFreqQ,}, \
     {.pattern = "CLOCk:DATA:STOre:REPs", .callback = SCPI_ClockDataReps,}, \
     {.pattern = "CLOCk:DATA:STOre:REPs?", .callback = SCPI_ClockDataRepsQ,}, \
-    {.pattern = "CLOCk:DATA:STOre:CLEAR", .callback = SCPI_ClockDataClear,}, \
-    {.pattern = "CLOCk:DATA:STOre:CLR", .callback = SCPI_ClockDataClear,}, \
+    {.pattern = "CLOCk:DATA:STOre:CLEar", .callback = SCPI_ClockDataClear,}, \
     {.pattern = "CLOCk#:DATA:STOre:APPly", .callback = SCPI_ClockDataApply,}, \
     {.pattern = "CLOCk#:DATA?", .callback = SCPI_ClockDataQ,}, \
     {.pattern = "CLOCk#:TRIGger:MODe", .callback = SCPI_ClockTriggerMode,}, \

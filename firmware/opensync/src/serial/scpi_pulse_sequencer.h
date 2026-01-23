@@ -16,8 +16,7 @@
     {.pattern = "PULSe:DATA:STOre:OUTPuts?", .callback = SCPI_PulseDataOutputQ,}, \
     {.pattern = "PULSe:DATA:STOre:DELays", .callback = SCPI_PulseDataDelay,}, \
     {.pattern = "PULSe:DATA:STOre:DELays?", .callback = SCPI_PulseDataDelayQ,}, \
-    {.pattern = "PULSe:DATA:STOre:CLEAR", .callback = SCPI_PulseDataClear,}, \
-    {.pattern = "PULSe:DATA:STOre:CLR", .callback = SCPI_PulseDataClear,}, \
+    {.pattern = "PULSe:DATA:STOre:CLEar", .callback = SCPI_PulseDataClear,}, \
     {.pattern = "PULSe#:DATA:STOre:APPly", .callback = SCPI_PulseDataApply,}, \
     {.pattern = "PULSe#:DATA?", .callback = SCPI_PulseDataQ,}, \
     {.pattern = "PULSe#:RESet", .callback = SCPI_PulseReset,}, \
