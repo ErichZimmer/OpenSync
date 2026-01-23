@@ -46,7 +46,7 @@ void clock_sequencer_cache_reps_clear()
 }
 
 
-// Clear all the cache
+// Clear all the clock instructions cache
 void clock_sequencer_cache_clear()
 {
     clock_sequencer_cache_freq_clear();

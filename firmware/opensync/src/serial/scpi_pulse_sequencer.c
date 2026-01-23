@@ -48,7 +48,7 @@ void pulse_sequencer_cache_delay_clear()
 }
 
 
-// Clear all the cache
+// Clear all the pulse instructions cache
 void pulse_sequencer_cache_clear()
 {
     pulse_sequencer_cache_output_clear();

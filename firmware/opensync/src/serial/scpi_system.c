@@ -238,7 +238,7 @@ scpi_result_t SCPI_SystemReset(
 
     // Clear static instruction data caches
     pulse_sequencer_cache_clear();
- //   clock_sequencer_cache_clear();
+    clock_sequencer_cache_clear();
 
     // Finally, set sebug and sequencer status to default
     // TODO: Add reset functions for each
