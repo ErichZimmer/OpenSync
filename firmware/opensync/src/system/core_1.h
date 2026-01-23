@@ -88,6 +88,11 @@ bool clock_instructions_load(
     uint32_t instructions[CLOCK_INSTRUCTIONS_MAX]
 );
 
+bool clock_unit_offset_set(
+    uint32_t clock_id,
+    double units_offset
+);
+
 bool clock_sequencer_state_reset(
     uint32_t clock_id
 );
@@ -104,7 +109,7 @@ bool pulse_pin_clock_set(
 
 bool pulse_unit_offset_set(
     uint32_t pulse_id,
-    uint64_t units_offset
+    double units_offset
 );
 
 bool pulse_instructions_load(

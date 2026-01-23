@@ -4,8 +4,8 @@
 
 
 #define INSTRUMENT_PULSE_COMMANDS \
-    {.pattern = "PULSe#:STATus", .callback = SCPI_PulseStatus,}, \
-    {.pattern = "PULSe#:STATus?", .callback = SCPI_PulseStatusQ,}, \
+    {.pattern = "PULSe#:STATe", .callback = SCPI_PulseStatus,}, \
+    {.pattern = "PULSe#:STATe?", .callback = SCPI_PulseStatusQ,}, \
     {.pattern = "PULSe#:PIN", .callback = SCPI_PulsePin,}, \
     {.pattern = "PULSe#:PIN?", .callback = SCPI_PulsePinQ,}, \
     {.pattern = "PULSe#:DIVider", .callback = SCPI_PulseClockDivider,}, \
@@ -16,7 +16,8 @@
     {.pattern = "PULSe:DATA:STOre:OUTPuts?", .callback = SCPI_PulseDataOutputQ,}, \
     {.pattern = "PULSe:DATA:STOre:DELays", .callback = SCPI_PulseDataDelay,}, \
     {.pattern = "PULSe:DATA:STOre:DELays?", .callback = SCPI_PulseDataDelayQ,}, \
-    {.pattern = "PULSe:DATA:STOre:CLEar", .callback = SCPI_PulseDataClear,}, \
+    {.pattern = "PULSe:DATA:STOre:CLEAR", .callback = SCPI_PulseDataClear,}, \
+    {.pattern = "PULSe:DATA:STOre:CLR", .callback = SCPI_PulseDataClear,}, \
     {.pattern = "PULSe#:DATA:STOre:APPly", .callback = SCPI_PulseDataApply,}, \
     {.pattern = "PULSe#:DATA?", .callback = SCPI_PulseDataQ,}, \
     {.pattern = "PULSe#:RESet", .callback = SCPI_PulseReset,}, \

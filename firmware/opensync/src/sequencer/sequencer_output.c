@@ -46,7 +46,7 @@ void sequencer_output_init(
         config_array[i].sm = i;
         config_array[i].clock_pin = INTERNAL_CLOCK_PINS[0]; // Default to all using the same internal pin
         config_array[i].clock_divider = CLOCK_DIV_DEFAULT;
-        config_array[i].unit_offset = UNITS_OFFSET_DEFAULT;
+        config_array[i].unit_offset = PULSE_UNITS_OFFSET_DEFAULT;
         config_array[i].active = false;
         config_array[i].configured = false;
     }
@@ -82,7 +82,7 @@ void sequencer_output_config_reset(
 
     config -> clock_pin = INTERNAL_CLOCK_PINS[0];
     config -> clock_divider = CLOCK_DIV_DEFAULT;
-    config -> unit_offset = UNITS_OFFSET_DEFAULT;
+    config -> unit_offset = PULSE_UNITS_OFFSET_DEFAULT;
     config -> active = false;
 }
 

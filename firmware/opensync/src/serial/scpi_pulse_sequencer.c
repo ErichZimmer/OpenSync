@@ -13,9 +13,6 @@
 #include "sequencer/sequencer_common.h"
 #include "scpi_common.h"
 
-#define STATUS_ON 1
-#define STATUS_OFF 0
-
 enum {
     NANOSECOND = 0,
     MICROSECOND,
@@ -28,13 +25,13 @@ enum {
 const uint32_t OFFSET_TERM = 2; // offset from last valid instruction of buffer
 static uint32_t pulse_sequence_buffer_output[PULSE_INSTRUCTIONS_MAX / 2 - 1] = {0};
 static double pulse_sequence_buffer_delay[PULSE_INSTRUCTIONS_MAX / 2 - 1] = {0.0};
-const uint32_t sequence_buffer_size = PULSE_INSTRUCTIONS_MAX / 2 - 1;
+const uint32_t pulse_sequence_buffer_size = PULSE_INSTRUCTIONS_MAX / 2 - 1;
 
 
 // Function to clear the static buffer cache for output data
 void pulse_sequencer_cache_output_clear()
 {
-    for (uint32_t i = 0; i < sequence_buffer_size; i++)
+    for (uint32_t i = 0; i < pulse_sequence_buffer_size; i++)
     {
         pulse_sequence_buffer_output[i] = 0;
     }
@@ -44,7 +41,7 @@ void pulse_sequencer_cache_output_clear()
 // Function to clear the static buffer cache for delay data
 void pulse_sequencer_cache_delay_clear()
 {
-    for (uint32_t i = 0; i < sequence_buffer_size; i++)
+    for (uint32_t i = 0; i < pulse_sequence_buffer_size; i++)
     {
         pulse_sequence_buffer_delay[i] = 0.0;
     }
@@ -590,10 +587,10 @@ scpi_result_t SCPI_PulseUnitsQ(
     struct pulse_config* config_array = sequencer_pulse_config_get();
 
     // Get the clock divider of the pulse sequencer at pulse_id
-    uint64_t unit_offset = config_array[pulse_id].unit_offset;
+    double unit_offset = config_array[pulse_id].unit_offset;
 
     // Return as uint32
-    SCPI_ResultUInt64(
+    SCPI_ResultDouble(
         context,
         unit_offset
     );
@@ -627,7 +624,7 @@ scpi_result_t SCPI_PulseDataOutput(
     if (!SCPI_ParamArrayUInt32(
         context,
         pulse_sequence_buffer_output,
-        sequence_buffer_size,
+        pulse_sequence_buffer_size,
         &instructions_read,
         0, // scpi array format type??
         TRUE
@@ -646,7 +643,7 @@ scpi_result_t SCPI_PulseDataOutputQ(
     SCPI_ResultArrayUInt32(
         context,
         pulse_sequence_buffer_output,
-        sequence_buffer_size,
+        pulse_sequence_buffer_size,
         0 // what is scpi array format??
     );
 
@@ -679,7 +676,7 @@ scpi_result_t SCPI_PulseDataDelay(
     if (!SCPI_ParamArrayDouble(
         context,
         pulse_sequence_buffer_delay,
-        sequence_buffer_size,
+        pulse_sequence_buffer_size,
         &instructions_read,
         0, // scpi array format type??
         TRUE
@@ -698,7 +695,7 @@ scpi_result_t SCPI_PulseDataDelayQ(
     SCPI_ResultArrayDouble(
         context,
         pulse_sequence_buffer_delay,
-        sequence_buffer_size,
+        pulse_sequence_buffer_size,
         0 // what is scpi array format??
     );
 
@@ -742,7 +739,7 @@ scpi_result_t SCPI_PulseDataApply(
     uint32_t delay_cycles = 0;
 
     uint32_t local_buffer[PULSE_INSTRUCTIONS_MAX] = {};
-    uint32_t local_buffer_size = PULSE_INSTRUCTIONS_MAX;
+    const uint32_t local_buffer_size = PULSE_INSTRUCTIONS_MAX;
 
     // !If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
     if(is_running())
@@ -781,7 +778,7 @@ scpi_result_t SCPI_PulseDataApply(
     // Now get unit conversion paramerters
     struct pulse_config* config_array = sequencer_pulse_config_get();
 
-    const uint64_t unit_offset = config_array[pulse_id].unit_offset;
+    const double unit_offset = config_array[pulse_id].unit_offset;
     const uint clock_divider = config_array[pulse_id].clock_divider;
 
     // Configure default buffer pattern
@@ -811,13 +808,13 @@ scpi_result_t SCPI_PulseDataApply(
 
     // Now, check each value and convert to make sure it is sane
     // Drunk me told me to refactor this, I'll see this message when no logney drunk me
-    for (uint32_t i = 0, j = 0; i < sequence_buffer_size; i++, j+=2)
+    for (uint32_t i = 0, j = 0; i < pulse_sequence_buffer_size; i++, j+=2)
     {
         uint32_t output = pulse_sequence_buffer_output[i];
         double delay = pulse_sequence_buffer_delay[i];
 
         // Convert delay into nanoseconds
-        delay = delay * (double) unit_offset;
+        delay = delay * unit_offset;
 
         // Convert nanoseconds to cycles, if possible
         if (!convert_nanos_to_cycles(

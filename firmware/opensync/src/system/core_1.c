@@ -659,6 +659,30 @@ bool clock_instructions_load(
 }
 
 
+bool clock_unit_offset_set(
+    uint32_t clock_id,
+    double units_offset
+) {
+    const double eps = 0.000001;
+
+    // Validate clock ID
+    if(!clock_id_validate(clock_id))
+    {
+        return 0;
+    }
+
+    // Make sure the offset is never 0
+    if(units_offset < eps)
+    {
+        return 0;
+    }
+
+    sequencer_clock_config[clock_id].unit_offset = units_offset;
+
+    return 1;
+}
+
+
 bool clock_sequencer_state_reset(
     uint32_t clock_id
 ) {
@@ -717,8 +741,9 @@ bool pulse_pin_clock_set(
 
 bool pulse_unit_offset_set(
     uint32_t pulse_id,
-    uint64_t units_offset
+    double units_offset
 ) {
+    const double eps = 0.000001;
 
     // Validate clock ID
     if(!clock_id_validate(pulse_id))
@@ -727,7 +752,7 @@ bool pulse_unit_offset_set(
     }
 
     // Make sure the offset is never 0
-    if(!units_offset)
+    if(units_offset < eps)
     {
         return 0;
     }

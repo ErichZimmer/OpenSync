@@ -2,6 +2,10 @@
 
 #include <stdbool.h>
 
+
+#define STATUS_ON 1
+#define STATUS_OFF 0
+
 bool convert_nanos_to_cycles(
     uint64_t nanoseconds,
     uint32_t clock_divider,
