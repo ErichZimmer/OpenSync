@@ -6,6 +6,7 @@
 
 
 const uint64_t CLOCK_CYCLES_MAX = 4294967200; // 2^32 - 96
+const uint64_t CLOCK_CYCLE_NANOS = 4; // Each clock cycle is 4 ns long
 
 
 // Convert nanoseconds to cycles, return 1 if success, 0 is not
@@ -15,7 +16,7 @@ bool convert_nanos_to_cycles(
     uint32_t clock_divider,
     uint32_t* cycles
 ){
-    uint64_t clock_cycles_raw = nanoseconds / (uint64_t) clock_divider;
+    uint64_t clock_cycles_raw = nanoseconds / ((uint64_t) (clock_divider) * CLOCK_CYCLE_NANOS);
 
     if (clock_cycles_raw > CLOCK_CYCLES_MAX)
     {

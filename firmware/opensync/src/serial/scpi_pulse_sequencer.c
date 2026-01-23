@@ -860,7 +860,7 @@ scpi_result_t SCPI_PulseDataApply(
 
         // If all is good, go ahead and offset the delay
         local_buffer[j] = output;
-        local_buffer[j+1] = delay - PULSE_INSTRUCTION_OFFSET;
+        local_buffer[j+1] = delay_cycles - PULSE_INSTRUCTION_OFFSET;
     }
 
     bool success = pulse_instructions_load(
