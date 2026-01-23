@@ -16,6 +16,7 @@
 #include "structs/pulse_config.h"
 #include "status/sequencer_status.h"
 #include "status/debug_status.h"
+#include "scpi_clock_sequencer.h"
 #include "scpi_pulse_sequencer.h"
 #include "scpi_common.h"
 
