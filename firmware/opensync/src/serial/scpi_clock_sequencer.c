@@ -671,6 +671,17 @@ scpi_result_t SCPI_ClockDataApply(
             return SCPI_RES_ERR;
         }
 
+        // Check for min cycles due to pulse sequencer operations
+        if (freq_cycles < CLOCK_INSTRUCTION_MIN)
+        {
+            SCPI_ErrorPush(
+                context, 
+                SCPI_ERROR_DATA_OUT_OF_RANGE
+            );
+
+            return SCPI_RES_ERR;
+        }
+
         // Reduce repitions by one if greater than one iteration due to the way the PIO program works
         if (reps > 1)
         {
