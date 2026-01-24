@@ -1,9 +1,10 @@
 #include "sequencer_output.h"
 
 #include <stdint.h>
+#include <math.h>
+
 #include "hardware/dma.h"
 #include "hardware/pio.h"
-
 #include "structs/clock_config.h"
 #include "structs/pulse_config.h"
 #include "sequencer_common.h"
@@ -90,7 +91,7 @@ void sequencer_output_config_reset(
 void sequencer_output_dma_configure(
     struct pulse_config* config
 ) {
-    const uint RING_BUFF_SIZE_POWER = 8; //log(2)(PULSE_INSTRUCTIONS_MAX * 4)
+    const uint RING_BUFF_SIZE_POWER = (uint) log2(PULSE_INSTRUCTIONS_MAX * 4);
 
     config -> dma_chan = dma_claim_unused_channel(true);
     
