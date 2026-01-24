@@ -23,6 +23,8 @@ enum {
 
 static double clock_sequence_buffer_freq[CLOCK_INSTRUCTIONS_MAX / 2] = {0};
 static uint32_t clock_sequence_buffer_reps[CLOCK_INSTRUCTIONS_MAX / 2] = {0.0};
+static size_t  clock_sequence_buffer_freqs_read = 0;
+static size_t  clock_sequence_buffer_reps_read = 0;
 const uint32_t clock_sequence_buffer_size = CLOCK_INSTRUCTIONS_MAX / 2;
 
 
@@ -33,6 +35,8 @@ void clock_sequencer_cache_freq_clear()
     {
         clock_sequence_buffer_freq[i] = 0;
     }
+
+    clock_sequence_buffer_freqs_read = 0;
 }
 
 
@@ -43,6 +47,8 @@ void clock_sequencer_cache_reps_clear()
     {
         clock_sequence_buffer_reps[i] = 0.0;
     }
+
+    clock_sequence_buffer_reps_read = 0;
 }
 
 
@@ -472,9 +478,6 @@ scpi_result_t SCPI_ClockUnitsQ(
 scpi_result_t SCPI_ClockDataReps(
     scpi_t* context
 ) {
-    // Allocate some variables
-    size_t instructions_read=0;
-
     // If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
     if(is_running())
     {
@@ -494,7 +497,7 @@ scpi_result_t SCPI_ClockDataReps(
         context,
         clock_sequence_buffer_reps,
         clock_sequence_buffer_size,
-        &instructions_read,
+        &clock_sequence_buffer_reps_read,
         0, // scpi array format type??
         TRUE
     )) {
@@ -524,9 +527,6 @@ scpi_result_t SCPI_ClockDataRepsQ(
 scpi_result_t SCPI_ClockDataFreq(
     scpi_t* context
 ) {
-    // Allocate some variables
-    size_t instructions_read=0;
-
     // If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
     if(is_running())
     {
@@ -546,7 +546,7 @@ scpi_result_t SCPI_ClockDataFreq(
         context,
         clock_sequence_buffer_freq,
         clock_sequence_buffer_size,
-        &instructions_read,
+        &clock_sequence_buffer_freqs_read,
         0, // scpi array format type??
         TRUE
     )) {
@@ -632,6 +632,17 @@ scpi_result_t SCPI_ClockDataApply(
         SCPI_ErrorPush(
             context, 
             SCPI_ERROR_PARAMETER_ERROR
+        );
+
+        return SCPI_RES_ERR;
+    }
+
+    // Make sure both instruction buffers have read same number of elements
+    if (clock_sequence_buffer_freqs_read != clock_sequence_buffer_reps_read)
+    {
+        SCPI_ErrorPush(
+            context, 
+            SCPI_ERROR_LISTS_NOT_SAME_LENGTH
         );
 
         return SCPI_RES_ERR;

@@ -22,10 +22,12 @@ enum {
     HOUR
 };
 
-const uint32_t OFFSET_TERM = 2; // offset from last valid instruction of buffer
+static double   pulse_sequence_buffer_delay[PULSE_INSTRUCTIONS_MAX / 2 - 1] = {0.0};
 static uint32_t pulse_sequence_buffer_output[PULSE_INSTRUCTIONS_MAX / 2 - 1] = {0};
-static double pulse_sequence_buffer_delay[PULSE_INSTRUCTIONS_MAX / 2 - 1] = {0.0};
+static size_t  pulse_sequence_buffer_output_read = 0;
+static size_t  pulse_sequence_buffer_delay_read = 0;
 const uint32_t pulse_sequence_buffer_size = PULSE_INSTRUCTIONS_MAX / 2 - 1;
+const uint32_t OFFSET_TERM = 2; // offset from last valid instruction of buffer
 
 
 // Function to clear the static buffer cache for output data
@@ -35,6 +37,8 @@ void pulse_sequencer_cache_output_clear()
     {
         pulse_sequence_buffer_output[i] = 0;
     }
+
+    pulse_sequence_buffer_output_read = 0;
 }
 
 
@@ -45,6 +49,8 @@ void pulse_sequencer_cache_delay_clear()
     {
         pulse_sequence_buffer_delay[i] = 0.0;
     }
+
+    pulse_sequence_buffer_delay_read = 0;
 }
 
 
@@ -603,9 +609,6 @@ scpi_result_t SCPI_PulseUnitsQ(
 scpi_result_t SCPI_PulseDataOutput(
     scpi_t* context
 ) {
-    // Allocate some variables
-    size_t instructions_read=0;
-
     // If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
     if(is_running())
     {
@@ -625,7 +628,7 @@ scpi_result_t SCPI_PulseDataOutput(
         context,
         pulse_sequence_buffer_output,
         pulse_sequence_buffer_size,
-        &instructions_read,
+        &pulse_sequence_buffer_output_read,
         0, // scpi array format type??
         TRUE
     )) {
@@ -655,9 +658,6 @@ scpi_result_t SCPI_PulseDataOutputQ(
 scpi_result_t SCPI_PulseDataDelay(
     scpi_t* context
 ) {
-    // Allocate some variables
-    size_t instructions_read=0;
-
     // If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
     if(is_running())
     {
@@ -677,7 +677,7 @@ scpi_result_t SCPI_PulseDataDelay(
         context,
         pulse_sequence_buffer_delay,
         pulse_sequence_buffer_size,
-        &instructions_read,
+        &pulse_sequence_buffer_delay_read,
         0, // scpi array format type??
         TRUE
     )) {
@@ -734,7 +734,6 @@ scpi_result_t SCPI_PulseDataApply(
     scpi_t* context
 ) {
     // Allocate some variables
-    int32_t numbers[1] = {0};
     uint32_t pulse_id = 0;
     uint32_t delay_cycles = 0;
 
@@ -769,6 +768,17 @@ scpi_result_t SCPI_PulseDataApply(
         return SCPI_RES_ERR;
     }
 
+    // Make sure both instruction buffers have read same number of elements
+    if (pulse_sequence_buffer_output_read != pulse_sequence_buffer_delay_read)
+    {
+        SCPI_ErrorPush(
+            context, 
+            SCPI_ERROR_LISTS_NOT_SAME_LENGTH
+        );
+
+        return SCPI_RES_ERR;
+    }
+ 
     // Now get unit conversion paramerters
     struct pulse_config* config_array = sequencer_pulse_config_get();
 
