@@ -346,7 +346,7 @@ def _device_pulse_config_load(
     trigger_id = pulse_params['clock_id']
     clock_res = pulse_params['clock_res']
 
-   # Activate clock channel
+   # Activate pulse channel
     command = f':pulse{pulse_id}:state  on'
     resp = device_comm_write(
         device,
@@ -357,7 +357,7 @@ def _device_pulse_config_load(
         if 'error' in msg.lower():
             return resp
         
-    # Load clock 
+    # Load pulse divider 
     command = f':pulse{pulse_id}:divider {clock_res}'
     resp = device_comm_write(
         device,
@@ -369,7 +369,7 @@ def _device_pulse_config_load(
             return resp
 
     # Load pulse sequence units
-    command = f':clock{clock_id}:units {clock_units}'
+    command = f':pulse{pulse_id}:units {pulse_units}'
     resp = device_comm_write(
         device,
         command
@@ -379,7 +379,7 @@ def _device_pulse_config_load(
         if 'error' in msg.lower():
             return resp
 
-    # Load clock trigger pin
+    # Load pulse signal pin
     command = f':pulse{pulse_id}:pin {trigger_id}'
     resp = device_comm_write(
         device,
