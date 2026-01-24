@@ -63,15 +63,37 @@ def _device_clock_inst_freerun_load(
         msg = f'Reps and delay size mismatch: {reps_len} vs {delay_len}'
         raise ValueError(msg)
 
-    # Get information to send to device
-    instructions = ','.join(str(x) for pair in zip(reps_inst, delay_inst) for x in pair)
+    # Send information to clock data buffer
+    command = f':clock:data:store:reps {reps_inst}'
     
-    # Send imformation to clock instruction buffer
-    command = f':clock{clock_id}:inst {instructions}'
     resp = device_comm_write(
         device,
         command
     )
+
+    for msg in resp:
+        if 'error' in msg.lower():
+            return resp
+
+    # Send information to clock data buffer (for delays this time)
+    command = f':clock:data:store:freqs {delay_inst}'
+    
+    resp = device_comm_write(
+        device,
+        command
+    )
+
+    for msg in resp:
+        if 'error' in msg.lower():
+            return resp
+
+    # Now apply the current setting to the clock sequencer
+    command = f':clock:data:store:apply {clock_id}'
+    
+    resp = device_comm_write(
+        device,
+        command
+    ) 
 
     return resp
 
@@ -115,7 +137,7 @@ def _device_clock_inst_triggered_load(
         raise ValueError(msg)
 
     # Load instructions to device
-    command = f':clock{clock_id}:trigger:inst {trigger_skips},{trigger_delay_inst},{trigger_reps}'
+    command = f':clock{clock_id}:trigger:data {trigger_skips},{trigger_delay_inst},{trigger_reps}'
     resp = device_comm_write(
         device,
         command
@@ -139,14 +161,22 @@ def _device_clock_config_load(
     Returns
     -------
     response : list[str]
+
+    Notes
+    -----
+    This function MUST be called before loading clock data/instructions as
+    it directly influences how the clock cycles are calculated. Every time
+    clock resolution or clock data units are changed, reload the existing
+    instructions.
     """
     clock_id = clock_params['clock_id']
     clock_res = clock_params['clock_res']
+    clock_units = clock_params['clock_units']
     trigger_id = clock_params['ext_trigger_id']
     clock_type = int(clock_params['ext_trigger'] == 'enabled')
 
     # Activate clock channel
-    command = f':clock{clock_id}:enable'
+    command = f':clock{clock_id}:state on'
     resp = device_comm_write(
         device,
         command
@@ -158,6 +188,17 @@ def _device_clock_config_load(
         
     # Load clock divider
     command = f':clock{clock_id}:divider {clock_res}'
+    resp = device_comm_write(
+        device,
+        command
+    )
+
+    for msg in resp:
+        if 'error' in msg.lower():
+            return resp
+
+    # Load clock units
+    command = f':clock{clock_id}:units {clock_units}'
     resp = device_comm_write(
         device,
         command
@@ -230,8 +271,6 @@ def _device_pulse_inst_load(
 
     """
     pulse_id = pulse_params['pulse_id']
-    clock_id = pulse_params['clock_id']
-    clock_res = pulse_params['clock_res']
 
     # Convert delay instructions to cycles in ns
     output_inst, delay_inst = _convert_pulse_inst(pulse_params)
@@ -244,15 +283,37 @@ def _device_pulse_inst_load(
         msg = f'Reps and delay size mismatch: {output_len} vs {delay_len}'
         raise ValueError(msg)
 
-    # Get information to send to device
-    instructions = ','.join(str(x) for pair in zip(output_inst, delay_inst) for x in pair)
+    # Send information to clock data buffer
+    command = f':pulse:data:store:outputs {output_inst}'
     
-    # Send imformation to clock instruction buffer
-    command = f':pulse{pulse_id}:inst {instructions}'
     resp = device_comm_write(
         device,
         command
     )
+
+    for msg in resp:
+        if 'error' in msg.lower():
+            return resp
+
+    # Send information to clock data buffer (for delays this time)
+    command = f':pulse:data:store:delays {delay_inst}'
+    
+    resp = device_comm_write(
+        device,
+        command
+    )
+
+    for msg in resp:
+        if 'error' in msg.lower():
+            return resp
+
+    # Now apply the current setting to the clock sequencer
+    command = f':clock:data:store:apply {pulse_id}'
+    
+    resp = device_comm_write(
+        device,
+        command
+    ) 
 
     return resp
 
@@ -272,13 +333,21 @@ def _device_pulse_config_load(
     Returns
     -------
     response : list[str]
+
+    Notes
+    -----
+    This function MUST be called before loading pulse data/instructions as
+    it directly influences how the clock cycles are calculated. Every time
+    clock resolution or pulse data units are changed, reload the existing
+    instructions.
     """
     pulse_id = pulse_params['pulse_id']
+    pulse_units = pulse_params['pulse_units']
     trigger_id = pulse_params['clock_id']
     clock_res = pulse_params['clock_res']
 
    # Activate clock channel
-    command = f':pulse{pulse_id}:enable'
+    command = f':pulse{pulse_id}:state  on'
     resp = device_comm_write(
         device,
         command
@@ -299,6 +368,16 @@ def _device_pulse_config_load(
         if 'error' in msg.lower():
             return resp
 
+    # Load pulse sequence units
+    command = f':clock{clock_id}:units {clock_units}'
+    resp = device_comm_write(
+        device,
+        command
+    )
+
+    for msg in resp:
+        if 'error' in msg.lower():
+            return resp
 
     # Load clock trigger pin
     command = f':pulse{pulse_id}:pin {trigger_id}'
