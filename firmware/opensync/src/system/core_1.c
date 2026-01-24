@@ -663,8 +663,6 @@ bool clock_unit_offset_set(
     uint32_t clock_id,
     double units_offset
 ) {
-    const double eps = 0.000001;
-
     // Validate clock ID
     if(!clock_id_validate(clock_id))
     {
@@ -672,7 +670,7 @@ bool clock_unit_offset_set(
     }
 
     // Make sure the offset is never 0
-    if(units_offset < eps)
+    if(units_offset < SEQUENCER_DOUBLE_EPS)
     {
         return 0;
     }

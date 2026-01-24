@@ -30,3 +30,4 @@ const uint32_t INTERNAL_CLOCK_PINS[CLOCKS_MAX] = {16, 17, 18};
 const uint32_t EXTERNAL_TRIGGER_PINS[TRIGGERS_MAX] = {13};
 const double PULSE_UNITS_OFFSET_DEFAULT = 1e3; // microseconds
 const double CLOCK_UNITS_OFFSET_DEFAULT = 1.0; // Hertz
+const double SEQUENCER_DOUBLE_EPS = 1e-8;

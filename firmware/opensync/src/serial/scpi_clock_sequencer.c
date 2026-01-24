@@ -654,32 +654,40 @@ scpi_result_t SCPI_ClockDataApply(
         uint32_t reps = clock_sequence_buffer_reps[i];
         double freq = clock_sequence_buffer_freq[i];
 
-        // Convert delay into nanoseconds
-        freq = 1e9 / (freq * unit_offset);
-
-        // Convert nanoseconds to cycles, if possible
-        if (!convert_nanos_to_cycles(
-            (uint64_t) freq, // This truncates decimals similar to floor operation (e.g, 120.5 ns --> 120 ns)
-            clock_divider,
-            &freq_cycles
-        )) {
-            SCPI_ErrorPush(
-                context, 
-                SCPI_ERROR_DATA_OUT_OF_RANGE
-            );
-
-            return SCPI_RES_ERR;
-        }
-
-        // Check for min cycles due to pulse sequencer operations
-        if (freq_cycles < CLOCK_INSTRUCTION_MIN)
+        if (freq > SEQUENCER_DOUBLE_EPS)
         {
-            SCPI_ErrorPush(
-                context, 
-                SCPI_ERROR_DATA_OUT_OF_RANGE
-            );
+            // Convert delay into nanoseconds
+            freq = 1e9 / (freq * unit_offset);
 
-            return SCPI_RES_ERR;
+            // Convert nanoseconds to cycles, if possible
+            if (!convert_nanos_to_cycles(
+                (uint64_t) freq, // This truncates decimals similar to floor operation (e.g, 120.5 ns --> 120 ns)
+                clock_divider,
+                &freq_cycles
+            )) {
+                SCPI_ErrorPush(
+                    context, 
+                    SCPI_ERROR_DATA_OUT_OF_RANGE
+                );
+
+                return SCPI_RES_ERR;
+            } 
+
+            // Check for min cycles due to pulse sequencer operations
+            if (freq_cycles < CLOCK_INSTRUCTION_MIN)
+            {
+                SCPI_ErrorPush(
+                    context, 
+                    SCPI_ERROR_DATA_OUT_OF_RANGE
+                );
+
+                return SCPI_RES_ERR;
+            }
+        }
+        // If the frequency is close to zero, set clock cycles to 0
+        else
+        {
+            freq_cycles = 0;
         }
 
         // Reduce repitions by one if greater than one iteration due to the way the PIO program works

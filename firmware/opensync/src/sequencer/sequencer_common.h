@@ -31,3 +31,4 @@ extern const uint32_t INTERNAL_CLOCK_PINS[CLOCKS_MAX];
 extern const uint32_t EXTERNAL_TRIGGER_PINS[TRIGGERS_MAX];
 extern const double PULSE_UNITS_OFFSET_DEFAULT;
 extern const double CLOCK_UNITS_OFFSET_DEFAULT;
+extern const double SEQUENCER_DOUBLE_EPS;
