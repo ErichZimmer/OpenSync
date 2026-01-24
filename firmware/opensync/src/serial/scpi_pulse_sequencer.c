@@ -742,7 +742,7 @@ scpi_result_t SCPI_PulseDataApply(
     const uint32_t local_buffer_size = PULSE_INSTRUCTIONS_MAX;
 
     // !If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
-    if(is_running())
+    if (is_running())
     {
         SCPI_ErrorPush(
             context, 
@@ -753,23 +753,17 @@ scpi_result_t SCPI_PulseDataApply(
     }
 
     // Get pulse sequencer ID
-    SCPI_CommandNumbers(
-        context,
-        numbers, 
-        1, // length (e.g., 1 element array)
-        0 // default value, e.g., pulse id 0
-    );
-
-    // Cast numbers to usable int type
-    pulse_id = (uint32_t) numbers[0];
+    if (!SCPI_ParamUInt32(context, &pulse_id, TRUE))
+    {
+        return SCPI_RES_ERR;
+    }
 
     // Validate the ID
-    // NOTE: We use clock id validate due to clock id and pulse id sharign same ids
     if (!clock_id_validate(pulse_id))
     {
         SCPI_ErrorPush(
             context, 
-            SCPI_ERROR_INVALID_SUFFIX
+            SCPI_ERROR_PARAMETER_ERROR
         );
 
         return SCPI_RES_ERR;

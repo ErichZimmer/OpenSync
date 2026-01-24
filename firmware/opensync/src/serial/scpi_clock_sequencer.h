@@ -10,18 +10,18 @@
     {.pattern = "CLOCk#:DIVider?", .callback = SCPI_ClockClockDividerQ,}, \
     {.pattern = "CLOCk#:UNITs", .callback = SCPI_ClockeUnits,}, \
     {.pattern = "CLOCk#:UNIts?", .callback = SCPI_ClockUnitsQ,}, \
-    {.pattern = "CLOCk:DATA:STOre:FREQ", .callback = SCPI_ClockDataFreq,}, \
-    {.pattern = "CLOCk:DATA:STOre:FREQ?", .callback = SCPI_ClockDataFreqQ,}, \
-    {.pattern = "CLOCk:DATA:STOre:REPs", .callback = SCPI_ClockDataReps,}, \
-    {.pattern = "CLOCk:DATA:STOre:REPs?", .callback = SCPI_ClockDataRepsQ,}, \
-    {.pattern = "CLOCk:DATA:STOre:CLEar", .callback = SCPI_ClockDataClear,}, \
-    {.pattern = "CLOCk#:DATA:STOre:APPly", .callback = SCPI_ClockDataApply,}, \
     {.pattern = "CLOCk#:DATA?", .callback = SCPI_ClockDataQ,}, \
     {.pattern = "CLOCk#:TRIGger:MODe", .callback = SCPI_ClockTriggerMode,}, \
     {.pattern = "CLOCk#:TRIGger:MODe?", .callback = SCPI_ClockTriggerModeQ,}, \
     {.pattern = "CLOCk#:TRIGger:DATA", .callback = SCPI_ClockTriggerData,}, \
     {.pattern = "CLOCk#:TRIGger:DATA?", .callback = SCPI_ClockTriggerDataQ,}, \
     {.pattern = "CLOCk#:RESet", .callback = SCPI_ClockReset,}, \
+    {.pattern = "CLOCk:DATA:STOre:FREQ", .callback = SCPI_ClockDataFreq,}, \
+    {.pattern = "CLOCk:DATA:STOre:FREQ?", .callback = SCPI_ClockDataFreqQ,}, \
+    {.pattern = "CLOCk:DATA:STOre:REPs", .callback = SCPI_ClockDataReps,}, \
+    {.pattern = "CLOCk:DATA:STOre:REPs?", .callback = SCPI_ClockDataRepsQ,}, \
+    {.pattern = "CLOCk:DATA:STOre:CLEar", .callback = SCPI_ClockDataClear,}, \
+    {.pattern = "CLOCk:DATA:STOre:APPly", .callback = SCPI_ClockDataApply,}, \
 
 void clock_sequencer_cache_clear();
 

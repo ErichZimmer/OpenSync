@@ -603,7 +603,6 @@ scpi_result_t SCPI_ClockDataApply(
     scpi_t* context
 ) {
     // Allocate some variables
-    int32_t numbers[1] = {0};
     uint32_t clock_id = 0;
     uint32_t freq_cycles = 0;
 
@@ -622,22 +621,17 @@ scpi_result_t SCPI_ClockDataApply(
     }
 
     // Get clock sequencer ID
-    SCPI_CommandNumbers(
-        context,
-        numbers, 
-        1, // length (e.g., 1 element array)
-        0 // default value, e.g., clock id 0
-    );
-
-    // Cast numbers to usable int type
-    clock_id = (uint32_t) numbers[0];
+    if (!SCPI_ParamUInt32(context, &clock_id, TRUE))
+    {
+        return SCPI_RES_ERR;
+    }
 
     // Validate the ID
     if (!clock_id_validate(clock_id))
     {
         SCPI_ErrorPush(
             context, 
-            SCPI_ERROR_INVALID_SUFFIX
+            SCPI_ERROR_PARAMETER_ERROR
         );
 
         return SCPI_RES_ERR;

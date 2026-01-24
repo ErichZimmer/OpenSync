@@ -12,14 +12,14 @@
     {.pattern = "PULSe#:DIVider?", .callback = SCPI_PulseClockDividerQ,}, \
     {.pattern = "PULSe#:UNITs", .callback = SCPI_PulseUnits,}, \
     {.pattern = "PULSe#:UNITs?", .callback = SCPI_PulseUnitsQ,}, \
+    {.pattern = "PULSe#:DATA?", .callback = SCPI_PulseDataQ,}, \
+    {.pattern = "PULSe#:RESet", .callback = SCPI_PulseReset,}, \
     {.pattern = "PULSe:DATA:STOre:OUTPuts", .callback = SCPI_PulseDataOutput,}, \
     {.pattern = "PULSe:DATA:STOre:OUTPuts?", .callback = SCPI_PulseDataOutputQ,}, \
     {.pattern = "PULSe:DATA:STOre:DELays", .callback = SCPI_PulseDataDelay,}, \
     {.pattern = "PULSe:DATA:STOre:DELays?", .callback = SCPI_PulseDataDelayQ,}, \
     {.pattern = "PULSe:DATA:STOre:CLEar", .callback = SCPI_PulseDataClear,}, \
-    {.pattern = "PULSe#:DATA:STOre:APPly", .callback = SCPI_PulseDataApply,}, \
-    {.pattern = "PULSe#:DATA?", .callback = SCPI_PulseDataQ,}, \
-    {.pattern = "PULSe#:RESet", .callback = SCPI_PulseReset,}, \
+    {.pattern = "PULSe:DATA:STOre:APPly", .callback = SCPI_PulseDataApply,}, \
 
 void pulse_sequencer_cache_clear();
 
