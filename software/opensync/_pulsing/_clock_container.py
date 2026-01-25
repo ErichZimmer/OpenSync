@@ -30,7 +30,7 @@ __all__ = [
     'config_trigger_id',
     'config_trigger_skips',
     'config_trigger_delay',
-    'config_reps_freq_units'
+    'config_reps_freq_units',
     'config_reps_freq',
     'config_reps_iter'
 ]

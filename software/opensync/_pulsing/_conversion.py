@@ -3,15 +3,14 @@ from numpy import inf as INF
 from typing import Tuple
 
 from ._utils import _get_channel_ids
-from .._communication import CLOCK_CYCLE
 from .._error_handles import DeviceBufferSizeError
 
 import warnings
 
 
-# Simple pulse sequences should not be larger than 30 instructions pairs.
-MAX_PULSE_INSTRUCTION_PAIRS = 31 # 31 * 2 = 62 total instructions supported + 2 term. flags
-MIN_PULSE_CYCLE_WIDTH = 5
+# Simple pulse sequences should not be larger than 10 instructions pairs.
+MAX_PULSE_INSTRUCTION_PAIRS = 15 # 15 * 2 = 30 total instructions supported + 2 term. flags
+NULL_PULSE_DELAY = 0
 DEFAULT_OUTPUT_STATE = 0
 
 
@@ -62,7 +61,7 @@ def _eval_piecewise_function(pulse_data: list, x: float) -> bool:
     return 0
 
 
-def _convert_pulse_params(pulse_params: dict) -> Tuple[list[int], list[int]]:  
+def _convert_pulse_params(pulse_params: dict) -> Tuple[list[int], list[float]]:  
     OUTPUT_STATE_MASK = '00000000'
     eps = 0.00001
     
@@ -78,8 +77,8 @@ def _convert_pulse_params(pulse_params: dict) -> Tuple[list[int], list[int]]:
     # Copy for coefficients in piece-wise function
     coeffs = deepcopy(detected_pulses)
 
-    output_state = []
-    output_delay = []
+    output_states = []
+    output_delays = []
 
     min_pulse_len = _get_min_pulse(detected_pulses)
     max_pulse_len = _get_max_pulse(detected_pulses)
@@ -108,8 +107,8 @@ def _convert_pulse_params(pulse_params: dict) -> Tuple[list[int], list[int]]:
                 if detected_pulses[channel][0] == total_delay:
                     detected_pulses[channel].pop(0)
                     
-        output_state.append(int(''.join(state), base=2)) # binary -> decimal
-        output_delay.append(current_delay)
+        output_states.append(int(''.join(state), base=2)) # binary -> decimal
+        output_delays.append(current_delay)
             
         reps += 1
 
@@ -120,50 +119,27 @@ def _convert_pulse_params(pulse_params: dict) -> Tuple[list[int], list[int]]:
         
         raise DeviceBufferSizeError(msg)
 
-    return output_state, output_delay
-
-
-def _micros_to_nano(microsecond: float) -> int:
-    return int(microsecond * 1000)
-
-
-def _nanos_to_cycle(nanosecond: int) -> int:
-    return nanosecond // CLOCK_CYCLE
-
-
-def _output_delay_cycles(output_delays: list[float]) -> list[int]:
-    output_delay_nanos = [_micros_to_nano(delay) for delay in output_delays]
-    output_delay_cycels = [int(_nanos_to_cycle(delay)) for delay in output_delay_nanos]
-
-    return output_delay_cycels
-    
-
-def _reps_khz_to_delay_micros(
-    reps_khz: list[float],
-) -> float:
-    delay_microseconds = [(1 / delay) * 1000 for delay in reps_khz]
-
-    return delay_microseconds
+    return output_states, output_delays
 
 
 def _conversion_delay_bugfix(
-    output_delay: list[int]
+    output_delays: list[int]
 ):
     # If the first delay is zero, replace it (byproduct of the conversion)
-    if output_delay[0] == 0:
-        output_delay = output_delay[1:]
-        output_delay.append(MIN_PULSE_CYCLE_WIDTH)
+    if output_delays[0] == 0:
+        output_delays = output_delays[1:]
+        output_delays.append(NULL_PULSE_DELAY)
 
-    return output_delay
+    return output_delays
 
 
-def _convert_pulse_inst(pulse_params: dict) -> Tuple[list[int], list[int]]:
+def _convert_pulse_inst(pulse_params: dict) -> Tuple[list[int], list[float]]:
     """Convert pulse parameters into output states and delays.
 
     This function takes a dictionary of pulse parameters and converts them
     into two lists: one representing the output states for each pulse and
-    another representing the corresponding delays in cycles. The conversion
-    includes calculating delays based on the sequence repetition rate.
+    another representing the corresponding delays. The actual conversion to
+    clock cycles and output instructions occur on device.
 
     Parameters
     ----------
@@ -172,17 +148,16 @@ def _convert_pulse_inst(pulse_params: dict) -> Tuple[list[int], list[int]]:
 
     Returns
     -------
-    output_state : list[int]
+    output_states : list[int]
         A list of integers representing the output states for each pulse.
-    output_delay : list[int]
-        A list of integers representing the corresponding delays in cycles.
+    output_delays : list[float]
+        A list of floats representing the corresponding delays.
     """
-    output_state, output_delay_microseconds = _convert_pulse_params(pulse_params)
-    output_delay_cycles = _output_delay_cycles(output_delay_microseconds)
+    output_states, output_delays = _convert_pulse_params(pulse_params)
     
-    output_delay_cycles = _conversion_delay_bugfix(output_delay_cycles)
+    output_delays = _conversion_delay_bugfix(output_delays)
 
-    return output_state, output_delay_cycles
+    return output_states, output_delays
 
 
 def _convert_clock_inst(clock_params: dict) -> Tuple[list[int], list[int]]:
@@ -203,16 +178,11 @@ def _convert_clock_inst(clock_params: dict) -> Tuple[list[int], list[int]]:
     -------
     reps : list[int]
         A list of integers representing the repititions for each pulse.
-    delay : list[int]
-        A list of integers representing the corresponding delays in cycles.
+    freqs : list[float]
+        A list of frequencies representing the corresponding delays.
     """
     # NOTE: only single instructions are used for now
     reps = clock_params['reps_iter']
-    delays = clock_params['reps_khz']
-    delays_trigger = [clock_params['ext_trigger_delay']]
+    freqs = clock_params['reps_freq']
 
-    delay_micros = _reps_khz_to_delay_micros(delays)
-    delay_cycles = _output_delay_cycles(delay_micros)
-    trigger_delay_cycles = _output_delay_cycles(delays_trigger)
-
-    return reps, delay_cycles, trigger_delay_cycles[0]
+    return reps, freqs

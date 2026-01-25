@@ -8,13 +8,11 @@ READ_TIMEOUT = 0.1
 WRITE_TIMEOUT = 0.1
 READ_TIMEOUT_FAST = 0.02
 WRITE_TIMEOUT_FAST = 0.01
-CLOCK_CYCLE = 4.0 # clock cycle in nanoseconds
 EOL = '\r\n'
 DELIMITER = ','
 
 
 __all__ = [
-    'CLOCK_CYCLE',
     'EOL',
     'device_comm_search',
     'device_comm_open',
