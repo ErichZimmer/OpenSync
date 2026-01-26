@@ -9,6 +9,27 @@ __all__ = [
 ]
 
 
+def _get_timing_label(
+    pulse_params: dict,
+) -> str:
+    data_units = pulse_params['pulse_units']
+    
+    if 'nano' in data_units:
+        return 'nanoseconds'
+    elif 'micro' in data_units:
+        return 'microseconds'
+    elif 'milli' in data_units:
+        return 'milliseconds'
+    elif 'sec' in data_units:
+        return 'seconds'
+    elif 'min' in data_units:
+        return 'minutes'
+    elif 'hour' in data_units:
+        return 'hours'
+    else:
+        return 'N/A'
+
+        
 def _plot_pulses(
     pulse_params: dict,
     axis: 'matplotlib.axis',
@@ -87,8 +108,10 @@ def get_pulse_plot(
     appear funky.
     
     """
+    time_resolution = _get_timing_label(pulse_params)
+    
     axis.set_title('Pulse Timing')
-    axis.set_xlabel('Time (microseconds)')
+    axis.set_xlabel(f'Time ({time_resolution})')
     
     axis.tick_params(
         which='minor',
