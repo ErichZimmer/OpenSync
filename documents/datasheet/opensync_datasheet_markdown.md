@@ -18,9 +18,9 @@ An open source synchronizer for the velocimetry of fluids using a Raspberry Pi m
  - **Repetition Rate**: 0.06 Hz to 1.9 MHz (0.0004 Hz to 7 kHz with max clock divider)
  - **Pulse Control Modes**: freerun, external trigger (rising edge)
  - **Ext. Trigger Min Pulse Width**: 8 ns * clock divider
- - **Ext. Trigger Delay**: 16 ns * clock divider
 
 ## CHANNEL TIMING GENERATOR
+ - **Trigger Signal Delay**: 20 ns * clock divider
  - **I/O Resolution**: 4 ns * clock divider (e.g., 4 ns, 8 ns, 20 ns, 100 ns, 1 us resolutions)
  - **Pulse Width**: 20 ns to 15 s (0.5 ms to 4,000 s with max clock divider)
  - **Max Pulse Sequence Length**: 16 instruction pairs
