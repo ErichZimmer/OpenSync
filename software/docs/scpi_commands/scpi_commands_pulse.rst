@@ -1,7 +1,7 @@
 .. _api_scpi_pulse_reference:
 
 ================================
-``PULSe`` SCPI Command Reference
+``PULSe`` Submodule Reference
 ================================
 
 Pulse sequencer properties of an OpenSync device can be accessed using the ``PULSe`` root path. Pulse sequencer configuration and information can be set and queried when the device is in idle and not currently executing a program.
@@ -125,6 +125,7 @@ Examples
  * \*RST resets ``:PULSe<N>:DIVider`` to `HIGH_res`
  * Only query command will be allowed during device operation.
  * Cached/stored pulse sequences need to be re-applied when data units are changed.
+ * Pulse sequencer clock dividers should generally match the clock dividers of the chosen clock sequencer.
 
 
 .. _scpi_pulse_pin:
@@ -242,7 +243,7 @@ Examples
    :caption: Example SCPI code
 
    PULS:DATA:STO:DEL 30.5,10.1,0.003
-   PULS:DATA:STO:DEL ?
+   PULS:DATA:STO:DEL?
    >>> 30.5,10.1,0.003
 
 .. note::
