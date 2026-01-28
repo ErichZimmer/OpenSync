@@ -28,7 +28,7 @@ Examples
    >>> 0
 
 .. note::
- * \*RST resets :PULSe:SELect to `0`
+ * \*RST resets ``:PULSe:SELect`` to `0`
  * Only query command will be allowed during device operation.
 
 
@@ -53,7 +53,7 @@ Examples
    >>> 1
 
 .. note::
- * \*RST resets :PULSe:STATe to `0`
+ * \*RST resets ``:PULSe:STATe`` to `0`
  * Only query command will be allowed during device operation.
 
 
@@ -87,7 +87,7 @@ Examples
    >>> 1.0e6
 
 .. note::
- * \*RST resets :PULSe<N>:UNITs to `MICROsecond`
+ * \*RST resets ``:PULSe<N>:UNITs`` to `MICROsecond`
  * Only query command will be allowed during device operation.
  * Cached/stored pulse sequences need to be re-applied when data units are changed.
 
@@ -122,7 +122,7 @@ Examples
    >>> 2
 
 .. note::
- * \*RST resets :PULSe<N>:DIVider to `HIGH_res`
+ * \*RST resets ``:PULSe<N>:DIVider`` to `HIGH_res`
  * Only query command will be allowed during device operation.
  * Cached/stored pulse sequences need to be re-applied when data units are changed.
 
@@ -148,8 +148,30 @@ Examples
    >>> 0
 
 .. note::
- * \*RST resets :PULSe<N>:PIN to `0`
+ * \*RST resets ``:PULSe<N>:PIN`` to `0`
  * Only query command will be allowed during device operation.
+
+
+.. _scpi_pulse_data:
+
+``:DATA``
+=========
+
+
+ | :PULSe:DATA?
+
+This command queries the instruction buffer of the pulse sequencer at sequencer <N> if stated or selected sequencer if not. This is read only and cannot be set directly.
+
+Examples
+--------
+.. code-block:: none
+   :caption: Example SCPI code
+
+   :PULS0:DATA?
+   >>> 0,1,0,1,0,1...
+
+.. note::
+ * \*RST resets ``:PULSe:DATA`` to al zeros.
 
 
 .. _scpi_pulse_reset:
@@ -182,7 +204,7 @@ Examples
 .. _scpi_pulse_data_store_outputs:
 
 ``:OUTPuts``
-===============
+============
 
  | :PULSe:DATA:STOre:OUTPuts?
  | :PULSe:DATA:STOre:OUTPuts <list of uint32_t>
@@ -199,7 +221,7 @@ Examples
    >>> 64,2048,512
 
 .. note::
- * \*RST resets :PULSe:DATA:STOre:OUTPuts to all zeros
+ * \*RST resets ``:PULSe:DATA:STOre:OUTPuts`` to all zeros
  * Only query command will be allowed during device operation.
  * Cached parameters need to be applied to a pulse sequencer before they can be used.
 
@@ -207,7 +229,7 @@ Examples
 .. _scpi_pulse_data_store_delays:
 
 ``:DELays``
-======================
+===========
 
  | :PULSe:DATA:STOre:DELays?
  | :PULSe:DATA:STOre:DELays <list of doubles>
@@ -224,7 +246,7 @@ Examples
    >>> 30.5,10.1,0.003
 
 .. note::
- * \*RST resets :PULSe:DATA:STOre:DELays to all zeros
+ * \*RST resets ``:PULSe:DATA:STOre:DELays`` to all zeros
  * Only query command will be allowed during device operation.
  * Cached parameters need to be applied to a pulse sequencer before they can be used.
 
@@ -232,7 +254,7 @@ Examples
 .. _scpi_pulse_data_store_clear:
 
 ``:CLEar``
-=====================
+==========
 
  | :PULSe:DATA:STOre:CLEar
 
@@ -255,7 +277,7 @@ Examples
 .. _scpi_pulse_data_store_apply:
 
 ``:APPly``
-=====================
+==========
 
  | :PULSe:DATA:STOre:APPly <N>
 
