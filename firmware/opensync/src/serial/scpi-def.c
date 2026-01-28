@@ -9,6 +9,7 @@
 #include "scpi-def.h"
 
 #include "scpi_system.h"
+#include "scpi_device.h"
 #include "scpi_clock_sequencer.h"
 #include "scpi_pulse_sequencer.h"
 
@@ -34,7 +35,7 @@ const scpi_command_t scpi_commands[] = {
     { .pattern = "*SRE", .callback = SCPI_CoreSre,},
     { .pattern = "*SRE?", .callback = SCPI_CoreSreQ,},
     { .pattern = "*STB?", .callback = SCPI_CoreStbQ,},
-    { .pattern = "*TST?", .callback = SCPI_SystemTestQ,},
+    { .pattern = "*TST?", .callback = SCPI_DeviceTestQ,},
     { .pattern = "*WAI", .callback = SCPI_CoreWai,},
 
     /* Required SCPI commands (SCPI std V1999.0 4.2.1) */ 
@@ -55,8 +56,11 @@ const scpi_command_t scpi_commands[] = {
  
     {.pattern = "STATus:PRESet", .callback = SCPI_StatusPreset,}, 
 
+    /* Additional OpenSync System Commands */
+    INSTRUMENT_SYSTEM_COMMANDS
+
     /* OpenSync device settings */
-    INSTRUMENT_SYST_COMMANDS
+    INSTRUMENT_DEVICE_COMMANDS
 
     /* OpenSync device clock sequencer settings */
     INSTRUMENT_CLOCK_COMMANDS
@@ -69,8 +73,8 @@ const scpi_command_t scpi_commands[] = {
 
 
 size_t SCPI_Write(
-    scpi_t * context, 
-    const char * data, 
+    scpi_t* context, 
+    const char* data, 
     size_t len
 ) {
     (void) context;
@@ -79,7 +83,10 @@ size_t SCPI_Write(
 }
 
 
-int SCPI_Error(scpi_t * context, int_fast16_t err) {
+int SCPI_Error(
+    scpi_t* context, 
+    int_fast16_t err
+) {
     (void) context;
 
     fprintf(stderr, "**ERROR: %d, \"%s\"\r\n", (int16_t) err, SCPI_ErrorTranslate(err));
@@ -90,7 +97,7 @@ int SCPI_Error(scpi_t * context, int_fast16_t err) {
 scpi_interface_t scpi_interface = {
     .write = SCPI_Write,
     .error = SCPI_Error,
-    .reset = SCPI_SystemReset,            
+    .reset = SCPI_DeviceReset,            
     .control = NULL,
     .flush = NULL,
 };

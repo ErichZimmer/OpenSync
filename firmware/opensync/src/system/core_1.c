@@ -455,7 +455,8 @@ bool sequencer_pulse_validate(
     return 1;
 }
 
-// For now, clock IDs and trigger IDs have the same range (e.g., [0..2])
+
+// Validate the clock IDs to make sure we don't explode (because exploding sucks)
 bool clock_id_validate(
     uint32_t clock_id
 ) {
@@ -465,6 +466,44 @@ bool clock_id_validate(
         uint32_t supported_clock_id = INTERNAL_CLOCK_IDS[i];
 
         if (clock_id == supported_clock_id)
+        {
+            return 1;
+        }
+    }
+
+    return 0;
+}
+
+
+// Make sure pulse id is within range (e.g., [0..2])
+bool pulse_id_validate(
+    uint32_t pulse_id
+) {
+    // Make sure the internal clock ID is supported
+    for (uint32_t i = 0; i < PULSES_MAX; i++)
+    {
+        uint32_t supported_pulse_id = INTERNAL_PULSE_IDS[i];
+
+        if (pulse_id == supported_pulse_id)
+        {
+            return 1;
+        }
+    }
+
+    return 0;
+}
+
+
+// Make sure trigger id is within range
+bool trigger_id_validate(
+    uint32_t trigger_id
+) {
+    // Make sure the internal clock ID is supported
+    for (uint32_t i = 0; i < TRIGGERS_MAX; i++)
+    {
+        uint32_t supported_trigger_id = EXTERNAL_TRIGGER_IDS[i];
+
+        if (trigger_id == supported_trigger_id)
         {
             return 1;
         }
@@ -524,8 +563,8 @@ bool pulse_divider_set(
     uint32_t pulse_id,
     uint32_t clock_divider_copy
 ) {
-    // Validate clock ID
-    if(!clock_id_validate(pulse_id))
+    // Validate pulse ID
+    if(!pulse_id_validate(pulse_id))
     {
         return 0;
     }
@@ -554,9 +593,8 @@ bool clock_pin_trigger_set(
         return 0;
     }
 
-    // Validate trigger ID (can't be larger than or equal to max triggers)
-    // TODO: Make this its own function
-    if(trigger_pin_id >= TRIGGERS_MAX)
+    // Validate trigger ID
+    if(!trigger_id_validate(trigger_pin_id))
     {
         return 0;
     }
@@ -702,8 +740,8 @@ bool pulse_sequencer_state_set(
     uint32_t pulse_id,
     bool pulse_state
 ) {
-    // Validate pulse ID (same as clock ID)
-    if (!clock_id_validate(pulse_id))
+    // Validate pulse ID
+    if (!pulse_id_validate(pulse_id))
     {
         return 0;
     }
@@ -719,13 +757,13 @@ bool pulse_pin_clock_set(
     uint32_t clock_id
 ) {
 
-    // Validate clock ID
-    if(!clock_id_validate(pulse_id))
+    // Validate pulse ID
+    if(!pulse_id_validate(pulse_id))
     {
         return 0;
     }
 
-    // Validate trigger ID (same as clock ID)
+    // Validate clock ID
     if(!clock_id_validate(clock_id))
     {
         return 0;
@@ -743,8 +781,8 @@ bool pulse_unit_offset_set(
 ) {
     const double eps = 0.000001;
 
-    // Validate clock ID
-    if(!clock_id_validate(pulse_id))
+    // Validate pulse ID
+    if(!pulse_id_validate(pulse_id))
     {
         return 0;
     }
@@ -766,8 +804,8 @@ bool pulse_instructions_load(
     uint32_t instructions[PULSE_INSTRUCTIONS_MAX]
 ) {
 
-    // Validate pulse ID (same as clock ID)
-    if(!clock_id_validate(pulse_id))
+    // Validate pulse ID
+    if(!pulse_id_validate(pulse_id))
     {
         return 0;
     }
@@ -783,8 +821,8 @@ bool pulse_instructions_load(
 bool pulse_sequencer_state_reset(
     uint32_t pulse_id
 ) {
-    // Validate pulse ID (same as clock ID)
-    if(!clock_id_validate(pulse_id))
+    // Validate pulse ID
+    if(!pulse_id_validate(pulse_id))
     {
         return 0;
     }

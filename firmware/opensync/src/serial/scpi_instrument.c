@@ -1,0 +1,3 @@
+/* To be implemented.
+    The instrument subsystem requires each pulse sequencer and clock sequencer to be treated as a separate instrument. This would require some amount of paper sketching and planning to make happen.
+*/

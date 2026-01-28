@@ -5,6 +5,7 @@
 #include "scpi_common.h"
 
 
+const int32_t STATEFUL = -1;
 const uint64_t CLOCK_CYCLES_MAX = 4294967200; // 2^32 - 96
 const uint64_t CLOCK_CYCLE_NANOS = 4; // Each clock cycle is 4 ns long
 

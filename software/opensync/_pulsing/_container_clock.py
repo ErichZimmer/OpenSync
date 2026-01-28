@@ -7,13 +7,11 @@ VALID_CLOCK_DIVIDERS = [
     'very_very_low', 'very_very_low_res'
 ]
 VALID_FREQ_UNITS = [
-    'micro', 'microhertz',
-    'milli', 'millihertz',
     'hertz',
     'kilo', 'kilohertz',
     'mega', 'megahertz'
 ]
-MAX_CLOCK_INST = 64
+MAX_CLOCK_INST = 16
 MAX_ITERATIONS = 500000
 MIN_ITERATIONS = 1
 MIN_FREQUENCY = 0
@@ -72,7 +70,8 @@ def get_clock_params() -> dict:
             A float representing the repetition rate in the selected units.
         - 'reps_iter' : int
             An integer representing the number of iterations to perform
-            (default is 10).
+            (default is 10). Note: the first reps frequency is used as the
+            number of trigger aquisitions for external trigger modes.
     """
     clock_params = {
         'clock_id': 0,
@@ -140,20 +139,20 @@ def config_clock_res(
             clock cycle resolution of 4 nanosecondsns.
 
         'med', 'med_res'
+            The clock divider is set to 2 effectively allowing for a
+            clock cycle resolution of 8 nanoseconds.
+
+        'low', 'low_res'
+            The clock divider is set to 5 effectively allowing for a
+            clock cycle resolution of 20 nanoseconds.
+
+        'very_low', 'very_low_res'
             The clock divider is set to 25 effectively allowing for a
             clock cycle resolution of 100 nanoseconds.
 
-        'low', 'low_res'
-            The clock divider is set to 250 effectively allowing for a
-            clock cycle resolution of 1 mirocseconds.
-
-        'very_low', 'very_low_res'
-            The clock divider is set to 2,500 effectively allowing for a
-            clock cycle resolution of 10 mirocseconds.
-
         'very_very_low', 'very_very_low_res'
-            The clock divider is set to 25,000 effectively allowing for a
-            clock cycle resolution of 100 mirocseconds.
+            The clock divider is set to 250 effectively allowing for a
+            clock cycle resolution of 1 microsecond.
 
     Returns
     -------
@@ -327,13 +326,7 @@ def config_reps_freq_units(
         A dictionary containing clock parameters from `get_clock_params`.
     units : str
         The desired repetition rate unit. The following are accpeted values:
-
-        `micro', 'microhertz'
-            The frequency unit for 0.00001 Hz.
-
-        'milli', 'millihertz'
-            The frequency unit for 0.001 Hz.
-
+        
         'hertz'
             The frequency unit for standard Hertz (Hz).
 

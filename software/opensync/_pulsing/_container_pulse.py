@@ -1,7 +1,7 @@
 from typing import Tuple
 from .._error_handles import PulseParamsError
 from ._utils import _get_channel_ids
-from ._clock_container import VALID_CLOCK_IDS, VALID_CLOCK_DIVIDERS
+from ._container_clock import VALID_CLOCK_IDS, VALID_CLOCK_DIVIDERS
 
 VALID_PULSE_UNITS = [
     'nano', 'nanosecond',
@@ -169,20 +169,20 @@ def config_pulse_res(
             clock cycle resolution of 4 nanosecondsns.
 
         'med', 'med_res'
+            The clock divider is set to 2 effectively allowing for a
+            clock cycle resolution of 8 nanoseconds.
+
+        'low', 'low_res'
+            The clock divider is set to 5 effectively allowing for a
+            clock cycle resolution of 20 nanoseconds.
+
+        'very_low', 'very_low_res'
             The clock divider is set to 25 effectively allowing for a
             clock cycle resolution of 100 nanoseconds.
 
-        'low', 'low_res'
-            The clock divider is set to 250 effectively allowing for a
-            clock cycle resolution of 1 mirocseconds.
-
-        'very_low', 'very_low_res'
-            The clock divider is set to 2,500 effectively allowing for a
-            clock cycle resolution of 10 mirocseconds.
-
         'very_very_low', 'very_very_low_res'
-            The clock divider is set to 25,000 effectively allowing for a
-            clock cycle resolution of 100 mirocseconds.
+            The clock divider is set to 250 effectively allowing for a
+            clock cycle resolution of 1 microsecond.
 
     Returns
     -------

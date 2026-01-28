@@ -27,6 +27,9 @@ static size_t  clock_sequence_buffer_freqs_read = 0;
 static size_t  clock_sequence_buffer_reps_read = 0;
 const uint32_t clock_sequence_buffer_size = CLOCK_INSTRUCTIONS_MAX / 2;
 
+// This is used in the INSTructions submodule for stateful operation.
+static uint32_t clock_id_stateful = 0;
+
 
 // Function to clear the static buffer cache for freq data
 void clock_sequencer_cache_freq_clear()
@@ -60,6 +63,65 @@ void clock_sequencer_cache_clear()
 }
 
 
+// Set the stateful ID of a clock sequencer
+scpi_result_t SCPI_ClockIndex(
+    scpi_t* context
+) {
+    // Allocate some variables
+    int32_t numbers[1] = {0};
+    int32_t choice = 0;
+    uint32_t clock_id = 0;
+
+    // If the system status is note (IDLE) or 5 (ABORTED), return an error
+    if (is_running())
+    {
+        SCPI_ErrorPush(
+            context, 
+            SCPI_ERROR_PROGRAM_CURRENTLY_RUNNING
+        );
+
+        return SCPI_RES_ERR;
+    }
+
+
+    // Get clock sequencer ID
+    if (!SCPI_ParamUInt32(context, &clock_id, TRUE))
+    {
+        return SCPI_RES_ERR;
+    }
+
+    // Validate the ID
+    if (!clock_id_validate(clock_id))
+    {
+        SCPI_ErrorPush(
+            context, 
+            SCPI_ERROR_PARAMETER_ERROR
+        );
+
+        return SCPI_RES_ERR;
+    }
+
+    // Now set stateful clock index
+    clock_id_stateful = clock_id;
+
+    return SCPI_RES_OK;
+}
+
+
+// Query pulse sequencer stateful index
+scpi_result_t SCPI_ClockIndexQ(
+    scpi_t* context
+) {
+    // Return as uint32
+    SCPI_ResultUInt32(
+        context,
+        clock_id_stateful
+    );
+    
+    return SCPI_RES_OK;
+}
+
+
 // Set the status of a clock sequencer at ID N
 scpi_result_t SCPI_ClockStatus(
     scpi_t* context
@@ -85,11 +147,19 @@ scpi_result_t SCPI_ClockStatus(
         context,
         numbers, 
         1, // length (e.g., 1 element array)
-        0 // default value, e.g., clock id 0
+        STATEFUL // -1 means to use stateful sequencer ID
     );
 
-    // Cast numbers to usable int type
-    clock_id = (uint32_t) numbers[0];
+    // Check if user specified sequencer ID
+    if (numbers[0] == STATEFUL)
+    {
+        clock_id = clock_id_stateful;
+    }
+    else
+    {
+        // Cast numbers to usable int type
+        clock_id = (uint32_t) numbers[0];
+    }
 
     // Validate the ID
     if (!clock_id_validate(clock_id))
@@ -153,11 +223,19 @@ scpi_result_t SCPI_ClockStatusQ(
         context,
         numbers, 
         1, // length (e.g., 1 element array)
-        0 // default value, e.g., clocks id 0
+        STATEFUL // -1 means to use stateful sequencer ID
     );
 
-    // Cast numbers to usable int type
-    clock_id = (uint32_t) numbers[0];
+    // Check if user specified sequencer ID
+    if (numbers[0] == STATEFUL)
+    {
+        clock_id = clock_id_stateful;
+    }
+    else
+    {
+        // Cast numbers to usable int type
+        clock_id = (uint32_t) numbers[0];
+    }
 
     // Validate the ID
     if (!clock_id_validate(clock_id))
@@ -212,11 +290,19 @@ scpi_result_t SCPI_ClockClockDivider(
         context,
         numbers, 
         1, // length (e.g., 1 element array)
-        0 // default value, e.g., clock id 0
+        STATEFUL // -1 means to use stateful sequencer ID
     );
 
-    // Cast numbers to usable int type
-    clock_id = (uint32_t) numbers[0];
+    // Check if user specified sequencer ID
+    if (numbers[0] == STATEFUL)
+    {
+        clock_id = clock_id_stateful;
+    }
+    else
+    {
+        // Cast numbers to usable int type
+        clock_id = (uint32_t) numbers[0];
+    }
 
     // Validate the ID
     if (!clock_id_validate(clock_id))
@@ -290,11 +376,19 @@ scpi_result_t SCPI_ClockClockDividerQ(
         context,
         numbers, 
         1, // length (e.g., 1 element array)
-        0 // default value, e.g., clock id 0
+        STATEFUL // -1 means to use stateful sequencer ID
     );
 
-    // Cast numbers to usable int type
-    clock_id = (uint32_t) numbers[0];
+    // Check if user specified sequencer ID
+    if (numbers[0] == STATEFUL)
+    {
+        clock_id = clock_id_stateful;
+    }
+    else
+    {
+        // Cast numbers to usable int type
+        clock_id = (uint32_t) numbers[0];
+    }
 
     // Validate the ID
     if (!clock_id_validate(clock_id))
@@ -349,11 +443,19 @@ scpi_result_t SCPI_ClockeUnits(
         context,
         numbers, 
         1, // length (e.g., 1 element array)
-        0 // default value, e.g., clock id 0
+        STATEFUL // -1 means to use stateful sequencer ID
     );
 
-    // Cast numbers to usable int type
-    clock_id = (uint32_t) numbers[0];
+    // Check if user specified sequencer ID
+    if (numbers[0] == STATEFUL)
+    {
+        clock_id = clock_id_stateful;
+    }
+    else
+    {
+        // Cast numbers to usable int type
+        clock_id = (uint32_t) numbers[0];
+    }
 
     // Validate the ID
     if (!clock_id_validate(clock_id))
@@ -368,8 +470,6 @@ scpi_result_t SCPI_ClockeUnits(
 
     // Valid frequency resolution choices
     const scpi_choice_def_t options[] = {
-        {"MICROhertz",  MICROHERTZ},
-        {"MILLIhertz",  MILLIHERTZ},
         {"HERTz",       HERTZ},
         {"KILOhertz",   KILOHERTZ},
         {"MEGAhertz",   MEGAHERTZ},
@@ -388,12 +488,6 @@ scpi_result_t SCPI_ClockeUnits(
 
     switch (choice)
     {
-        case MICROHERTZ:
-            unit_offset = 1e-6;
-            break;
-        case MILLIHERTZ:
-            unit_offset = 1e-3;
-            break;
         case HERTZ:
             unit_offset = 1.0;
             break;
@@ -403,7 +497,7 @@ scpi_result_t SCPI_ClockeUnits(
         case MEGAHERTZ:
             unit_offset = 1e6;
             break;
-        default:
+        default: // Default to Hertz
             unit_offset = 1.0;
     }
 
@@ -441,11 +535,19 @@ scpi_result_t SCPI_ClockUnitsQ(
         context,
         numbers, 
         1, // length (e.g., 1 element array)
-        0 // default value, e.g., pulse id 0
+        STATEFUL // -1 means to use stateful sequencer ID
     );
 
-    // Cast numbers to usable int type
-    clock_id = (uint32_t) numbers[0];
+    // Check if user specified sequencer ID
+    if (numbers[0] == STATEFUL)
+    {
+        clock_id = clock_id_stateful;
+    }
+    else
+    {
+        // Cast numbers to usable int type
+        clock_id = (uint32_t) numbers[0];
+    }
 
     // Validate the ID
     if (!clock_id_validate(clock_id))
@@ -621,9 +723,9 @@ scpi_result_t SCPI_ClockDataApply(
     }
 
     // Get clock sequencer ID
-    if (!SCPI_ParamUInt32(context, &clock_id, TRUE))
+    if (!SCPI_ParamUInt32(context, &clock_id, FALSE))
     {
-        return SCPI_RES_ERR;
+        clock_id = clock_id_stateful;
     }
 
     // Validate the ID
@@ -738,11 +840,19 @@ scpi_result_t SCPI_ClockDataQ(
         context,
         numbers, 
         1, // length (e.g., 1 element array)
-        0 // default value, e.g., clock id 0
+        STATEFUL // -1 means to use stateful sequencer ID
     );
 
-    // Cast numbers to usable int type
-    clock_id = (uint32_t) numbers[0];
+    // Check if user specified sequencer ID
+    if (numbers[0] == STATEFUL)
+    {
+        clock_id = clock_id_stateful;
+    }
+    else
+    {
+        // Cast numbers to usable int type
+        clock_id = (uint32_t) numbers[0];
+    }
 
     // Validate the ID
     if (!clock_id_validate(clock_id))
@@ -795,11 +905,19 @@ scpi_result_t SCPI_ClockTriggerMode(
         context,
         numbers, 
         1, // length (e.g., 1 element array)
-        0 // default value, e.g., clock id 0
+        STATEFUL // -1 means to use stateful sequencer ID
     );
 
-    // Cast numbers to usable int type
-    clock_id = (uint32_t) numbers[0];
+    // Check if user specified sequencer ID
+    if (numbers[0] == STATEFUL)
+    {
+        clock_id = clock_id_stateful;
+    }
+    else
+    {
+        // Cast numbers to usable int type
+        clock_id = (uint32_t) numbers[0];
+    }
 
     // Validate the ID
     if (!clock_id_validate(clock_id))
@@ -866,11 +984,19 @@ scpi_result_t SCPI_ClockTriggerModeQ(
         context,
         numbers, 
         1, // length (e.g., 1 element array)
-        0 // default value, e.g., clock id 0
+        STATEFUL // -1 means to use stateful sequencer ID
     );
 
-    // Cast numbers to usable int type
-    clock_id = (uint32_t) numbers[0];
+    // Check if user specified sequencer ID
+    if (numbers[0] == STATEFUL)
+    {
+        clock_id = clock_id_stateful;
+    }
+    else
+    {
+        // Cast numbers to usable int type
+        clock_id = (uint32_t) numbers[0];
+    }
 
     // Validate the ID
     if (!clock_id_validate(clock_id))
@@ -927,11 +1053,19 @@ scpi_result_t SCPI_ClockTriggerData(
         context,
         numbers, 
         1, // length (e.g., 1 element array)
-        0 // default value, e.g., clock id 0
+        STATEFUL // -1 means to use stateful sequencer ID
     );
 
-    // Cast numbers to usable int type
-    clock_id = (uint32_t) numbers[0];
+    // Check if user specified sequencer ID
+    if (numbers[0] == STATEFUL)
+    {
+        clock_id = clock_id_stateful;
+    }
+    else
+    {
+        // Cast numbers to usable int type
+        clock_id = (uint32_t) numbers[0];
+    }
 
     // Validate the ID
     if(!clock_id_validate(clock_id))
@@ -1007,11 +1141,19 @@ scpi_result_t SCPI_ClockTriggerDataQ(
         context,
         numbers, 
         1, // length (e.g., 1 element array)
-        0 // default value, e.g., clock id 0
+        STATEFUL // -1 means to use stateful sequencer ID
     );
 
-    // Cast numbers to usable int type
-    clock_id = (uint32_t) numbers[0];
+    // Check if user specified sequencer ID
+    if (numbers[0] == STATEFUL)
+    {
+        clock_id = clock_id_stateful;
+    }
+    else
+    {
+        // Cast numbers to usable int type
+        clock_id = (uint32_t) numbers[0];
+    }
 
     // Validate the ID
     if (!clock_id_validate(clock_id))
@@ -1066,11 +1208,19 @@ scpi_result_t SCPI_ClockReset(
         context,
         numbers, 
         1, // length (e.g., 1 element array)
-        0 // default value, e.g., clock id 0
+        STATEFUL // -1 means to use stateful sequencer ID
     );
 
-    // Cast numbers to usable int type
-    clock_id = (uint32_t) numbers[0];
+    // Check if user specified sequencer ID
+    if (numbers[0] == STATEFUL)
+    {
+        clock_id = clock_id_stateful;
+    }
+    else
+    {
+        // Cast numbers to usable int type
+        clock_id = (uint32_t) numbers[0];
+    }
 
     // Validate the ID
     if (!clock_id_validate(clock_id))

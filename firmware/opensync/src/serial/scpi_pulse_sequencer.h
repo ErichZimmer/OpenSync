@@ -4,6 +4,8 @@
 
 
 #define INSTRUMENT_PULSE_COMMANDS \
+    {.pattern = "PULSe:SELect", .callback = SCPI_PulseIndex,}, \
+    {.pattern = "PULSe:SELect?", .callback = SCPI_PulseIndexQ,}, \
     {.pattern = "PULSe#:STATe", .callback = SCPI_PulseStatus,}, \
     {.pattern = "PULSe#:STATe?", .callback = SCPI_PulseStatusQ,}, \
     {.pattern = "PULSe#:PIN", .callback = SCPI_PulsePin,}, \
@@ -22,6 +24,14 @@
     {.pattern = "PULSe:DATA:STOre:APPly", .callback = SCPI_PulseDataApply,}, \
 
 void pulse_sequencer_cache_clear();
+
+scpi_result_t SCPI_PulseIndex(
+    scpi_t* context
+);
+
+scpi_result_t SCPI_PulseIndexQ(
+    scpi_t* context
+);
 
 scpi_result_t SCPI_PulseStatus(
     scpi_t* context

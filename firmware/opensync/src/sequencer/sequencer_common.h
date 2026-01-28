@@ -3,6 +3,7 @@
 #include <stdint.h>
 
 #include "structs/clock_config.h"
+#include "structs/pulse_config.h"
 
 
 enum {
@@ -26,8 +27,10 @@ extern const uint32_t CLOCK_DIVIDER_MAX;
 extern const uint32_t PULSE_INSTRUCTION_OFFSET;
 extern const uint32_t CLOCK_INSTRUCTION_OFFSET;
 extern const uint32_t CLOCK_INSTRUCTION_MIN;
+extern const uint32_t INTERNAL_PULSE_IDS[PULSES_MAX];
 extern const uint32_t INTERNAL_CLOCK_IDS[CLOCKS_MAX];
 extern const uint32_t INTERNAL_CLOCK_PINS[CLOCKS_MAX];
+extern const uint32_t EXTERNAL_TRIGGER_IDS[TRIGGERS_MAX];
 extern const uint32_t EXTERNAL_TRIGGER_PINS[TRIGGERS_MAX];
 extern const double PULSE_UNITS_OFFSET_DEFAULT;
 extern const double CLOCK_UNITS_OFFSET_DEFAULT;

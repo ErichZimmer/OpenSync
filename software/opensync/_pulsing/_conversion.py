@@ -5,8 +5,6 @@ from typing import Tuple
 from ._utils import _get_channel_ids
 from .._error_handles import DeviceBufferSizeError
 
-import warnings
-
 
 # Simple pulse sequences should not be larger than 10 instructions pairs.
 MAX_PULSE_INSTRUCTION_PAIRS = 15 # 15 * 2 = 30 total instructions supported + 2 term. flags
@@ -15,7 +13,6 @@ DEFAULT_OUTPUT_STATE = 0
 
 
 __all__ = [
-    '_convert_clock_inst',
     '_convert_pulse_inst'
 ]
 
@@ -158,31 +155,3 @@ def _convert_pulse_inst(pulse_params: dict) -> Tuple[list[int], list[float]]:
     output_delays = _conversion_delay_bugfix(output_delays)
 
     return output_states, output_delays
-
-
-def _convert_clock_inst(clock_params: dict) -> Tuple[list[int], list[int]]:
-    """Convert clock parameters into reps and delays.
-
-    This function takes a dictionary of clock parameters and converts them
-    into two lists: one representing the repitions for each pulse and
-    another representing the corresponding delays in cycles. The conversion
-    includes handling external trigger settings and calculating delays based
-    on the sequence repetition rate.
-
-    Parameters
-    ----------
-    pulse_params : dict
-        A dictionary containing pulse parameters from `get_pulse_params`.
-
-    Returns
-    -------
-    reps : list[int]
-        A list of integers representing the repititions for each pulse.
-    freqs : list[float]
-        A list of frequencies representing the corresponding delays.
-    """
-    # NOTE: only single instructions are used for now
-    reps = clock_params['reps_iter']
-    freqs = clock_params['reps_freq']
-
-    return reps, freqs

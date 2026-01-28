@@ -2,7 +2,7 @@
 
 #include "scpi/scpi.h"
 
-#include "version/opensync_version.h"
+#include "version/opensync_version_info.h"
 
 
 #define SCPI_INPUT_BUFFER_LENGTH 256
@@ -11,7 +11,7 @@
 #define SCPI_IDN1 "OpenPIV"
 #define SCPI_IDN2 "OpenSync"
 #define SCPI_IDN3 NULL
-#define SCPI_IDN4 OPENSYNC_VERSION
+#define SCPI_IDN4 OPENSYNC_FIRMWARE_VERSION
 
 extern scpi_interface_t scpi_interface;
 // extern char scpi_input_buffer[];

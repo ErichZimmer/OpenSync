@@ -4,6 +4,8 @@
 
 
 #define INSTRUMENT_CLOCK_COMMANDS \
+    {.pattern = "CLOCk:SELect", .callback = SCPI_ClockIndex,}, \
+    {.pattern = "CLOCk:SELect?", .callback = SCPI_ClockIndexQ,}, \
     {.pattern = "CLOCk#:STATe", .callback = SCPI_ClockStatus,}, \
     {.pattern = "CLOCk#:State?", .callback = SCPI_ClockStatusQ,}, \
     {.pattern = "CLOCk#:DIVider", .callback = SCPI_ClockClockDivider,}, \
@@ -24,6 +26,14 @@
     {.pattern = "CLOCk:DATA:STOre:APPly", .callback = SCPI_ClockDataApply,}, \
 
 void clock_sequencer_cache_clear();
+
+scpi_result_t SCPI_ClockIndex(
+    scpi_t* context
+);
+
+scpi_result_t SCPI_ClockIndexQ(
+    scpi_t* context
+);
 
 scpi_result_t SCPI_ClockStatus(
     scpi_t* context

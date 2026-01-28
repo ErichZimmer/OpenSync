@@ -1,5 +1,5 @@
 from .._communication import device_comm_write
-from . import _buffer
+from . import _load_buffer
 from . import _conversion as _conv
 
 
@@ -15,14 +15,14 @@ def device_params_load(
     reset: bool=True
 ):
     if reset == True:
-        _buffer.device_timing_reset(
+        _load_buffer.device_timing_reset(
             device
         )
     
     # Load all clock parameters
     for clk_param in clock_params:
         # Load clock configs (MUST BE DONE FIRST!!!)
-        resp = _buffer._device_clock_config_load(
+        resp = _load_buffer._device_clock_config_load(
             device,
             clk_param
         )
@@ -33,7 +33,7 @@ def device_params_load(
                 return resp
                 
         # Load instructions
-        resp = _buffer._device_clock_inst_triggered_load(
+        resp = _load_buffer._device_clock_inst_triggered_load(
             device,
             clk_param
         )
@@ -44,7 +44,7 @@ def device_params_load(
                 return resp
 
         # Load instructions
-        resp = _buffer._device_clock_inst_freerun_load(
+        resp = _load_buffer._device_clock_inst_freerun_load(
             device,
             clk_param
         )
@@ -57,7 +57,7 @@ def device_params_load(
     # Load all pulse parameters
     for pls_param in pulse_params:
         # Load pulse configs (MUST BE DONE FIRST!!!!)
-        resp = _buffer._device_pulse_config_load(
+        resp = _load_buffer._device_pulse_config_load(
             device,
             pls_param
         )
@@ -68,7 +68,7 @@ def device_params_load(
                 return resp
                 
         # Load instructions
-        resp = _buffer._device_pulse_inst_load(
+        resp = _load_buffer._device_pulse_inst_load(
             device,
             pls_param
         )

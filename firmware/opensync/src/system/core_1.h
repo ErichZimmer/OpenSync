@@ -43,6 +43,7 @@ bool sequencer_pulse_validate(
     struct pulse_config* config
 );
 
+
 bool sequencer_clock_type_set(
      uint32_t clock_id,
     uint32_t requested_type
@@ -50,6 +51,14 @@ bool sequencer_clock_type_set(
 
 bool clock_id_validate(
     uint32_t clock_id
+);
+
+bool trigger_id_validate(
+    uint32_t pulse_id
+);
+
+bool pulse_id_validate(
+    uint32_t pulse_id
 );
 
 bool clock_divider_set(

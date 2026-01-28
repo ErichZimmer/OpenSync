@@ -31,7 +31,7 @@ trigger_pulse_delay:
     jmp y-- trigger_pulse_delay
 
 trigger_pulse_start:
-    set pins, 1 [9] ; 10 cycles pulse width (9 cycles + 1) (see SDLC docs on why)
+    set pins, 1 [1] ; 2 cycles pulse width (1 cycles + 1) (see SDLC docs on why)
     set pins, 0
 
 .wrap

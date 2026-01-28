@@ -35,12 +35,14 @@ set(OPENSYNC_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/serial/scpi-def.c
     ${CMAKE_CURRENT_SOURCE_DIR}/serial/scpi_common.c
     ${CMAKE_CURRENT_SOURCE_DIR}/serial/scpi_system.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/serial/scpi_device.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/serial/scpi_instrument.c
     ${CMAKE_CURRENT_SOURCE_DIR}/serial/scpi_clock_sequencer.c
     ${CMAKE_CURRENT_SOURCE_DIR}/serial/scpi_pulse_sequencer.c
     ${CMAKE_CURRENT_SOURCE_DIR}/system/core_1.c
     ${CMAKE_CURRENT_SOURCE_DIR}/system/core_2.c
     ${CMAKE_CURRENT_SOURCE_DIR}/usb_desc/usb_descriptors.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/version/opensync_version.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/version/opensync_version_info.c
 )
 
 # Add executable
