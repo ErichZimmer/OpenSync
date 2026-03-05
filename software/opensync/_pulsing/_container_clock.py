@@ -24,13 +24,13 @@ __all__ = [
     'get_clock_params',
     'config_clock_id',
     'config_clock_res',
-    'config_trigger',
-    'config_trigger_id',
-    'config_trigger_skips',
-    'config_trigger_delay',
-    'config_reps_freq_units',
-    'config_reps_freq',
-    'config_reps_iter'
+    'config_clock_trigger',
+    'config_clock_trigger_id',
+    'config_clock_trigger_skips',
+    'config_clock_trigger_delay',
+    'config_clock_reps_freq_units',
+    'config_clock_reps_freq',
+    'config_clock_reps_iter'
 ]
 
 
@@ -169,7 +169,7 @@ def config_clock_res(
     return clock_params
     
 
-def config_trigger(
+def config_clock_trigger(
     clock_params: dict,
     enable: bool
 ) -> dict:
@@ -208,7 +208,7 @@ def config_trigger(
     return clock_params
 
 
-def config_trigger_id(
+def config_clock_trigger_id(
     clock_params: dict,
     channel_id: int=0
 ) -> dict:
@@ -239,7 +239,7 @@ def config_trigger_id(
     return clock_params
 
     
-def config_trigger_skips(
+def config_clock_trigger_skips(
     clock_params: dict,
     skips: int
 ) -> dict:
@@ -275,7 +275,7 @@ def config_trigger_skips(
     return clock_params
     
 
-def config_trigger_delay(
+def config_clock_trigger_delay(
     clock_params: dict,
     delay: float
 ) -> dict:
@@ -311,7 +311,7 @@ def config_trigger_delay(
     return clock_params
         
 
-def config_reps_freq_units(
+def config_clock_reps_freq_units(
     clock_params: dict,
     units: float
 ) -> dict:
@@ -355,7 +355,7 @@ def config_reps_freq_units(
     return clock_params
 
 
-def config_reps_freq(
+def config_clock_reps_freq(
     clock_params: dict,
     freq: float
 ) -> dict:
@@ -391,7 +391,7 @@ def config_reps_freq(
     return clock_params
 
 
-def config_reps_iter(
+def config_clock_reps_iter(
     clock_params: dict,
     iterations: int
 ) -> dict:

@@ -21,8 +21,8 @@ __all__ = [
     'config_pulse_clock_id',
     'config_pulse_res',
     'config_pulse_units',
-    'insert_pulse',
-    'insert_pulse_many'
+    'config_pulse_insert',
+    'config_pulse_insert_many'
 ]
 
 
@@ -247,7 +247,7 @@ def config_pulse_units(
     return pulse_params
 
 
-def insert_pulse(
+def config_pulse_insert(
     pulse_params: dict,
     rising_edge_1: int,
     falling_edge_1: int,
@@ -315,7 +315,7 @@ def insert_pulse(
     return pulse_params
 
 
-def insert_pulse_many(
+def config_pulse_insert_many(
     pulse_params: dict,
     pulse_train: list[Tuple[float, float]],
     channel_id: int = 0,
