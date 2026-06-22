@@ -1,0 +1,38 @@
+; 
+; Copyright 2025, Erich Zimmer
+;
+; sequencer_pio_clock_triggered_falling.pio
+; 
+; This file contains the pio assmembly implmentation of a triggered sequencer
+; clock. This clock source relies on external triggers to send the internal
+; clock signal to fire the pulse sequence. It does not accept any sequencer
+; parameters beyond trigger skip and trigger delay. This program waits for
+; a high signal then a low signal before sending a fire signal.
+
+; Pulse sequence reps are determined by the ring buffer (2 instructions * reps_count)
+
+; Defines
+.program sequencer_pio_clock_triggered_rising
+
+.wrap_target
+trigger_skips:
+    out x, 32 ; store the number of external triggers to skip
+
+trigger_delay:
+    out y, 32 ; store the trigger delay signal
+
+trigger_pulse_wait:
+    wait 1 pin 0 ; make sure the rising edge is recieved first
+    wait 0 pin 0 ; then wait for the falling edge
+    
+trigger_pulse_skip:
+    jmp x-- trigger_pulse_wait
+
+trigger_pulse_delay:
+    jmp y-- trigger_pulse_delay
+
+trigger_pulse_start:
+    set pins, 1 [2] ; 3 cycles pulse width (2 cycles + 1) (see SDLC docs on why)
+    set pins, 0
+
+.wrap

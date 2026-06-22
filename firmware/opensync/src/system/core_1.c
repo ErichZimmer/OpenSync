@@ -18,7 +18,7 @@
 
 
 static uint offset_clock_freerun = 0;
-static uint offset_clock_triggered = 0;
+static uint offset_clock_triggered_rising = 0;
 static uint offset_output = 0;
 
 static struct clock_config sequencer_clock_config[CLOCKS_MAX];
@@ -36,9 +36,10 @@ void core_1_init()
         pio_clocks
     );
 
-    // Triggered PIO clock program
-    offset_clock_triggered = sequencer_program_triggered_add(
-        pio_clocks
+    // Triggered PIO clock programs
+    offset_clock_triggered_rising = sequencer_program_triggered_add(
+        pio_clocks,
+        CLOCK_TRIGGERED
     );
 
     // Sequencer PIO pulse program
@@ -223,6 +224,8 @@ void sequencer_clock_sm_config_active()
 {
     uint32_t debug_status_local_func = debug_status_get();
 
+    uint program_offset_local_func = 0;
+
     for (uint32_t i = 0; i < CLOCKS_MAX; i++)
     {
         if (sequencer_clock_config[i].active == true)
@@ -232,10 +235,30 @@ void sequencer_clock_sm_config_active()
                 "Internal Message: Starting to configure clock state machine %i\r\n",
                 i
             );
+            
+            switch (sequencer_clock_config[i].clock_type)
+            {
+                case CLOCK_FREERUN:
+                    program_offset_local_func = offset_clock_freerun;
+                    break;
+
+                // TODO: Remove all instances of CLOCK_TRIGGERED
+                case CLOCK_TRIGGERED:
+                    program_offset_local_func = offset_clock_triggered_rising;
+                    break;
+
+                case CLOCK_TRIGGERED_RISING:
+                    program_offset_local_func = offset_clock_triggered_rising;
+                    break;
+
+                default:
+                    // We should never get to this point...
+                    return;
+            }
 
             sequencer_clock_sm_config(
                 &sequencer_clock_config[i],
-                offset_clock_freerun
+                program_offset_local_func
             );
 
             debug_message_print_i(
@@ -349,11 +372,38 @@ void sequencer_clock_sm_stall()
             continue;
         }
 
-        while((dma_channel_is_busy(sequencer_clock_config[i].dma_chan)) &&
-            (sequencer_status_get() != ABORT_REQUESTED))
+        // We have to check pulse channel during trigger modes since clock isn't use
+        switch (sequencer_clock_config[i].clock_type)
+        {
+        case CLOCK_FREERUN:
+            while((dma_channel_is_busy(sequencer_clock_config[i].dma_chan)) &&
+                (sequencer_status_get() != ABORT_REQUESTED))
+                {
+                    sleep_us(100);
+                }
+            break;
+
+        // TODO: Remove all instances of CLOCK_TRIGGERED
+        case CLOCK_TRIGGERED:
+            while((dma_channel_is_busy(sequencer_pulse_config[i].dma_chan)) &&
+                (sequencer_status_get() != ABORT_REQUESTED))
             {
                 sleep_us(100);
             }
+            break;
+
+        case CLOCK_TRIGGERED_RISING:
+            while((dma_channel_is_busy(sequencer_pulse_config[i].dma_chan)) &&
+                (sequencer_status_get() != ABORT_REQUESTED))
+            {
+                sleep_us(100);
+            }
+            break;
+
+        default:
+            // We should never get to this point...
+            return;
+        }
     }
 }
 

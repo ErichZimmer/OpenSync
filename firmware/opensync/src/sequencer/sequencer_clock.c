@@ -8,7 +8,10 @@
 #include "sequencer_common.h"
 
 #include "sequencer_pio_clock_freerun.pio.h"
-#include "sequencer_pio_clock_triggered.pio.h"
+#include "sequencer_pio_clock_triggered_rising.pio.h"
+#include "sequencer_pio_clock_triggered_falling.pio.h"
+#include "sequencer_pio_clock_gated_high.pio.h"
+#include "sequencer_pio_clock_gated_low.pio.h"
 
 
 // Sequence stuff
@@ -27,12 +30,51 @@ uint sequencer_program_freerun_add(
 
 
 uint sequencer_program_triggered_add(
-    PIO pio_clock
+    PIO pio_clock,
+    uint32_t clock_type
 ) {
-    return pio_add_program(
-        pio_clock,
-        &sequencer_pio_clock_triggered_program
-    );
+    uint offset=0;
+
+    switch (clock_type)
+    {
+        case CLOCK_TRIGGERED:
+            offset = pio_add_program(
+                pio_clock,
+                &sequencer_pio_clock_triggered_rising_program
+            );
+            break;
+
+        case CLOCK_TRIGGERED_RISING:
+            offset = pio_add_program(
+                pio_clock,
+                &sequencer_pio_clock_triggered_rising_program
+            );
+            break;
+
+        case CLOCK_TRIGGERED_FALLING:
+            offset = pio_add_program(
+                pio_clock,
+                &sequencer_pio_clock_triggered_falling_program
+            );
+
+        case CLOCK_TRIGGERED_HIGH:
+            offset = pio_add_program(
+                pio_clock,
+                &sequencer_pio_clock_gated_high_program
+            );
+            break;
+
+        case CLOCK_TRIGGERED_LOW:
+            offset = pio_add_program(
+                pio_clock,
+                &sequencer_pio_clock_gated_low_program
+            );
+            break;
+        default:
+            // We should never get to this point.
+            break;
+    }
+    return offset;
 }
 
 
@@ -50,13 +92,54 @@ void sequencer_program_freerun_remove(
 
 void sequencer_program_triggered_remove(
     PIO pio_clock, 
-    uint offset
+    uint offset,
+    uint32_t clock_type
 ) {
-    pio_remove_program(
-        pio_clock,
-        &sequencer_pio_clock_triggered_program,
-        offset
-    );
+    switch (clock_type)
+    {
+        case CLOCK_TRIGGERED:
+            pio_remove_program(
+                pio_clock,
+                &sequencer_pio_clock_triggered_rising_program,
+                offset
+            );
+            break;
+
+        case CLOCK_TRIGGERED_RISING:
+            pio_remove_program(
+                pio_clock,
+                &sequencer_pio_clock_triggered_rising_program,
+                offset
+            );
+            break;
+
+        case CLOCK_TRIGGERED_FALLING:
+            pio_remove_program(
+                pio_clock,
+                &sequencer_pio_clock_triggered_falling_program,
+                offset
+            );
+            break;
+
+        case CLOCK_TRIGGERED_HIGH:
+            pio_remove_program(
+                pio_clock,
+                &sequencer_pio_clock_gated_high_program,
+                offset
+            );
+            break;
+
+        case CLOCK_TRIGGERED_LOW:
+            pio_remove_program(
+                pio_clock,
+                &sequencer_pio_clock_gated_low_program,
+                offset
+            );
+            break;
+        default:
+            // We should never get to this point.
+            break;
+    }
 }
 
 
@@ -171,10 +254,11 @@ void sequencer_clock_dma_configure(
         )
     );
     
-
     switch(config -> clock_type)
     {
         case CLOCK_FREERUN:
+        case CLOCK_TRIGGERED_HIGH:
+        case CLOCK_TRIGGERED_LOW:
             // Start dma with the selected channel, generated config
             dma_channel_configure(
                 config -> dma_chan,
@@ -184,10 +268,11 @@ void sequencer_clock_dma_configure(
                 CLOCK_INSTRUCTIONS_MAX, // Number of instructions
                 true // Do not start automatically
             );
-
             break;
 
         case CLOCK_TRIGGERED:
+        case CLOCK_TRIGGERED_RISING:
+        case CLOCK_TRIGGERED_FALLING:
             channel_config_set_ring(
                 &dma_config,
                 false,
@@ -208,7 +293,7 @@ void sequencer_clock_dma_configure(
 
         default:
             // We should never get to this point.
-            return;
+            break;
     }
 }
 
@@ -259,7 +344,8 @@ void sequencer_triggered_sm_helper_init(
     uint offset, 
     uint pin_out,
     uint pin_trig, 
-    uint clock_divider
+    uint clock_divider,
+    uint32_t clock_type
 ) {
     // Initialize GPIO pin
     pio_gpio_init(pio, pin_out);
@@ -280,8 +366,33 @@ void sequencer_triggered_sm_helper_init(
         false // input direction
     );
 
-    // Get config for pio state machine
-	pio_sm_config config = sequencer_pio_clock_triggered_program_get_default_config(offset);	
+    // Defualt init (don't really care what, just as long as it isn't null)
+    pio_sm_config config = sequencer_pio_clock_triggered_rising_program_get_default_config(offset);
+
+    switch (clock_type)
+    {
+        case CLOCK_TRIGGERED:
+        case CLOCK_TRIGGERED_RISING:
+            config = sequencer_pio_clock_triggered_rising_program_get_default_config(offset);
+            break;
+        
+        case CLOCK_TRIGGERED_FALLING:
+            config = sequencer_pio_clock_triggered_falling_program_get_default_config(offset);
+            break;
+
+        case CLOCK_TRIGGERED_HIGH:
+            config = sequencer_pio_clock_gated_high_program_get_default_config(offset);
+            break;
+        
+        case CLOCK_TRIGGERED_LOW:
+            config = sequencer_pio_clock_gated_low_program_get_default_config(offset);
+            break;
+
+        default:
+            // We should never get to this point...
+            return;
+
+    }
 
     // Set output pins of config to output pins
 	sm_config_set_set_pins(
@@ -291,10 +402,21 @@ void sequencer_triggered_sm_helper_init(
     );
 
     // Set trigger pins of config to input pins
-    sm_config_set_in_pins(
-        &config,
-        pin_trig
-    );
+    if (clock_type == CLOCK_TRIGGERED_HIGH ||
+        clock_type == CLOCK_TRIGGERED_LOW)
+    {
+        sm_config_set_jmp_pin(
+            &config,
+            pin_trig
+        );
+    }
+    else
+    {
+        sm_config_set_in_pins(
+            &config,
+            pin_trig
+        );
+    }
 
     // Setup autopull for 32 bit words
     sm_config_set_out_shift(
@@ -350,19 +472,22 @@ void sequencer_clock_sm_config(
                 config -> clock_pin,
                 config -> clock_divider
             );
-
             break;
 
         case CLOCK_TRIGGERED:
+        case CLOCK_TRIGGERED_RISING:
+        case CLOCK_TRIGGERED_FALLING:
+        case CLOCK_TRIGGERED_HIGH:
+        case CLOCK_TRIGGERED_LOW:
             sequencer_triggered_sm_helper_init(
                 config -> pio,
                 config -> sm,
                 offset,
                 config -> clock_pin,
                 config -> trigger_pin,
-                config -> clock_divider
+                config -> clock_divider,
+                config -> clock_type
             );
-
             break;
 
         default:

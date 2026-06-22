@@ -12,7 +12,8 @@ uint sequencer_program_freerun_add(
 );
 
 uint sequencer_program_triggered_add(
-    PIO pio_clock
+    PIO pio_clock,
+    uint32_t clock_type
 );
 
 void sequencer_program_freerun_remove(
@@ -22,7 +23,8 @@ void sequencer_program_freerun_remove(
 
 void sequencer_program_triggered_remove(
     PIO pio_clock, 
-    uint offset
+    uint offset,
+    uint32_t clock_type
 );
 
 void sequencer_clocks_init(
@@ -67,7 +69,8 @@ void sequencer_triggered_sm_helper_init(
     uint offset, 
     uint pin_out,
     uint pin_trig, 
-    uint clock_divider
+    uint clock_divider,
+    uint32_t clock_type
 );
 
 void sequencer_clock_sm_config(

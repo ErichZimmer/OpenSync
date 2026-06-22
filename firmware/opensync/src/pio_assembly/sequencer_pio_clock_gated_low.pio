@@ -1,0 +1,45 @@
+; 
+; Copyright 2025, Erich Zimmer
+;
+; sequencer_pio_clock_gated_low.pio
+; 
+; This file contains the pio assmembly implmentation of a triggered sequencer
+; clock. This clock source relies on external triggers to output clock signals
+; when the trigger is low and block signals when the trigger is high.
+
+; Defines
+.program sequencer_pio_clock_gated_low
+
+.wrap_target
+pulse_reps_pull_store:
+    pull block
+    mov x, OSR ; store pulse repition count
+
+pulse_delay_block:
+    pull block ; pull delay instructions from instruction set
+
+pulse_reps_check:
+    jmp !x pulse_reps_pull_store ; If x register (reps) is 0, then skip instruction set
+
+pulse_delay_store:
+    mov y, OSR ; store pulse delay (e.g., pulse-to-pulse distance)
+
+; If jmp pin is not high, skip this iteration
+pulse_trigger_check:
+    jmp pin pulse_trigger_delay_escape ; jumps if pin = 1
+    jmp pulse_trigger_output ; jumps if pin = 0
+
+pulse_trigger_output:
+    set pins, 1 [3] ; 3 cycles pulse width (2 cycles + 1) (see SDLC docs on why)
+    set pins, 0 
+
+pulse_trigger_delay:
+    jmp y-- pulse_trigger_delay
+
+pulse_trigger_reset:
+    jmp x-- pulse_delay_store
+
+pulse_trigger_delay_escape:
+    jmp y-- pulse_trigger_delay_escape
+    jmp pulse_delay_store
+.wrap

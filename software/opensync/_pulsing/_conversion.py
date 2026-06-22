@@ -58,6 +58,14 @@ def _eval_piecewise_function(pulse_data: list, x: float) -> bool:
     return 0
 
 
+def _conversion_state_bugfix(
+    output_state: list[str]
+) -> list[str]:
+    # Currently, the output states are in inverted where channel one is
+    # located far right instead of far left.
+    return output_state[::-1]
+    
+    
 def _convert_pulse_params(pulse_params: dict) -> Tuple[list[int], list[float]]:  
     OUTPUT_STATE_MASK = '00000000'
     eps = 0.00001
@@ -104,6 +112,9 @@ def _convert_pulse_params(pulse_params: dict) -> Tuple[list[int], list[float]]:
                 if detected_pulses[channel][0] == total_delay:
                     detected_pulses[channel].pop(0)
                     
+        # Fix bit order (reverse them)
+        state = _conversion_state_bugfix(state)
+                
         output_states.append(int(''.join(state), base=2)) # binary -> decimal
         output_delays.append(current_delay)
             
@@ -120,8 +131,8 @@ def _convert_pulse_params(pulse_params: dict) -> Tuple[list[int], list[float]]:
 
 
 def _conversion_delay_bugfix(
-    output_delays: list[int]
-):
+    output_delays: list[float]
+) -> list[float]:
     # If the first delay is zero, replace it (byproduct of the conversion)
     if output_delays[0] == 0:
         output_delays = output_delays[1:]

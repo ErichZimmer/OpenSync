@@ -308,7 +308,7 @@ def _device_pulse_inst_load(
             return resp
 
     # Now apply the current setting to the clock sequencer
-    command = f':clock:data:store:apply {pulse_id}'
+    command = f':pulse:data:store:apply {pulse_id}'
     resp = device_comm_write(
         device,
         command
