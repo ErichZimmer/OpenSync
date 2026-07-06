@@ -1,16 +1,9 @@
 from typing import Tuple
+from .._input_checker import check_types
 from .._error_handles import PulseParamsError
 from ._utils import _get_channel_ids
-from ._container_clock import VALID_CLOCK_IDS, VALID_CLOCK_DIVIDERS
+from ._container_clock import VALID_CLOCK_IDS, VALID_CLOCK_DIVIDERS, VALID_PULSE_UNITS
 
-VALID_PULSE_UNITS = [
-    'nano', 'nanosecond',
-    'micro', 'microsecond',
-    'milli', 'millisecond',
-    'sec', 'second',
-    'min', 'minute',
-    'hour'
-]
 MIN_PULSE_TRAIN_SIZE = 1
 PULSE_SEQUENCE_SIZE = 2
 
@@ -66,7 +59,7 @@ def get_pulse_params() -> dict:
         'pulse_id': 0,
         'clock_id': 0,
         'clock_res': 'high_res',
-        'pulse_units': 'microsecond',
+        'pulse_units': 'us',
         'channel_0': [],
         'channel_1': [],
         'channel_2': [],
@@ -107,6 +100,11 @@ def config_pulse_id(
         The updated pulse parameters dictionary.
     
     """
+    check_types(
+        int,
+        channel_id=channel_id
+    )
+    
     if channel_id not in VALID_CLOCK_IDS:
         msg = f'Invalid pulse channel selected. Got {channel_id}'
         raise ValueError(msg)
@@ -138,6 +136,11 @@ def config_pulse_clock_id(
         The updated pulse parameters dictionary.
     
     """
+    check_types(
+        int,
+        channel_id=channel_id
+    )
+    
     if channel_id not in VALID_CLOCK_IDS:
         msg = f'Invalid clock channel selected. Got {channel_id}'
         raise ValueError(msg)
@@ -164,25 +167,23 @@ def config_pulse_res(
     clock_res : str
         The clock divider resolution. The following are accepted values:
 
-        'high', 'high_res'
-            The clock divider is set to 1 effectively allowing for a
-            clock cycle resolution of 4 nanosecondsns.
+        'ns'
+            The trigger delay data is in nanoseconds.
 
-        'med', 'med_res'
-            The clock divider is set to 2 effectively allowing for a
-            clock cycle resolution of 8 nanoseconds.
+        'us'
+            The trigger delay data is in microseconds.
 
-        'low', 'low_res'
-            The clock divider is set to 5 effectively allowing for a
-            clock cycle resolution of 20 nanoseconds.
+        'ms'
+            The trigger delay data is in milliseconds.
 
-        'very_low', 'very_low_res'
-            The clock divider is set to 25 effectively allowing for a
-            clock cycle resolution of 100 nanoseconds.
+        's'
+            The trigger delay data is in seconds.
 
-        'very_very_low', 'very_very_low_res'
-            The clock divider is set to 250 effectively allowing for a
-            clock cycle resolution of 1 microsecond.
+        'm'
+            The trigger delay data is in minutes.
+
+        'h'
+            The trigger delay data is in hours.
 
     Returns
     -------
@@ -190,6 +191,11 @@ def config_pulse_res(
         The updated clock parameters dictionary.
     
     """
+    check_types(
+        str,
+        clock_res=clock_res
+    )
+    
     if clock_res.lower() not in VALID_CLOCK_DIVIDERS:
         msg = f'Invalid clock divider resolution. Got {clock_res}'
         raise ValueError(msg)
@@ -238,6 +244,11 @@ def config_pulse_units(
         The updated clock parameters dictionary.
     
     """
+    check_types(
+        str,
+        units=units
+    )
+    
     if units.lower() not in VALID_PULSE_UNITS:
         msg = f'Invalid data units. Got {units}'
         raise ValueError(msg)
@@ -294,6 +305,24 @@ def config_pulse_insert(
     second pulse sequence is omitted.
     
     """
+    check_types(
+        (float, int, type(None)),
+        rising_edge_1=rising_edge_1,
+        falling_edge_1=falling_edge_1,
+        rising_edge_2=rising_edge_2,
+        falling_edge_2=falling_edge_2
+    )
+    
+    check_types(
+        int,
+        channel_id=channel_id
+    )
+    
+    check_types(
+        (str, type(None)),
+        channel_name=channel_name
+    )
+    
     channel = _get_channel_ids(pulse_params)[channel_id]
 
     pulse_train = [
@@ -352,6 +381,21 @@ def config_pulse_insert_many(
         raised.
     
     """
+    check_types(
+        list,
+        pulse_train=pulse_train
+    )
+    
+    check_types(
+        int,
+        channel_id=channel_id
+    )
+    
+    check_types(
+        (str, type(None)),
+        channel_name=channel_name
+    )
+    
     channel = _get_channel_ids(pulse_params)[channel_id]
     pulse_data = []
     
@@ -366,6 +410,12 @@ def config_pulse_insert_many(
         if sequence_size != PULSE_SEQUENCE_SIZE:
             msg = f'Invalid pulse sequence size of {sequence_size} detected'
             raise PulseParamsSize(msg)
+
+        check_types(
+            (float, int),
+            rising_edge=sequence[0],
+            falling_edge=sequence[1]
+        )
 
         # If we made it this far, the evrything should be a-okay
         pulse_data += sequence

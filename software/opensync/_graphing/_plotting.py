@@ -12,20 +12,20 @@ __all__ = [
 def _get_timing_label(
     pulse_params: dict,
 ) -> str:
-    data_units = pulse_params['pulse_units']
+    data_units = pulse_params['pulse_units'].lower()
     
-    if 'nano' in data_units:
-        return 'nanoseconds'
-    elif 'micro' in data_units:
-        return 'microseconds'
-    elif 'milli' in data_units:
-        return 'milliseconds'
-    elif 'sec' in data_units:
-        return 'seconds'
-    elif 'min' in data_units:
-        return 'minutes'
-    elif 'hour' in data_units:
-        return 'hours'
+    if data_units == 'ns':
+        return 'ns'
+    elif data_units == 'us':
+        return 'μs'
+    elif data_units == 'ms':
+        return 'ms'
+    elif data_units == 's':
+        return 's'
+    elif data_units == 'm':
+        return 'm'
+    elif data_units == 'h':
+        return 'h'
     else:
         return 'N/A'
 

@@ -31,44 +31,11 @@ def device_params_load(
         for msg in resp:
             if 'error' in msg.lower():
                 return resp
-                
-        # Load instructions
-        resp = _load_buffer._device_clock_inst_triggered_load(
-            device,
-            clk_param
-        )
-        
-        # check for errors
-        for msg in resp:
-            if 'error' in msg.lower():
-                return resp
-
-        # Load instructions
-        resp = _load_buffer._device_clock_inst_freerun_load(
-            device,
-            clk_param
-        )
-        
-        # check for errors
-        for msg in resp:
-            if 'error' in msg.lower():
-                return resp
 
     # Load all pulse parameters
     for pls_param in pulse_params:
         # Load pulse configs (MUST BE DONE FIRST!!!!)
         resp = _load_buffer._device_pulse_config_load(
-            device,
-            pls_param
-        )
-
-        # check for errors
-        for msg in resp:
-            if 'error' in msg.lower():
-                return resp
-                
-        # Load instructions
-        resp = _load_buffer._device_pulse_inst_load(
             device,
             pls_param
         )
