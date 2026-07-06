@@ -24,26 +24,6 @@ For a more detailed specification, please read the [datasheet](documents/datashe
  - Each clock can add delay between external trigger signal and pulse sequence signal
  - Internal clocks and pulse sequncers can have different clock dividers
 
-## File Architecture
-```
-opensync/
-├── documents/              # OpenSync development documentation
-│   ├── manual/             # PDF manual (independent of device documentation) 
-│   └── SDLC/               # System Development Life Cycle documentation
-├── firmware/               # Firmware for RP2350 microcontroller
-│   ├── opensync/           # Source folder root directory
-│   └──   ├── src/          # C and assembly source code files
-│         └── external/     # PrawnDO TUSB interface code and liscense
-├── hardware/               # Hardware for OpenSync
-│   ├── opensync/           # Hardware folder root directory
-│   └──   ├── Components/   # Parts necessary to build OpenSync
-│         └── CAD/          # CAD files for 3D printing housing and parts
-└── software/               # Python interface for OpenSync
-    ├── opensync/           # Namespace package root directory
-    └── docs/               # Sphinx documentation generator
-
-```
-
 ## Documentation
 Complete instructions to construct and use OpenSync are provided in [imaginary link to notebook-based rtd website].
 
@@ -75,15 +55,8 @@ with opensync.device_comm_managed(ports[0], fast=True) as device:
 ```
 If successfull, no errors or warnings should be produced. Please note that all commands to and from opensync are terminated with CRLF. Additionally, all used output terminals should be validated on an osciliscope for peace-of-mind, allthough this is not strictly necessary.
 
-
-## Known Erratas
- - Pulsing at frequencies >1MHz could incur cross-talk and other noise between output channels (PCB design yet to be validated).
-
-## Context
-https://groups.google.com/g/openpiv-users/c/xi7qt28IGEE
-
 ## Acknowledgments
-Will be determined after the first milestone of this project.
+I would like to acknowledge Dr. Ivan Nepomnyashchikh and Professor Alex Liberzon for spearheading development of open source, open hardware equipment for the OpenPIV project (see the original [thread](https://groups.google.com/g/openpiv-users/c/xi7qt28IGEE) that started this project). Additionally, certain inspirations of the OpenSync project are from relatively low-cost hardware produced by  [Optolution](https://optolution.com/en/) and [MicroVec Pte Ltd](https://piv.com.sg/). 
 
 ## TODO
 - [x] Add timing plot utilities
@@ -93,8 +66,9 @@ Will be determined after the first milestone of this project.
 - [x] Add three internal timers that can be mapped to pulse sequences
 - [x] Add the ability to count and skip external triggers (usefull for phase-locked stuff like rotor blades)
 - [x] Add second external trigger and output port masking
-- [ ] Update firmware and software to reflect new design 
-- [ ] Validate prototypes against an osciliscope
+- [x] Update firmware and software to reflect new design
+- [ ] Get the damn production PCB produced (keep pushing it off to a later date, umpf)
+- [ ] Validate PCB against an osciliscope
 - [ ] Add video examples on YouTube
 
 ## References
