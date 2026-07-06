@@ -16,7 +16,7 @@ An open source synchronizer for the velocimetry of fluids using a Raspberry Pi m
  - **PLL Jitter**:  typically < 0.1 ns
  - **Internal Sync Clocks**: 3
  - **Repetition Rate**: 0.06 Hz to 1.9 MHz (0.0004 Hz to 7 kHz with max clock divider)
- - **Pulse Control Modes**: freerun, external trigger (rising edge)
+ - **Pulse Control Modes**: freerun, external trigger (rising edge, falling edge, gated high, gated low)
  - **Ext. Trigger Min Pulse Width**: 8 ns * clock divider
 
 ## CHANNEL TIMING GENERATOR
