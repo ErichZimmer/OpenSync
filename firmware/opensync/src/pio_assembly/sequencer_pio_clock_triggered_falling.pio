@@ -12,7 +12,7 @@
 ; Pulse sequence reps are determined by the ring buffer (2 instructions * reps_count)
 
 ; Defines
-.program sequencer_pio_clock_triggered_rising
+.program sequencer_pio_clock_triggered_falling
 
 .wrap_target
 trigger_skips:

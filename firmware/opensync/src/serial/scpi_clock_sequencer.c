@@ -19,7 +19,7 @@ enum {
     HERTZ,
     KILOHERTZ,
     MEGAHERTZ
-}; 
+};
 
 static double clock_sequence_buffer_freq[CLOCK_INSTRUCTIONS_MAX / 2] = {0};
 static uint32_t clock_sequence_buffer_reps[CLOCK_INSTRUCTIONS_MAX / 2] = {0.0};
@@ -63,6 +63,59 @@ void clock_sequencer_cache_clear()
 }
 
 
+// Get clock id from context and validate it. 
+// If valid, change clock_id to that value
+bool SCPI_check_clock_id_and_append_error(
+    scpi_t* context,
+    uint32_t* clock_id
+) {
+    // Allocate some variables
+    int32_t numbers[1] = {0};
+    int32_t choice = 0;
+    uint32_t clock_id_res = 0;
+
+    // If the system status is note (IDLE) or 5 (ABORTED), return an error
+    if (SCPI_check_running_and_append_error(context))
+    {
+        return SCPI_RES_ERR;
+    }
+
+    // Get clock sequencer ID
+    SCPI_CommandNumbers(
+        context,
+        numbers, 
+        1, // length (e.g., 1 element array)
+        STATEFUL // -1 means to use stateful sequencer ID
+    );
+
+    // Check if user specified sequencer ID
+    if (numbers[0] == STATEFUL)
+    {
+        clock_id_res = clock_id_stateful;
+    }
+    else
+    {
+        // Cast numbers to usable int type
+        clock_id_res = (uint32_t) numbers[0];
+    }
+
+    // Validate the ID
+    if (!clock_id_validate(clock_id_res))
+    {
+        SCPI_ErrorPush(
+            context, 
+            SCPI_ERROR_INVALID_SUFFIX
+        );
+
+        return true;
+    }
+
+    *clock_id = clock_id_res;
+
+    return false;
+}
+
+
 // Set the stateful ID of a clock sequencer
 scpi_result_t SCPI_ClockIndex(
     scpi_t* context
@@ -73,18 +126,14 @@ scpi_result_t SCPI_ClockIndex(
     uint32_t clock_id = 0;
 
     // If the system status is note (IDLE) or 5 (ABORTED), return an error
-    if (is_running())
+    if (SCPI_check_running_and_append_error(context))
     {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_PROGRAM_CURRENTLY_RUNNING
-        );
-
         return SCPI_RES_ERR;
     }
 
 
-    // Get clock sequencer ID
+    // Get clock sequencer ID 
+    // We do not use SCPI_check_clock_id_and_append_error since it checks for statefullness
     if (!SCPI_ParamUInt32(context, &clock_id, TRUE))
     {
         return SCPI_RES_ERR;
@@ -108,7 +157,7 @@ scpi_result_t SCPI_ClockIndex(
 }
 
 
-// Query pulse sequencer stateful index
+// Query clock sequencer stateful index
 scpi_result_t SCPI_ClockIndexQ(
     scpi_t* context
 ) {
@@ -132,43 +181,15 @@ scpi_result_t SCPI_ClockStatus(
     uint32_t clock_id = 0;
 
     // If the system status is note (IDLE) or 5 (ABORTED), return an error
-    if (is_running())
+    if (SCPI_check_running_and_append_error(context))
     {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_PROGRAM_CURRENTLY_RUNNING
-        );
-
         return SCPI_RES_ERR;
     }
 
-    // Get clock sequencer ID
-    SCPI_CommandNumbers(
+    if (SCPI_check_clock_id_and_append_error(
         context,
-        numbers, 
-        1, // length (e.g., 1 element array)
-        STATEFUL // -1 means to use stateful sequencer ID
-    );
-
-    // Check if user specified sequencer ID
-    if (numbers[0] == STATEFUL)
-    {
-        clock_id = clock_id_stateful;
-    }
-    else
-    {
-        // Cast numbers to usable int type
-        clock_id = (uint32_t) numbers[0];
-    }
-
-    // Validate the ID
-    if (!clock_id_validate(clock_id))
-    {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_INVALID_SUFFIX
-        );
-
+        &clock_id
+    )) {
         return SCPI_RES_ERR;
     }
 
@@ -219,32 +240,10 @@ scpi_result_t SCPI_ClockStatusQ(
     uint32_t clock_id = 0;
 
     // Get clock sequencer ID
-    SCPI_CommandNumbers(
+    if (SCPI_check_clock_id_and_append_error(
         context,
-        numbers, 
-        1, // length (e.g., 1 element array)
-        STATEFUL // -1 means to use stateful sequencer ID
-    );
-
-    // Check if user specified sequencer ID
-    if (numbers[0] == STATEFUL)
-    {
-        clock_id = clock_id_stateful;
-    }
-    else
-    {
-        // Cast numbers to usable int type
-        clock_id = (uint32_t) numbers[0];
-    }
-
-    // Validate the ID
-    if (!clock_id_validate(clock_id))
-    {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_INVALID_SUFFIX
-        );
-
+        &clock_id
+    )) {
         return SCPI_RES_ERR;
     }
 
@@ -275,43 +274,16 @@ scpi_result_t SCPI_ClockClockDivider(
     uint32_t clock_divider = 1;
 
     // !If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
-    if (is_running())
+    if (SCPI_check_running_and_append_error(context))
     {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_PROGRAM_CURRENTLY_RUNNING
-        );
-
         return SCPI_RES_ERR;
     }
 
     // Get clock sequencer ID
-    SCPI_CommandNumbers(
+    if (SCPI_check_clock_id_and_append_error(
         context,
-        numbers, 
-        1, // length (e.g., 1 element array)
-        STATEFUL // -1 means to use stateful sequencer ID
-    );
-
-    // Check if user specified sequencer ID
-    if (numbers[0] == STATEFUL)
-    {
-        clock_id = clock_id_stateful;
-    }
-    else
-    {
-        // Cast numbers to usable int type
-        clock_id = (uint32_t) numbers[0];
-    }
-
-    // Validate the ID
-    if (!clock_id_validate(clock_id))
-    {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_INVALID_SUFFIX
-        );
-
+        &clock_id
+    )) {
         return SCPI_RES_ERR;
     }
 
@@ -372,32 +344,10 @@ scpi_result_t SCPI_ClockClockDividerQ(
     uint32_t clock_id = 0;
 
     // Get clock sequencer ID
-    SCPI_CommandNumbers(
+    if (SCPI_check_clock_id_and_append_error(
         context,
-        numbers, 
-        1, // length (e.g., 1 element array)
-        STATEFUL // -1 means to use stateful sequencer ID
-    );
-
-    // Check if user specified sequencer ID
-    if (numbers[0] == STATEFUL)
-    {
-        clock_id = clock_id_stateful;
-    }
-    else
-    {
-        // Cast numbers to usable int type
-        clock_id = (uint32_t) numbers[0];
-    }
-
-    // Validate the ID
-    if (!clock_id_validate(clock_id))
-    {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_INVALID_SUFFIX
-        );
-
+        &clock_id
+    )) {
         return SCPI_RES_ERR;
     }
 
@@ -428,51 +378,24 @@ scpi_result_t SCPI_ClockeUnits(
     uint64_t unit_offset = 0;
 
     // !If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
-    if (is_running())
+    if (SCPI_check_running_and_append_error(context))
     {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_PROGRAM_CURRENTLY_RUNNING
-        );
-
         return SCPI_RES_ERR;
     }
 
     // Get clock sequencer ID
-    SCPI_CommandNumbers(
+    if (SCPI_check_clock_id_and_append_error(
         context,
-        numbers, 
-        1, // length (e.g., 1 element array)
-        STATEFUL // -1 means to use stateful sequencer ID
-    );
-
-    // Check if user specified sequencer ID
-    if (numbers[0] == STATEFUL)
-    {
-        clock_id = clock_id_stateful;
-    }
-    else
-    {
-        // Cast numbers to usable int type
-        clock_id = (uint32_t) numbers[0];
-    }
-
-    // Validate the ID
-    if (!clock_id_validate(clock_id))
-    {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_INVALID_SUFFIX
-        );
-
+        &clock_id
+    )) {
         return SCPI_RES_ERR;
     }
 
     // Valid frequency resolution choices
     const scpi_choice_def_t options[] = {
-        {"HERTz",       HERTZ},
-        {"KILOhertz",   KILOHERTZ},
-        {"MEGAhertz",   MEGAHERTZ},
+        {"HZ",  HERTZ},
+        {"KHZ", KILOHERTZ},
+        {"MHZ", MEGAHERTZ},
         SCPI_CHOICE_LIST_END
     };
 
@@ -531,32 +454,10 @@ scpi_result_t SCPI_ClockUnitsQ(
     uint32_t clock_id = 0;
 
     // Get clock sequencer ID
-    SCPI_CommandNumbers(
+    if (SCPI_check_clock_id_and_append_error(
         context,
-        numbers, 
-        1, // length (e.g., 1 element array)
-        STATEFUL // -1 means to use stateful sequencer ID
-    );
-
-    // Check if user specified sequencer ID
-    if (numbers[0] == STATEFUL)
-    {
-        clock_id = clock_id_stateful;
-    }
-    else
-    {
-        // Cast numbers to usable int type
-        clock_id = (uint32_t) numbers[0];
-    }
-
-    // Validate the ID
-    if (!clock_id_validate(clock_id))
-    {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_INVALID_SUFFIX
-        );
-
+        &clock_id
+    )) {
         return SCPI_RES_ERR;
     }
 
@@ -581,13 +482,17 @@ scpi_result_t SCPI_ClockDataReps(
     scpi_t* context
 ) {
     // If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
-    if(is_running())
+    if (SCPI_check_running_and_append_error(context))
     {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_PROGRAM_CURRENTLY_RUNNING
-        );
+        return SCPI_RES_ERR;
+    }
 
+    // Get clock sequencer ID (not used)
+    uint32_t clock_id = 0;
+    if (SCPI_check_clock_id_and_append_error(
+        context,
+        &clock_id
+    )) {
         return SCPI_RES_ERR;
     }
 
@@ -614,6 +519,15 @@ scpi_result_t SCPI_ClockDataReps(
 scpi_result_t SCPI_ClockDataRepsQ(
     scpi_t* context
 ) {
+    // Get clock sequencer ID (not used)
+    uint32_t clock_id = 0;
+    if (SCPI_check_clock_id_and_append_error(
+        context,
+        &clock_id
+    )) {
+        return SCPI_RES_ERR;
+    }
+
     SCPI_ResultArrayUInt32(
         context,
         clock_sequence_buffer_reps,
@@ -630,13 +544,17 @@ scpi_result_t SCPI_ClockDataFreq(
     scpi_t* context
 ) {
     // If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
-    if(is_running())
+    if (SCPI_check_running_and_append_error(context))
     {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_PROGRAM_CURRENTLY_RUNNING
-        );
+        return SCPI_RES_ERR;
+    }
 
+    // Get clock sequencer ID (not used)
+    uint32_t clock_id = 0;
+    if (SCPI_check_clock_id_and_append_error(
+        context,
+        &clock_id
+    )) {
         return SCPI_RES_ERR;
     }
 
@@ -663,6 +581,15 @@ scpi_result_t SCPI_ClockDataFreq(
 scpi_result_t SCPI_ClockDataFreqQ(
     scpi_t* context
 ) {
+    // Get clock sequencer ID (not used)
+    uint32_t clock_id = 0;
+    if (SCPI_check_clock_id_and_append_error(
+        context,
+        &clock_id
+    )) {
+        return SCPI_RES_ERR;
+    }
+
     SCPI_ResultArrayDouble(
         context,
         clock_sequence_buffer_freq,
@@ -681,14 +608,18 @@ scpi_result_t SCPI_ClockDataClear(
     // Allocate some variables
     size_t instructions_read=0;
 
-    // If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
-    if(is_running())
-    {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_PROGRAM_CURRENTLY_RUNNING
-        );
+    // Get clock sequencer ID (not used)
+    uint32_t clock_id = 0;
+    if (SCPI_check_clock_id_and_append_error(
+        context,
+        &clock_id
+    )) {
+        return SCPI_RES_ERR;
+    }
 
+    // If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
+    if (SCPI_check_running_and_append_error(context))
+    {
         return SCPI_RES_ERR;
     }
 
@@ -712,30 +643,16 @@ scpi_result_t SCPI_ClockDataApply(
     const uint32_t local_buffer_size = CLOCK_INSTRUCTIONS_MAX;
 
     // !If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
-    if (is_running())
+    if (SCPI_check_running_and_append_error(context))
     {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_PROGRAM_CURRENTLY_RUNNING
-        );
-
         return SCPI_RES_ERR;
     }
 
     // Get clock sequencer ID
-    if (!SCPI_ParamUInt32(context, &clock_id, FALSE))
-    {
-        clock_id = clock_id_stateful;
-    }
-
-    // Validate the ID
-    if (!clock_id_validate(clock_id))
-    {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_PARAMETER_ERROR
-        );
-
+    if (SCPI_check_clock_id_and_append_error(
+        context,
+        &clock_id
+    )) {
         return SCPI_RES_ERR;
     }
 
@@ -780,7 +697,7 @@ scpi_result_t SCPI_ClockDataApply(
                 return SCPI_RES_ERR;
             } 
 
-            // Check for min cycles due to pulse sequencer operations
+            // Check for min cycles due to clock sequencer operations
             if (freq_cycles < CLOCK_INSTRUCTION_MIN)
             {
                 SCPI_ErrorPush(
@@ -836,32 +753,10 @@ scpi_result_t SCPI_ClockDataQ(
     uint32_t clock_id = 0;
 
     // Get clock sequencer ID
-    SCPI_CommandNumbers(
+    if (SCPI_check_clock_id_and_append_error(
         context,
-        numbers, 
-        1, // length (e.g., 1 element array)
-        STATEFUL // -1 means to use stateful sequencer ID
-    );
-
-    // Check if user specified sequencer ID
-    if (numbers[0] == STATEFUL)
-    {
-        clock_id = clock_id_stateful;
-    }
-    else
-    {
-        // Cast numbers to usable int type
-        clock_id = (uint32_t) numbers[0];
-    }
-
-    // Validate the ID
-    if (!clock_id_validate(clock_id))
-    {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_INVALID_SUFFIX
-        );
-
+        &clock_id
+    )) {
         return SCPI_RES_ERR;
     }
 
@@ -879,62 +774,34 @@ scpi_result_t SCPI_ClockDataQ(
 }
 
 
-// Set clock trigger mode at clock sequencer N
-scpi_result_t SCPI_ClockTriggerMode(
+// Set clock mode at clock sequencer N
+scpi_result_t SCPI_ClockMode(
     scpi_t* context
 ) {
     // Allocate some variables
     int32_t numbers[1] = {0};
     int32_t choice = 0;
     uint32_t clock_id = 0;
-    uint32_t clock_type = 1;
+    uint32_t clock_mode = 1;
 
     // !If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
-    if (is_running())
+    if (SCPI_check_running_and_append_error(context))
     {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_PROGRAM_CURRENTLY_RUNNING
-        );
-
         return SCPI_RES_ERR;
     }
 
     // Get clock sequencer ID
-    SCPI_CommandNumbers(
+    if (SCPI_check_clock_id_and_append_error(
         context,
-        numbers, 
-        1, // length (e.g., 1 element array)
-        STATEFUL // -1 means to use stateful sequencer ID
-    );
-
-    // Check if user specified sequencer ID
-    if (numbers[0] == STATEFUL)
-    {
-        clock_id = clock_id_stateful;
-    }
-    else
-    {
-        // Cast numbers to usable int type
-        clock_id = (uint32_t) numbers[0];
-    }
-
-    // Validate the ID
-    if (!clock_id_validate(clock_id))
-    {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_INVALID_SUFFIX
-        );
-
+        &clock_id
+    )) {
         return SCPI_RES_ERR;
     }
 
-    // Valid clock cycle resolution choices
+    // Valid clock mode choices
     const scpi_choice_def_t options[] = {
-        {"INTernal",        INTERNAL},
-        {"RISING",          RISING_EDGE},
-        {"RISING_EDGE",     RISING_EDGE},
+        {"INTernal",         CLOCK_SCPI_MODE_FREERUN},
+        {"EXTernal",         CLOCK_SCPI_MODE_SEQUENCER},
         SCPI_CHOICE_LIST_END
     };
 
@@ -949,11 +816,11 @@ scpi_result_t SCPI_ClockTriggerMode(
     }
 
     // Cast to usable type
-    clock_type = (uint32_t) choice;
+    clock_mode = (uint32_t) choice;
 
-    bool success = sequencer_clock_type_set(
+    bool success = sequencer_clock_mode_set(
         clock_id,
-        clock_type
+        clock_mode
     );
 
     // If for some wierd reason we failed, raise an error
@@ -972,7 +839,7 @@ scpi_result_t SCPI_ClockTriggerMode(
 
 
 // Query trigger mode at clock sequencer N
-scpi_result_t SCPI_ClockTriggerModeQ(
+scpi_result_t SCPI_ClockModeQ(
     scpi_t* context
 ) {
     // Allocate some variables
@@ -980,137 +847,566 @@ scpi_result_t SCPI_ClockTriggerModeQ(
     uint32_t clock_id = 0;
 
     // Get clock sequencer ID
-    SCPI_CommandNumbers(
+    if (SCPI_check_clock_id_and_append_error(
         context,
-        numbers, 
-        1, // length (e.g., 1 element array)
-        STATEFUL // -1 means to use stateful sequencer ID
-    );
-
-    // Check if user specified sequencer ID
-    if (numbers[0] == STATEFUL)
-    {
-        clock_id = clock_id_stateful;
-    }
-    else
-    {
-        // Cast numbers to usable int type
-        clock_id = (uint32_t) numbers[0];
-    }
-
-    // Validate the ID
-    if (!clock_id_validate(clock_id))
-    {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_INVALID_SUFFIX
-        );
-
+        &clock_id
+    )) {
         return SCPI_RES_ERR;
     }
 
     // Retrieve clock sequencer container
     struct clock_config* config_array = sequencer_clock_config_get();
 
-    // Get the trigger mode of the clock sequencer at clock_id
-    uint32_t clock_type = config_array[clock_id].clock_type;
+    // Get the mode of the clock sequencer at clock_id
+    uint32_t mode = config_array[clock_id].clock_mode;
 
     SCPI_ResultUInt32(
         context,
-        clock_type
+        mode
     );
     
     return SCPI_RES_OK;
 }
 
 
-// Set clock trigger instructions at clock sequencer N
-scpi_result_t SCPI_ClockTriggerData(
+// Set trigger mode at clock sequencer N
+scpi_result_t SCPI_TriggerMode(
+    scpi_t* context
+) {
+    // Allocate some variables
+    int32_t numbers[1] = {0};
+    int32_t choice = 0;
+    uint32_t clock_id = 0;
+    uint32_t trigger_mode = 1;
+
+    // !If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
+    if (SCPI_check_running_and_append_error(context))
+    {
+        return SCPI_RES_ERR;
+    }
+
+    // Get clock sequencer ID
+    if (SCPI_check_clock_id_and_append_error(
+        context,
+        &clock_id
+    )) {
+        return SCPI_RES_ERR;
+    }
+
+    // Valid clock mode choices
+    const scpi_choice_def_t options[] = {
+        {"IMMediate",   CLOCK_TRIG_SOURCE_IMMEDIATE},
+        {"EDGE",        CLOCK_TRIG_SOURCE_EDGE},
+        {"GATE",        CLOCK_TRIG_SOURCE_GATE},
+        SCPI_CHOICE_LIST_END
+    };
+
+    // Now get the trigger mode if present
+    if (!SCPI_ParamChoice(
+        context,
+        options,
+        &choice,
+        TRUE
+    )) {
+        return SCPI_RES_ERR;
+    }
+
+    // Cast to usable type
+    trigger_mode = (uint32_t) choice;
+
+    bool success = sequencer_trigger_mode_set(
+        clock_id,
+        trigger_mode
+    );
+
+    // If for some wierd reason we failed, raise an error
+    if (!success)
+    {
+        SCPI_ErrorPush(
+            context, 
+            SCPI_ERROR_PARAMETER_ERROR
+        );
+
+        return SCPI_RES_ERR;
+    }
+
+    return SCPI_RES_OK;
+}
+
+
+// Query trigger mode at clock sequencer N
+scpi_result_t SCPI_TriggerModeQ(
     scpi_t* context
 ) {
     // Allocate some variables
     int32_t numbers[1] = {0};
     uint32_t clock_id = 0;
-    uint32_t trigger_skips = 0;
-    uint32_t trigger_delay = 0;
-    uint32_t trigger_reps = 0;
-    uint32_t param = 0;
-    bool success = 0;
+
+    // Get clock sequencer ID
+    if (SCPI_check_clock_id_and_append_error(
+        context,
+        &clock_id
+    )) {
+        return SCPI_RES_ERR;
+    }
+
+    // Retrieve clock sequencer container
+    struct clock_config* config_array = sequencer_clock_config_get();
+
+    // Get the mode of the clock sequencer at clock_id
+    uint32_t mode = config_array[clock_id].trigger_source;
+
+    SCPI_ResultUInt32(
+        context,
+        mode
+    );
+    
+    return SCPI_RES_OK;
+}
+
+
+// Set trigger edge at clock sequencer N
+scpi_result_t SCPI_TriggerEdge(
+    scpi_t* context
+) {
+    // Allocate some variables
+    int32_t numbers[1] = {0};
+    int32_t choice = 0;
+    uint32_t clock_id = 0;
+    uint32_t trigger_edge = 1;
 
     // !If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
-    if(is_running())
+    if (SCPI_check_running_and_append_error(context))
     {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_PROGRAM_CURRENTLY_RUNNING
-        );
-
         return SCPI_RES_ERR;
     }
 
     // Get clock sequencer ID
-    SCPI_CommandNumbers(
+    if (SCPI_check_clock_id_and_append_error(
         context,
-        numbers, 
-        1, // length (e.g., 1 element array)
-        STATEFUL // -1 means to use stateful sequencer ID
+        &clock_id
+    )) {
+        return SCPI_RES_ERR;
+    }
+
+    // Valid clock mode choices
+    const scpi_choice_def_t options[] = {
+        {"POSitive",    CLOCK_TRIG_EDGE_POSITIVE},
+        {"NEGative",    CLOCK_TRIG_EDGE_NEGATIVE},
+        SCPI_CHOICE_LIST_END
+    };
+
+    // Now get the trigger mode if present
+    if (!SCPI_ParamChoice(
+        context,
+        options,
+        &choice,
+        TRUE
+    )) {
+        return SCPI_RES_ERR;
+    }
+
+    // Cast to usable type
+    trigger_edge = (uint32_t) choice;
+
+    bool success = sequencer_trigger_edge_set(
+        clock_id,
+        trigger_edge
     );
 
-    // Check if user specified sequencer ID
-    if (numbers[0] == STATEFUL)
-    {
-        clock_id = clock_id_stateful;
-    }
-    else
-    {
-        // Cast numbers to usable int type
-        clock_id = (uint32_t) numbers[0];
-    }
-
-    // Validate the ID
-    if(!clock_id_validate(clock_id))
+    // If for some wierd reason we failed, raise an error
+    if (!success)
     {
         SCPI_ErrorPush(
             context, 
-            SCPI_ERROR_INVALID_SUFFIX
+            SCPI_ERROR_PARAMETER_ERROR
         );
 
         return SCPI_RES_ERR;
     }
 
-    // Get the trigger skip number if present
-    if(!SCPI_ParamUInt32(context, &trigger_skips, TRUE))
+    return SCPI_RES_OK;
+}
+
+
+// Query trigger edge at clock sequencer N
+scpi_result_t SCPI_TriggerEdgeQ(
+    scpi_t* context
+) {
+    // Allocate some variables
+    int32_t numbers[1] = {0};
+    uint32_t clock_id = 0;
+
+    // Get clock sequencer ID
+    if (SCPI_check_clock_id_and_append_error(
+        context,
+        &clock_id
+    )) {
+        return SCPI_RES_ERR;
+    }
+
+    // Retrieve clock sequencer container
+    struct clock_config* config_array = sequencer_clock_config_get();
+
+    // Get the mode of the clock sequencer at clock_id
+    uint32_t mode = config_array[clock_id].trigger_edge;
+
+    SCPI_ResultUInt32(
+        context,
+        mode
+    );
+    
+    return SCPI_RES_OK;
+}
+
+
+// Set trigger level at clock sequencer N
+scpi_result_t SCPI_TriggerLevel(
+    scpi_t* context
+) {
+    // Allocate some variables
+    int32_t numbers[1] = {0};
+    int32_t choice = 0;
+    uint32_t clock_id = 0;
+    uint32_t trigger_level = 1;
+
+    // !If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
+    if (SCPI_check_running_and_append_error(context))
     {
+        return SCPI_RES_ERR;
+    }
+
+    // Get clock sequencer ID
+    if (SCPI_check_clock_id_and_append_error(
+        context,
+        &clock_id
+    )) {
+        return SCPI_RES_ERR;
+    }
+
+    // Valid clock mode choices
+    const scpi_choice_def_t options[] = {
+        {"HIGH",    CLOCK_GATE_LEVEL_HIGH},
+        {"LOW",     CLOCK_GATE_LEVEL_LOW},
+        SCPI_CHOICE_LIST_END
+    };
+
+    // Now get the trigger mode if present
+    if (!SCPI_ParamChoice(
+        context,
+        options,
+        &choice,
+        TRUE
+    )) {
+        return SCPI_RES_ERR;
+    }
+
+    // Cast to usable type
+    trigger_level = (uint32_t) choice;
+
+    bool success = sequencer_trigger_level_set(
+        clock_id,
+        trigger_level
+    );
+
+    // If for some wierd reason we failed, raise an error
+    if (!success)
+    {
+        SCPI_ErrorPush(
+            context, 
+            SCPI_ERROR_PARAMETER_ERROR
+        );
+
+        return SCPI_RES_ERR;
+    }
+
+    return SCPI_RES_OK;
+}
+
+
+// Query trigger level at clock sequencer N
+scpi_result_t SCPI_TriggerLevelQ(
+    scpi_t* context
+) {
+    // Allocate some variables
+    int32_t numbers[1] = {0};
+    uint32_t clock_id = 0;
+
+    // Get clock sequencer ID
+    if (SCPI_check_clock_id_and_append_error(
+        context,
+        &clock_id
+    )) {
+        return SCPI_RES_ERR;
+    }
+
+    // Retrieve clock sequencer container
+    struct clock_config* config_array = sequencer_clock_config_get();
+
+    // Get the mode of the clock sequencer at clock_id
+    uint32_t mode = config_array[clock_id].trigger_level;
+
+    SCPI_ResultUInt32(
+        context,
+        mode
+    );
+    
+    return SCPI_RES_OK;
+}
+
+
+// Set trigger pin at clock sequencer N
+scpi_result_t SCPI_TriggerPin(
+    scpi_t* context
+) {
+    // Allocate some variables
+    int32_t numbers[1] = {0};
+    uint32_t clock_id = 0;
+    uint32_t param = 0;
+    uint trigger_pin_id = 0;
+
+    // !If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
+    if (SCPI_check_running_and_append_error(context))
+    {
+        return SCPI_RES_ERR;
+    }
+
+    // Get clock sequencer ID
+    if (SCPI_check_clock_id_and_append_error(
+        context,
+        &clock_id
+    )) {
+        return SCPI_RES_ERR;
+    }
+
+    // Now get the trigger pin if present
+    if (!SCPI_ParamUInt32(context, &param, TRUE))
+    {
+        return SCPI_RES_ERR;
+    }
+
+    trigger_pin_id = (uint) param;
+
+    // Validate the ID
+    if (!trigger_id_validate(trigger_pin_id))
+    {
+        SCPI_ErrorPush(
+            context, 
+            SCPI_ERROR_PARAMETER_ERROR
+        );
+
+        return SCPI_RES_ERR;
+    }
+
+    bool success = trigger_pin_set(
+        clock_id,
+        trigger_pin_id
+    );
+
+    // If for some wierd reason we failed, raise an error
+    if (!success)
+    {
+        SCPI_ErrorPush(
+            context, 
+            SCPI_ERROR_PARAMETER_ERROR
+        );
+
+        return SCPI_RES_ERR;
+    }
+
+    return SCPI_RES_OK;
+}
+
+
+// Query clock pin at clock sequencer N
+scpi_result_t SCPI_TriggerPinQ(
+    scpi_t* context
+) {
+    // Allocate some variables
+    int32_t numbers[1] = {0};
+    uint32_t clock_id = 0;
+
+    // Get clock sequencer ID
+    if (SCPI_check_clock_id_and_append_error(
+        context,
+        &clock_id
+    )) {
+        return SCPI_RES_ERR;
+    }
+
+    // Retrieve clock sequencer container
+    struct clock_config* config_array = sequencer_clock_config_get();
+
+    // Get the trigger pin of the trigger sequencer at ckock_id
+    uint32_t trigger_pin = config_array[clock_id].trigger_pin;
+
+    // Return as uint32
+    SCPI_ResultUInt32(
+        context,
+        trigger_pin
+    );
+    
+    return SCPI_RES_OK;
+}
+
+
+// Set clock data at clock sequencer N
+scpi_result_t SCPI_TriggerUnits(
+    scpi_t* context
+) {
+    // Allocate some variables
+    int32_t numbers[1] = {0};
+    int32_t choice = 0;
+    uint32_t clock_id = 0;
+    uint64_t unit_offset = 0;
+
+    // If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
+    if (SCPI_check_running_and_append_error(context))
+    {
+        return SCPI_RES_ERR;
+    }
+
+    // Get clock sequencer ID
+    if (SCPI_check_clock_id_and_append_error(
+        context,
+        &clock_id
+    )) {
+        return SCPI_RES_ERR;
+    }
+
+    // Valid clock cycle resolution choices
+    const scpi_choice_def_t options[] = {
+        {"NS",  NANOSECOND},
+        {"US",  MICROSECOND},
+        {"MS",  MILLISECOND},
+        {"S",   SECOND},
+        {"M",   MINUTE},
+        {"H",   HOUR},
+        SCPI_CHOICE_LIST_END
+    };
+
+    // Now get the clock divider if present
+    if (!SCPI_ParamChoice(
+        context,
+        options,
+        &choice,
+        TRUE
+    )) {
+        return SCPI_RES_ERR;
+    }
+
+    switch (choice)
+    {
+        case NANOSECOND:
+            unit_offset = OFFSET_NANOSECOND;
+            break;
+        case MICROSECOND:
+            unit_offset = OFFSET_MICROSECOND;
+            break;
+        case MILLISECOND:
+            unit_offset = OFFSET_MILLISECOND;
+            break;
+        case SECOND:
+            unit_offset = OFFSET_SECOND;
+            break;
+        case MINUTE:
+            unit_offset = OFFSET_MINUTE;
+            break;
+        case HOUR:
+            unit_offset = OFFSET_HOUR;
+            break;
+        default:
+            unit_offset = OFFSET_NANOSECOND;
+    }
+
+    // Cast choice into usable clock divider type
+    bool success = clock_trigger_unit_offset_set(
+        clock_id,
+        unit_offset
+    );
+
+    // If for some wierd reason we failed, raise an error
+    if (!success)
+    {
+        SCPI_ErrorPush(
+            context, 
+            SCPI_ERROR_PARAMETER_ERROR
+        );
+
+        return SCPI_RES_ERR;
+    }
+
+    return SCPI_RES_OK;
+}
+
+
+// Query clock data units offset at clock sequencer N
+scpi_result_t SCPI_TriggerUnitsQ(
+    scpi_t* context
+) {
+    // Allocate some variables
+    int32_t numbers[1] = {0};
+    uint32_t clock_id = 0;
+
+    // Get clock sequencer ID
+    if (SCPI_check_clock_id_and_append_error(
+        context,
+        &clock_id
+    )) {
+        return SCPI_RES_ERR;
+    }
+
+    // Retrieve clock sequencer container
+    struct clock_config* config_array = sequencer_clock_config_get();
+
+    // Get the clock divider of the clock sequencer at clock_id
+    double unit_offset = config_array[clock_id].unit_offset_trigger;
+
+    // Return as uint32
+    SCPI_ResultDouble(
+        context,
+        unit_offset
+    );
+    
+    return SCPI_RES_OK;
+}
+
+
+// Set clock trigger skips at clock sequencer N
+scpi_result_t SCPI_TriggerSkip(
+    scpi_t* context
+) {
+    // Allocate some variables
+    int32_t numbers[1] = {0};
+    uint32_t clock_id = 0;
+    uint32_t param = 0;
+    uint32_t trigger_skips = 0;
+
+    // !If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
+    if (SCPI_check_running_and_append_error(context))
+    {
+        return SCPI_RES_ERR;
+    }
+
+    // Get clock sequencer ID
+    if (SCPI_check_clock_id_and_append_error(
+        context,
+        &clock_id
+    )) {
         return SCPI_RES_ERR;
     }
 
     // Now get the trigger delay if present
-    if(!SCPI_ParamUInt32(context, &trigger_delay, TRUE))
+    if(!SCPI_ParamUInt32(context, &trigger_skips, TRUE))
     {
         return SCPI_RES_ERR;
-    }
-
-    // Finally get the trigger reps if present
-    if(!SCPI_ParamUInt32(context, &trigger_reps, TRUE))
-    {
-        return SCPI_RES_ERR;
-    }
+    } 
 
     // This is not ideal, but there should only ever be two external trigger instructions and never more
-    success = clock_trigger_instructions_load(
+    const bool success = trigger_skip_set(
         clock_id,
-        trigger_skips,
-        trigger_delay
+        trigger_skips
     );
-
-    // If loading trigger isntructions is successful, then continue to loading reps
-    if (success)
-    {
-        success = clock_reps_trigger_set(
-            clock_id,
-            trigger_reps
-        );
-    }
 
     // If for some wierd reason we failed, raise an error
     if (!success)
@@ -1128,56 +1424,216 @@ scpi_result_t SCPI_ClockTriggerData(
 
 
 // Query instructions at clock sequencer N
-scpi_result_t SCPI_ClockTriggerDataQ(
+scpi_result_t SCPI_TriggerSkipQ(
     scpi_t* context
 ) {
     // Allocate some variables
     int32_t numbers[1] = {0};
     uint32_t clock_id = 0;
-    uint32_t instruction_buffer[CLOCK_TRIGGERS_MAX + 1] = {0};
 
     // Get clock sequencer ID
-    SCPI_CommandNumbers(
+    if (SCPI_check_clock_id_and_append_error(
         context,
-        numbers, 
-        1, // length (e.g., 1 element array)
-        STATEFUL // -1 means to use stateful sequencer ID
-    );
-
-    // Check if user specified sequencer ID
-    if (numbers[0] == STATEFUL)
-    {
-        clock_id = clock_id_stateful;
-    }
-    else
-    {
-        // Cast numbers to usable int type
-        clock_id = (uint32_t) numbers[0];
-    }
-
-    // Validate the ID
-    if (!clock_id_validate(clock_id))
-    {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_INVALID_SUFFIX
-        );
-
+        &clock_id
+    )) {
         return SCPI_RES_ERR;
     }
 
     // Retrieve clock sequencer container
     struct clock_config* config_array = sequencer_clock_config_get();
 
-    instruction_buffer[0] = config_array[clock_id].trigger_config[0]; // skips
-    instruction_buffer[1] = config_array[clock_id].trigger_config[1]; // delay
-    instruction_buffer[2] = config_array[clock_id].trigger_reps; // reps
+    const uint32_t skips = config_array[clock_id].trigger_config[0]; // skips is index 0
 
-    SCPI_ResultArrayUInt32(
+    SCPI_ResultUInt32(
         context,
-        instruction_buffer,
-        CLOCK_TRIGGERS_MAX + 1,
-        0 // what is scpi array format??
+        skips
+    );
+    
+    return SCPI_RES_OK;
+}
+
+
+// Set clock trigger delay at clock sequencer N
+scpi_result_t SCPI_TriggerDelay(
+    scpi_t* context
+) {
+    // Allocate some variables
+    int32_t numbers[1] = {0};
+    uint32_t clock_id = 0;
+    uint32_t param = 0;
+    uint32_t trigger_delay_cycles = 0;
+    double trigger_delay = 0;
+    double delay = 0.0;
+
+    // !If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
+    if (SCPI_check_running_and_append_error(context))
+    {
+        return SCPI_RES_ERR;
+    }
+
+    // Get clock sequencer ID
+    if (SCPI_check_clock_id_and_append_error(
+        context,
+        &clock_id
+    )) {
+        return SCPI_RES_ERR;
+    }
+
+    // Now get the trigger delay if present
+    if(!SCPI_ParamDouble(context, &trigger_delay, TRUE))
+    {
+        return SCPI_RES_ERR;
+    } 
+
+    // Now get unit conversion paramerters
+    struct clock_config* config_array = sequencer_clock_config_get();
+
+    const double unit_offset = config_array[clock_id].unit_offset_trigger;
+    const uint clock_divider = config_array[clock_id].clock_divider;
+
+    // Convert delay into nanoseconds
+    delay = trigger_delay * unit_offset;
+
+    // Convert nanoseconds to cycles, if possible
+    if (!convert_nanos_to_cycles(
+        (uint64_t) delay, // This truncates decimals similar to floor operation (e.g, 120.5 ns --> 120 ns)
+        clock_divider,
+        &trigger_delay_cycles
+    )) {
+        SCPI_ErrorPush(
+            context, 
+            SCPI_ERROR_DATA_OUT_OF_RANGE
+        );
+
+        return SCPI_RES_ERR;
+    }
+
+    // This is not ideal, but there should only ever be two external trigger instructions and never more
+    const bool success = trigger_delay_set(
+        clock_id,
+        trigger_delay_cycles
+    );
+
+    // If for some wierd reason we failed, raise an error
+    if (!success)
+    {
+        SCPI_ErrorPush(
+            context, 
+            SCPI_ERROR_PARAMETER_ERROR
+        );
+
+        return SCPI_RES_ERR;
+    }
+
+    return SCPI_RES_OK;
+}
+
+
+// Query instructions at clock sequencer N
+scpi_result_t SCPI_TriggerDelayQ(
+    scpi_t* context
+) {
+    // Allocate some variables
+    int32_t numbers[1] = {0};
+    uint32_t clock_id = 0;
+
+    // Get clock sequencer ID
+    if (SCPI_check_clock_id_and_append_error(
+        context,
+        &clock_id
+    )) {
+        return SCPI_RES_ERR;
+    }
+
+    // Retrieve clock sequencer container
+    struct clock_config* config_array = sequencer_clock_config_get();
+
+    const uint32_t delays = config_array[clock_id].trigger_config[1]; // delays is index 1
+
+    SCPI_ResultUInt32(
+        context,
+        delays
+    );
+    
+    return SCPI_RES_OK;
+}
+
+
+// Set clock trigger count at clock sequencer N
+scpi_result_t SCPI_TriggerCount(
+    scpi_t* context
+) {
+    // Allocate some variables
+    int32_t numbers[1] = {0};
+    uint32_t clock_id = 0;
+    uint32_t param = 0;
+    uint32_t trigger_count = 0;
+
+    // !If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
+    if (SCPI_check_running_and_append_error(context))
+    {
+        return SCPI_RES_ERR;
+    }
+
+    // Get clock sequencer ID
+    if (SCPI_check_clock_id_and_append_error(
+        context,
+        &clock_id
+    )) {
+        return SCPI_RES_ERR;
+    }
+
+    // Now get the trigger delay if present
+    if(!SCPI_ParamUInt32(context, &trigger_count, TRUE))
+    {
+        return SCPI_RES_ERR;
+    } 
+
+    // This is not ideal, but there should only ever be two external trigger instructions and never more
+    const bool success = trigger_count_set(
+        clock_id,
+        trigger_count
+    );
+
+    // If for some wierd reason we failed, raise an error
+    if (!success)
+    {
+        SCPI_ErrorPush(
+            context, 
+            SCPI_ERROR_PARAMETER_ERROR
+        );
+
+        return SCPI_RES_ERR;
+    }
+
+    return SCPI_RES_OK;
+}
+
+
+// Query instructions at clock sequencer N
+scpi_result_t SCPI_TriggerCountQ(
+    scpi_t* context
+) {
+    // Allocate some variables
+    int32_t numbers[1] = {0};
+    uint32_t clock_id = 0;
+
+    // Get clock sequencer ID
+    if (SCPI_check_clock_id_and_append_error(
+        context,
+        &clock_id
+    )) {
+        return SCPI_RES_ERR;
+    }
+
+    // Retrieve clock sequencer container
+    struct clock_config* config_array = sequencer_clock_config_get();
+
+    const uint32_t counts = config_array[clock_id].trigger_reps;
+
+    SCPI_ResultUInt32(
+        context,
+        counts
     );
     
     return SCPI_RES_OK;
@@ -1193,43 +1649,16 @@ scpi_result_t SCPI_ClockReset(
     uint32_t clock_id = 0;
 
     // If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
-    if (is_running())
+    if (SCPI_check_running_and_append_error(context))
     {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_PROGRAM_CURRENTLY_RUNNING
-        );
-
         return SCPI_RES_ERR;
     }
 
     // Get clock sequencer ID
-    SCPI_CommandNumbers(
+    if (SCPI_check_clock_id_and_append_error(
         context,
-        numbers, 
-        1, // length (e.g., 1 element array)
-        STATEFUL // -1 means to use stateful sequencer ID
-    );
-
-    // Check if user specified sequencer ID
-    if (numbers[0] == STATEFUL)
-    {
-        clock_id = clock_id_stateful;
-    }
-    else
-    {
-        // Cast numbers to usable int type
-        clock_id = (uint32_t) numbers[0];
-    }
-
-    // Validate the ID
-    if (!clock_id_validate(clock_id))
-    {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_INVALID_SUFFIX
-        );
-
+        &clock_id
+    )) {
         return SCPI_RES_ERR;
     }
 

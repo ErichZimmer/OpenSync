@@ -45,6 +45,8 @@ void sequencer_output_init(
     {
         config_array[i].pio = clock_pio;
         config_array[i].sm = i;
+        config_array[i].dma_chan = i;
+        config_array[i].program_offset = 0;
         config_array[i].clock_pin = INTERNAL_CLOCK_PINS[0]; // Default to all using the same internal pin
         config_array[i].clock_divider = CLOCK_DIV_DEFAULT;
         config_array[i].unit_offset = PULSE_UNITS_OFFSET_DEFAULT;
@@ -208,13 +210,20 @@ void sequencer_output_sm_helper_init(
 }
 
 
+// NOTE: Claims both state machine and PIO memory
+// NOTE: sets configured to true
 void sequencer_output_sm_config(
-    struct pulse_config* config,
-    uint offset
+    struct pulse_config* config
 ) {
+    // Claim unused state machine memory
     pio_claim_sm_mask(
         config -> pio,
         1u << config -> sm
+    );
+
+    // Claim unused PIO memory
+    config -> program_offset = sequencer_program_output_add(
+        config -> pio
     );
 
     // Make sure the state machine is disabled
@@ -233,7 +242,7 @@ void sequencer_output_sm_config(
     sequencer_output_sm_helper_init(
         config -> pio,
         config -> sm,
-        offset,
+        config -> program_offset,
         OUTPUT_PIN_BASE,
         OUTPUT_PIN_COUNT,
         config -> clock_pin,
@@ -265,6 +274,7 @@ void sequencer_output_dma_free(
 }
 
 
+// NOTE: Unclaims both state machine and PIO memory
 void sequencer_output_sm_free(
     struct pulse_config* config
 ) {
@@ -293,16 +303,29 @@ void sequencer_output_sm_free(
         config -> sm
     );
 
+    // Unclaim state machine
     pio_sm_unclaim(
         config -> pio,
         config -> sm
     );
+
+    // Unclaim PIO memory
+    sequencer_program_ouput_remove(
+        config -> pio,
+        config -> program_offset
+    );
 }
 
-
+// NOTE: sets configured to false
 void sequencer_output_free(
     struct pulse_config* config
 ) {
+    // If this resource has not beem initialized, do not uninit it
+    if (config -> configured == false)
+    {
+        return;
+    }
+    
     pio_sm_set_enabled(
         config -> pio,
         config -> sm,

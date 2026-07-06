@@ -4,24 +4,24 @@
 
 
 #define INSTRUMENT_PULSE_COMMANDS \
-    {.pattern = "PULSe:SELect", .callback = SCPI_PulseIndex,}, \
-    {.pattern = "PULSe:SELect?", .callback = SCPI_PulseIndexQ,}, \
-    {.pattern = "PULSe#:STATe", .callback = SCPI_PulseStatus,}, \
-    {.pattern = "PULSe#:STATe?", .callback = SCPI_PulseStatusQ,}, \
-    {.pattern = "PULSe#:PIN", .callback = SCPI_PulsePin,}, \
-    {.pattern = "PULSe#:PIN?", .callback = SCPI_PulsePinQ,}, \
-    {.pattern = "PULSe#:DIVider", .callback = SCPI_PulseClockDivider,}, \
-    {.pattern = "PULSe#:DIVider?", .callback = SCPI_PulseClockDividerQ,}, \
-    {.pattern = "PULSe#:UNITs", .callback = SCPI_PulseUnits,}, \
-    {.pattern = "PULSe#:UNITs?", .callback = SCPI_PulseUnitsQ,}, \
-    {.pattern = "PULSe#:DATA?", .callback = SCPI_PulseDataQ,}, \
-    {.pattern = "PULSe#:RESet", .callback = SCPI_PulseReset,}, \
-    {.pattern = "PULSe:DATA:STOre:OUTPuts", .callback = SCPI_PulseDataOutput,}, \
-    {.pattern = "PULSe:DATA:STOre:OUTPuts?", .callback = SCPI_PulseDataOutputQ,}, \
-    {.pattern = "PULSe:DATA:STOre:DELays", .callback = SCPI_PulseDataDelay,}, \
-    {.pattern = "PULSe:DATA:STOre:DELays?", .callback = SCPI_PulseDataDelayQ,}, \
-    {.pattern = "PULSe:DATA:STOre:CLEar", .callback = SCPI_PulseDataClear,}, \
-    {.pattern = "PULSe:DATA:STOre:APPly", .callback = SCPI_PulseDataApply,}, \
+    {.pattern = "SOURce:PULSe:SELect",    .callback = SCPI_PulseIndex,}, \
+    {.pattern = "SOURce:PULSe:SELect?",   .callback = SCPI_PulseIndexQ,}, \
+    {.pattern = "SOURce:PULSe#:STATe",    .callback = SCPI_PulseStatus,}, \
+    {.pattern = "SOURce:PULSe#:STATe?",   .callback = SCPI_PulseStatusQ,}, \
+    {.pattern = "SOURce:PULSe#:INPut",    .callback = SCPI_PulsePin,}, \
+    {.pattern = "SOURce:PULSe#:INPut?",   .callback = SCPI_PulsePinQ,}, \
+    {.pattern = "SOURce:PULSe#:DIVider",  .callback = SCPI_PulseClockDivider,}, \
+    {.pattern = "SOURce:PULSe#:DIVider?", .callback = SCPI_PulseClockDividerQ,}, \
+    {.pattern = "SOURce:PULSe#:UNITs",    .callback = SCPI_PulseUnits,}, \
+    {.pattern = "SOURce:PULSe#:UNITs?",   .callback = SCPI_PulseUnitsQ,}, \
+    {.pattern = "SOURce:PULSe#:DATA?",    .callback = SCPI_PulseDataQ,}, \
+    {.pattern = "SOURce:PULSe#:RESet",    .callback = SCPI_PulseReset,}, \
+    {.pattern = "SOURce:PULSe#:DATA:BUFFer:OUTPut",  .callback = SCPI_PulseDataOutput,}, \
+    {.pattern = "SOURce:PULSe#:DATA:BUFFer:OUTPut?", .callback = SCPI_PulseDataOutputQ,}, \
+    {.pattern = "SOURce:PULSe#:DATA:BUFFer:DELay",   .callback = SCPI_PulseDataDelay,}, \
+    {.pattern = "SOURce:PULSe#:DATA:BUFFer:DELay?",  .callback = SCPI_PulseDataDelayQ,}, \
+    {.pattern = "SOURce:PULSe#:DATA:BUFFer:CLEar",   .callback = SCPI_PulseDataClear,}, \
+    {.pattern = "SOURce:PULSe#:DATA:BUFFer:APPly",   .callback = SCPI_PulseDataApply,}, \
 
 void pulse_sequencer_cache_clear();
 

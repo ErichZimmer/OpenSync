@@ -13,15 +13,6 @@
 #include "sequencer/sequencer_common.h"
 #include "scpi_common.h"
 
-enum {
-    NANOSECOND = 0,
-    MICROSECOND,
-    MILLISECOND,
-    SECOND,
-    MINUTE,
-    HOUR
-};
-
 static double   pulse_sequence_buffer_delay[PULSE_INSTRUCTIONS_MAX / 2 - 1] = {0.0};
 static uint32_t pulse_sequence_buffer_output[PULSE_INSTRUCTIONS_MAX / 2 - 1] = {0};
 static size_t  pulse_sequence_buffer_output_read = 0;
@@ -65,6 +56,59 @@ void pulse_sequencer_cache_clear()
 }
 
 
+// Get pulse id from context and validate it. 
+// If valid, change pulse_id to that value
+bool SCPI_check_pulse_id_and_append_error(
+    scpi_t* context,
+    uint32_t* pulse_id
+) {
+    // Allocate some variables
+    int32_t numbers[1] = {0};
+    int32_t choice = 0;
+    uint32_t pulse_id_res = 0;
+
+    // If the system status is note (IDLE) or 5 (ABORTED), return an error
+    if (SCPI_check_running_and_append_error(context))
+    {
+        return SCPI_RES_ERR;
+    }
+
+    // Get clock sequencer ID
+    SCPI_CommandNumbers(
+        context,
+        numbers, 
+        1, // length (e.g., 1 element array)
+        STATEFUL // -1 means to use stateful sequencer ID
+    );
+
+    // Check if user specified sequencer ID
+    if (numbers[0] == STATEFUL)
+    {
+        pulse_id_res = pulse_id_stateful;
+    }
+    else
+    {
+        // Cast numbers to usable int type
+        pulse_id_res = (uint32_t) numbers[0];
+    }
+
+    // Validate the ID
+    if (!pulse_id_validate(pulse_id_res))
+    {
+        SCPI_ErrorPush(
+            context, 
+            SCPI_ERROR_INVALID_SUFFIX
+        );
+
+        return true;
+    }
+
+    *pulse_id = pulse_id_res;
+
+    return false;
+}
+
+
 // Set the stateful ID of a clock sequencer
 scpi_result_t SCPI_PulseIndex(
     scpi_t* context
@@ -86,7 +130,7 @@ scpi_result_t SCPI_PulseIndex(
     }
 
 
-    // Get clock sequencer ID
+    // Get pulse sequencer ID
     if (!SCPI_ParamUInt32(context, &pulse_id, TRUE))
     {
         return SCPI_RES_ERR;
@@ -134,43 +178,16 @@ scpi_result_t SCPI_PulseStatus(
     uint32_t pulse_id = 0;
 
     // If the system status is note (IDLE) or 5 (ABORTED), return an error
-    if (is_running())
+    if (SCPI_check_running_and_append_error(context))
     {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_PROGRAM_CURRENTLY_RUNNING
-        );
-
         return SCPI_RES_ERR;
     }
 
     // Get pulse sequencer ID
-    SCPI_CommandNumbers(
+    if (SCPI_check_pulse_id_and_append_error(
         context,
-        numbers, 
-        1, // length (e.g., 1 element array)
-        STATEFUL // -1 means to use stateful sequencer ID
-    );
-
-    // Check if user specified sequencer ID
-    if (numbers[0] == STATEFUL)
-    {
-        pulse_id = pulse_id_stateful;
-    }
-    else
-    {
-        // Cast numbers to usable int type
-        pulse_id = (uint32_t) numbers[0];
-    }
-
-    // Validate the ID
-    if (!pulse_id_validate(pulse_id))
-    {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_INVALID_SUFFIX
-        );
-
+        &pulse_id
+    )) {
         return SCPI_RES_ERR;
     }
 
@@ -221,32 +238,10 @@ scpi_result_t SCPI_PulseStatusQ(
     uint32_t pulse_id = 0;
 
     // Get pulse sequencer ID
-    SCPI_CommandNumbers(
+    if (SCPI_check_pulse_id_and_append_error(
         context,
-        numbers, 
-        1, // length (e.g., 1 element array)
-        STATEFUL // -1 means to use stateful sequencer ID
-    );
-
-    // Check if user specified sequencer ID
-    if (numbers[0] == STATEFUL)
-    {
-        pulse_id = pulse_id_stateful;
-    }
-    else
-    {
-        // Cast numbers to usable int type
-        pulse_id = (uint32_t) numbers[0];
-    }
-
-    // Validate the ID
-    if (!pulse_id_validate(pulse_id))
-    {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_INVALID_SUFFIX
-        );
-
+        &pulse_id
+    )) {
         return SCPI_RES_ERR;
     }
 
@@ -275,44 +270,17 @@ scpi_result_t SCPI_PulsePin(
     uint32_t param = 0;
     uint clock_pin_id = 0;
 
-    // !If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
-    if (is_running())
+    /// If the system status is note (IDLE) or 5 (ABORTED), return an error
+    if (SCPI_check_running_and_append_error(context))
     {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_PROGRAM_CURRENTLY_RUNNING
-        );
-
         return SCPI_RES_ERR;
     }
 
     // Get pulse sequencer ID
-    SCPI_CommandNumbers(
+    if (SCPI_check_pulse_id_and_append_error(
         context,
-        numbers, 
-        1, // length (e.g., 1 element array)
-        STATEFUL // -1 means to use stateful sequencer ID
-    );
-
-    // Check if user specified sequencer ID
-    if (numbers[0] == STATEFUL)
-    {
-        pulse_id = pulse_id_stateful;
-    }
-    else
-    {
-        // Cast numbers to usable int type
-        pulse_id = (uint32_t) numbers[0];
-    }
-
-    // Validate the ID
-    if (!pulse_id_validate(pulse_id))
-    {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_INVALID_SUFFIX
-        );
-
+        &pulse_id
+    )) {
         return SCPI_RES_ERR;
     }
 
@@ -353,32 +321,10 @@ scpi_result_t SCPI_PulsePinQ(
     uint32_t pulse_id = 0;
 
     // Get pulse sequencer ID
-    SCPI_CommandNumbers(
+    if (SCPI_check_pulse_id_and_append_error(
         context,
-        numbers, 
-        1, // length (e.g., 1 element array)
-        STATEFUL // -1 means to use stateful sequencer ID
-    );
-
-    // Check if user specified sequencer ID
-    if (numbers[0] == STATEFUL)
-    {
-        pulse_id = pulse_id_stateful;
-    }
-    else
-    {
-        // Cast numbers to usable int type
-        pulse_id = (uint32_t) numbers[0];
-    }
-
-    // Validate the ID
-    if (!pulse_id_validate(pulse_id))
-    {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_INVALID_SUFFIX
-        );
-
+        &pulse_id
+    )) {
         return SCPI_RES_ERR;
     }
 
@@ -409,44 +355,17 @@ scpi_result_t SCPI_PulseClockDivider(
     uint32_t pulse_id = 0;
     uint32_t clock_divider = 1;
 
-    // !If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
-    if (is_running())
+    // If the system status is note (IDLE) or 5 (ABORTED), return an error
+    if (SCPI_check_running_and_append_error(context))
     {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_PROGRAM_CURRENTLY_RUNNING
-        );
-
         return SCPI_RES_ERR;
     }
 
     // Get pulse sequencer ID
-    SCPI_CommandNumbers(
+    if (SCPI_check_pulse_id_and_append_error(
         context,
-        numbers, 
-        1, // length (e.g., 1 element array)
-        STATEFUL // -1 means to use stateful sequencer ID
-    );
-
-    // Check if user specified sequencer ID
-    if (numbers[0] == STATEFUL)
-    {
-        pulse_id = pulse_id_stateful;
-    }
-    else
-    {
-        // Cast numbers to usable int type
-        pulse_id = (uint32_t) numbers[0];
-    }
-
-    // Validate the ID
-    if (!pulse_id_validate(pulse_id))
-    {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_INVALID_SUFFIX
-        );
-
+        &pulse_id
+    )) {
         return SCPI_RES_ERR;
     }
 
@@ -507,32 +426,10 @@ scpi_result_t SCPI_PulseClockDividerQ(
     uint32_t pulse_id = 0;
 
     // Get pulse sequencer ID
-    SCPI_CommandNumbers(
+    if (SCPI_check_pulse_id_and_append_error(
         context,
-        numbers, 
-        1, // length (e.g., 1 element array)
-        STATEFUL // -1 means to use stateful sequencer ID
-    );
-
-    // Check if user specified sequencer ID
-    if (numbers[0] == STATEFUL)
-    {
-        pulse_id = pulse_id_stateful;
-    }
-    else
-    {
-        // Cast numbers to usable int type
-        pulse_id = (uint32_t) numbers[0];
-    }
-
-    // Validate the ID
-    if (!pulse_id_validate(pulse_id))
-    {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_INVALID_SUFFIX
-        );
-
+        &pulse_id
+    )) {
         return SCPI_RES_ERR;
     }
 
@@ -562,55 +459,28 @@ scpi_result_t SCPI_PulseUnits(
     uint32_t pulse_id = 0;
     uint64_t unit_offset = 0;
 
-    // !If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
-    if (is_running())
+    // If the system status is note (IDLE) or 5 (ABORTED), return an error
+    if (SCPI_check_running_and_append_error(context))
     {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_PROGRAM_CURRENTLY_RUNNING
-        );
-
         return SCPI_RES_ERR;
     }
 
     // Get pulse sequencer ID
-    SCPI_CommandNumbers(
+    if (SCPI_check_pulse_id_and_append_error(
         context,
-        numbers, 
-        1, // length (e.g., 1 element array)
-        STATEFUL // -1 means to use stateful sequencer ID
-    );
-
-    // Check if user specified sequencer ID
-    if (numbers[0] == STATEFUL)
-    {
-        pulse_id = pulse_id_stateful;
-    }
-    else
-    {
-        // Cast numbers to usable int type
-        pulse_id = (uint32_t) numbers[0];
-    }
-
-    // Validate the ID
-    if (!pulse_id_validate(pulse_id))
-    {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_INVALID_SUFFIX
-        );
-
+        &pulse_id
+    )) {
         return SCPI_RES_ERR;
     }
 
     // Valid clock cycle resolution choices
     const scpi_choice_def_t options[] = {
-        {"NANOsecond",      NANOSECOND},
-        {"MICROsecond",     MICROSECOND},
-        {"MILLIsecond",     MILLISECOND},
-        {"SECond",          SECOND},
-        {"MINute",          MINUTE},
-        {"HOUR",            HOUR},
+        {"NS",  NANOSECOND},
+        {"US",  MICROSECOND},
+        {"MS",  MILLISECOND},
+        {"S",   SECOND},
+        {"M",   MINUTE},
+        {"H",   HOUR},
         SCPI_CHOICE_LIST_END
     };
 
@@ -627,25 +497,25 @@ scpi_result_t SCPI_PulseUnits(
     switch (choice)
     {
         case NANOSECOND:
-            unit_offset = 1.0;
+            unit_offset = OFFSET_NANOSECOND;
             break;
         case MICROSECOND:
-            unit_offset = 1e3;
+            unit_offset = OFFSET_MICROSECOND;
             break;
         case MILLISECOND:
-            unit_offset = 1e6;
+            unit_offset = OFFSET_MILLISECOND;
             break;
         case SECOND:
-            unit_offset = 1e9;
+            unit_offset = OFFSET_SECOND;
             break;
         case MINUTE:
-            unit_offset = 6e10;
+            unit_offset = OFFSET_MINUTE;
             break;
         case HOUR:
-            unit_offset = 3.6e12;
+            unit_offset = OFFSET_HOUR;
             break;
         default:
-            unit_offset = 1.0;
+            unit_offset = OFFSET_NANOSECOND;
     }
 
     // Cast choice into usable clock divider type
@@ -678,32 +548,10 @@ scpi_result_t SCPI_PulseUnitsQ(
     uint32_t pulse_id = 0;
 
     // Get pulse sequencer ID
-    SCPI_CommandNumbers(
+    if (SCPI_check_pulse_id_and_append_error(
         context,
-        numbers, 
-        1, // length (e.g., 1 element array)
-        STATEFUL // -1 means to use stateful sequencer ID
-    );
-
-    // Check if user specified sequencer ID
-    if (numbers[0] == STATEFUL)
-    {
-        pulse_id = pulse_id_stateful;
-    }
-    else
-    {
-        // Cast numbers to usable int type
-        pulse_id = (uint32_t) numbers[0];
-    }
-
-    // Validate the ID
-    if (!pulse_id_validate(pulse_id))
-    {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_INVALID_SUFFIX
-        );
-
+        &pulse_id
+    )) {
         return SCPI_RES_ERR;
     }
 
@@ -727,14 +575,21 @@ scpi_result_t SCPI_PulseUnitsQ(
 scpi_result_t SCPI_PulseDataOutput(
     scpi_t* context
 ) {
-    // If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
-    if(is_running())
-    {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_PROGRAM_CURRENTLY_RUNNING
-        );
+    // Allocate some variables
+    int32_t numbers[1] = {0};
+    uint32_t pulse_id = 0;
 
+    // If the system status is note (IDLE) or 5 (ABORTED), return an error
+    if (SCPI_check_running_and_append_error(context))
+    {
+        return SCPI_RES_ERR;
+    }
+
+    // Get pulse sequencer ID (Not used right now)
+    if (SCPI_check_pulse_id_and_append_error(
+        context,
+        &pulse_id
+    )) {
         return SCPI_RES_ERR;
     }
 
@@ -761,6 +616,24 @@ scpi_result_t SCPI_PulseDataOutput(
 scpi_result_t SCPI_PulseDataOutputQ(
     scpi_t* context
 ) {
+    // Allocate some variables
+    int32_t numbers[1] = {0};
+    uint32_t pulse_id = 0;
+
+    // If the system status is note (IDLE) or 5 (ABORTED), return an error
+    if (SCPI_check_running_and_append_error(context))
+    {
+        return SCPI_RES_ERR;
+    }
+
+    // Get pulse sequencer ID (Not currently used)
+    if (SCPI_check_pulse_id_and_append_error(
+        context,
+        &pulse_id
+    )) {
+        return SCPI_RES_ERR;
+    }
+    
     SCPI_ResultArrayUInt32(
         context,
         pulse_sequence_buffer_output,
@@ -776,14 +649,21 @@ scpi_result_t SCPI_PulseDataOutputQ(
 scpi_result_t SCPI_PulseDataDelay(
     scpi_t* context
 ) {
-    // If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
-    if(is_running())
-    {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_PROGRAM_CURRENTLY_RUNNING
-        );
+    // Allocate some variables
+    int32_t numbers[1] = {0};
+    uint32_t pulse_id = 0;
 
+    // If the system status is note (IDLE) or 5 (ABORTED), return an error
+    if (SCPI_check_running_and_append_error(context))
+    {
+        return SCPI_RES_ERR;
+    }
+
+    // Get pulse sequencer ID (Not used right now)
+    if (SCPI_check_pulse_id_and_append_error(
+        context,
+        &pulse_id
+    )) {
         return SCPI_RES_ERR;
     }
 
@@ -810,6 +690,24 @@ scpi_result_t SCPI_PulseDataDelay(
 scpi_result_t SCPI_PulseDataDelayQ(
     scpi_t* context
 ) {
+    // Allocate some variables
+    int32_t numbers[1] = {0};
+    uint32_t pulse_id = 0;
+
+    // If the system status is note (IDLE) or 5 (ABORTED), return an error
+    if (SCPI_check_running_and_append_error(context))
+    {
+        return SCPI_RES_ERR;
+    }
+
+    // Get pulse sequencer ID (Not currently used)
+    if (SCPI_check_pulse_id_and_append_error(
+        context,
+        &pulse_id
+    )) {
+        return SCPI_RES_ERR;
+    }
+
     SCPI_ResultArrayDouble(
         context,
         pulse_sequence_buffer_delay,
@@ -826,16 +724,21 @@ scpi_result_t SCPI_PulseDataClear(
     scpi_t* context
 ) {
     // Allocate some variables
+    int32_t numbers[1] = {0};
+    uint32_t pulse_id = 0;
     size_t instructions_read=0;
 
-    // If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
-    if(is_running())
+    // If the system status is note (IDLE) or 5 (ABORTED), return an error
+    if (SCPI_check_running_and_append_error(context))
     {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_PROGRAM_CURRENTLY_RUNNING
-        );
+        return SCPI_RES_ERR;
+    }
 
+    // Get pulse sequencer ID (Not currently used)
+    if (SCPI_check_pulse_id_and_append_error(
+        context,
+        &pulse_id
+    )) {
         return SCPI_RES_ERR;
     }
 
@@ -852,37 +755,24 @@ scpi_result_t SCPI_PulseDataApply(
     scpi_t* context
 ) {
     // Allocate some variables
+    int32_t numbers[1] = {0};
     uint32_t pulse_id = 0;
     uint32_t delay_cycles = 0;
 
     uint32_t local_buffer[PULSE_INSTRUCTIONS_MAX] = {};
     const uint32_t local_buffer_size = PULSE_INSTRUCTIONS_MAX;
 
-    // !If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
-    if (is_running())
+    // If the system status is note (IDLE) or 5 (ABORTED), return an error
+    if (SCPI_check_running_and_append_error(context))
     {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_PROGRAM_CURRENTLY_RUNNING
-        );
-
         return SCPI_RES_ERR;
     }
 
-    // Get pulse sequencer ID
-    if (!SCPI_ParamUInt32(context, &pulse_id, FALSE))
-    {
-        pulse_id = pulse_id_stateful;
-    }
-
-    // Validate the ID
-    if (!pulse_id_validate(pulse_id))
-    {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_PARAMETER_ERROR
-        );
-
+    // Get pulse sequencer ID (Not currently used)
+    if (SCPI_check_pulse_id_and_append_error(
+        context,
+        &pulse_id
+    )) {
         return SCPI_RES_ERR;
     }
 
@@ -1014,32 +904,10 @@ scpi_result_t SCPI_PulseDataQ(
     uint32_t pulse_id = 0;
 
     // Get pulse sequencer ID
-    SCPI_CommandNumbers(
+    if (SCPI_check_pulse_id_and_append_error(
         context,
-        numbers, 
-        1, // length (e.g., 1 element array)
-        STATEFUL // -1 means to use stateful sequencer ID
-    );
-
-    // Check if user specified sequencer ID
-    if (numbers[0] == STATEFUL)
-    {
-        pulse_id = pulse_id_stateful;
-    }
-    else
-    {
-        // Cast numbers to usable int type
-        pulse_id = (uint32_t) numbers[0];
-    }
-
-    // Validate the ID
-    if (!pulse_id_validate(pulse_id))
-    {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_INVALID_SUFFIX
-        );
-
+        &pulse_id
+    )) {
         return SCPI_RES_ERR;
     }
 
@@ -1066,44 +934,17 @@ scpi_result_t SCPI_PulseReset(
     int32_t numbers[1] = {0};
     uint32_t pulse_id = 0;
 
-    // If the system status is not 0 (IDLE) or 5 (ABORTED), return an error
-    if (is_running())
+    // If the system status is note (IDLE) or 5 (ABORTED), return an error
+    if (SCPI_check_running_and_append_error(context))
     {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_PROGRAM_CURRENTLY_RUNNING
-        );
-
         return SCPI_RES_ERR;
     }
 
     // Get pulse sequencer ID
-    SCPI_CommandNumbers(
+    if (SCPI_check_pulse_id_and_append_error(
         context,
-        numbers, 
-        1, // length (e.g., 1 element array)
-        STATEFUL // -1 means to use stateful sequencer ID
-    );
-
-    // Check if user specified sequencer ID
-    if (numbers[0] == STATEFUL)
-    {
-        pulse_id = pulse_id_stateful;
-    }
-    else
-    {
-        // Cast numbers to usable int type
-        pulse_id = (uint32_t) numbers[0];
-    }
-
-    // Validate the ID
-    if(!pulse_id_validate(pulse_id))
-    {
-        SCPI_ErrorPush(
-            context, 
-            SCPI_ERROR_INVALID_SUFFIX
-        );
-
+        &pulse_id
+    )) {
         return SCPI_RES_ERR;
     }
 

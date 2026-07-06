@@ -50,8 +50,7 @@ void sequencer_output_sm_helper_init(
 );
 
 void sequencer_output_sm_config(
-    struct pulse_config* config,
-    uint offset
+    struct pulse_config* config
 );
 
 void sequencer_output_dma_free(

@@ -1,7 +1,7 @@
 ; 
 ; Copyright 2025, Erich Zimmer
 ;
-; sequencer_pio_clock_triggered_falling.pio
+; sequencer_pio_clock_triggered_rising.pio
 ; 
 ; This file contains the pio assmembly implmentation of a triggered sequencer
 ; clock. This clock source relies on external triggers to send the internal
@@ -12,7 +12,7 @@
 ; Pulse sequence reps are determined by the ring buffer (2 instructions * reps_count)
 
 ; Defines
-.program sequencer_pio_clock_triggered_falling
+.program sequencer_pio_clock_triggered_rising
 
 .wrap_target
 trigger_skips:

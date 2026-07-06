@@ -19,6 +19,7 @@ struct pulse_config
     uint out_pins_count;
     uint clock_pin;
     int dma_chan;
+    uint program_offset;
     uint32_t __attribute__((aligned(PULSE_INSTRUCTIONS_MAX * sizeof(uint32_t)))) instructions[PULSE_INSTRUCTIONS_MAX];
     uint clock_divider;
     double unit_offset;

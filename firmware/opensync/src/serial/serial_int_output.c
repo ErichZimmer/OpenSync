@@ -55,12 +55,15 @@ void serial_print_clock_configs(
     {
         fast_serial_printf("Clock config id: %i\r\n", i);
         fast_serial_printf("Clock config is active: %i\r\n", config_array[i].active);
-        fast_serial_printf("Clock config clock type: %i\r\n", config_array[i].clock_type);
+        fast_serial_printf("Clock config clock mode: %i\r\n", config_array[i].clock_mode);
         fast_serial_printf("Clock config clock divider: %i\r\n", config_array[i].clock_divider);
         fast_serial_printf("Clock config sm: %i\r\n", config_array[i].sm);
         fast_serial_printf("Clock config dma channel: %i\r\n", config_array[i].dma_chan);
         fast_serial_printf("Clock config clock pin: %i\r\n", config_array[i].clock_pin);
         fast_serial_printf("Clock config trigger pin: %i\r\n", config_array[i].trigger_pin);
+        fast_serial_printf("Clock config trigger mode: %i\r\n", config_array[i].trigger_source);
+        fast_serial_printf("Clock config trigger edge: %i\r\n", config_array[i].trigger_edge);
+        fast_serial_printf("Clock config trigger gate level: %i\r\n", config_array[i].trigger_level);
         serial_print_clock_instructions(
             &config_array[i]
         );

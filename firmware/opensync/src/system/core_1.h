@@ -43,10 +43,24 @@ bool sequencer_pulse_validate(
     struct pulse_config* config
 );
 
+bool sequencer_clock_mode_set(
+    uint32_t clock_id,
+    uint32_t requested_mode
+);
 
-bool sequencer_clock_type_set(
-     uint32_t clock_id,
-    uint32_t requested_type
+bool sequencer_trigger_mode_set(
+    uint32_t clock_id,
+    uint32_t requested_mode
+);
+
+bool sequencer_trigger_edge_set(
+    uint32_t clock_id,
+    uint32_t requested_edge
+);
+
+bool sequencer_trigger_level_set(
+    uint32_t clock_id,
+    uint32_t requested_level
 );
 
 bool clock_id_validate(
@@ -76,19 +90,23 @@ bool clock_sequencer_state_set(
     bool clock_state
 );
 
-bool clock_pin_trigger_set(
+bool trigger_pin_set(
     uint32_t clock_id,
-    uint32_t trigger_pin
+    uint32_t trigger_pin_id
 );
 
-bool clock_reps_trigger_set(
+bool trigger_count_set(
     uint32_t clock_id,
     uint32_t trigger_reps
 );
 
-bool clock_trigger_instructions_load(
+bool trigger_skip_set(
     uint32_t clock_id,
-    uint32_t trigger_skips,
+    uint32_t trigger_skips
+);
+
+bool trigger_delay_set(
+    uint32_t clock_id,
     uint32_t trigger_delay
 );
 
@@ -101,6 +119,12 @@ bool clock_unit_offset_set(
     uint32_t clock_id,
     double units_offset
 );
+
+bool clock_trigger_unit_offset_set(
+    uint32_t clock_id,
+    double units_offset
+);
+
 
 bool clock_sequencer_state_reset(
     uint32_t clock_id

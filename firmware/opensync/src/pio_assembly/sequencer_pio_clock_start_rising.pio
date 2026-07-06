@@ -1,0 +1,41 @@
+; 
+; Copyright 2025, Erich Zimmer
+;
+; sequencer_pio_clock_freerun_start_rising.pio
+; 
+; This file contains the pio assmembly implmentation of a free running sequencer
+; clock. This clock source does not accept any external triggers and is
+; ran completely internally (e.g., software trigger) after the initial
+; external trigger rising edge is detected.
+
+; Defines
+.program sequencer_pio_clock_freerun_start_rising
+
+trigger_pulse_wait:
+    wait 0 pin 0 ; make sure the falling edge is recieved first
+    wait 1 pin 0 ; then wait for the rising edge
+
+.wrap_target
+pulse_reps_pull_store:
+    pull block
+    mov x, OSR ; store pulse repition count
+
+pulse_delay_block:
+    pull block ; pull delay instructions from instruction set
+
+pulse_reps_check:
+    jmp !x pulse_reps_pull_store ; If x register (reps) is 0, then skip instruction set
+
+pulse_delay_store:
+    mov y, OSR ; store pulse delay (e.g., pulse-to-pulse distance)
+
+pulse_trigger_output:
+    set pins, 1 [3] ; 3 cycles pulse width (2 cycles + 1) (see SDLC docs on why)
+    set pins, 0 
+
+pulse_trigger_delay:
+    jmp y-- pulse_trigger_delay
+
+pulse_trigger_reset:
+    jmp x-- pulse_delay_store
+.wrap

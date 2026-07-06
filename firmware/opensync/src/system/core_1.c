@@ -16,11 +16,6 @@
 #include "status/debug_status.h"
 #include "serial/serial_int_output.h"
 
-
-static uint offset_clock_freerun = 0;
-static uint offset_clock_triggered_rising = 0;
-static uint offset_output = 0;
-
 static struct clock_config sequencer_clock_config[CLOCKS_MAX];
 static struct pulse_config sequencer_pulse_config[CLOCKS_MAX];
 
@@ -31,22 +26,6 @@ const uint32_t ARM_SEQUENCER = 1;
 
 void core_1_init()
 {
-    // Freerun PIO clock program
-    offset_clock_freerun = sequencer_program_freerun_add(
-        pio_clocks
-    );
-
-    // Triggered PIO clock programs
-    offset_clock_triggered_rising = sequencer_program_triggered_add(
-        pio_clocks,
-        CLOCK_TRIGGERED
-    );
-
-    // Sequencer PIO pulse program
-    offset_output = sequencer_program_output_add(
-        pio_output
-    );
-
     sequencer_clocks_init(
         sequencer_clock_config,
         pio_clocks
@@ -91,7 +70,7 @@ void core_1_init()
 
         debug_message_print(
             debug_status_local,
-            "Internal Message: Starting to configure clock state machines\r\n"
+            "Internal Message: Starting to configure clock channel state machines\r\n"
         );
 
         // Configure all active channels
@@ -99,12 +78,12 @@ void core_1_init()
 
         debug_message_print(
             debug_status_local,
-            "Internal Message: Starting to configure output state machines\r\n"
+            "Internal Message: Starting to configure pulse channel state machines\r\n"
         );
 
         sequencer_output_sm_config_active();
 
-        // Start the state machines
+        // Start the state machines if everything configured properly
         if (sequencer_status_get() != ABORT_REQUESTED)
         {
             sequencer_status_set(RUNNING);
@@ -209,22 +188,27 @@ void debug_message_print_i(
     }
 }
 
+
+// return all three clock configs
 struct clock_config* sequencer_clock_config_get()
 {
     return sequencer_clock_config;
 }
 
+
+// return all three pulse configs
 struct pulse_config* sequencer_pulse_config_get()
 {
     return sequencer_pulse_config;
 }
 
+
 // NOTE: Has debug messages incl.
+// Configure all active state machines based on static array of clock
+// configs.
 void sequencer_clock_sm_config_active()
 {
     uint32_t debug_status_local_func = debug_status_get();
-
-    uint program_offset_local_func = 0;
 
     for (uint32_t i = 0; i < CLOCKS_MAX; i++)
     {
@@ -235,30 +219,9 @@ void sequencer_clock_sm_config_active()
                 "Internal Message: Starting to configure clock state machine %i\r\n",
                 i
             );
-            
-            switch (sequencer_clock_config[i].clock_type)
-            {
-                case CLOCK_FREERUN:
-                    program_offset_local_func = offset_clock_freerun;
-                    break;
-
-                // TODO: Remove all instances of CLOCK_TRIGGERED
-                case CLOCK_TRIGGERED:
-                    program_offset_local_func = offset_clock_triggered_rising;
-                    break;
-
-                case CLOCK_TRIGGERED_RISING:
-                    program_offset_local_func = offset_clock_triggered_rising;
-                    break;
-
-                default:
-                    // We should never get to this point...
-                    return;
-            }
 
             sequencer_clock_sm_config(
-                &sequencer_clock_config[i],
-                program_offset_local_func
+                &sequencer_clock_config[i]
             );
 
             debug_message_print_i(
@@ -272,6 +235,8 @@ void sequencer_clock_sm_config_active()
 
 
 // NOTE: Has debug messages incl.
+// Configure all active state machines based on static array of pulse
+// configs.
 void sequencer_output_sm_config_active()
 {
     uint32_t debug_status_local_func = debug_status_get();
@@ -284,6 +249,7 @@ void sequencer_output_sm_config_active()
         );
 
         sequencer_status_set(ABORT_REQUESTED);
+        return;
     }
 
     for (uint32_t i = 0; i < CLOCKS_MAX; i++)
@@ -299,7 +265,7 @@ void sequencer_output_sm_config_active()
                 );
 
                 sequencer_status_set(ABORT_REQUESTED);
-                break;
+                return;
             }
 
             debug_message_print_i(
@@ -309,8 +275,7 @@ void sequencer_output_sm_config_active()
             );
 
             sequencer_output_sm_config(
-                &sequencer_pulse_config[0],
-                offset_output
+                &sequencer_pulse_config[i]
             );
 
             debug_message_print_i(
@@ -323,6 +288,7 @@ void sequencer_output_sm_config_active()
 }
 
 
+// Get bit mask of all active state machiens for clock programs
 uint sequencer_clock_sm_mask_get()
 {
     uint pio_clocks_sm_mask = 0;
@@ -338,6 +304,7 @@ uint sequencer_clock_sm_mask_get()
 }
 
 
+// Get bit mask of all active state machiens for pulse programs
 uint sequencer_output_sm_mask_get()
 {
     uint pio_output_sm_mask = 0;
@@ -355,59 +322,52 @@ uint sequencer_output_sm_mask_get()
 
 
 // NOTE: Has debug messages incl.
+// Stall the synchronizer core until dma channels are empty.
+// This has the effect of halting the program at this entry point so
+// the synchronizer does not continue to execute later insructions.
+// This is accomplished by stalling the program on the dma channel for
+// the clock programs when software  triggers are used, or pulse
+// configs when using external trigger.
+// TODO: Validate that the stall of external triggers actually works
+// as indented.
 void sequencer_clock_sm_stall()
 {
     uint32_t debug_status_local_func = debug_status_get();
 
     for (uint32_t i = 0; i < CLOCKS_MAX; ++i)
     {
-        debug_message_print_i(
-            debug_status_local_func,
-            "Internal Message: Entering stall for clock id: %i\r\n",
-            i
-        );
-
+        // If a clock is not configured, then do not stall
         if (sequencer_clock_config[i].configured != true)
         {
             continue;
         }
 
-        // We have to check pulse channel during trigger modes since clock isn't use
-        switch (sequencer_clock_config[i].clock_type)
-        {
-        case CLOCK_FREERUN:
-            while((dma_channel_is_busy(sequencer_clock_config[i].dma_chan)) &&
-                (sequencer_status_get() != ABORT_REQUESTED))
-                {
-                    sleep_us(100);
-                }
-            break;
-
-        // TODO: Remove all instances of CLOCK_TRIGGERED
-        case CLOCK_TRIGGERED:
-            while((dma_channel_is_busy(sequencer_pulse_config[i].dma_chan)) &&
-                (sequencer_status_get() != ABORT_REQUESTED))
-            {
-                sleep_us(100);
-            }
-            break;
-
-        case CLOCK_TRIGGERED_RISING:
-            while((dma_channel_is_busy(sequencer_pulse_config[i].dma_chan)) &&
-                (sequencer_status_get() != ABORT_REQUESTED))
-            {
-                sleep_us(100);
-            }
-            break;
-
-        default:
-            // We should never get to this point...
-            return;
+        debug_message_print_i(
+            debug_status_local_func,
+            "Internal Message: Entering stall for clock id: %i\r\n",
+            i
+        );
+        
+        // Check if a dma channel is busy or if transmit fifo is empty.
+        // If dma channel is not busy and transmit fifo is empty, we can
+        // assume that the clock program is finished and undo the stall.
+        while(
+            (dma_channel_is_busy(sequencer_clock_config[i].dma_chan) ||
+            !pio_sm_is_tx_fifo_empty(
+                sequencer_clock_config[i].pio,
+                sequencer_clock_config[i].sm
+            )) &&
+            (sequencer_status_get() != ABORT_REQUESTED)
+        ) {
+            // Check status every 100 microseconds / 10 kHz
+            sleep_us(100);
         }
     }
 }
 
 
+// For all active clock and pulse programs, free them.
+// TODO: Move checks into sequencer free/unclaim functions; not here
 void sequencer_sm_active_free()
 {
     // Cleanup clock configs
@@ -434,6 +394,11 @@ void sequencer_sm_active_free()
 }
 
 
+// For all pulse channels, validate that each output channel is tied
+// to only a single pulse channel. While pulse channels can modify output
+// channels linked to other pulse channels, the same output channel cannot
+// accept two state changes at the same time which would cause bus contention
+// and excess jitter. To prevent this, no pulse channels can cross over at all.
 bool sequencer_pulse_conflict_check()
 {
     #define NUM_BITS 32
@@ -480,6 +445,7 @@ bool sequencer_pulse_conflict_check()
 }
 
 
+// Check that pulse instructions are valid
 bool sequencer_pulse_validate(
     struct pulse_config* config
 ) {
@@ -529,7 +495,7 @@ bool clock_id_validate(
 bool pulse_id_validate(
     uint32_t pulse_id
 ) {
-    // Make sure the internal clock ID is supported
+    // Make sure the internal pulse ID is supported
     for (uint32_t i = 0; i < PULSES_MAX; i++)
     {
         uint32_t supported_pulse_id = INTERNAL_PULSE_IDS[i];
@@ -548,7 +514,7 @@ bool pulse_id_validate(
 bool trigger_id_validate(
     uint32_t trigger_id
 ) {
-    // Make sure the internal clock ID is supported
+    // Make sure the trigger ID is supported
     for (uint32_t i = 0; i < TRIGGERS_MAX; i++)
     {
         uint32_t supported_trigger_id = EXTERNAL_TRIGGER_IDS[i];
@@ -563,9 +529,67 @@ bool trigger_id_validate(
 }
 
 
-bool sequencer_clock_type_set(
+// Make sure clock mode is supported
+bool validate_clock_mode(
+    uint32_t clock_mode
+) {
+    if (clock_mode == CLOCK_SCPI_MODE_FREERUN ||
+        clock_mode == CLOCK_SCPI_MODE_SEQUENCER
+    ) {
+        return 1;
+    }
+
+    return 0;
+}
+
+
+// Make sure trigger mode is supported
+bool validate_trigger_mode(
+    uint32_t trigger_mode
+) {
+    if (trigger_mode == CLOCK_TRIG_SOURCE_IMMEDIATE ||
+        trigger_mode == CLOCK_TRIG_SOURCE_EDGE ||
+        trigger_mode == CLOCK_TRIG_SOURCE_GATE
+    ) {
+        return 1;
+    }
+
+    return 0;
+}
+
+
+// Make sure trigger edge is supported
+bool validate_trigger_edge(
+    uint32_t trigger_edge
+) {
+    if (trigger_edge == CLOCK_TRIG_EDGE_POSITIVE ||
+        trigger_edge == CLOCK_TRIG_EDGE_NEGATIVE
+    ) {
+        return 1;
+    }
+
+    return 0;
+}
+
+
+// Make sure trigger level is supported
+bool validate_trigger_level(
+    uint32_t trigger_level
+) {
+    if (trigger_level == CLOCK_GATE_LEVEL_HIGH ||
+        trigger_level == CLOCK_GATE_LEVEL_LOW
+    ) {
+        return 1;
+    }
+
+    return 0;
+}
+
+
+// Set the clock type of a clock channel
+bool sequencer_clock_mode_set(
     uint32_t clock_id,
-    uint32_t requested_type
+    uint32_t requested_mode
 ) {
 
     // Validate clock ID
@@ -574,18 +598,91 @@ bool sequencer_clock_type_set(
         return 0;
     }
 
-    // Clock types must be zero to max enum type (CLOCK_TRIGGERED in this case)
-    if (requested_type > CLOCK_TRIGGERED)
+    // Check clock type is valid and supported
+    if (!validate_clock_mode(requested_mode))
     {
         return 0;
     }
 
-    sequencer_clock_config[clock_id].clock_type = requested_type;
+    sequencer_clock_config[clock_id].clock_mode = requested_mode;
 
     return 1;
 }
 
 
+// Set the trigger type of a clock channel
+bool sequencer_trigger_mode_set(
+    uint32_t clock_id,
+    uint32_t requested_mode
+) {
+
+    // Validate clock ID
+    if(!clock_id_validate(clock_id))
+    {
+        return 0;
+    }
+
+    // Check clock type is valid and supported
+    if (!validate_trigger_mode(requested_mode))
+    {
+        return 0;
+    }
+
+    sequencer_clock_config[clock_id].trigger_source = requested_mode;
+
+    return 1;
+}
+
+
+// Set the trigger edge of a clock channel
+bool sequencer_trigger_edge_set(
+    uint32_t clock_id,
+    uint32_t requested_edge
+) {
+
+    // Validate clock ID
+    if(!clock_id_validate(clock_id))
+    {
+        return 0;
+    }
+
+    // Check clock type is valid and supported
+    if (!validate_trigger_edge(requested_edge))
+    {
+        return 0;
+    }
+
+    sequencer_clock_config[clock_id].trigger_edge = requested_edge;
+
+    return 1;
+}
+
+
+// Set the clock type of a clock channel
+bool sequencer_trigger_level_set(
+    uint32_t clock_id,
+    uint32_t requested_level
+) {
+
+    // Validate clock ID
+    if(!clock_id_validate(clock_id))
+    {
+        return 0;
+    }
+
+    // Check clock type is valid and supported
+    if (!validate_trigger_level(requested_level))
+    {
+        return 0;
+    }
+
+    sequencer_clock_config[clock_id].trigger_level = requested_level;
+
+    return 1;
+}
+
+
+// Set the clock divider of a clock channel
 bool clock_divider_set(
     uint32_t clock_id,
     uint32_t clock_divider_copy
@@ -609,6 +706,7 @@ bool clock_divider_set(
 }
 
 
+// Set the clock divider of a pulse channel
 bool pulse_divider_set(
     uint32_t pulse_id,
     uint32_t clock_divider_copy
@@ -632,7 +730,25 @@ bool pulse_divider_set(
 }
 
 
-bool clock_pin_trigger_set(
+// Choose whether or not this clock channel is going to be loaded into sm memory
+bool clock_sequencer_state_set(
+    uint32_t clock_id,
+    bool clock_state
+) {
+    // Validate clock ID
+    if (!clock_id_validate(clock_id))
+    {
+        return 0;
+    }
+
+    sequencer_clock_config[clock_id].active = clock_state;
+
+    return 1;
+}
+
+
+// Set the external trigger pin based on pin ID for a clock channel
+bool trigger_pin_set(
     uint32_t clock_id,
     uint32_t trigger_pin_id
 ) {
@@ -655,23 +771,8 @@ bool clock_pin_trigger_set(
 }
 
 
-bool clock_sequencer_state_set(
-    uint32_t clock_id,
-    bool clock_state
-) {
-    // Validate clock ID
-    if (!clock_id_validate(clock_id))
-    {
-        return 0;
-    }
-
-    sequencer_clock_config[clock_id].active = clock_state;
-
-    return 1;
-}
-
-
-bool clock_reps_trigger_set(
+// Sets the amount of accepted external triggers for a clock channel
+bool trigger_count_set(
     uint32_t clock_id,
     uint32_t trigger_reps
 ) {
@@ -694,10 +795,10 @@ bool clock_reps_trigger_set(
 }
 
 
-bool clock_trigger_instructions_load(
+// Set trigger skip for amount of external triggers to skip
+bool trigger_skip_set(
     uint32_t clock_id,
-    uint32_t trigger_skips,
-    uint32_t trigger_delay
+    uint32_t trigger_skips
 ) {
 
     // Validate clock ID
@@ -712,21 +813,37 @@ bool clock_trigger_instructions_load(
         return 0;
     }
 
-    // Create trigger instructions buffer
-    uint32_t instructions[CLOCK_TRIGGERS_MAX] = {0};
-
-    instructions[0] = trigger_skips;
-    instructions[1] = trigger_delay;
-
-    sequencer_clock_insert_instructions_triggered(
+    sequencer_clock_insert_instructions_triggered_skip(
         &sequencer_clock_config[clock_id],
-        instructions
+        trigger_skips
     );
 
     return 1;
 }
 
 
+// Set trigger delay between clock signal and pulse sequence fire signal
+bool trigger_delay_set(
+    uint32_t clock_id,
+    uint32_t trigger_delay
+) {
+
+    // Validate clock ID
+    if(!clock_id_validate(clock_id))
+    {
+        return 0;
+    }
+
+    sequencer_clock_insert_instructions_triggered_delay(
+        &sequencer_clock_config[clock_id],
+        trigger_delay
+    );
+
+    return 1;
+}
+
+
+// Load clock reps and iter instructions to a clock channel
 bool clock_instructions_load(
     uint32_t clock_id,
     uint32_t instructions[CLOCK_INSTRUCTIONS_MAX]
@@ -747,6 +864,7 @@ bool clock_instructions_load(
 }
 
 
+// Set unit offset (scaling factor) for a clock channel
 bool clock_unit_offset_set(
     uint32_t clock_id,
     double units_offset
@@ -769,6 +887,30 @@ bool clock_unit_offset_set(
 }
 
 
+// Set trigger unit offset (scaling factor) for a clock channel
+bool clock_trigger_unit_offset_set(
+    uint32_t clock_id,
+    double units_offset
+) {
+    // Validate clock ID
+    if(!clock_id_validate(clock_id))
+    {
+        return 0;
+    }
+
+    // Make sure the offset is never 0
+    if(units_offset < SEQUENCER_DOUBLE_EPS)
+    {
+        return 0;
+    }
+
+    sequencer_clock_config[clock_id].unit_offset_trigger = units_offset;
+
+    return 1;
+}
+
+
+// Reset clock channel to hardcoded defualt state
 bool clock_sequencer_state_reset(
     uint32_t clock_id
 ) {
@@ -786,6 +928,7 @@ bool clock_sequencer_state_reset(
 }
 
 
+// Choose whether or not this pulse channel is loaded into sm memory
 bool pulse_sequencer_state_set(
     uint32_t pulse_id,
     bool pulse_state
@@ -802,6 +945,7 @@ bool pulse_sequencer_state_set(
 }
 
 
+// Set the clock channel trigger pin for a pulse channel
 bool pulse_pin_clock_set(
     uint32_t pulse_id,
     uint32_t clock_id
@@ -825,6 +969,7 @@ bool pulse_pin_clock_set(
 }
 
 
+// Set unit offset (scaling factor) for pulse channel delay instructions
 bool pulse_unit_offset_set(
     uint32_t pulse_id,
     double units_offset
@@ -849,6 +994,7 @@ bool pulse_unit_offset_set(
 }
 
 
+// Load state and delay instructions to pulse channel
 bool pulse_instructions_load(
     uint32_t pulse_id,
     uint32_t instructions[PULSE_INSTRUCTIONS_MAX]
@@ -868,6 +1014,8 @@ bool pulse_instructions_load(
     return 1;
 }
 
+
+// Reset pulse channel to hardcoded defualts
 bool pulse_sequencer_state_reset(
     uint32_t pulse_id
 ) {
