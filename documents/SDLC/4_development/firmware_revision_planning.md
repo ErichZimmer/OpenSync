@@ -4,6 +4,7 @@
 | Date | Version | Change | 
 | --- | --- | --- |
 | 08/01/2026 | 0.1.0 | Intitial publishment. |
+| 08/02/2026 | 0.2.0 | Updated firmware design (again). |
 
 ## Key Words
 - DMA - Direct Memory Access
@@ -55,11 +56,20 @@ The biggest shift in this firmware revision is the move from implementing an arb
 | Enabled | Enabled, Disabled | Determines whether the channel accepts synchronization events and executes its instruction buffer. |
 | Synchronization Source | `T0`, Channel A–H | Selects the event source used to trigger execution of the output sequence. |
 | Source Units | NS, US, MS, S | Sets the units used for the source delay values. |
-| Instruction Buffer | 16 × 32-bit Words | Raw instruction buffer containing two header words, six output-state/output-delay pairs, and two terminating words. |
-| Source Skip | Integer | Header word 0. Defines the number of `T0` or selected-source events ignored before the next event is accepted. |
-| Source Delay | Double | Header word 1. Defines the delay between the accepted source event and the first output-state/output-delay pair. |
+| Instruction Buffer | 8 × 32-bit Words | Raw instruction buffer containing one header word, six output-state/output-delay pairs, and a terminating word. |
+| Source Skip | Integer | Header word most significant bits 1-5. Defines the number of `T0` or selected-source events ignored before the next event is accepted. |
+| Source Delay | Double | Header word most significant bits 6-32. Defines the delay between the accepted source event and the first output-state/output-delay pair. |
 | Output Units | NS, US, MS, S | Sets the units used for the output delay values. |
 | Output State | Low, High | Defines the channel state applied during the corresponding output-delay interval. |
 | Output Delay | Double | Defines how long the corresponding output state is maintained. |
-| Output-State/Output-Delay Pairs | Six Pairs | Words 2–13 contain six ordered output-state/output-delay pairs. |
-| Terminating Words | Two 32-bit Words | Words 14 and 15 terminate the instruction sequence. The channel is forced low after termination. |
+| Output-State/Output-Delay Pairs | Six 32-bit Words | The most significant bit changes state. All other bits change delay period. |
+| Terminating Word | 32-bit Word | A 32-bit word with least significant bit of zero which terminates the buffer. |
+
+The output sequencing (part of PULSe SCPI namespace) can take a much more compact form when only having to handle a single gpio pin per channel. Hence, output and delay instructions are now packed into a single 32-bit word. With the exception of source skip/delay, all words contain a bit state on the most significant bit and a delay period consisting of the remaining 31 bits. All pulse instructions must have a least significant bit of 1 since 0 signals a terminating instruction. This allows for six pulse instructions to be held in a circular buffer. To use these instructions with a source, a 32-bit word acts as a header which determines the amount of events to skip and an artificial delay added to the event. Currently, five bits are used for wkipping events which allow for up to 32 skips before accepting the next event. The last 27 bits are used for delay information which allows for up to 500 millisecond delay for a 4 ns system clock. Finally, a terminating word of all zeros is used to signal the end of the buffer so it can determinstically restart.
+
+While the buffer execution mode would currently be the only mode implemented due to its direct applicability to particle image velocimetry experiments, other modes may be added in a future date. This can be accomplised through using a more limited buffered execution that acts similar to `T0`. Since both operations utilize direct memory access (DMA) and ring buffers to constistently populate the first in, first out (FIFO) buffers to prevent state machine stalling, additional modes could be quite simple to implement require minimal changes. Nonetheless, this feature would likely not be implemented until there is a reasonable request for such features.
+
+Finally, to allow for this level of customization for individual output channels, more advanced means of programming state machines may be required. Currently, state machines are programmed by compiling a psuedo-assembly program into a header file that directly configures state machine instructions. To allow greater flexibility, a piece-wise construction of the raw instructions may be required which can be reasonably accomplished using if statements to modify the state machine program. This has the added benefit of no longer needing to compile the pseudo-assembly program during firmware compilation.
+
+## 3. Summary
+In summary, the revision of the output/pulse sequencers used in the firmware of an OpenSync device would allow for totally independent channels to be individually programmed. Through the use of eight state machines (one for each channel), an OpenSync device would better replicate formalities that are seen in its commercial counterparts. An additional state machine will be utilized for `T0` which controlls the internal events that signal when to start a pulse channel oepration. One further state machine may be used to analyze delays between external trigger events or obtain external trigger widths (previously called a sniffer clock in OpenSync). The changes are expected to minimally effect jitter and would require validaiton through an osciliscope to confirm the viability of this implementation on microcontroller hardware. 
