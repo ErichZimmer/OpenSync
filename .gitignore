@@ -9,6 +9,7 @@ __pycache__
 
 firmware/opensync/.vscode
 firmware/opensync/build
+firmware/prototypes/opensync_arbitrary_pulse_generator/build
 
 .vscode/*
 documents/manual/*
