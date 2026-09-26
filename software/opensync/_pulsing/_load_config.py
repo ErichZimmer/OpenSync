@@ -1,6 +1,4 @@
-from .._communication import device_comm_write
 from . import _load_buffer
-from . import _conversion as _conv
 
 
 __all__ = [
@@ -10,37 +8,39 @@ __all__ = [
 
 def device_params_load(
     device: 'opensync',
-    clock_params: list['clock_params'],
-    pulse_params: list['pulse_params'],
-    reset: bool=True
-):
+    clock_params: dict,
+    pulse_params: dict,
+    reset: bool = True
+) -> list[str]:
     if reset == True:
-        _load_buffer.device_timing_reset(
+        resp = _load_buffer.device_timing_reset(
             device
         )
-    
-    # Load all clock parameters
-    for clk_param in clock_params:
-        # Load clock configs (MUST BE DONE FIRST!!!)
-        resp = _load_buffer._device_clock_config_load(
-            device,
-            clk_param
-        )
 
-        # check for errors
         for msg in resp:
             if 'error' in msg.lower():
                 return resp
 
-    # Load all pulse parameters
-    for pls_param in pulse_params:
-        # Load pulse configs (MUST BE DONE FIRST!!!!)
+    # Load clock configuration first.
+    resp = _load_buffer._device_clock_config_load(
+        device,
+        clock_params
+    )
+
+    for msg in resp:
+        if 'error' in msg.lower():
+            return resp
+
+    # Load each pulse channel configuration.
+    for channel in pulse_params:
+        channel_id = int(channel.split('_')[1])
+
         resp = _load_buffer._device_pulse_config_load(
             device,
-            pls_param
+            pulse_params[channel],
+            channel_id
         )
 
-        # check for errors
         for msg in resp:
             if 'error' in msg.lower():
                 return resp

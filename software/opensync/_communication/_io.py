@@ -31,11 +31,18 @@ def _parse_response(response: str) -> list[str]:
     # Remove terminator
     response = [resp.decode().replace(EOL, '') for resp in response]
 
+    # Replace semicolons
+    response = [resp.replace(';', ',') for resp in response]
+
     # Remove commas
     response = [resp.split(DELIMITER) for resp in response]
 
     # Flatten the list of response(s)
     response = [resp for inner in response for resp in inner]
+
+    # The last two indexes are error status. If 0 (ok), then pop them out
+    if response[-2] == '0':
+        response = response[:-2]
 
     return response
 
@@ -171,6 +178,8 @@ def device_comm_write(
         A list of strings containing the responses from the OpenSync device
         after executing the command.
     """
+    # Add ;:SYST:ERR? to make sure all commands have an output
+    command += ';:SYST:ERR?'
     command += eol
 
     # Send command terminated in CRLF or any other terminator

@@ -1,70 +1,44 @@
 from .._input_checker import check_types
 
 
-VALID_CLOCK_IDS = [0, 1, 2]
-VALID_TRIGGER_IDS = [0]
-VALID_CLOCK_DIVIDERS = [
-    'high',          'high_res',
-    'med',           'med_res',
-    'low',           'low_res',
-    'very_low',      'very_low_res',
-    'very_very_low', 'very_very_low_res'
-]
-VALID_CLOCK_UNITS = [
-    'hz',
-    'khz',
-    'mhz'
-]
-VALID_CLOCK_MODES = [
-    'int', 'internal',
-    'ext', 'external'
-]
 VALID_TRIGGER_MODES = [
-    'imm', 'immediate',
-    'edge',
-    'gate'
+    'disabled',
+    'triggered'
 ]
 VALID_TRIGGER_EDGES = [
-    'pos', 'positive',
-    'neg', 'negative'
+    'rising',
+    'falling'
 ]
-VALID_TRIGGER_LEVELS = [
+VALID_GATE_MODES = [
+    'disabled',
+    'output',
+    'pulse',
+    'channel'
+]
+VALID_GATE_LEVELS = [
     'high',
     'low'
 ]
-VALID_PULSE_UNITS = [
-    'ns',
-    'us',
-    'ms',
-    's',
-    'm',
-    'h'
-]
-MAX_CLOCK_INST = 16
-MAX_ITERATIONS = 500000
-MIN_ITERATIONS = 1
-MIN_FREQUENCY = 0
-MIN_DELAY = 0
-MAX_SKIPS = 100
-MIN_SKIPS = 0
+
+COUNTERS_MAX = 1000000000
+BCOUNTER_MAX = 30000000
+DIVIDER_MAX = 65500
+PERIOD_MIN = 200e-9
+PERIOD_MAX = 16
 
 
 __all__ = [
     'get_clock_params',
-    'config_clock_id',
-    'config_clock_res',
-    'config_clock_mode',
-    'config_clock_units',
-    'config_clock_freq',
-    'config_clock_iter',
-    'config_clock_trigger_id',
+    'config_clock_state',
+    'config_clock_divider',
+    'config_clock_period',
+    'config_clock_bcounter',
+    'config_clock_pcounter',
+    'config_clock_ocounter',
     'config_clock_trigger_mode',
     'config_clock_trigger_edge',
-    'config_clock_trigger_level',
-    'config_clock_trigger_units',
-    'config_clock_trigger_skips',
-    'config_clock_trigger_delay',
-    'config_clock_trigger_count'
+    'config_clock_gate_mode',
+    'config_clock_gate_level'
 ]
 
 
@@ -72,90 +46,72 @@ def get_clock_params() -> dict:
     """Retrieve the default clock parameters for the pulse generator.
 
     This function initializes and returns a dictionary containing the
-    default clock parameters for a pulse generator. The dictionary includes
-    settings such as the clock divider, clock mode, external trigger
-    configuration, repetition rate, and trigger count.
+    default clock parameters for the T0 clock sequencer.
 
     Returns
     -------
     clock_params : dict
         A dictionary containing the default clock parameters. The structure
         of the dictionary includes:
-        - 'clock_id' : int
-            An integer between 0 and 2 representing the clock channel to
-            use (default is 0).
-        - 'clock_res' : str
-            A string representing the clock divider (default is high_res).
-        - 'clock_mode' : str
-            A string indicating whether the clock channel will run from the
-            internal clock sequence or external sequencer/trigger system
-            (default is 'internal').
-        - 'clock_units' : str
-            A string representing the repetition rate units.
-        - 'clock_freq' : list[float]
-            A list containing the repetition rates in the selected units.
-        - 'clock_iter' : list[int]
-            A list containing the number of repetitions for each frequency.
-        - 'trigger_id' : int
-            An integer representing the external trigger input channel to use
-            (default is 0).
+        - 'state' : bool
+            Whether the clock sequencer is enabled (default is False).
+        - 'divider' : int
+            The clock divider (default is 1).
+        - 'period' : float
+            The clock period in seconds (default is 0.0).
+        - 'bcounter' : int
+            The number of acquisitions. A value of 0 selects infinite
+            operation (default is 0).
+        - 'pcounter' : int
+            The number of ON periods per acquisition (default is 1).
+        - 'ocounter' : int
+            The number of OFF periods per acquisition (default is 0).
         - 'trigger_mode' : str
-            A string indicating how the external trigger system is used
-            (default is 'immediate').
+            The external trigger mode (default is 'disabled').
         - 'trigger_edge' : str
-            A string indicating which external trigger edge is used when
-            trigger mode is edge based (default is 'positive').
-        - 'trigger_level' : str
-            A string indicating which external trigger gate level is active
-            when trigger mode is gate based (default is 'high').
-        - 'trigger_units' : str
-            A string representing the trigger delay units.
-        - 'trigger_skips' : int
-            An integer respresenting the number of external trigger signals
-            to skip (default is 0).
-        - 'trigger_delay' : float
-            A float respresenting the delay between the external trigger and
-            the start of the pulse sequence (default is 0.0).
-        - 'trigger_count' : int
-            An integer representing the number of trigger events to accept
-            (default is 10).
+            The external trigger edge (default is 'rising').
+        - 'gate_mode' : str
+            The global gate mode (default is 'disabled').
+        - 'gate_level' : str
+            The active gate input level (default is 'low').
+
+    Notes
+    -----
+    - Defaults follow the SCPI reset configuration.
+    - Set a valid period before starting the clock sequencer.
 
     """
     clock_params = {
-        'clock_id': 0,
-        'clock_res': 'high_res',
-        'clock_mode': 'internal',
-        'clock_units': 'hz',
-        'clock_freq': [1.0],
-        'clock_iter': [10],
-        'trigger_id': 0,
-        'trigger_mode': 'immediate',
-        'trigger_edge': 'positive',
-        'trigger_level': 'high',
-        'trigger_units': 'us',
-        'trigger_skips': 0,
-        'trigger_delay': 0.0,
-        'trigger_count': 10
+        'state': False,
+        'divider': 1,
+        'period': 0.0,
+        'bcounter': 0,
+        'pcounter': 1,
+        'ocounter': 0,
+        'trigger_mode': 'disabled',
+        'trigger_edge': 'rising',
+        'gate_mode': 'disabled',
+        'gate_level': 'low'
     }
 
     return clock_params
 
 
-def config_clock_id(
+def config_clock_state(
     clock_params: dict,
-    channel_id: int = 0
+    state: bool
 ) -> dict:
-    """Configure which clock channel to use.
+    """Configure the clock sequencer state.
 
-    This function updates the clock pararameters by selecting which clock
-    channel to use for the internal timing and execution of the pulse
-    parameters.
+    This function updates the clock parameters to enable or disable the
+    clock sequencer.
 
+    Parameters
+    ----------
     clock_params : dict
         A dictionary containing clock parameters from `get_clock_params`.
-    channel_id : int
-        The index of the clock channel to which the pulse parameters will be
-        controlled. Valid clock ids are 0, 1, and 2.
+    state : bool
+        True enables the clock sequencer. False disables it.
 
     Returns
     -------
@@ -164,159 +120,80 @@ def config_clock_id(
 
     Notes
     -----
-    - The function modifies the 'clock_id' key in the clock_params
-      dictionary to reflect the desired clock channel to configure.
+    - The function modifies the 'state' key in the clock_params dictionary
+      to reflect the desired clock sequencer state.
+
+    """
+    check_types(
+        bool,
+        state=state
+    )
+
+    clock_params['state'] = state
+
+    return clock_params
+
+
+def config_clock_divider(
+    clock_params: dict,
+    divider: int = 1
+) -> dict:
+    """Configure the clock divider.
+
+    This function updates the clock parameters by modifying the clock
+    divider. The divider scales the clock resolution and the minimum and
+    maximum clock period.
+
+    Parameters
+    ----------
+    clock_params : dict
+        A dictionary containing clock parameters from `get_clock_params`.
+    divider : int
+        The desired clock divider, from 1 through 65500.
+
+    Returns
+    -------
+    clock_params : dict
+        The updated clock parameters dictionary.
+
+    Notes
+    -----
+    - The function modifies the 'divider' key in the clock_params
+      dictionary to reflect the desired clock divider.
 
     """
     check_types(
         int,
-        channel_id=channel_id
+        divider=divider
     )
 
-    if channel_id not in VALID_CLOCK_IDS:
-        msg = f'Invalid clock channel selected. Got {channel_id}'
+    if divider < 1 or divider > DIVIDER_MAX:
+        msg = f'Invalid clock divider. Got {divider}'
         raise ValueError(msg)
 
-    clock_params['clock_id'] = channel_id
+    clock_params['divider'] = divider
 
     return clock_params
 
 
-def config_clock_res(
+def config_clock_period(
     clock_params: dict,
-    clock_res: str = 'high_res'
+    period: float,
+    units: str = 's'
 ) -> dict:
-    """Configure the clock resolution for a clock channel.
+    """Configure the clock period.
 
-    This function updates the clock pararameters by modfying the clock
-    divider of that particular channel. This effectively slows the clock down
-    by dividing the main clock by the clock divider.
-
-    clock_params : dict
-        A dictionary containing clock parameters from `get_clock_params`.
-    clock_res : str
-        The clock divider resolution. The following are accepted values:
-
-        'high', 'high_res'
-            The clock divider is set to 1 effectively allowing for a
-            clock cycle resolution of 4 nanoseconds.
-
-        'med', 'med_res'
-            The clock divider is set to 2 effectively allowing for a
-            clock cycle resolution of 8 nanoseconds.
-
-        'low', 'low_res'
-            The clock divider is set to 5 effectively allowing for a
-            clock cycle resolution of 20 nanoseconds.
-
-        'very_low', 'very_low_res'
-            The clock divider is set to 25 effectively allowing for a
-            clock cycle resolution of 100 nanoseconds.
-
-        'very_very_low', 'very_very_low_res'
-            The clock divider is set to 250 effectively allowing for a
-            clock cycle resolution of 1 microsecond.
-
-    Returns
-    -------
-    clock_params : dict
-        The updated clock parameters dictionary.
-
-    Notes
-    -----
-    - The function modifies the 'clock_res' key in the clock_params
-      dictionary to reflect the desired resolution of the clock channel.
-
-    """
-    check_types(
-        str,
-        clock_res=clock_res
-    )
-
-    if clock_res.lower() not in VALID_CLOCK_DIVIDERS:
-        msg = f'Invalid clock divider resolution. Got {clock_res}'
-        raise ValueError(msg)
-
-    clock_params['clock_res'] = clock_res
-
-    return clock_params
-
-
-def config_clock_mode(
-    clock_params: dict,
-    clock_mode: str
-) -> dict:
-    """Configure the clock operation mode.
-
-    This function updates the clock parameters to select whether the clock
-    sequencer uses the internal clock sequence or the external sequencer /
-    trigger configuration.
+    This function converts the supplied period to seconds and updates the
+    clock parameters.
 
     Parameters
     ----------
     clock_params : dict
         A dictionary containing clock parameters from `get_clock_params`.
-    clock_mode : str
-        A string that describes the clock sequencer mode. The following are
-        accepted values:
-
-        'int', 'internal'
-            The clock sequencer runs from the internally configured clock
-            sequence.
-
-        'ext', 'external'
-            The clock sequencer runs from the external sequencer / trigger
-            configuration.
-
-    Returns
-    -------
-    clock_params : dict
-        The updated clock parameters dictionary.
-
-    Notes
-    -----
-    - The function modifies the 'clock_mode' key in the clock_params
-      dictionary to reflect the desired state of the clock channel.
-
-    """
-    check_types(
-        str,
-        clock_mode=clock_mode
-    )
-
-    if clock_mode.lower() in VALID_CLOCK_MODES:
-        clock_params['clock_mode'] = clock_mode
-    else:
-        msg = f'Invalid clock mode. Got {clock_mode}'
-        raise ValueError(msg)
-
-    return clock_params
-
-
-def config_clock_units(
-    clock_params: dict,
-    units: str
-) -> dict:
-    """Configure repetition rate frequency units.
-
-    This function updates the clock parameters to set the repetition rate
-    units for the timing system.
-
-    Parameters
-    ----------
-    clock_params : dict
-        A dictionary containing clock parameters from `get_clock_params`.
+    period : float
+        The desired clock period in the selected units.
     units : str
-        The desired repetition rate unit. The following are accpeted values:
-
-        'hz'
-            The frequency unit for standard Hertz (Hz).
-
-        'khz'
-            The frequency unit for 1,000 Hz.
-
-        'mhz'
-            The frequency unit for 1,000,000 Hz.
+        The period units: 'ns', 'us', 'ms', or 's'.
 
     Returns
     -------
@@ -325,39 +202,63 @@ def config_clock_units(
 
     Notes
     -----
-    - The function modifies the 'clock_units' key in the clock_params
-      dictionary to store the repetition rate units.
+    - The function modifies the 'period' key in the clock_params dictionary
+      to store the clock period in seconds.
+    - The allowed period is from 200 nanoseconds multiplied by the clock
+      divider through 10 seconds multiplied by the clock divider.
+    - Configure the divider before configuring the period.
 
     """
+    check_types(
+        (float, int),
+        period=period
+    )
     check_types(
         str,
         units=units
     )
 
-    if units.lower() not in VALID_CLOCK_UNITS:
-        msg = f'Invalid sequence repetition frequency units. Got {units}'
+    unit_factors = {
+        'ns': 1e-9,
+        'us': 1e-6,
+        'ms': 1e-3,
+        's': 1.0
+    }
+
+    if units.lower() not in unit_factors:
+        msg = f'Invalid clock period units. Got {units}'
         raise ValueError(msg)
 
-    clock_params['clock_units'] = units
+    period = period * unit_factors[units.lower()]
+
+    if not (
+        period >= PERIOD_MIN * clock_params['divider'] or
+        period <= PERIOD_MAX * clock_params['divider']
+    ):
+        msg = f'Invalid clock period in seconds. Got {period}'
+        raise ValueError(msg)
+
+    clock_params['period'] = period
 
     return clock_params
 
 
-def config_clock_freq(
+def config_clock_bcounter(
     clock_params: dict,
-    freq: float
+    count: int
 ) -> dict:
-    """Configure repetition rate frequency.
+    """Configure the clock acquisition counter.
 
-    This function updates the clock parameters to set the repetition rate
-    for the timing system in the chosen units.
+    This function updates the clock parameters to set the number of
+    acquisitions. Each acquisition contains the configured P and O counts.
 
     Parameters
     ----------
     clock_params : dict
         A dictionary containing clock parameters from `get_clock_params`.
-    freq : float
-        The desired repetition rate in the chosen units.
+    count : int
+        The desired number of acquisitions, from 0 through 30000000.
+        A value of 0 selects infinite operation.
 
     Returns
     -------
@@ -366,40 +267,83 @@ def config_clock_freq(
 
     Notes
     -----
-    - The function modifies the 'clock_freq' key in the clock_params dictionary
-      to store the repetition rate in the chosen units.
+    - The function modifies the 'bcounter' key in the clock_params
+      dictionary to store the number of acquisitions.
 
     """
     check_types(
-        (float, int),
-        freq=freq
+        int,
+        count=count
     )
 
-    if freq < MIN_FREQUENCY:
-        msg = f'Invalid sequence repetition frequency. Got {freq}'
+    if count < 0 or count > BCOUNTER_MAX:
+        msg = f'Invalid clock B counter. Got {count}'
         raise ValueError(msg)
 
-    # Make it a list since OpenSync devices support multiple frequencies.
-    clock_params['clock_freq'] = [freq]
+    clock_params['bcounter'] = count
 
     return clock_params
 
 
-def config_clock_iter(
+def config_clock_pcounter(
     clock_params: dict,
-    iterations: int
+    count: int
 ) -> dict:
-    """Configure number of clock iterations.
+    """Configure the clock ON duty cycle counter.
+
+    This function updates the clock parameters to set the number of ON
+    periods in each acquisition.
+
+    Parameters
+    ----------
+    clock_params : dict
+        A dictionary containing clock parameters from `get_clock_params`.
+    count : int
+        The desired number of ON periods, from 0 through 1000000000.
+        Use a count of at least 1 for T0 as recommended by the SCPI
+        documentation.
+
+    Returns
+    -------
+    clock_params : dict
+        The updated clock parameters dictionary.
+
+    Notes
+    -----
+    - The function modifies the 'pcounter' key in the clock_params
+      dictionary to store the number of ON periods.
+
+    """
+    check_types(
+        int,
+        count=count
+    )
+
+    if count < 0 or count > COUNTERS_MAX:
+        msg = f'Invalid clock P counter. Got {count}'
+        raise ValueError(msg)
+
+    clock_params['pcounter'] = count
+
+    return clock_params
+
+
+def config_clock_ocounter(
+    clock_params: dict,
+    count: int
+) -> dict:
+    """Configure the clock OFF duty cycle counter.
 
     This function updates the clock parameters to set the number of clock
-    iterations during program execution.
+    periods skipped after the configured ON periods.
 
     Parameters
     ----------
-     clock_params : dict
+    clock_params : dict
         A dictionary containing clock parameters from `get_clock_params`.
-    iterations : int
-        The desired number of iterations a pulse sequence is executed.
+    count : int
+        The desired number of OFF periods, from 0 through 1000000000.
+        A value of 0 means no clock periods are skipped.
 
     Returns
     -------
@@ -408,62 +352,20 @@ def config_clock_iter(
 
     Notes
     -----
-    - The function modifies the 'clock_iter' key in the clock_params dictionary
-      to store the number of clock sequence repetitions.
+    - The function modifies the 'ocounter' key in the clock_params
+      dictionary to store the number of OFF periods.
 
     """
     check_types(
         int,
-        iterations=iterations
+        count=count
     )
 
-    if iterations < MIN_ITERATIONS or iterations > MAX_ITERATIONS:
-        msg = f'Invalid number of sequence iterations. Got {iterations}'
+    if count < 0 or count > COUNTERS_MAX:
+        msg = f'Invalid clock O counter. Got {count}'
         raise ValueError(msg)
 
-    # Make it a list since OpenSync devices support multiple frequencies.
-    clock_params['clock_iter'] = [iterations]
-
-    return clock_params
-
-
-def config_clock_trigger_id(
-    clock_params: dict,
-    channel_id: int = 0
-) -> dict:
-    """Configure which trigger input channel to use.
-
-    This function updates the clock pararameters by selecting which external
-    trigger input channel to use for the internal timing and execution of the
-    pulse parameters.
-
-    clock_params : dict
-        A dictionary containing clock parameters from `get_clock_params`.
-    channel_id : int
-        The index of the trigger input channel to use. Valid trigger ids are
-        currently 0.
-
-    Returns
-    -------
-    clock_params : dict
-        The updated clock parameters dictionary.
-
-    Notes
-    -----
-    - The function modifies the 'trigger_id' key in the clock_params
-      dictionary to reflect the desired trigger input channel to configure.
-
-    """
-    check_types(
-        int,
-        channel_id=channel_id
-    )
-
-    if channel_id not in VALID_TRIGGER_IDS:
-        msg = f'Invalid trigger channel selected. Got {channel_id}'
-        raise ValueError(msg)
-
-    clock_params['trigger_id'] = channel_id
+    clock_params['ocounter'] = count
 
     return clock_params
 
@@ -485,16 +387,12 @@ def config_clock_trigger_mode(
         A string that describes the trigger mode. The following are accepted
         values:
 
-        'imm', 'immediate'
-            The trigger system immediately allows the configured clock
-            sequence to run.
+        'disabled'
+            External triggering is disabled.
 
-        'edge'
-            The trigger system waits for the selected external trigger edge.
-
-        'gate'
-            The trigger system is gated by the selected external trigger
-            level.
+        'triggered'
+            The selected external trigger edge starts one acquisition
+            containing the configured P and O counts.
 
     Returns
     -------
@@ -528,7 +426,7 @@ def config_clock_trigger_edge(
     """Configure the external trigger edge.
 
     This function updates the clock parameters to select which edge should
-    be used when the trigger mode is edge based.
+    be used when external triggering is enabled.
 
     Parameters
     ----------
@@ -537,11 +435,11 @@ def config_clock_trigger_edge(
     edge : str
         The selected trigger edge. The following are accepted values:
 
-        'pos', 'positive'
-            The trigger system uses the positive/rising edge.
+        'rising'
+            The trigger system uses the rising edge.
 
-        'neg', 'negative'
-            The trigger system uses the negative/falling edge.
+        'falling'
+            The trigger system uses the falling edge.
 
     Returns
     -------
@@ -568,27 +466,36 @@ def config_clock_trigger_edge(
     return clock_params
 
 
-def config_clock_trigger_level(
+def config_clock_gate_mode(
     clock_params: dict,
-    level: str
+    gate_mode: str
 ) -> dict:
-    """Configure the external trigger gate level.
+    """Configure the global gate mode.
 
-    This function updates the clock parameters to select which gate level
-    should be active when the trigger mode is gate based.
+    This function updates the clock parameters to select how the external
+    gate affects program execution.
 
     Parameters
     ----------
     clock_params : dict
         A dictionary containing clock parameters from `get_clock_params`.
-    level : str
-        The selected trigger gate level. The following are accepted values:
+    gate_mode : str
+        A string that describes the gate mode. The following are accepted
+        values:
 
-        'high'
-            The trigger gate is active when the input is high.
+        'disabled'
+            Global gating is disabled.
 
-        'low'
-            The trigger gate is active when the input is low.
+        'output'
+            An asserted gate suppresses T0 output events while the P/O
+            counters continue.
+
+        'pulse'
+            An asserted gate prevents a new acquisition from starting.
+            An acquisition already started continues.
+
+        'channel'
+            Gating is controlled by each output channel's gate settings.
 
     Returns
     -------
@@ -597,7 +504,54 @@ def config_clock_trigger_level(
 
     Notes
     -----
-    - The function modifies the 'trigger_level' key in the clock_params
+    - The function modifies the 'gate_mode' key in the clock_params
+      dictionary to reflect the desired gate mode.
+
+    """
+    check_types(
+        str,
+        gate_mode=gate_mode
+    )
+
+    if gate_mode.lower() not in VALID_GATE_MODES:
+        msg = f'Invalid gate mode. Got {gate_mode}'
+        raise ValueError(msg)
+
+    clock_params['gate_mode'] = gate_mode
+
+    return clock_params
+
+
+def config_clock_gate_level(
+    clock_params: dict,
+    level: str
+) -> dict:
+    """Configure the active gate input level.
+
+    This function updates the clock parameters to select which input level
+    asserts the global gate.
+
+    Parameters
+    ----------
+    clock_params : dict
+        A dictionary containing clock parameters from `get_clock_params`.
+    level : str
+        The selected gate level. The following are accepted values:
+
+        'high'
+            The gate is asserted when the input is high.
+
+        'low'
+            The gate is asserted when the input is low.
+
+    Returns
+    -------
+    clock_params : dict
+        The updated clock parameters dictionary.
+
+    Notes
+    -----
+    - The function modifies the 'gate_level' key in the clock_params
       dictionary to reflect the desired gate level configuration.
 
     """
@@ -606,194 +560,10 @@ def config_clock_trigger_level(
         level=level
     )
 
-    if level.lower() not in VALID_TRIGGER_LEVELS:
-        msg = f'Invalid trigger gate level. Got {level}'
+    if level.lower() not in VALID_GATE_LEVELS:
+        msg = f'Invalid gate level. Got {level}'
         raise ValueError(msg)
 
-    clock_params['trigger_level'] = level
-
-    return clock_params
-
-
-def config_clock_trigger_units(
-    clock_params: dict,
-    units: str = 'us'
-) -> dict:
-    """Configure the units for a clock trigger delay.
-
-    This function updates the clock pararameters by modfying the units of
-    the trigger delay. This makes it easier to produce either very short or
-    long delays by simply changing the data units.
-
-    clock_params : dict
-        A dictionary containing pulse parameters from `get_clock_params`.
-    units : str
-        The trigger data units. The following are accepted values:
-
-        'ns'
-            The trigger delay data is in nanoseconds.
-
-        'us'
-            The trigger delay data is in microseconds.
-
-        'ms'
-            The trigger delay data is in milliseconds.
-
-        's'
-            The trigger delay data is in seconds.
-
-        'm'
-            The trigger delay data is in minutes.
-
-        'h'
-            The trigger delay data is in hours.
-
-    Returns
-    -------
-    clock_params : dict
-        The updated clock parameters dictionary.
-
-    Notes
-    -----
-    - The function modifies the 'trigger_units' key in the clock_params
-      dictionary to reflect the desired units of the external trigger delay.
-
-    """
-    check_types(
-        str,
-        units=units
-    )
-
-    if units.lower() not in VALID_PULSE_UNITS:
-        msg = f'Invalid data units. Got {units}'
-        raise ValueError(msg)
-
-    clock_params['trigger_units'] = units
-
-    return clock_params
-
-
-def config_clock_trigger_skips(
-    clock_params: dict,
-    skips: int
-) -> dict:
-    """Change the number external triggers to skip.
-
-    This function updates the clock parameters to configure the amount of
-    external trigger events to skip before generating a clock event.
-
-    Parameters
-    ----------
-    clock_params : dict
-        A dictionary containing clock parameters from `get_clock_params`.
-    skips : int
-        The desired amount of external triggers to skip before executing
-        the pulse parameters.
-
-    Returns
-    -------
-    clock_params : dict
-        The updated clock parameters dictionary.
-
-    Notes
-    -----
-    - The function modifies the 'trigger_skips' key in the clock_params
-      dictionary to reflect the desired state of the external trigger.
-
-    """
-    check_types(
-        int,
-        skips=skips
-    )
-
-    if skips < MIN_SKIPS or skips > MAX_SKIPS:
-        msg = f'Invalid external trigger skips. Got {skips}'
-        raise ValueError(msg)
-
-    clock_params['trigger_skips'] = skips
-
-    return clock_params
-
-
-def config_clock_trigger_delay(
-    clock_params: dict,
-    delay: float
-) -> dict:
-    """Change external trigger delay.
-
-    This function updates the clock parameters to add a delay to the
-    external trigger of the timing system used in the experiment.
-
-    Parameters
-    ----------
-    clock_params : dict
-        A dictionary containing clock parameters from `get_clock_params`.
-    delay : float
-        The desired delay in the currently selected trigger units between
-        the external trigger and the start of the pulse sequence.
-
-    Returns
-    -------
-    clock_params : dict
-        The updated clock parameters dictionary.
-
-    Notes
-    -----
-    - The function modifies the 'trigger_delay' key in the clock_params
-      dictionary to reflect the desired state of the external trigger.
-
-    """
-    check_types(
-        (float, int),
-        delay=delay
-    )
-
-    if delay >= MIN_DELAY:
-        clock_params['trigger_delay'] = delay
-    else:
-        msg = f'Invalid external trigger delay. Got {delay}'
-        raise ValueError(msg)
-
-    return clock_params
-
-
-def config_clock_trigger_count(
-    clock_params: dict,
-    count: int
-) -> dict:
-    """Configure number of trigger events.
-
-    This function updates the clock parameters to set the amount of trigger
-    events to be accepted during program execution.
-
-    Parameters
-    ----------
-     clock_params : dict
-        A dictionary containing clock parameters from `get_clock_params`.
-    count : int
-        The desired number of trigger events to accept.
-
-    Returns
-    -------
-    clock_params : dict
-        The updated clock parameters dictionary.
-
-    Notes
-    -----
-    - The function modifies the 'trigger_iter' key in the clock_params
-      dictionary to reflect the desired number of trigger aquisitions.
-    - This helper maps to the SCPI ``TRIGger:CLOCk#:COUNt`` command.
-
-    """
-    check_types(
-        int,
-        count=count
-    )
-
-    if count < MIN_ITERATIONS or count > MAX_ITERATIONS:
-        msg = f'Invalid number of trigger events. Got {count}'
-        raise ValueError(msg)
-
-    clock_params['trigger_count'] = count
+    clock_params['gate_level'] = level
 
     return clock_params

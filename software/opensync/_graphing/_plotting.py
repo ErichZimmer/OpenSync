@@ -10,21 +10,20 @@ __all__ = [
 
 
 def _get_timing_label(
-    pulse_params: dict,
+    units: str
 ) -> str:
-    data_units = pulse_params['pulse_units'].lower()
     
-    if data_units == 'ns':
+    if units == 'ns':
         return 'ns'
-    elif data_units == 'us':
+    elif units == 'us':
         return 'μs'
-    elif data_units == 'ms':
+    elif units == 'ms':
         return 'ms'
-    elif data_units == 's':
+    elif units == 's':
         return 's'
-    elif data_units == 'm':
+    elif units == 'm':
         return 'm'
-    elif data_units == 'h':
+    elif units == 'h':
         return 'h'
     else:
         return 'N/A'
@@ -33,25 +32,39 @@ def _get_timing_label(
 def _plot_pulses(
     pulse_params: dict,
     axis: 'matplotlib.axis',
-    skip_empty: bool=True
+    skip_empty: bool = True,
+    units: str = 'us'
 ) -> None:
+    unit_factors = {
+        'ns': 1e-9,
+        'us': 1e-6,
+        'ms': 1e-3,
+        's': 1.0
+    }
+
+    if units.lower() not in unit_factors:
+        msg = f'Invalid pulse units. Got {units}'
+        raise ValueError(msg)
+
+    scaling = unit_factors[units.lower()]
     offset = 0.1
-    
-    channels = _get_channel_ids(pulse_params)
+
+    if skip_empty:
+        channels = _get_used_channels(pulse_params)
+    else:
+        channels = _get_channel_ids(pulse_params)
+
     max_pulse = _get_max_pulse(pulse_params)
 
     for i, channel in enumerate(channels):
         pulse = pulse_params[channel]['data']
         pulse_len = len(pulse)
 
-        # If there is not pulse data, skip that channel
-        if pulse_len < 1 and skip_empty == True:
-            continue
-        
         states = np.zeros(pulse_len * 2 + 2, dtype=float)
-        
-        # Iterate through states to get rise and fall edges
+
+        # Iterate through states to get rise and fall edges.
         j = 1
+
         for _ in range(pulse_len // 2):
             states[j + 0 : j + 2] = (np.arange(2) % 2)
             states[j + 2 : j + 4] = ((np.arange(2) + 1) % 2)
@@ -60,15 +73,17 @@ def _plot_pulses(
 
         states[states < 0.5] = 0
         states[states > 0.5] = 1 - offset
-        
+
         channel_state = states + i
 
         channel_signal = np.zeros(pulse_len * 2 + 2)
         channel_signal[1:-1] = np.repeat(pulse, 2)
         channel_signal[-1] = max_pulse
 
+        channel_signal /= scaling
+
         axis.plot(
-            channel_signal, 
+            channel_signal,
             channel_state,
             label=pulse_params[channel]['name']
         )
@@ -77,7 +92,8 @@ def _plot_pulses(
 def get_pulse_plot(
     pulse_params: dict, 
     axis: 'matplotlib.axis',
-    skip_empty: bool=False
+    skip_empty: bool=False,
+    units: str='us'
 ) -> None:
     """Generate a plot of pulse timing for each channel.
 
@@ -94,21 +110,17 @@ def get_pulse_plot(
         A Matplotlib axis object on which the pulse timing plot will be drawn.
     skip_empty : bool
         Skip plotting empty channels.
+    units : str
+        The units for the x axis. They may be `ns`, `us`, `ms` or `s`.
 
     Returns
     -------
     None
         This function does not return a value. It modifies the provided axis
         to display the pulse timing plot.
-
-    Notes
-    -----
-    When skipping unused channels, the unused channels must start at channel 0
-    and increase from there. Not starting from channel 0 causes the plots to
-    appear funky.
     
     """
-    time_resolution = _get_timing_label(pulse_params)
+    time_resolution = _get_timing_label(units)
     
     axis.set_title('Pulse Timing')
     axis.set_xlabel(f'Time ({time_resolution})')
@@ -130,4 +142,9 @@ def get_pulse_plot(
     axis.set_yticks(range(len(y_labels)))
     axis.set_yticklabels(y_labels)
     
-    _plot_pulses(pulse_params, axis, skip_empty)
+    _plot_pulses(
+        pulse_params, 
+        axis, 
+        skip_empty,
+        units
+    )

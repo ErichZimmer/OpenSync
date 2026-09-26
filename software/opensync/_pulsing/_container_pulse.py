@@ -1,28 +1,61 @@
 from typing import Tuple
+
 from .._input_checker import check_types
 from .._error_handles import PulseParamsError
-from ._utils import _get_channel_ids
-from ._container_clock import VALID_CLOCK_IDS, VALID_CLOCK_DIVIDERS, VALID_PULSE_UNITS
 
+
+VALID_SYNC_SOURCES = [
+    't0',
+    'cha',
+    'chb',
+    'chc',
+    'chd',
+    'che',
+    'chf',
+    'chg',
+    'chh'
+]
+VALID_OUTPUT_LEVELS = [
+    'ttl',
+    'lvttl'
+]
+COUNTERS_MAX = 1000000000
+BCOUNTER_MAX = 30000000
+DIVIDER_MAX = 65500
 MIN_PULSE_TRAIN_SIZE = 1
+MAX_PULSE_TRAIN_SIZE = 2
 PULSE_SEQUENCE_SIZE = 2
+MIN_PULSE_LENGTH = 44e-9
+MAX_PULSE_LENGTH = 8.0
+DECIMALS_NS = 9
 
 
 __all__ = [
     'get_pulse_params',
-    'config_pulse_id',
-    'config_pulse_clock_id',
-    'config_pulse_res',
-    'config_pulse_units',
+    'config_pulse_state',
+    'config_pulse_divider',
     'config_pulse_insert',
-    'config_pulse_insert_many'
+    'config_pulse_wcounter',
+    'config_pulse_bcounter',
+    'config_pulse_pcounter',
+    'config_pulse_ocounter',
+    'config_pulse_sync',
+    'config_pulse_output_level'
 ]
 
 
-def _get_empty_container(name: str='') -> dict:
+def _get_empty_container(name: str = '') -> dict:
     container = {
         'name': name,
-        'data': []
+        'state': False,
+        'divider': 1,
+        'data': [],
+        'wcounter': 0,
+        'bcounter': 0,
+        'pcounter': 1,
+        'ocounter': 0,
+        'sync': 't0',
+        'output_level': 'lvttl'
     }
 
     return container
@@ -32,35 +65,41 @@ def get_pulse_params() -> dict:
     """Retrieve the default pulse parameters for the pulse generator.
 
     This function initializes and returns a dictionary containing the
-    default pulse parameters for a pulse generator. The dictionary includes
-    settings such as the  empty lists for each channel's pulse data.
+    configuration and pulse data for each output channel.
 
     Returns
     -------
     pulse_params : dict
-        A dictionary containing the default pulse parameters. The structure
-        of the dictionary includes:
-        - 'pulse_id': int 
-            An integer between 0 and 2 representing the pulse
-            channel to use (default is 0).
-        - 'clock_id' : int
-            An integer between 0 and 2 representing the clock 
-            channel to use (default is 0).
-        - 'clock_res' : str
-            A string representing the clock divider (default is high_res).
-        - 'pulse_units' : str
-            A string representing the pulse data units..
-        - 'channel_X' : list[float]
-            A dict of channel name and pulse data for each channel where X 
-            is the channel number from 0 to 11.
-    
+        A dictionary containing channels 'channel_0' through 'channel_7'.
+        Each channel contains:
+        - 'name' : str
+            The channel name.
+        - 'state' : bool
+            Whether the channel is enabled (default is False).
+        - 'divider' : int
+            The channel clock divider (default is 1).
+        - 'data' : list[float]
+            Flattened rising/falling edge times in seconds.
+        - 'wcounter' : int
+            The initial synchronization events to skip (default is 0).
+        - 'bcounter' : int
+            The total waveform buffers to execute (default is 0).
+        - 'pcounter' : int
+            The ON synchronization event count (default is 1).
+        - 'ocounter' : int
+            The OFF synchronization event count (default is 0).
+        - 'sync' : str
+            The synchronization source (default is 't0').
+        - 'output_level' : str
+            The output logic level (default is 'lvttl').
+
+    Notes
+    -----
+    - Python channel indices 0 through 7 correspond to firmware output
+      channels 1 through 8, or CHA through CHH.
+
     """
     pulse_params = {
-        'pulse_id': 0,
-        'clock_id': 0,
-        'clock_res': 'high_res',
-        'pulse_units': 'us',
-        'channel_0': [],
         'channel_1': [],
         'channel_2': [],
         'channel_3': [],
@@ -68,348 +107,230 @@ def get_pulse_params() -> dict:
         'channel_5': [],
         'channel_6': [],
         'channel_7': [],
+        'channel_8': []
     }
 
-    channels = _get_channel_ids(pulse_params)
-
-    for channel in channels:
+    for channel in pulse_params:
         pulse_params[channel] = _get_empty_container(name=channel)
-        
+
     return pulse_params
 
 
-def config_pulse_id(
+def config_pulse_state(
     pulse_params: dict,
-    channel_id: int=0
+    state: bool,
+    channel_id: int = 0
 ) -> dict:
-    """Configure which pulse channel to use.
+    """Configure the pulse channel state.
 
-    This function updates the pulse pararameters by selecting which clock
-    channel to use for the internal timing and execution of the pulse
-    parameters.
+    This function updates the pulse parameters to enable or disable the
+    selected output channel.
 
+    Parameters
+    ----------
     pulse_params : dict
         A dictionary containing pulse parameters from `get_pulse_params`.
-    channel_id : int
-        The index of the pulse channel to which the pulse parameters will be
-        executed. Valid pulse ids are 0, 1, and 2.
+    state : bool
+        True enables the channel. False disables it.
+    channel_id : int, optional
+        The index of the channel to configure, from 0 through 7.
 
     Returns
     -------
     pulse_params : dict
         The updated pulse parameters dictionary.
-    
+
+    Notes
+    -----
+    - The function modifies the selected channel's 'state' key.
+
     """
+    check_types(
+        bool,
+        state=state
+    )
+
     check_types(
         int,
         channel_id=channel_id
     )
-    
-    if channel_id not in VALID_CLOCK_IDS:
+
+    channels = list(pulse_params)
+
+    if not 0 <= channel_id < len(channels):
         msg = f'Invalid pulse channel selected. Got {channel_id}'
         raise ValueError(msg)
 
-    pulse_params['pulse_id'] = channel_id
+    channel = channels[channel_id]
+    pulse_params[channel]['state'] = state
 
     return pulse_params
 
 
-def config_pulse_clock_id(
+def config_pulse_divider(
     pulse_params: dict,
-    channel_id: int=0
+    divider: int = 1,
+    channel_id: int = 0
 ) -> dict:
-    """Configure which clock channel to use for pulsing.
+    """Configure the pulse channel clock divider.
 
-    This function updates the pulse pararameters by selecting which clock
-    channel to use for the internal timing and execution of the pulse
-    parameters.
+    This function updates the pulse parameters to set the clock divider
+    of the selected output channel.
 
+    Parameters
+    ----------
     pulse_params : dict
         A dictionary containing pulse parameters from `get_pulse_params`.
-    channel_id : int
-        The index of the clock channel to which the pulse parameters will be
-        controlled. Valid clock ids are 0, 1, and 2.
+    divider : int
+        The desired clock divider, from 1 through 65500.
+    channel_id : int, optional
+        The index of the channel to configure, from 0 through 7.
 
     Returns
     -------
     pulse_params : dict
         The updated pulse parameters dictionary.
-    
+
+    Notes
+    -----
+    - The function modifies the selected channel's 'divider' key.
+
     """
+    check_types(
+        int,
+        divider=divider
+    )
+
     check_types(
         int,
         channel_id=channel_id
     )
-    
-    if channel_id not in VALID_CLOCK_IDS:
-        msg = f'Invalid clock channel selected. Got {channel_id}'
+
+    channels = list(pulse_params)
+
+    if not 0 <= channel_id < len(channels):
+        msg = f'Invalid pulse channel selected. Got {channel_id}'
         raise ValueError(msg)
 
-    pulse_params['clock_id'] = channel_id
+    channel = channels[channel_id]
 
-    return pulse_params
-    
-
-def config_pulse_res(
-    pulse_params: dict,
-    clock_res: str='high'
-) -> dict:
-    """Configure the clock resolution for a pulse output channel.
-
-    This function updates the pulse pararameters by modfying the clock
-    divider of that particular channel. This effectively slows the clock down
-    by dividing the main clock by the clock divider.
-
-    Params
-    ------
-    pulse_params : dict
-        A dictionary containing pulse parameters from `get_pulse_params`.
-    clock_res : str
-        The clock divider resolution. The following are accepted values:
-
-        'ns'
-            The trigger delay data is in nanoseconds.
-
-        'us'
-            The trigger delay data is in microseconds.
-
-        'ms'
-            The trigger delay data is in milliseconds.
-
-        's'
-            The trigger delay data is in seconds.
-
-        'm'
-            The trigger delay data is in minutes.
-
-        'h'
-            The trigger delay data is in hours.
-
-    Returns
-    -------
-    pulse_params : dict
-        The updated clock parameters dictionary.
-    
-    """
-    check_types(
-        str,
-        clock_res=clock_res
-    )
-    
-    if clock_res.lower() not in VALID_CLOCK_DIVIDERS:
-        msg = f'Invalid clock divider resolution. Got {clock_res}'
+    if divider < 1 or divider > DIVIDER_MAX:
+        msg = f'Invalid pulse divider. Got {divider}'
         raise ValueError(msg)
 
-    pulse_params['clock_res'] = clock_res
-
-    return pulse_params
-
-
-def config_pulse_units(
-    pulse_params: dict,
-    units: str='microsecond'
-) -> dict:
-    """Configure the units for a pulse output channel.
-
-    This function updates the pulse pararameters by modfying the units of
-    the pulse sequencer. This makes it easier to produce either very short
-    or long pulses by simply changing the data units.
-
-    pulse_params : dict
-        A dictionary containing pulse parameters from `get_pulse_params`.
-    units : str
-        The pulse data units. The following are accepted values:
-
-        'nano', 'nanosecond'
-            The pulse data is in nanoseconds.
-
-        'micro', 'microsecond'
-            the pulse data is in microseconds.
-
-        'milli', 'millisecond'
-            the pulse data is in milliseconds.
-
-        'sec', 'seconds'
-            the pulse data is in seconds.
-
-        'min', 'minute'
-            the pulse data is in minutes.
-
-        'hour'
-            the pulse data is in hours.
-
-    Returns
-    -------
-    pulse_params : dict
-        The updated clock parameters dictionary.
-    
-    """
-    check_types(
-        str,
-        units=units
-    )
-    
-    if units.lower() not in VALID_PULSE_UNITS:
-        msg = f'Invalid data units. Got {units}'
-        raise ValueError(msg)
-
-    pulse_params['pulse_units'] = units
+    pulse_params[channel]['divider'] = divider
 
     return pulse_params
 
 
 def config_pulse_insert(
     pulse_params: dict,
-    rising_edge_1: int,
-    falling_edge_1: int,
-    rising_edge_2: int = None,
-    falling_edge_2: int = None,
-    channel_id: int = 0,
-    channel_name=None
-) -> dict:
-    """Insert simple pulse timing information into the specified channel.
-
-    This function updates the pulse parameters dictionary by inserting the
-    start and end times of one or two pulses into the specified channel. If
-    a channel name is provided, it updates the channel's name as well.
-
-    Parameters
-    ----------
-    pulse_params : dict
-        A dictionary containing pulse parameters from `get_pulse_params`.
-    rising_edge_1 : int
-        The start time of the first pulse in microseconds.
-    falling_edge_1 : int
-        The end time of the first pulse in microseconds.
-    rising_edge_2 : int, optional
-        The start time of the second pulse in microseconds. If not provided,
-        no second pulse is added.
-    falling_edge_2 : int, optional
-        The end time of the second pulse in microseconds. Must be provided
-        if rising_edge_2 is provided.
-    channel_id : int, optional
-        The index of the channel to which the pulses will be added.
-    channel_name : str, optional
-        The name to assign to the channel. If provided, it will update the
-        channel's name.
-
-    Returns
-    -------
-    pulse_params : dict
-        The updated pulse parameters dictionary with the inserted pulse
-        timing information.
-
-    Notes
-    -----
-    If either rising_edge_2 or falling_edge_2 is missing, then the entire
-    second pulse sequence is omitted.
-    
-    """
-    check_types(
-        (float, int, type(None)),
-        rising_edge_1=rising_edge_1,
-        falling_edge_1=falling_edge_1,
-        rising_edge_2=rising_edge_2,
-        falling_edge_2=falling_edge_2
-    )
-    
-    check_types(
-        int,
-        channel_id=channel_id
-    )
-    
-    check_types(
-        (str, type(None)),
-        channel_name=channel_name
-    )
-    
-    channel = _get_channel_ids(pulse_params)[channel_id]
-
-    pulse_train = [
-        rising_edge_1,
-        falling_edge_1
-    ]
-
-    if (rising_edge_2 != None) and (falling_edge_2 != None):
-        pulse_train += [
-            rising_edge_2,
-            falling_edge_2
-        ]
-
-    pulse_params[channel]['data'] = pulse_train
-
-    if channel_name != None:
-        pulse_params[channel]['name'] = channel_name
-
-    return pulse_params
-
-
-def config_pulse_insert_many(
-    pulse_params: dict,
     pulse_train: list[Tuple[float, float]],
     channel_id: int = 0,
-    channel_name=None
+    channel_name=None,
+    units: str = 's'
 ) -> dict:
-    """Insert several pulse timing information into the specified channel.
+    """Insert pulse timing information into the specified channel.
 
     This function updates the pulse parameters dictionary by inserting the
-    start and end times of many pulses into the specified channel. If a
-    channel name is provided, it updates the channel's name as well.
+    start and end times of one or two pulses into the specified channel.
+    Edge times are converted to seconds and rounded to the nearest
+    nanosecond before being validated and stored.
 
     Parameters
     ----------
     pulse_params : dict
         A dictionary containing pulse parameters from `get_pulse_params`.
     pulse_train : list[tuple[float, float]]
-        The start and end times of each pulse in microseconds.
+        One or two rising/falling edge pairs in the selected units.
+        Edge times are measured from the start of the sequence.
     channel_id : int, optional
-        The index of the channel to which the pulses will be added.
+        The index of the channel to configure, from 0 through 7.
     channel_name : str, optional
-        The name to assign to the channel. If provided, it will update the
-        channel's name.
+        The name to assign to the channel.
+    units : str, optional
+        The pulse timing units: 'ns', 'us', 'ms', or 's'.
 
     Returns
     -------
     pulse_params : dict
-        The updated pulse parameters dictionary with the inserted pulse
-        timing information.
+        The updated pulse parameters dictionary.
 
     Raises
     ------
-    PulseParamsSize
-        If invalid pulse train instructions are detected, this error is
-        raised.
-    
+    PulseParamsError
+        If the pulse train size, edge pairs, widths, or delays are invalid.
+
+    Notes
+    -----
+    - Each rounded pulse width must be between 44 nanoseconds and
+      8 seconds, inclusive.
+    - The initial delay and gaps between pulses must satisfy the same
+      limits. The first pulse may start at zero without an initial delay.
+    - Pulses must be supplied in chronological order.
+    - The function replaces the selected channel's existing pulse data.
+    - The 'data' key stores flattened rising/falling edge times in seconds.
+
     """
     check_types(
         list,
         pulse_train=pulse_train
     )
-    
+
     check_types(
         int,
         channel_id=channel_id
     )
-    
+
     check_types(
         (str, type(None)),
         channel_name=channel_name
     )
-    
-    channel = _get_channel_ids(pulse_params)[channel_id]
-    pulse_data = []
-    
+
+    check_types(
+        str,
+        units=units
+    )
+
+    unit_factors = {
+        'ns': 1e-9,
+        'us': 1e-6,
+        'ms': 1e-3,
+        's': 1.0
+    }
+
+    if units.lower() not in unit_factors:
+        msg = f'Invalid pulse units. Got {units}'
+        raise ValueError(msg)
+
+    unit_scale = unit_factors[units.lower()]
     pulse_train_size = len(pulse_train)
-    if pulse_train_size < MIN_PULSE_TRAIN_SIZE:
+
+    if not MIN_PULSE_TRAIN_SIZE <= pulse_train_size <= MAX_PULSE_TRAIN_SIZE:
         msg = f'Invalid pulse train size of {pulse_train_size}'
         raise PulseParamsError(msg)
 
-    # Check for pulse train size and append
+    channels = list(pulse_params)
+
+    if not 0 <= channel_id < len(channels):
+        msg = f'Invalid pulse channel selected. Got {channel_id}'
+        raise ValueError(msg)
+
+    channel = channels[channel_id]
+    pulse_data = []
+    previous_falling_edge = 0.0
+
     for sequence in pulse_train:
+        check_types(
+            (tuple, list),
+            sequence=sequence
+        )
+
         sequence_size = len(sequence)
+
         if sequence_size != PULSE_SEQUENCE_SIZE:
             msg = f'Invalid pulse sequence size of {sequence_size} detected'
-            raise PulseParamsSize(msg)
+            raise PulseParamsError(msg)
 
         check_types(
             (float, int),
@@ -417,12 +338,393 @@ def config_pulse_insert_many(
             falling_edge=sequence[1]
         )
 
-        # If we made it this far, the evrything should be a-okay
-        pulse_data += sequence
+        rising_edge = round(
+            sequence[0] * unit_scale, 
+            DECIMALS_NS
+        )
+        
+        falling_edge = round(
+            sequence[1] * unit_scale, 
+            DECIMALS_NS
+        )
+
+        pulse_length = round(
+            falling_edge - rising_edge, 
+            DECIMALS_NS
+        )
+
+        if not MIN_PULSE_LENGTH <= pulse_length <= MAX_PULSE_LENGTH:
+            msg = f'Invalid pulse length in seconds. Got {pulse_length}'
+            raise PulseParamsError(msg)
+
+        delay = round(
+            rising_edge - previous_falling_edge,
+            DECIMALS_NS
+        )
+
+        if pulse_data or delay != 0:
+            if not MIN_PULSE_LENGTH <= delay <= MAX_PULSE_LENGTH:
+                msg = f'Invalid pulse delay in seconds. Got {delay}'
+                raise PulseParamsError(msg)
+
+        pulse_data += [
+            rising_edge,
+            falling_edge
+        ]
+
+        previous_falling_edge = falling_edge
 
     pulse_params[channel]['data'] = pulse_data
 
     if channel_name != None:
         pulse_params[channel]['name'] = channel_name
+
+    return pulse_params
+
+
+def config_pulse_wcounter(
+    pulse_params: dict,
+    count: int,
+    channel_id: int = 0
+) -> dict:
+    """Configure the initial wait counter.
+
+    This function updates the pulse parameters to set the number of
+    synchronization events skipped before the channel starts its P/O cycle.
+
+    Parameters
+    ----------
+    pulse_params : dict
+        A dictionary containing pulse parameters from `get_pulse_params`.
+    count : int
+        The initial number of events to skip, from 0 through 1000000000.
+        A value of 0 starts on the first accepted event.
+    channel_id : int, optional
+        The index of the channel to configure, from 0 through 7.
+
+    Returns
+    -------
+    pulse_params : dict
+        The updated pulse parameters dictionary.
+
+    Notes
+    -----
+    - The function modifies the selected channel's 'wcounter' key.
+    - The initial wait is performed once per program run.
+
+    """
+    check_types(
+        int,
+        count=count
+    )
+
+    check_types(
+        int,
+        channel_id=channel_id
+    )
+
+    channels = list(pulse_params)
+
+    if not 0 <= channel_id < len(channels):
+        msg = f'Invalid pulse channel selected. Got {channel_id}'
+        raise ValueError(msg)
+
+    channel = channels[channel_id]
+
+    if count < 0 or count > COUNTERS_MAX:
+        msg = f'Invalid pulse W counter. Got {count}'
+        raise ValueError(msg)
+
+    pulse_params[channel]['wcounter'] = count
+
+    return pulse_params
+
+
+def config_pulse_bcounter(
+    pulse_params: dict,
+    count: int,
+    channel_id: int = 0
+) -> dict:
+    """Configure the waveform buffer counter.
+
+    This function updates the pulse parameters to set the total number
+    of waveform buffers the channel will execute.
+
+    Parameters
+    ----------
+    pulse_params : dict
+        A dictionary containing pulse parameters from `get_pulse_params`.
+    count : int
+        The number of waveform buffers to execute, from 0 through 30000000.
+        A value of 0 selects infinite operation.
+    channel_id : int, optional
+        The index of the channel to configure, from 0 through 7.
+
+    Returns
+    -------
+    pulse_params : dict
+        The updated pulse parameters dictionary.
+
+    Notes
+    -----
+    - The function modifies the selected channel's 'bcounter' key.
+
+    """
+    check_types(
+        int,
+        count=count
+    )
+
+    check_types(
+        int,
+        channel_id=channel_id
+    )
+
+    channels = list(pulse_params)
+
+    if not 0 <= channel_id < len(channels):
+        msg = f'Invalid pulse channel selected. Got {channel_id}'
+        raise ValueError(msg)
+
+    channel = channels[channel_id]
+
+    if count < 0 or count > BCOUNTER_MAX:
+        msg = f'Invalid pulse B counter. Got {count}'
+        raise ValueError(msg)
+
+    pulse_params[channel]['bcounter'] = count
+
+    return pulse_params
+
+
+def config_pulse_pcounter(
+    pulse_params: dict,
+    count: int,
+    channel_id: int = 0
+) -> dict:
+    """Configure the ON duty cycle counter.
+
+    This function updates the pulse parameters to set the number of
+    synchronization events that execute the channel's waveform buffer
+    before the OFF portion of the P/O cycle.
+
+    Parameters
+    ----------
+    pulse_params : dict
+        A dictionary containing pulse parameters from `get_pulse_params`.
+    count : int
+        The ON synchronization event count, from 0 through 1000000000.
+        The firmware treats a value of 0 as 1.
+    channel_id : int, optional
+        The index of the channel to configure, from 0 through 7.
+
+    Returns
+    -------
+    pulse_params : dict
+        The updated pulse parameters dictionary.
+
+    Notes
+    -----
+    - The function modifies the selected channel's 'pcounter' key.
+
+    """
+    check_types(
+        int,
+        count=count
+    )
+
+    check_types(
+        int,
+        channel_id=channel_id
+    )
+
+    channels = list(pulse_params)
+
+    if not 0 <= channel_id < len(channels):
+        msg = f'Invalid pulse channel selected. Got {channel_id}'
+        raise ValueError(msg)
+
+    channel = channels[channel_id]
+
+    if count < 0 or count > COUNTERS_MAX:
+        msg = f'Invalid pulse P counter. Got {count}'
+        raise ValueError(msg)
+
+    pulse_params[channel]['pcounter'] = count
+
+    return pulse_params
+
+
+def config_pulse_ocounter(
+    pulse_params: dict,
+    count: int,
+    channel_id: int = 0
+) -> dict:
+    """Configure the OFF duty cycle counter.
+
+    This function updates the pulse parameters to set the number of
+    synchronization events skipped after the ON portion of the P/O cycle.
+
+    Parameters
+    ----------
+    pulse_params : dict
+        A dictionary containing pulse parameters from `get_pulse_params`.
+    count : int
+        The OFF synchronization event count, from 0 through 1000000000.
+        A value of 0 means no OFF events are skipped.
+    channel_id : int, optional
+        The index of the channel to configure, from 0 through 7.
+
+    Returns
+    -------
+    pulse_params : dict
+        The updated pulse parameters dictionary.
+
+    Notes
+    -----
+    - The function modifies the selected channel's 'ocounter' key.
+
+    """
+    check_types(
+        int,
+        count=count
+    )
+
+    check_types(
+        int,
+        channel_id=channel_id
+    )
+
+    channels = list(pulse_params)
+
+    if not 0 <= channel_id < len(channels):
+        msg = f'Invalid pulse channel selected. Got {channel_id}'
+        raise ValueError(msg)
+
+    channel = channels[channel_id]
+
+    if count < 0 or count > COUNTERS_MAX:
+        msg = f'Invalid pulse O counter. Got {count}'
+        raise ValueError(msg)
+
+    pulse_params[channel]['ocounter'] = count
+
+    return pulse_params
+
+
+def config_pulse_sync(
+    pulse_params: dict,
+    sync: str,
+    channel_id: int = 0
+) -> dict:
+    """Configure the pulse synchronization source.
+
+    This function updates the pulse parameters to select the source whose
+    rising events control the output channel.
+
+    Parameters
+    ----------
+    pulse_params : dict
+        A dictionary containing pulse parameters from `get_pulse_params`.
+    sync : str
+        The synchronization source. Accepted values are 't0', 'cha', 'chb',
+        'chc', 'chd', 'che', 'chf', 'chg', and 'chh'.
+    channel_id : int, optional
+        The index of the channel to configure, from 0 through 7.
+
+    Returns
+    -------
+    pulse_params : dict
+        The updated pulse parameters dictionary.
+
+    Notes
+    -----
+    - The function modifies the selected channel's 'sync' key.
+    - A channel cannot select itself as its synchronization source.
+
+    """
+    check_types(
+        str,
+        sync=sync
+    )
+
+    check_types(
+        int,
+        channel_id=channel_id
+    )
+
+    channels = list(pulse_params)
+
+    if not 0 <= channel_id < len(channels):
+        msg = f'Invalid pulse channel selected. Got {channel_id}'
+        raise ValueError(msg)
+
+    channel = channels[channel_id]
+
+    if sync.lower() not in VALID_SYNC_SOURCES:
+        msg = f'Invalid pulse synchronization source. Got {sync}'
+        raise ValueError(msg)
+
+    if sync.lower() == VALID_SYNC_SOURCES[channel_id + 1]:
+        msg = 'A pulse channel cannot synchronize to itself'
+        raise ValueError(msg)
+
+    pulse_params[channel]['sync'] = sync
+
+    return pulse_params
+
+
+def config_pulse_output_level(
+    pulse_params: dict,
+    level: str,
+    channel_id: int = 0
+) -> dict:
+    """Configure the pulse output logic level.
+
+    This function updates the pulse parameters to select the output logic
+    level of the channel.
+
+    Parameters
+    ----------
+    pulse_params : dict
+        A dictionary containing pulse parameters from `get_pulse_params`.
+    level : str
+        The selected output logic level: 'ttl' or 'lvttl'.
+    channel_id : int, optional
+        The index of the channel to configure, from 0 through 7.
+
+    Returns
+    -------
+    pulse_params : dict
+        The updated pulse parameters dictionary.
+
+    Notes
+    -----
+    - The function modifies the selected channel's 'output_level' key.
+
+    """
+    check_types(
+        str,
+        level=level
+    )
+
+    check_types(
+        int,
+        channel_id=channel_id
+    )
+
+    channels = list(pulse_params)
+
+    if not 0 <= channel_id < len(channels):
+        msg = f'Invalid pulse channel selected. Got {channel_id}'
+        raise ValueError(msg)
+
+    channel = channels[channel_id]
+
+    if level.lower() not in VALID_OUTPUT_LEVELS:
+        msg = f'Invalid pulse output level. Got {level}'
+        raise ValueError(msg)
+
+    pulse_params[channel]['output_level'] = level
 
     return pulse_params
