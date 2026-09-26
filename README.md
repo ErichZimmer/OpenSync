@@ -3,29 +3,19 @@ An open source synchronizer for the velocimetry of fluids using a Raspberry Pi m
 
 ![Example Timing Graph for Diode Laser](assets/opensync_demo_timing.png)
 
-## NOTICE
-The OpenSync project has temporarily been halted due to supply chain issues with the vendors this project relies on. Additionally, university is taking up quite a bit of my free time due to being on my final semester. Hopefully, the project would be done soon :)
-
 ## Purpose
-OpenSync is a simple and low-cost synchronizer based on microcontroller technology. Due to the intrinsic nature of microcontrollers compared to more advanced devices (e.g., field programmable gate arrays), most complex features that are typical of commercial propietary devices such as gating, external trigger manipulation, etc are not implemented. However, OpenSync remains sufficiently flexible and provides enough support for most users' needs when performing a PIV experiment. This is because OpenSync is an arbitrary pulse generator under-the-hood which allows for rather complex pulse sequences to be synthesized through simple output port manipulation. Additionally, three (3) independent internal clocks can be utilized to allow for relatively advanced pulse timing. While this implementation for a synchronizer may be quite restrictive at times, it is what makes OpenSync so simple!
+OpenSync is a simple and low-cost synchronizer based on microcontroller technology. Due to the intrinsic nature of microcontrollers compared to more advanced devices (e.g., field programmable gate arrays), sub-cycle accuracy and come complex features that are typical of commercial propietary devices are not implemented. However, OpenSync remains sufficiently flexible and provides enough support for most users' needs when performing a PIV experiment. This is because OpenSync is a digital delay/pulse generator capable of having each output channel individually programmed. In adition to an all-microcontroller platform and a custom PCB, OpenSync devices provides a low-cost means to deterministic controll of laboratory equipment.
 
 ## Basic Specs
  - **System Frequency**: 250 MHz (4 ns resolution)
  - **Output Channels**: 8
- - **Input Channels**: 1
- - **I/O Channel Voltage**: 5V @ 50 Ohm
+ - **Input Channels**: 2
+ - **I/O Channel Voltage**: 3.3V or 5V @ high impedance
 
 For a more detailed specification, please read the [datasheet](documents/datasheet/opensync_datasheet_markdown.md).
 
-## Advanced Features
- - Three (3) independent clocks mapped to all 8 output channels
- - Variable timing for each internal clock
- - Each clock can skip certain number of external triggers
- - Each clock can add delay between external trigger signal and pulse sequence signal
- - Internal clocks and pulse sequncers can have different clock dividers
-
 ## Documentation
-Complete instructions to construct and use OpenSync are provided in [imaginary link to notebook-based rtd website].
+Complete instructions to construct and use OpenSync are provided in [imaginary link to notebook-based rtd website]. User's interested in the development process of OpenSync are kindly refered to the [SDLC documentation](documents/SDLC/README.md). There is a lot of information on the development process including some quirks from the pico microcontroller platform.
 
 ## Quick Start
 
@@ -38,7 +28,7 @@ Flashing firmware to OpenSync is extremely simple. Make sure OpenSync is disconn
 ### Self Test
 Import the Python library `opensync` and type in the following command:
 ```python
-from opensync import opensync
+import opensync
 
 # Find all open ports
 ports = opensync.device_comm_search()
@@ -56,7 +46,7 @@ with opensync.device_comm_managed(ports[0], fast=True) as device:
 If successfull, no errors or warnings should be produced. Please note that all commands to and from opensync are terminated with CRLF. Additionally, all used output terminals should be validated on an osciliscope for peace-of-mind, allthough this is not strictly necessary.
 
 ## Acknowledgments
-I would like to acknowledge Dr. Ivan Nepomnyashchikh and Professor Alex Liberzon for spearheading development of open source, open hardware equipment for the OpenPIV project (see the original [thread](https://groups.google.com/g/openpiv-users/c/xi7qt28IGEE) that started this project). Additionally, certain inspirations of the OpenSync project are from relatively low-cost hardware produced by  [Optolution](https://optolution.com/en/) and [MicroVec Pte Ltd](https://piv.com.sg/). 
+I would like to acknowledge Dr. Ivan Nepomnyashchikh and Professor Alex Liberzon for spearheading development of open source, open hardware equipment for the OpenPIV project (see the original [thread](https://groups.google.com/g/openpiv-users/c/xi7qt28IGEE) that started this project). Additionally, certain inspirations of the OpenSync project are from relatively low-cost hardware produced by [Optolution](https://optolution.com/en/) and [MicroVec Pte Ltd](https://piv.com.sg/). 
 
 ## TODO
 - [x] Add timing plot utilities
