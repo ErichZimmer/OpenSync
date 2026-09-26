@@ -23,7 +23,7 @@ VALID_GATE_LEVELS = [
 COUNTERS_MAX = 1000000000
 BCOUNTER_MAX = 30000000
 DIVIDER_MAX = 65500
-PERIOD_MIN = 200e-9
+PERIOD_MIN = 320e-9
 PERIOD_MAX = 16
 
 
@@ -204,7 +204,7 @@ def config_clock_period(
     -----
     - The function modifies the 'period' key in the clock_params dictionary
       to store the clock period in seconds.
-    - The allowed period is from 200 nanoseconds multiplied by the clock
+    - The allowed period is from 320 nanoseconds multiplied by the clock
       divider through 10 seconds multiplied by the clock divider.
     - Configure the divider before configuring the period.
 
@@ -218,21 +218,21 @@ def config_clock_period(
         units=units
     )
 
-    unit_factors = {
-        'ns': 1e-9,
-        'us': 1e-6,
-        'ms': 1e-3,
+    unit_divisors = {
+        'ns': 1e9,
+        'us': 1e6,
+        'ms': 1e3,
         's': 1.0
     }
 
-    if units.lower() not in unit_factors:
+    if units.lower() not in unit_divisors:
         msg = f'Invalid clock period units. Got {units}'
         raise ValueError(msg)
 
-    period = period * unit_factors[units.lower()]
+    period = period / unit_divisors[units.lower()]
 
     if not (
-        period >= PERIOD_MIN * clock_params['divider'] or
+        period >= PERIOD_MIN * clock_params['divider'] and
         period <= PERIOD_MAX * clock_params['divider']
     ):
         msg = f'Invalid clock period in seconds. Got {period}'

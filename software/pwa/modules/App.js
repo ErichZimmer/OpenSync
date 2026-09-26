@@ -3,7 +3,8 @@ import "arcane-os/modules/HTMLImport.js";
 import waitForComponent from "arcane-os/modules/WaitForComponent.js";
 import UserEntity, {
     createSystemSettings,
-    createChannelSettings
+    createChannelSettings,
+    SYSTEM_PERIOD_MIN
 } from "../entities/User.js";
 import uploadSettings from "./uploadSettings.mjs";
 import DeviceManager from './connectionManager.mjs';
@@ -259,6 +260,14 @@ function populateChannels(channel='') {
     }
 }
 
+function updateSystemPeriodMinimum() {
+    const periodInput = systemEditor.querySelector('[name="period"]');
+    const units = systemEditor.querySelector('[name="periodUnit"]').value;
+    const divider = systemEditor.querySelector('[name="divider"]').valueAsNumber;
+
+    periodInput.min = SYSTEM_PERIOD_MIN[units] * divider;
+}
+
 function populateSystem() {
     const settings = user.systemSettings;
 
@@ -273,6 +282,8 @@ function populateSystem() {
     systemEditor.querySelector('[name="triggerEdge"]').value    = settings.trigger_edge;
     systemEditor.querySelector('[name="gateMode"]').value       = settings.gate_mode;
     systemEditor.querySelector('[name="gateLogic"]').value      = settings.gate_level;
+
+    updateSystemPeriodMinimum();
 }
 
 async function updateChannels(channel = '') {
@@ -375,6 +386,7 @@ async function onSettingsInput(event) {
 
     if (systemEditor.contains(event.target)) {
         editor = systemEditor;
+        updateSystemPeriodMinimum();
     } else if (channelEditor.contains(event.target)) {
         editor = channelEditor;
     } else {

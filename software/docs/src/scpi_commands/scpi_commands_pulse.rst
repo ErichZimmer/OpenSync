@@ -86,7 +86,7 @@ Examples
  | :PULSe0:PERiod <time>
 
 This command sets the clock period used by T0. This command is available only
-for sequencer 0. The allowed period is from 200 ns multiplied by the clock
+for sequencer 0. The allowed period is from 320 ns multiplied by the clock
 divider through 10 s multiplied by the clock divider.
 
 Time values without a suffix are in seconds. Supported time suffixes are

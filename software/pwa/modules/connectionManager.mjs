@@ -84,7 +84,7 @@ class DeviceManager {
                     this.#device = undefined;
                 }
             }.bind(this)
-        )
+        );
     }
 
     async open() {

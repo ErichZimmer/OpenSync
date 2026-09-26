@@ -24,7 +24,7 @@ An open source synchronizer for the velocimetry of fluids using a Raspberry Pi m
   </tr>
   <tr>
     <td>Period Range</td>
-    <td>0.0004 Hz to 5 MHz</td>
+    <td>0.0004 Hz to 3.125 MHz</td>
   </tr>
   <tr>
     <td>Resolution</td>

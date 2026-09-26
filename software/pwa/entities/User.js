@@ -12,6 +12,14 @@ import DBOPFS from 'arcane-os/modules/DBOPFS.js';
 const is = new Is(false);
 let singletonDBOPFSReadyUnsubscribe = null;
 
+// Minimum clock period at divider 1, expressed in each selectable unit.
+const SYSTEM_PERIOD_MIN = {
+    s: 0.00000032,
+    ms: 0.00032,
+    us: 0.32,
+    ns: 320
+};
+
 function createSystemSettings() {
     return {
         enable: false,
@@ -113,12 +121,14 @@ function validateSystemSettings(value) {
     const settings = readSettings(value, createSystemSettings(), 'systemSettings');
     validateCommonSettings(settings, 'systemSettings');
 
+    validateChoice(settings.units, ['s', 'ms', 'us', 'ns'], 'systemSettings.units');
+
     // Store the period value with its selected unit; do not convert it here.
-    if (!is.finite(settings.period) || settings.period < 0) {
-        throw new TypeError('systemSettings.period must be a nonnegative number');
+    const minimumPeriod = SYSTEM_PERIOD_MIN[settings.units] * settings.divider;
+    if (!is.finite(settings.period) || settings.period < minimumPeriod) {
+        throw new TypeError('systemSettings.period must be at least ' + minimumPeriod + ' ' + settings.units);
     }
 
-    validateChoice(settings.units, ['s', 'ms', 'us', 'ns'], 'systemSettings.units');
     validateChoice(settings.trigger_mode, ['disabled', 'triggered'], 'systemSettings.trigger_mode');
     validateChoice(settings.trigger_edge, ['rising', 'falling'], 'systemSettings.trigger_edge');
     validateChoice(settings.gate_mode, ['disabled', 'pulse', 'output', 'channel'], 'systemSettings.gate_mode');
@@ -448,5 +458,5 @@ if (window.dbopfs?.ready) {
     );
 }
 
-export { createSystemSettings, createChannelSettings };
+export { createSystemSettings, createChannelSettings, SYSTEM_PERIOD_MIN };
 export default UserEntity;

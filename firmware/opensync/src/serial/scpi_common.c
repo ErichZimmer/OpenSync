@@ -9,7 +9,7 @@
 
 
 const int32_t STATEFUL = -1;
-const double DELAY_CLOCK_MIN = 200e-9; // 200 ns in seconds
+const double DELAY_CLOCK_MIN = 320e-9; // 320 ns in seconds
 const double DELAY_CLOCK_MAX = 16.0;   // 10 seconds
 const double DELAY_PULSE_MIN = 44e-9;  // 44 ns in seconds
 const double DELAY_PULSE_MAX = 8.0;    // 8 seconds
