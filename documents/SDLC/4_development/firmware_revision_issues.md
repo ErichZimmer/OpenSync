@@ -32,27 +32,52 @@ After much contemplatation, the usage of RXFIFO in the pulse sequencer PIO progr
 
 ## Appendix A. OpenSync Configuration During Testing
 pulse0:state on
+
+
 pulse0:divider 1
+
 pulse0:period 3 s
+
 pulse0:bcounter 1
+
 pulse0:pcounter 3
+
 pulse0:ocounter 0
+
 pulse0:trigger:mode triggered
+
 pulse0:trigger:edge rising
+
 pulse0:gate:mode disabled
 
+
 pulse1:state on
+
 pulse1:divider 1
+
 pulse1:buffer on, 0.25 s, off, 0.5 s, on, 0.25 s, off, 0.5 s, on, 0.25 s, off, 0.5 s
+
 pulse1:sync t0
+
 pulse1:bcounter 0
+
 pulse1:pcounter 1
+
 pulse1:ocounter 0
 
+
+
 pulse2:state on
+
 pulse2:divider 1
+
 pulse2:buffer off, 0.25 s, on, 0.5 s, off, 0.25 s, on, 0.5 s, off, 0.25 s, on, 0.5 s
+
 pulse2:sync t0
+
 pulse2:bcounter 0
+
 pulse2:pcounter 1
+
 pulse2:ocounter 0
+
