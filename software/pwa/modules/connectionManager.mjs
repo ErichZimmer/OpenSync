@@ -78,6 +78,13 @@ class DeviceManager {
     #device = undefined;
 
     constructor() {
+        navigator.serial.addEventListener('disconnect',
+            function onDisconnect(event) {
+                if (event.target === this.#device) {
+                    this.#device = undefined;
+                }
+            }.bind(this)
+        )
     }
 
     async open() {
