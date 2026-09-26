@@ -222,13 +222,6 @@ async function uploadSettings(device, user) {
     }
 
     for (let i = 0; i<numChannels; i++) {
-        const channelSettings = user.channelSettings[i];
-
-        // If a channel is not enabled, don't bother uploading the settings
-        if (!channelSettings.enable) {
-            continue;
-        }
-
         resp = await uploadChannelSettings(device, user, i);
 
         if (resp) {

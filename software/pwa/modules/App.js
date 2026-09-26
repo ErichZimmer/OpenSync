@@ -15,6 +15,9 @@ await arcaneThemeReady;
 const user = new UserEntity();
 await user.load();
 
+const COMMUNICATION_ERROR = 'Device Communication Error';
+const PARAMETER_ERROR =  'Device Parameter Error';
+
 const connectButton = document.querySelector('#connect-device');
 const runStopButton = document.querySelector('#run-stop');
 const sendButton = document.querySelector('#send-settings');
@@ -34,6 +37,11 @@ const terminal = document.createElement('html-import');
 const terminalRoot = terminal.shadowRoot;
 const terminalURL = new URL(
     '../components/terminal-workspace.html',
+    import.meta.resolve('arcane-os/modules/WaitForComponent.js')
+);
+
+const modalURL = new URL(
+    '../components/modal.html',
     import.meta.resolve('arcane-os/modules/WaitForComponent.js')
 );
 
@@ -96,6 +104,45 @@ async function sendTerminalCommand(event) {
     }
 }
 
+async function showMessage(message, title='OpenSync') {
+    const modal = document.createElement('html-import');
+
+    modal.setAttribute('href', modalURL.href);
+    modal.setAttribute('data-once', '');
+
+    const content = document.createElement('section');
+    const heading = document.createElement('h2');
+    const text    = document.createElement('p');
+
+    heading.textContent = title;
+    text.textContent = message;
+    text.style.whiteSpace = 'pre-wrap';
+
+    content.append(heading, text);
+
+    const closed = new Promise(function (resolve) {
+        modal.addEventListener('modal-closed', resolve, { once: true });
+    });
+
+    document.body.append(modal);
+
+    try {
+        await waitForComponent(modal, {
+            event: 'modal-ready',
+            property: 'ready',
+            methods: ['populate', 'open'],
+            errorEvent: 'html-import-error'
+        });
+
+        await modal.populate(content, false);
+        await modal.open();
+        await closed;
+    } catch (error) {
+        modal.remove();
+        throw error;
+    }
+}
+
 populateSystem();
 populateChannels(startingChannel);
 
@@ -131,8 +178,9 @@ async function manageConnection() {
 
 async function manageRunStop() {
     if (!device.isopen()) {
-        // TODO: Move alert into an arcane-os modal
-        alert('Device failed to communicate. Make sure that it is connected');
+        const msg = 'Device failed to communicate. Make sure that it is connected'
+        await showMessage(msg, COMMUNICATION_ERROR)
+
         console.error('Connect to OpenSync before using Run/Stop.');
 
         return;
@@ -166,7 +214,7 @@ async function manageRunStop() {
 
         const postResponseStatus = (await device.send('device:status?')).trim();
         
-        alert(message + `\nDevice status: ${postResponseStatus}`);
+        await showMessage(message + `\nDevice status: ${postResponseStatus}`);
         console.log(`Device status post command: ${postResponseStatus}`);
 
     } catch (err) {
@@ -179,8 +227,9 @@ async function manageRunStop() {
 
 async function sendSettingsToDevice() {
     if (!device.isopen()) {
-        // TODO: Move alert into an arcane-os modal
-        alert('Device failed to communicate. Make sure that it is connected');
+        const msg = 'Device failed to communicate. Make sure that it is connected';
+        await showMessage(msg, COMMUNICATION_ERROR);
+
         console.error('Connect to OpenSync before using Run/Stop.');
 
         return;
@@ -190,12 +239,17 @@ async function sendSettingsToDevice() {
 
     console.log(`Result of send: ${result}`);
 
-    // TODO: Move all these alerts to arcane modal
+    let msg = '';
+    let title = 'OpenSync';
+
     if (result) {
-        alert(result);
+        msg += result
+        title = PARAMETER_ERROR;
     } else {
-        alert('Settings sucessfully uploaded to device');
+        msg = 'Settings sucessfully uploaded to device';
     }
+
+    await showMessage(msg, title);
 }
 
 function mapChannelToIndex(channel='') {
@@ -398,8 +452,8 @@ async function onSettingsInput(event) {
         if (!Number.isFinite(input.valueAsNumber) || !input.checkValidity()) {
             console.warn('Invalid values detected; skipping save')
             
-            // TODO: Move the modal into arane-os modal
-            alert('Invalid values detected; skipping save');
+            const msg = 'Invalid values detected; skipping save';
+            await showMessage(msg, PARAMETER_ERROR);
 
             return;
         }
