@@ -5,39 +5,13 @@
 ================================
 
 Pulse sequencer properties of an OpenSync device can be accessed using the
-``SOURce:PULSe`` root path. Pulse sequencer configuration and information can be
-set and queried when the device is idle and not currently executing a program.
+``PULSe`` root path. Pulse sequencer configuration can be set when the device
+is idle or aborted. Queries can also be used during device operation.
 
-Commands that include ``PULSe<N>`` operate on pulse sequencer ``<N>``. Commands
-that omit ``<N>`` use the currently selected stateful pulse sequencer index.
-For example, ``:SOURce:PULSe0:STATe ON`` operates on pulse sequencer 0, while
-``:SOURce:PULSe:STATe ON`` operates on the currently selected pulse sequencer.
-
-
-.. _scpi_pulse_select:
-
-``:SELect``
-===========
-
- | :SOURce:PULSe:SELect?
- | :SOURce:PULSe:SELect 0 | 1 | 2
-
-This command selects the pulse sequencer index for stateful configuration
-operations. The sequencer IDs reflect the pulse sequencer index where 0 is pulse
-sequencer 0 and so on.
-
-Examples
---------
-.. code-block:: none
-   :caption: Example SCPI code
-
-   :SOUR:PULS:SEL 0
-   :SOUR:PULS:SEL?
-   >>> 0
-
-.. note::
- * \*RST resets ``:SOURce:PULSe:SELect`` to `0`.
- * Only the query command is intended to be used during device operation.
+Commands that include ``PULSe<N>`` operate on sequencer ``<N>``. Sequencer 0 is
+the T0 clock, and sequencers 1 through 8 are output channels CHA through CHH.
+Commands that omit ``<N>`` operate on T0. For example, ``:PULSe1:STATe ON``
+enables output channel CHA, while ``:PULSe:STATe ON`` enables T0.
 
 
 .. _scpi_pulse_state:
@@ -45,52 +19,24 @@ Examples
 ``:STATe``
 ===========
 
- | :SOURce:PULSe<N>:STATe?
- | :SOURce:PULSe<N>:STATe ON | OFF
+ | :PULSe<N>:STATe?
+ | :PULSe<N>:STATe ON | OFF
 
-This command enables or disables the pulse sequencer at sequencer ``<N>`` if
-stated, or the selected sequencer if not. Pulse sequencers that are not enabled
-will not be processed during program execution.
+This command enables or disables sequencer ``<N>``. Sequencers that are not
+enabled will not be processed during program execution. The command accepts
+`ON` or `1` to enable and `OFF` or `0` to disable. The query returns `1` or `0`.
 
 Examples
 --------
 .. code-block:: none
    :caption: Example SCPI code
 
-   :SOUR:PULS0:STAT ON
-   :SOUR:PULS0:STAT?
+   :PULS1:STAT ON
+   :PULS1:STAT?
    >>> 1
 
 .. note::
- * \*RST resets ``:SOURce:PULSe<N>:STATe`` to `OFF`.
- * Configuration commands are not allowed during device operation.
-
-
-.. _scpi_pulse_input:
-
-``:INPut``
-==========
-
- | :SOURce:PULSe<N>:INPut?
- | :SOURce:PULSe<N>:INPut 0 | 1 | 2
-
-This command sets the clock input source of the pulse sequencer at sequencer
-``<N>`` if stated, or the selected sequencer if not. The input IDs reflect the
-clock sequencer index where 0 is clock sequencer 0 and so on. A pulse sequencer
-requires a clock sequencer input to listen to; without one, the pulse sequencer
-will never execute.
-
-Examples
---------
-.. code-block:: none
-   :caption: Example SCPI code
-
-   :SOUR:PULS0:INP 0
-   :SOUR:PULS0:INP?
-   >>> 0
-
-.. note::
- * \*RST resets ``:SOURce:PULSe<N>:INPut`` to `0`.
+ * \*RST resets ``:PULSe<N>:STATe`` to `OFF`.
  * Configuration commands are not allowed during device operation.
 
 
@@ -99,104 +45,250 @@ Examples
 ``:DIVider``
 ============
 
- | :SOURce:PULSe<N>:DIVider?
- | :SOURce:PULSe<N>:DIVider HIGH | HIGH_RES | MED | MED_RES | LOW | LOW_RES | VERY_LOW | VERY_LOW_RES | VERY_VERY_LOW | VERY_VERY_LOW_RES
+ | :PULSe0:DIVider?
+ | :PULSe<N>:DIVider <positive integer>
 
-This command sets the time scale of the pulse sequencer at sequencer ``<N>`` if
-stated, or the selected sequencer if not. The string arguments are converted to
-a clock divider that changes the clock resolution of the pulse sequencer. For
-example, ``HIGH_RES`` results in a clock divider of `1`, while ``LOW_RES``
-results in a clock divider of `5`.
+This command sets the clock divider of sequencer ``<N>``. The divider changes
+the clock resolution and scales the minimum and maximum period or delay that
+can be configured.
 
 .. csv-table:: Divider Data Description
-   :header: "SCPI String", "Clock Divider", "Unit Time Scale"
-   :widths: 25, 10, 20
+   :header: "Clock Divider", "Unit Time Scale"
+   :widths: 15, 25
 
-   "``HIGH_RES`` or ``HIGH``", "1", "Clock resolution is 4 ns"
-   "``MED_RES`` or ``MED``", "2", "Clock resolution is 8 ns"
-   "``LOW_RES`` or ``LOW``", "5", "Clock resolution is 20 ns"
-   "``VERY_LOW_RES`` or ``VERY_LOW``", "25", "Clock resolution is 100 ns"
-   "``VERY_VERY_LOW_RES`` or ``VERY_VERY_LOW``", "250", "Clock resolution is 1,000 ns (1 us)"
+   "1", "Clock resolution is 4 ns"
+   "2", "Clock resolution is 8 ns"
+   "5", "Clock resolution is 20 ns"
+   "25", "Clock resolution is 100 ns"
+   "250", "Clock resolution is 1,000 ns (1 us)"
 
 Examples
 --------
 .. code-block:: none
    :caption: Example SCPI code
 
-   :SOUR:PULS0:DIV MED_RES
-   :SOUR:PULS0:DIV?
+   :PULS0:DIV 2
+   :PULS0:DIV?
    >>> 2
 
 .. note::
- * \*RST resets ``:SOURce:PULSe<N>:DIVider`` to `HIGH_RES`.
+ * \*RST resets ``:PULSe<N>:DIVider`` to `1`.
  * Configuration commands are not allowed during device operation.
- * Cached pulse sequence data needs to be re-applied when the divider is changed.
- * Pulse sequencer clock dividers should generally match the clock dividers of the chosen clock sequencer.
+ * Program configuration supports dividers up to `65500` for T0 and output channels.
 
 
-.. _scpi_pulse_units:
+.. _scpi_pulse_period:
 
-``:UNITs``
+``:PERiod``
+============
+
+ | :PULSe0:PERiod?
+ | :PULSe0:PERiod <time>
+
+This command sets the clock period used by T0. This command is available only
+for sequencer 0. The allowed period is from 200 ns multiplied by the clock
+divider through 10 s multiplied by the clock divider.
+
+Time values without a suffix are in seconds. Supported time suffixes are
+`NS`, `US`, `MS`, `S`, and `MIN`. The query returns the period in
+seconds.
+
+Examples
+--------
+.. code-block:: none
+   :caption: Example SCPI code
+
+   :PULS0:PER 1MS
+   :PULS0:PER?
+   >>> 0.001
+
+.. note::
+ * \*RST resets ``:PULSe0:PERiod`` to `0`. Set a valid period before starting T0.
+ * Configuration commands are not allowed during device operation.
+
+
+.. _scpi_pulse_bcounter:
+
+``:BCOunter``
+==============
+
+ | :PULSe<N>:BCOunter?
+ | :PULSe<N>:BCOunter <count>
+
+This command sets the B counter of sequencer ``<N>``. Values range from `0`
+through `30,000,000`. For T0, the B counter sets the number of acquisitions, each
+containing the configured P and O counts. For an output channel, the B counter
+sets the total number of waveform buffers to execute.
+
+A value of `0` selects infinite operation until T0 is stopped or the program is
+aborted using ``:DEVice:STOP``. The query returns the configured count.
+
+.. note::
+   The `30,000,000` maximum keeps finite B counts within the RP2350 DMA
+   transfer-count limit for both T0 and output channels.
+
+Examples
+--------
+.. code-block:: none
+   :caption: Example SCPI code
+
+   :PULS1:BCO 5
+   :PULS1:BCO?
+   >>> 5
+
+.. note::
+ * \*RST resets ``:PULSe<N>:BCOunter`` to `0`.
+ * B counts are not decremented for pulse inhibit, but are decremented on output inhibit gate modes.
+ * Configuration commands are not allowed during device operation.
+
+
+.. _scpi_pulse_pcounter:
+
+``:PCOunter``
+==============
+
+ | :PULSe<N>:PCOunter?
+ | :PULSe<N>:PCOunter <count>
+
+This command sets the ON duty cycle counter of sequencer ``<N>``. Values range
+from `0` through `1,000,000,000`. T0 produces an event for each ON period. An output
+channel executes its waveform buffer for each accepted ON synchronization
+event. After the P count, the sequencer skips the number of events specified
+by the O counter and repeats the P/O cycle.
+
+Output channels treat a P count of `0` as `1` when configuring the sequencer.
+Use a P count of at least `1` for T0. The query returns the configured count.
+
+Examples
+--------
+.. code-block:: none
+   :caption: Example SCPI code
+
+   :PULS1:PCO 3
+   :PULS1:PCO?
+   >>> 3
+
+.. note::
+ * \*RST resets ``:PULSe<N>:PCOunter`` to `1`.
+ * Configuration commands are not allowed during device operation.
+
+
+.. _scpi_pulse_ocounter:
+
+``:OCOunter``
+==============
+
+ | :PULSe<N>:OCOunter?
+ | :PULSe<N>:OCOunter <count>
+
+This command sets the OFF duty cycle counter of sequencer ``<N>``. Values range
+from `0` through `1,000,000,000`. After the P count, T0 skips this number of clock
+periods, or an output channel skips this number of synchronization events,
+before starting the next P/O cycle. A value of `0` means no OFF events are
+skipped. The query returns the configured count.
+
+Examples
+--------
+.. code-block:: none
+   :caption: Example SCPI code
+
+   :PULS1:OCO 2
+   :PULS1:OCO?
+   >>> 2
+
+.. note::
+ * \*RST resets ``:PULSe<N>:OCOunter`` to `0`.
+ * Configuration commands are not allowed during device operation.
+
+
+.. _scpi_pulse_wcounter:
+
+``:WCOunter``
+==============
+
+ | :PULSe<N>:WCOunter?
+ | :PULSe<N>:WCOunter <count>
+
+This command sets the initial wait counter of output channel ``<N>``, where
+``<N>`` is 1 through 8. Use values from `0` through `1,000,000,000`. The channel skips
+this number of events from its selected synchronization source before starting
+its P/O cycle. A value of `0` starts on the first accepted event. The initial
+wait is performed once per program run. The query returns the configured count.
+
+Examples
+--------
+.. code-block:: none
+   :caption: Example SCPI code
+
+   :PULS1:WCO 2
+   :PULS1:WCO?
+   >>> 2
+
+.. note::
+ * \*RST resets ``:PULSe<N>:WCOunter`` to `0`.
+ * Configuration commands are not allowed during device operation.
+
+
+.. _scpi_pulse_sync:
+
+``:SYNC``
 ==========
 
- | :SOURce:PULSe<N>:UNITs?
- | :SOURce:PULSe<N>:UNITs NS | US | MS | S | M | H
+ | :PULSe<N>:SYNC?
+ | :PULSe<N>:SYNC T0 | CHA | CHB | CHC | CHD | CHE | CHF | CHG | CHH
 
-This command sets the data units of the pulse sequencer at sequencer ``<N>`` if
-stated, or the selected sequencer if not. The string arguments are converted to
-a unit scaler that converts the supplied delay values into nanoseconds before
-conversion to clock cycles. For example, ``NS`` results in a unit scaler of `1`,
-while ``US`` results in a unit scaler of `1.0e3` because there are 1,000
-nanoseconds in one microsecond.
-
-.. csv-table:: Units Data Description
-   :header: "SCPI String", "Unit Time Scale"
-   :widths: 15, 25
-
-   "``NS``", "Pulse delay data is in nanoseconds"
-   "``US``", "Pulse delay data is in microseconds"
-   "``MS``", "Pulse delay data is in milliseconds"
-   "``S``", "Pulse delay data is in seconds"
-   "``M``", "Pulse delay data is in minutes"
-   "``H``", "Pulse delay data is in hours"
+This command sets the synchronization source of output channel ``<N>``, where
+``<N>`` is 1 through 8. The channel waits for rising events from the selected
+source. `T0` selects the T0 clock. `CHA` through `CHH` select output channels
+1 through 8, respectively. A channel cannot select itself as its source.
 
 Examples
 --------
 .. code-block:: none
    :caption: Example SCPI code
 
-   :SOUR:PULS0:UNIT US
-   :SOUR:PULS0:UNIT?
-   >>> 1000.0
+   :PULS1:SYNC T0
+   :PULS1:SYNC?
+   >>> T0
 
 .. note::
- * \*RST resets ``:SOURce:PULSe<N>:UNITs`` to the default unit scale configured by the device.
+ * \*RST resets ``:PULSe<N>:SYNC`` to `T0`.
  * Configuration commands are not allowed during device operation.
- * Cached pulse sequence data needs to be re-applied when data units are changed.
 
 
-.. _scpi_pulse_data:
+.. _scpi_pulse_buffer:
 
-``:DATA``
-=========
+``:BUFfer``
+============
 
- | :SOURce:PULSe<N>:DATA?
+ | :PULSe<N>:BUFfer?
+ | :PULSe<N>:BUFfer <state>,<delay>[,<state>,<delay>...]
 
-This command queries the instruction buffer of the pulse sequencer at sequencer
-``<N>`` if stated, or the selected sequencer if not. This is read only and cannot
-be set directly. The returned data is the applied low-level instruction buffer,
-not the temporary ``DATA:BUFFer`` cache.
+This command sets the waveform buffer of output channel ``<N>``, where ``<N>``
+is 1 through 8. The buffer contains one through six output-state and delay
+pairs. Each state is `ON` or `1` for HIGH, or `OFF` or `0` for LOW. The following
+delay specifies how long that state is held.
+
+Time values without a suffix are in seconds. Supported time suffixes are
+`PS`, `NS`, `US`, `MS`, `S`, `MIN`, and `HR`. Each supplied delay must be from
+44 ns multiplied by the channel clock divider through 8 s multiplied by the
+channel clock divider.
+
+Each command replaces the channel buffer. Unused pairs are cleared to `OFF`
+and `0`. The query returns all six pairs, with delays in seconds.
 
 Examples
 --------
 .. code-block:: none
    :caption: Example SCPI code
 
-   :SOUR:PULS0:DATA?
-   >>> 0,1,0,1,0,1...
+   :PULS1:BUF ON,250MS,OFF,500MS,ON,250MS,OFF,500MS,ON,250MS,OFF,500MS
+   :PULS1:BUF?
+   >>> ON,0.25,OFF,0.5,ON,0.25,OFF,0.5,ON,0.25,OFF,0.5
 
 .. note::
- * \*RST resets ``:SOURce:PULSe<N>:DATA`` to the device default pulse instruction buffer.
+ * \*RST resets ``:PULSe<N>:BUFfer`` to six `OFF,0` pairs.
+ * Configuration commands are not allowed during device operation.
 
 
 .. _scpi_pulse_reset:
@@ -204,158 +296,245 @@ Examples
 ``:RESet``
 ==========
 
- | :SOURce:PULSe<N>:RESet
+ | :PULSe<N>:RESet
 
-This command resets the pulse sequencer at sequencer ``<N>`` if stated, or the
-selected sequencer if not.
+This command resets sequencer ``<N>`` to its default configuration. The channel
+is disabled, the divider and P counter are set to `1`, and the remaining
+settings and buffers are cleared to their defaults.
 
 Examples
 --------
 .. code-block:: none
    :caption: Example SCPI code
 
-   :SOUR:PULS0:RES
+   :PULS1:RES
 
 .. note::
- - \*RST calls this command on all sequencers.
+ - \*RST resets all sequencers.
  - Command is not allowed during device operation.
 
 
 =============================
-``:DATA:BUFFer`` Properties
+``:OUTPut`` Properties
 =============================
-``DATA:BUFFer`` is a subdirectory that controls the static instruction buffers
-used by the pulse sequencer SCPI interface. These buffers are intermediary and
-are not applied to a pulse sequencer until the ``:APPly`` command is executed.
-
-The output and delay buffers are separate, global cache buffers. The command
-still accepts a pulse sequencer suffix so the selected pulse sequencer can be
-validated and used during ``:APPly``. The output and delay buffers must contain
-the same number of elements before ``:APPly`` is executed.
+``OUTPut`` is a subdirectory that controls the output logic level of channels
+1 through 8.
 
 
-.. _scpi_pulse_data_buffer_output:
+.. _scpi_pulse_output_level:
 
-``:OUTPut``
+``:LEVel``
 ===========
 
- | :SOURce:PULSe<N>:DATA:BUFFer:OUTPut?
- | :SOURce:PULSe<N>:DATA:BUFFer:OUTPut <list of uint32_t>
+ | :PULSe<N>:OUTPut:LEVel?
+ | :PULSe<N>:OUTPut:LEVel LVTtl | TTL
 
-This command caches output-state instructions into the static internal output
-buffer. This buffer is not applied to a pulse sequencer until
-``:SOURce:PULSe<N>:DATA:BUFFer:APPly`` is executed.
-
-Each output value represents the desired output state for one pulse instruction.
-Only the supported output-state bits are valid; values outside the output mask
-will raise a `data out of range` error during ``:APPly``.
+This command selects the output logic level of output channel ``<N>``, where
+``<N>`` is 1 through 8.
 
 Examples
 --------
 .. code-block:: none
    :caption: Example SCPI code
 
-   :SOUR:PULS0:DATA:BUFF:OUTP 64,2048,512
-   :SOUR:PULS0:DATA:BUFF:OUTP?
-   >>> 64,2048,512,0,0,0...
+   :PULS1:OUTP:LEV TTL
+   :PULS1:OUTP:LEV?
+   >>> TTL
 
 .. note::
- * \*RST resets ``:SOURce:PULSe<N>:DATA:BUFFer:OUTPut`` to all zeros.
+ * \*RST resets ``:PULSe<N>:OUTPut:LEVel`` to `LVTtl`.
  * Configuration commands are not allowed during device operation.
- * Cached parameters need to be applied to a pulse sequencer before they can be used.
 
 
-.. _scpi_pulse_data_buffer_delay:
+=============================
+``:GATe`` Properties
+=============================
+``GATe`` is a subdirectory that controls global gating through T0. These
+commands are available only for sequencer 0.
 
-``:DELay``
+
+.. _scpi_pulse_gate_mode:
+
+``:MODe``
 ==========
 
- | :SOURce:PULSe<N>:DATA:BUFFer:DELay?
- | :SOURce:PULSe<N>:DATA:BUFFer:DELay <list of doubles>
+ | :PULSe0:GATe:MODe?
+ | :PULSe0:GATe:MODe DISabled | PULSe | OUTPut | CHANnel
 
-This command caches delay instructions into the static internal delay buffer.
-This buffer is not applied to a pulse sequencer until
-``:SOURce:PULSe<N>:DATA:BUFFer:APPly`` is executed.
+This command selects how the external gate affects program execution. An
+asserted gate inhibits the activity selected by the gate mode. The active gate
+level is set by ``:PULSe0:GATe:LOGic``.
 
-Delay values are interpreted using the currently selected
-``:SOURce:PULSe<N>:UNITs`` setting. During ``:APPly``, each delay is converted to
-nanoseconds and then converted to clock cycles using the currently selected
-``:SOURce:PULSe<N>:DIVider`` setting. Values that are invalid during the
-conversion process will raise a `data out of range` error.
+.. csv-table:: Gate Mode Description
+   :header: "SCPI String", "Description"
+   :widths: 15, 45
+
+   "``DISabled``", "Global gating is disabled"
+   "``PULSe``", "An asserted gate prevents a new acquisition from starting; an acquisition already started continues"
+   "``OUTPut``", "An asserted gate suppresses T0 output events while the P/O counters continue"
+   "``CHANnel``", "Gating is controlled by each output channel's CGATe settings"
 
 Examples
 --------
 .. code-block:: none
    :caption: Example SCPI code
 
-   :SOUR:PULS0:DATA:BUFF:DEL 30.5,10.1,0.003
-   :SOUR:PULS0:DATA:BUFF:DEL?
-   >>> 30.5,10.1,0.003,0,0,0...
+   :PULS0:GAT:MOD CHANNEL
+   :PULS0:GAT:MOD?
+   >>> CHANnel
 
 .. note::
- * \*RST resets ``:SOURce:PULSe<N>:DATA:BUFFer:DELay`` to all zeros.
+ * \*RST resets ``:PULSe0:GATe:MODe`` to `DISabled`.
  * Configuration commands are not allowed during device operation.
- * Cached parameters need to be applied to a pulse sequencer before they can be used.
 
 
-.. _scpi_pulse_data_buffer_clear:
+.. _scpi_pulse_gate_logic:
 
-``:CLEar``
-==========
+``:LOGic``
+===========
 
- | :SOURce:PULSe<N>:DATA:BUFFer:CLEar
+ | :PULSe0:GATe:LOGic?
+ | :PULSe0:GATe:LOGic LOW | HIGH
 
-This command clears the cached output and delay buffers and sets them all to
-zero.
-
-Examples
---------
-.. code-block:: none
-   :caption: Example SCPI code
-
-   :SOUR:PULS0:DATA:BUFF:CLE
-   :SOUR:PULS0:DATA:BUFF:OUTP?
-   >>> 0,0,0,0,0...
-
-.. note::
- * \*RST calls this command.
- * Command is not allowed during device operation.
-
-
-.. _scpi_pulse_data_buffer_apply:
-
-``:APPly``
-==========
-
- | :SOURce:PULSe<N>:DATA:BUFFer:APPly
-
-This command loads the currently cached output and delay buffers into pulse
-sequencer ``<N>`` if stated, or the selected sequencer if not. Delay values are
-converted using the current pulse units and pulse divider before they are stored
-in the applied pulse instruction buffer.
-
-The output and delay buffers must contain the same number of values. If they do
-not, the command raises a `lists not same length` error. Delay values that cannot
-be converted into valid clock cycles, or output values that exceed the supported
-output mask, raise a `data out of range` error.
-
-The applied instruction buffer alternates output-state and delay-cycle entries.
-Output instructions are stored at even indexes and delay instructions are stored
-at odd indexes. The final two entries in the applied instruction buffer are used
-as termination flags.
+This command selects the active level of the global gate input. `LOW` asserts
+the gate when the input is LOW, and `HIGH` asserts the gate when the input is
+HIGH.
 
 Examples
 --------
 .. code-block:: none
    :caption: Example SCPI code
 
-   :SOUR:PULS0:DATA:BUFF:OUTP 64,2048,512
-   :SOUR:PULS0:DATA:BUFF:DEL 30.5,10.1,0.003
-   :SOUR:PULS0:DATA:BUFF:APP
-   :SOUR:PULS0:DATA?
-   >>> 64,7620,2048,2520,512,1...
+   :PULS0:GAT:LOG HIGH
+   :PULS0:GAT:LOG?
+   >>> HIGH
 
 .. note::
- * Command is not allowed during device operation.
- * Cached parameters are converted using the current data units and clock divider.
- * Cached output and delay buffers need to have the same number of values before applying.
+ * \*RST resets ``:PULSe0:GATe:LOGic`` to `LOW`.
+ * Configuration commands are not allowed during device operation.
+
+
+=============================
+``:CGATe`` Properties
+=============================
+``CGATe`` is a subdirectory that controls gating for individual output channels.
+These settings are used when ``:PULSe0:GATe:MODe`` is `CHANnel`.
+
+
+.. _scpi_pulse_cgate_mode:
+
+``:MODe``
+==========
+
+ | :PULSe<N>:CGATe:MODe?
+ | :PULSe<N>:CGATe:MODe DISabled | PULSe | OUTPut
+
+This command selects the gate mode of output channel ``<N>``, where ``<N>`` is
+1 through 8. Set ``:PULSe0:GATe:MODe CHANnel`` before setting a channel gate
+mode. The active gate level is set by ``:PULSe<N>:CGATe:LOGic``.
+
+.. csv-table:: Channel Gate Mode Description
+   :header: "SCPI String", "Description"
+   :widths: 15, 45
+
+   "``DISabled``", "Channel gating is disabled"
+   "``PULSe``", "An asserted gate rejects synchronization events without advancing the P/O counters; an accepted waveform continues"
+   "``OUTPut``", "An asserted gate writes LOW at waveform segment updates while waveform timing and the P/O counters continue"
+
+Examples
+--------
+.. code-block:: none
+   :caption: Example SCPI code
+
+   :PULS0:GAT:MOD CHANNEL
+   :PULS1:CGAT:MOD PULSE
+   :PULS1:CGAT:MOD?
+   >>> PULSe
+
+.. note::
+ * \*RST resets ``:PULSe<N>:CGATe:MODe`` to `DISabled`.
+ * Configuration commands are not allowed during device operation.
+
+
+.. _scpi_pulse_cgate_logic:
+
+``:LOGic``
+===========
+
+ | :PULSe<N>:CGATe:LOGic?
+ | :PULSe<N>:CGATe:LOGic LOW | HIGH
+
+This command selects the active gate level of output channel ``<N>``, where
+``<N>`` is 1 through 8. `LOW` asserts the gate when the input is LOW, and `HIGH`
+asserts the gate when the input is HIGH.
+
+Examples
+--------
+.. code-block:: none
+   :caption: Example SCPI code
+
+   :PULS1:CGAT:LOG HIGH
+   :PULS1:CGAT:LOG?
+   >>> HIGH
+
+.. note::
+ * \*RST resets ``:PULSe<N>:CGATe:LOGic`` to `LOW`.
+ * Configuration commands are not allowed during device operation.
+
+
+=============================
+``:TRIGger`` Properties
+=============================
+``TRIGger`` is a subdirectory that controls external triggering of T0. These
+commands are available only for sequencer 0.
+
+
+.. _scpi_pulse_trigger_mode:
+
+``:MODe``
+==========
+
+ | :PULSe0:TRIGger:MODe?
+ | :PULSe0:TRIGger:MODe DISabled | TRIGgered
+
+This command enables or disables external triggering. `TRIGgered` starts one
+T0 acquisition on the selected external trigger edge. Each acquisition contains
+the configured P and O counts. `DISabled` disables external triggering.
+
+Examples
+--------
+.. code-block:: none
+   :caption: Example SCPI code
+
+   :PULS0:TRIG:MOD TRIGGERED
+   :PULS0:TRIG:MOD?
+   >>> TRIGgered
+
+.. note::
+ * \*RST resets ``:PULSe0:TRIGger:MODe`` to `DISabled`.
+ * Configuration commands are not allowed during device operation.
+
+
+.. _scpi_pulse_trigger_edge:
+
+``:EDGe``
+==========
+
+ | :PULSe0:TRIGger:EDGe?
+ | :PULSe0:TRIGger:EDGe RISing | FALLing
+
+This command selects the external trigger edge used when
+``:PULSe0:TRIGger:MODe`` is `TRIGgered`.
+
+Examples
+--------
+.. code-block:: none
+   :caption: Example SCPI code
+
+   :PULS0:TRIG:EDG RISING
+   :PULS0:TRIG:EDG?
+   >>> RISing
+
+.. note::
+ * \*RST resets ``:PULSe0:TRIGger:EDGe`` to `RISing`.
+ * Configuration commands are not allowed during device operation.
