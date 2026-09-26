@@ -1,0 +1,25 @@
+{
+  "name": "opensync-pwa",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "doctor": "arcane doctor",
+    "dev": "arcane dev",
+    "test": "arcane test",
+    "check": "arcane check",
+    "import-map": "arcane import-map",
+    "package": "arcane package",
+    "verify": "arcane verify",
+    "bundle": "arcane bundle",
+    "build": "arcane build --target browser",
+    "run": "arcane run --target browser"
+  },
+  "dependencies": {
+    "arcane-os": "0.33.2",
+    "dbopfs": "^1.0.0"
+  },
+  "engines": {
+    "node": ">=22.23.2"
+  }
+}

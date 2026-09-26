@@ -1,0 +1,7 @@
+node_modules/
+dist/
+build/
+.arcane/
+.env.json
+.arcane.env.json
+*.log

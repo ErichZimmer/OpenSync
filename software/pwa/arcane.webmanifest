@@ -1,0 +1,16 @@
+{
+  "id": "/apps/opensync-pwa/",
+  "name": "OpenSync Synchronizer",
+  "short_name": "OpenSync",
+  "start_url": "/index.html",
+  "scope": "/",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "/opensync_logo.png",
+      "sizes": "1254x1254",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

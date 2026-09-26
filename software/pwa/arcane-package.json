@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "opensync-pwa",
+  "displayName": "OpenSync Synchronizer",
+  "version": "0.1.0",
+  "entry": "index.html",
+  "strategy": "static",
+  "pwa": {
+    "enabled": true,
+    "manifest": {
+      "name": "OpenSync Synchronizer",
+      "short_name": "OpenSync",
+      "display": "standalone",
+      "icons": [
+        {
+          "src": "opensync_logo.png",
+          "sizes": "1254x1254",
+          "type": "image/png",
+          "purpose": "any"
+        }
+      ]
+    },
+    "offline": {
+      "include": [],
+      "exclude": []
+    }
+  },
+  "include": [
+    "opensync-pwa.css",
+    "index.html",
+    "manifest.json",
+    "modules",
+    "entities",
+    "opensync_logo.png"
+  ],
+  "exclude": [],
+  "shared": [
+    "browser-runtime"
+  ]
+}

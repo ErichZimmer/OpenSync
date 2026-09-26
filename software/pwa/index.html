@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <base href="./">
+        <script type="importmap" data-arcane-import-map>
+{
+  "imports": {
+    "#arcane/persistent-ai-chat-session": "./node_modules/arcane-os/runtime/arcane/modules/PersistentAIChatSession.js",
+    "./node_modules/arcane-os/runtime/strong-type/index.js": "./node_modules/arcane-os/runtime/strong-type/index.js",
+    "./node_modules/arcane-os/runtime/arcane/dependencies/strong-type/index.js": "./node_modules/arcane-os/runtime/strong-type/index.js",
+    "./node_modules/arcane-os/runtime/arcane/entities/ApiModelRecord.js": "./node_modules/arcane-os/runtime/arcane/entities/ApiModelRecord.js",
+    "./node_modules/arcane-os/runtime/arcane/entities/Calculation.js": "./node_modules/arcane-os/runtime/arcane/entities/Calculation.js",
+    "./node_modules/arcane-os/runtime/arcane/entities/Chat.js": "./node_modules/arcane-os/runtime/arcane/entities/Chat.js",
+    "./node_modules/arcane-os/runtime/arcane/entities/CommunicationMessage.js": "./node_modules/arcane-os/runtime/arcane/entities/CommunicationMessage.js",
+    "./node_modules/arcane-os/runtime/arcane/entities/CommunicationThread.js": "./node_modules/arcane-os/runtime/arcane/entities/CommunicationThread.js",
+    "./node_modules/arcane-os/runtime/arcane/entities/Document.js": "./node_modules/arcane-os/runtime/arcane/entities/Document.js",
+    "./node_modules/arcane-os/runtime/arcane/entities/File.js": "./node_modules/arcane-os/runtime/arcane/entities/File.js",
+    "./node_modules/arcane-os/runtime/arcane/entities/Image.js": "./node_modules/arcane-os/runtime/arcane/entities/Image.js",
+    "./node_modules/arcane-os/runtime/arcane/entities/IntentEnvelope.js": "./node_modules/arcane-os/runtime/arcane/entities/IntentEnvelope.js",
+    "./node_modules/arcane-os/runtime/arcane/entities/Preference.js": "./node_modules/arcane-os/runtime/arcane/entities/Preference.js",
+    "./node_modules/arcane-os/runtime/arcane/entities/TerminalSession.js": "./node_modules/arcane-os/runtime/arcane/entities/TerminalSession.js",
+    "./node_modules/arcane-os/runtime/arcane/entities/Theme.js": "./node_modules/arcane-os/runtime/arcane/entities/Theme.js",
+    "./node_modules/arcane-os/runtime/arcane/entities/User.js": "./node_modules/arcane-os/runtime/arcane/entities/User.js",
+    "./node_modules/arcane-os/runtime/arcane/entities/Weather.js": "./node_modules/arcane-os/runtime/arcane/entities/Weather.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/AI.js": "./node_modules/arcane-os/runtime/arcane/modules/AI.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/AIModelSelectionController.js": "./node_modules/arcane-os/runtime/arcane/modules/AIModelSelectionController.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/AIPreferenceRuntime.js": "./node_modules/arcane-os/runtime/arcane/modules/AIPreferenceRuntime.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/AIPreferenceTuple.js": "./node_modules/arcane-os/runtime/arcane/modules/AIPreferenceTuple.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/AIProviderRuntime.js": "./node_modules/arcane-os/runtime/arcane/modules/AIProviderRuntime.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/AIResponseURLPolicy.js": "./node_modules/arcane-os/runtime/arcane/modules/AIResponseURLPolicy.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/AIRuntimeState.js": "./node_modules/arcane-os/runtime/arcane/modules/AIRuntimeState.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/AnsiText.js": "./node_modules/arcane-os/runtime/arcane/modules/AnsiText.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/ApiModelDatabase.js": "./node_modules/arcane-os/runtime/arcane/modules/ApiModelDatabase.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/AppDataScope.js": "./node_modules/arcane-os/runtime/arcane/modules/AppDataScope.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/AppearancePreferences.js": "./node_modules/arcane-os/runtime/arcane/modules/AppearancePreferences.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/ArcaneCommunicationBridge.js": "./node_modules/arcane-os/runtime/arcane/modules/ArcaneCommunicationBridge.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/ArcaneNavigationPolicy.js": "./node_modules/arcane-os/runtime/arcane/modules/ArcaneNavigationPolicy.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/ArcaneNetworkPolicy.js": "./node_modules/arcane-os/runtime/arcane/modules/ArcaneNetworkPolicy.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/AsyncBoundary.js": "./node_modules/arcane-os/runtime/arcane/modules/AsyncBoundary.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/BrowserTestSuite.js": "./node_modules/arcane-os/runtime/arcane/modules/BrowserTestSuite.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/CalculatorEngine.js": "./node_modules/arcane-os/runtime/arcane/modules/CalculatorEngine.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/ChartLibrary.js": "./node_modules/arcane-os/runtime/arcane/modules/ChartLibrary.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/ChatRecords.js": "./node_modules/arcane-os/runtime/arcane/modules/ChatRecords.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/CommunicationAppController.js": "./node_modules/arcane-os/runtime/arcane/modules/CommunicationAppController.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/CommunicationHub.js": "./node_modules/arcane-os/runtime/arcane/modules/CommunicationHub.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/CommunicationPreferences.js": "./node_modules/arcane-os/runtime/arcane/modules/CommunicationPreferences.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/CommunicationProviderRegistry.js": "./node_modules/arcane-os/runtime/arcane/modules/CommunicationProviderRegistry.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/ComponentContracts.js": "./node_modules/arcane-os/runtime/arcane/modules/ComponentContracts.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/ConfiguredAIChatSession.js": "./node_modules/arcane-os/runtime/arcane/modules/ConfiguredAIChatSession.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/ConversationActionItems.js": "./node_modules/arcane-os/runtime/arcane/modules/ConversationActionItems.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/ConversationClosingReport.js": "./node_modules/arcane-os/runtime/arcane/modules/ConversationClosingReport.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/ConversationTimebox.js": "./node_modules/arcane-os/runtime/arcane/modules/ConversationTimebox.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/CoreLocalModelCatalog.js": "./node_modules/arcane-os/runtime/arcane/modules/CoreLocalModelCatalog.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/DBLS.js": "./node_modules/arcane-os/runtime/arcane/modules/DBLS.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/DBOPFS.js": "./node_modules/arcane-os/runtime/arcane/modules/DBOPFS.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/DBOPFSDocumentLibrary.js": "./node_modules/arcane-os/runtime/arcane/modules/DBOPFSDocumentLibrary.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/DBOPFSWorker.js": "./node_modules/arcane-os/runtime/arcane/modules/DBOPFSWorker.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/DataMaintenance.js": "./node_modules/arcane-os/runtime/arcane/modules/DataMaintenance.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/DevelopmentWorkspace.js": "./node_modules/arcane-os/runtime/arcane/modules/DevelopmentWorkspace.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/DirectoryPicker.js": "./node_modules/arcane-os/runtime/arcane/modules/DirectoryPicker.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/DocumentLexicalSearch.js": "./node_modules/arcane-os/runtime/arcane/modules/DocumentLexicalSearch.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/DocumentNavigation.js": "./node_modules/arcane-os/runtime/arcane/modules/DocumentNavigation.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/Errors.js": "./node_modules/arcane-os/runtime/arcane/modules/Errors.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/GifEncoder.js": "./node_modules/arcane-os/runtime/arcane/modules/GifEncoder.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/HTMLImport.js": "./node_modules/arcane-os/runtime/arcane/modules/HTMLImport.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/InMemoryCommunicationProvider.js": "./node_modules/arcane-os/runtime/arcane/modules/InMemoryCommunicationProvider.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/IsolatedModelQuestionRunner.js": "./node_modules/arcane-os/runtime/arcane/modules/IsolatedModelQuestionRunner.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/LocalAIReadiness.js": "./node_modules/arcane-os/runtime/arcane/modules/LocalAIReadiness.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/LocalAIReadinessController.js": "./node_modules/arcane-os/runtime/arcane/modules/LocalAIReadinessController.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/MD.js": "./node_modules/arcane-os/runtime/arcane/modules/MD.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/Mail.js": "./node_modules/arcane-os/runtime/arcane/modules/Mail.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/MailApi.mjs": "./node_modules/arcane-os/runtime/arcane/modules/MailApi.mjs",
+    "./node_modules/arcane-os/runtime/arcane/modules/MailOutbox.mjs": "./node_modules/arcane-os/runtime/arcane/modules/MailOutbox.mjs",
+    "./node_modules/arcane-os/runtime/arcane/modules/MailTransport.mjs": "./node_modules/arcane-os/runtime/arcane/modules/MailTransport.mjs",
+    "./node_modules/arcane-os/runtime/arcane/modules/MarkdownSpeech.js": "./node_modules/arcane-os/runtime/arcane/modules/MarkdownSpeech.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/Marked.min.js": "./node_modules/arcane-os/runtime/arcane/modules/Marked.min.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/MemoryRecords.js": "./node_modules/arcane-os/runtime/arcane/modules/MemoryRecords.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/MessageAdvisory.js": "./node_modules/arcane-os/runtime/arcane/modules/MessageAdvisory.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/ModelDefinition.js": "./node_modules/arcane-os/runtime/arcane/modules/ModelDefinition.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/Ollama.js": "./node_modules/arcane-os/runtime/arcane/modules/Ollama.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/OllamaModelIdentifier.js": "./node_modules/arcane-os/runtime/arcane/modules/OllamaModelIdentifier.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/OllamaSettings.js": "./node_modules/arcane-os/runtime/arcane/modules/OllamaSettings.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/OpenMeteoWeatherProvider.js": "./node_modules/arcane-os/runtime/arcane/modules/OpenMeteoWeatherProvider.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/PersistentAIChatSession.js": "./node_modules/arcane-os/runtime/arcane/modules/PersistentAIChatSession.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/PreferenceStore.js": "./node_modules/arcane-os/runtime/arcane/modules/PreferenceStore.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/PreparedSpeech.js": "./node_modules/arcane-os/runtime/arcane/modules/PreparedSpeech.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/QRCode.min.js": "./node_modules/arcane-os/runtime/arcane/modules/QRCode.min.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/Questionnaire.js": "./node_modules/arcane-os/runtime/arcane/modules/Questionnaire.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/RecordLinkIndex.js": "./node_modules/arcane-os/runtime/arcane/modules/RecordLinkIndex.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/RecordPassageIndex.js": "./node_modules/arcane-os/runtime/arcane/modules/RecordPassageIndex.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/RecordReviewStore.js": "./node_modules/arcane-os/runtime/arcane/modules/RecordReviewStore.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/RiskSignalAnalyzer.js": "./node_modules/arcane-os/runtime/arcane/modules/RiskSignalAnalyzer.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/ScamRiskPolicy.js": "./node_modules/arcane-os/runtime/arcane/modules/ScamRiskPolicy.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/ScopedOPFSCache.js": "./node_modules/arcane-os/runtime/arcane/modules/ScopedOPFSCache.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/ScreenCapture.js": "./node_modules/arcane-os/runtime/arcane/modules/ScreenCapture.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/SpeechPlayback.js": "./node_modules/arcane-os/runtime/arcane/modules/SpeechPlayback.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/StaticDocumentCatalog.js": "./node_modules/arcane-os/runtime/arcane/modules/StaticDocumentCatalog.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/SystemAppearance.js": "./node_modules/arcane-os/runtime/arcane/modules/SystemAppearance.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/SystemPlatformPresentation.js": "./node_modules/arcane-os/runtime/arcane/modules/SystemPlatformPresentation.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/SystemToolRegistry.js": "./node_modules/arcane-os/runtime/arcane/modules/SystemToolRegistry.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/TerminalClient.js": "./node_modules/arcane-os/runtime/arcane/modules/TerminalClient.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/TerminalCommandRegistry.js": "./node_modules/arcane-os/runtime/arcane/modules/TerminalCommandRegistry.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/ThemeBootstrap.js": "./node_modules/arcane-os/runtime/arcane/modules/ThemeBootstrap.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/ThemeManager.js": "./node_modules/arcane-os/runtime/arcane/modules/ThemeManager.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/TimeGuard.js": "./node_modules/arcane-os/runtime/arcane/modules/TimeGuard.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/ToolCallRouter.js": "./node_modules/arcane-os/runtime/arcane/modules/ToolCallRouter.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/WaitForComponent.js": "./node_modules/arcane-os/runtime/arcane/modules/WaitForComponent.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/YouTubeMedia.js": "./node_modules/arcane-os/runtime/arcane/modules/YouTubeMedia.js",
+    "./node_modules/arcane-os/runtime/arcane/modules/uPlot.iife.min.js": "./node_modules/arcane-os/runtime/arcane/modules/uPlot.iife.min.js",
+    "./node_modules/arcane-os/browser-runtime/ai/browser-device-settings.mjs": "./node_modules/arcane-os/browser-runtime/ai/browser-device-settings.mjs",
+    "./node_modules/arcane-os/runtime/arcane/sdk/ai/browser-device-settings.mjs": "./node_modules/arcane-os/browser-runtime/ai/browser-device-settings.mjs",
+    "./node_modules/arcane-os/browser-runtime/ai/browser-kokoro-worker.mjs": "./node_modules/arcane-os/browser-runtime/ai/browser-kokoro-worker.mjs",
+    "./node_modules/arcane-os/runtime/arcane/sdk/ai/browser-kokoro-worker.mjs": "./node_modules/arcane-os/browser-runtime/ai/browser-kokoro-worker.mjs",
+    "./node_modules/arcane-os/browser-runtime/ai/browser-speech-artifacts.mjs": "./node_modules/arcane-os/browser-runtime/ai/browser-speech-artifacts.mjs",
+    "./node_modules/arcane-os/runtime/arcane/sdk/ai/browser-speech-artifacts.mjs": "./node_modules/arcane-os/browser-runtime/ai/browser-speech-artifacts.mjs",
+    "./node_modules/arcane-os/browser-runtime/ai/browser-speech-providers.mjs": "./node_modules/arcane-os/browser-runtime/ai/browser-speech-providers.mjs",
+    "./node_modules/arcane-os/runtime/arcane/sdk/ai/browser-speech-providers.mjs": "./node_modules/arcane-os/browser-runtime/ai/browser-speech-providers.mjs",
+    "./node_modules/arcane-os/browser-runtime/ai/browser-speech.mjs": "./node_modules/arcane-os/browser-runtime/ai/browser-speech.mjs",
+    "./node_modules/arcane-os/runtime/arcane/sdk/ai/browser-speech.mjs": "./node_modules/arcane-os/browser-runtime/ai/browser-speech.mjs",
+    "./node_modules/arcane-os/browser-runtime/ai/browser-wasm-llm-provider.mjs": "./node_modules/arcane-os/browser-runtime/ai/browser-wasm-llm-provider.mjs",
+    "./node_modules/arcane-os/runtime/arcane/sdk/ai/browser-wasm-llm-provider.mjs": "./node_modules/arcane-os/browser-runtime/ai/browser-wasm-llm-provider.mjs",
+    "./node_modules/arcane-os/browser-runtime/ai/browser-wasm.mjs": "./node_modules/arcane-os/browser-runtime/ai/browser-wasm.mjs",
+    "./node_modules/arcane-os/runtime/arcane/sdk/ai/browser-wasm.mjs": "./node_modules/arcane-os/browser-runtime/ai/browser-wasm.mjs",
+    "./node_modules/arcane-os/browser-runtime/ai/browser-whisper-worker.mjs": "./node_modules/arcane-os/browser-runtime/ai/browser-whisper-worker.mjs",
+    "./node_modules/arcane-os/runtime/arcane/sdk/ai/browser-whisper-worker.mjs": "./node_modules/arcane-os/browser-runtime/ai/browser-whisper-worker.mjs",
+    "./node_modules/arcane-os/browser-runtime/ai/browser-wllama-runtime.mjs": "./node_modules/arcane-os/browser-runtime/ai/browser-wllama-runtime.mjs",
+    "./node_modules/arcane-os/runtime/arcane/sdk/ai/browser-wllama-runtime.mjs": "./node_modules/arcane-os/browser-runtime/ai/browser-wllama-runtime.mjs",
+    "./node_modules/arcane-os/browser-runtime/ai/model-controller.mjs": "./node_modules/arcane-os/browser-runtime/ai/model-controller.mjs",
+    "./node_modules/arcane-os/runtime/arcane/sdk/ai/model-controller.mjs": "./node_modules/arcane-os/browser-runtime/ai/model-controller.mjs",
+    "./node_modules/arcane-os/browser-runtime/ai/speech-worker-client.mjs": "./node_modules/arcane-os/browser-runtime/ai/speech-worker-client.mjs",
+    "./node_modules/arcane-os/runtime/arcane/sdk/ai/speech-worker-client.mjs": "./node_modules/arcane-os/browser-runtime/ai/speech-worker-client.mjs",
+    "./node_modules/arcane-os/browser-runtime/ai/speech-worker-runtime.mjs": "./node_modules/arcane-os/browser-runtime/ai/speech-worker-runtime.mjs",
+    "./node_modules/arcane-os/runtime/arcane/sdk/ai/speech-worker-runtime.mjs": "./node_modules/arcane-os/browser-runtime/ai/speech-worker-runtime.mjs",
+    "./node_modules/arcane-os/browser-runtime/ai/tool-text-stream.mjs": "./node_modules/arcane-os/browser-runtime/ai/tool-text-stream.mjs",
+    "./node_modules/arcane-os/runtime/arcane/sdk/ai/tool-text-stream.mjs": "./node_modules/arcane-os/browser-runtime/ai/tool-text-stream.mjs",
+    "./node_modules/arcane-os/browser-runtime/ai/twin-cloud.mjs": "./node_modules/arcane-os/browser-runtime/ai/twin-cloud.mjs",
+    "./node_modules/arcane-os/runtime/arcane/sdk/ai/twin-cloud.mjs": "./node_modules/arcane-os/browser-runtime/ai/twin-cloud.mjs",
+    "./node_modules/arcane-os/browser-runtime/ai/wllama/index.mjs": "./node_modules/arcane-os/browser-runtime/ai/wllama/index.mjs",
+    "./node_modules/arcane-os/runtime/arcane/sdk/ai/wllama/index.mjs": "./node_modules/arcane-os/browser-runtime/ai/wllama/index.mjs",
+    "./node_modules/arcane-os/browser-runtime/browser-device.mjs": "./node_modules/arcane-os/browser-runtime/browser-device.mjs",
+    "./node_modules/arcane-os/runtime/arcane/sdk/browser-device.mjs": "./node_modules/arcane-os/browser-runtime/browser-device.mjs",
+    "./node_modules/arcane-os/browser-runtime/dependencies/event-pubsub/index.js": "./node_modules/arcane-os/browser-runtime/dependencies/event-pubsub/index.js",
+    "./node_modules/arcane-os/runtime/arcane/sdk/dependencies/event-pubsub/index.js": "./node_modules/arcane-os/browser-runtime/dependencies/event-pubsub/index.js",
+    "./node_modules/arcane-os/browser-runtime/dependencies/strong-type/index.js": "./node_modules/arcane-os/browser-runtime/dependencies/strong-type/index.js",
+    "./node_modules/arcane-os/runtime/arcane/sdk/dependencies/strong-type/index.js": "./node_modules/arcane-os/browser-runtime/dependencies/strong-type/index.js",
+    "./node_modules/arcane-os/browser-runtime/dom-event-instrumentation.mjs": "./node_modules/arcane-os/browser-runtime/dom-event-instrumentation.mjs",
+    "./node_modules/arcane-os/runtime/arcane/sdk/dom-event-instrumentation.mjs": "./node_modules/arcane-os/browser-runtime/dom-event-instrumentation.mjs",
+    "./node_modules/arcane-os/browser-runtime/event-manager.mjs": "./node_modules/arcane-os/browser-runtime/event-manager.mjs",
+    "./node_modules/arcane-os/runtime/arcane/sdk/event-manager.mjs": "./node_modules/arcane-os/browser-runtime/event-manager.mjs",
+    "./node_modules/arcane-os/browser-runtime/logging.mjs": "./node_modules/arcane-os/browser-runtime/logging.mjs",
+    "./node_modules/arcane-os/runtime/arcane/sdk/logging.mjs": "./node_modules/arcane-os/browser-runtime/logging.mjs",
+    "./node_modules/arcane-os/browser-runtime/pwa-install.mjs": "./node_modules/arcane-os/browser-runtime/pwa-install.mjs",
+    "./node_modules/arcane-os/runtime/arcane/sdk/pwa-install.mjs": "./node_modules/arcane-os/browser-runtime/pwa-install.mjs",
+    "./node_modules/arcane-os/browser-runtime/pwa.mjs": "./node_modules/arcane-os/browser-runtime/pwa.mjs",
+    "./node_modules/arcane-os/runtime/arcane/sdk/pwa.mjs": "./node_modules/arcane-os/browser-runtime/pwa.mjs",
+    "./node_modules/arcane-os/browser-runtime/speech-text.mjs": "./node_modules/arcane-os/browser-runtime/speech-text.mjs",
+    "./node_modules/arcane-os/runtime/arcane/sdk/speech-text.mjs": "./node_modules/arcane-os/browser-runtime/speech-text.mjs",
+    "./node_modules/strong-type/index.js": "./node_modules/arcane-os/runtime/strong-type/index.js",
+    "arcane-os/ai": "./node_modules/arcane-os/runtime/arcane/modules/AI.js",
+    "arcane-os/ai-preference-runtime": "./node_modules/arcane-os/runtime/arcane/modules/AIPreferenceRuntime.js",
+    "arcane-os/ai-preference-tuple": "./node_modules/arcane-os/runtime/arcane/modules/AIPreferenceTuple.js",
+    "arcane-os/ai-provider-runtime": "./node_modules/arcane-os/runtime/arcane/modules/AIProviderRuntime.js",
+    "arcane-os/ai-runtime-state": "./node_modules/arcane-os/runtime/arcane/modules/AIRuntimeState.js",
+    "arcane-os/ai/browser-speech": "./node_modules/arcane-os/browser-runtime/ai/browser-speech.mjs",
+    "arcane-os/ai/browser-wasm": "./node_modules/arcane-os/browser-runtime/ai/browser-wasm.mjs",
+    "arcane-os/ai/tool-text-stream": "./node_modules/arcane-os/browser-runtime/ai/tool-text-stream.mjs",
+    "arcane-os/ai/twin-cloud": "./node_modules/arcane-os/browser-runtime/ai/twin-cloud.mjs",
+    "arcane-os/app-data-scope": "./node_modules/arcane-os/runtime/arcane/modules/AppDataScope.js",
+    "arcane-os/browser-device": "./node_modules/arcane-os/browser-runtime/browser-device.mjs",
+    "arcane-os/chat-records": "./node_modules/arcane-os/runtime/arcane/modules/ChatRecords.js",
+    "arcane-os/conversation-action-items": "./node_modules/arcane-os/runtime/arcane/modules/ConversationActionItems.js",
+    "arcane-os/conversation-closing-report": "./node_modules/arcane-os/runtime/arcane/modules/ConversationClosingReport.js",
+    "arcane-os/conversation-timebox": "./node_modules/arcane-os/runtime/arcane/modules/ConversationTimebox.js",
+    "arcane-os/core-local-model-catalog": "./node_modules/arcane-os/runtime/arcane/modules/CoreLocalModelCatalog.js",
+    "arcane-os/dbopfs-document-library": "./node_modules/arcane-os/runtime/arcane/modules/DBOPFSDocumentLibrary.js",
+    "arcane-os/dom-event-instrumentation": "./node_modules/arcane-os/browser-runtime/dom-event-instrumentation.mjs",
+    "arcane-os/entities/ApiModelRecord.js": "./node_modules/arcane-os/runtime/arcane/entities/ApiModelRecord.js",
+    "arcane-os/entities/Calculation.js": "./node_modules/arcane-os/runtime/arcane/entities/Calculation.js",
+    "arcane-os/entities/Chat.js": "./node_modules/arcane-os/runtime/arcane/entities/Chat.js",
+    "arcane-os/entities/CommunicationMessage.js": "./node_modules/arcane-os/runtime/arcane/entities/CommunicationMessage.js",
+    "arcane-os/entities/CommunicationThread.js": "./node_modules/arcane-os/runtime/arcane/entities/CommunicationThread.js",
+    "arcane-os/entities/Document.js": "./node_modules/arcane-os/runtime/arcane/entities/Document.js",
+    "arcane-os/entities/File.js": "./node_modules/arcane-os/runtime/arcane/entities/File.js",
+    "arcane-os/entities/Image.js": "./node_modules/arcane-os/runtime/arcane/entities/Image.js",
+    "arcane-os/entities/IntentEnvelope.js": "./node_modules/arcane-os/runtime/arcane/entities/IntentEnvelope.js",
+    "arcane-os/entities/Preference.js": "./node_modules/arcane-os/runtime/arcane/entities/Preference.js",
+    "arcane-os/entities/TerminalSession.js": "./node_modules/arcane-os/runtime/arcane/entities/TerminalSession.js",
+    "arcane-os/entities/Theme.js": "./node_modules/arcane-os/runtime/arcane/entities/Theme.js",
+    "arcane-os/entities/User.js": "./node_modules/arcane-os/runtime/arcane/entities/User.js",
+    "arcane-os/entities/Weather.js": "./node_modules/arcane-os/runtime/arcane/entities/Weather.js",
+    "arcane-os/event-manager": "./node_modules/arcane-os/browser-runtime/event-manager.mjs",
+    "arcane-os/local-ai-readiness": "./node_modules/arcane-os/runtime/arcane/modules/LocalAIReadiness.js",
+    "arcane-os/logging": "./node_modules/arcane-os/browser-runtime/logging.mjs",
+    "arcane-os/mail": "./node_modules/arcane-os/runtime/arcane/modules/MailApi.mjs",
+    "arcane-os/model-definition": "./node_modules/arcane-os/runtime/arcane/modules/ModelDefinition.js",
+    "arcane-os/modules/AI.js": "./node_modules/arcane-os/runtime/arcane/modules/AI.js",
+    "arcane-os/modules/AIModelSelectionController.js": "./node_modules/arcane-os/runtime/arcane/modules/AIModelSelectionController.js",
+    "arcane-os/modules/AIPreferenceRuntime.js": "./node_modules/arcane-os/runtime/arcane/modules/AIPreferenceRuntime.js",
+    "arcane-os/modules/AIPreferenceTuple.js": "./node_modules/arcane-os/runtime/arcane/modules/AIPreferenceTuple.js",
+    "arcane-os/modules/AIProviderRuntime.js": "./node_modules/arcane-os/runtime/arcane/modules/AIProviderRuntime.js",
+    "arcane-os/modules/AIResponseURLPolicy.js": "./node_modules/arcane-os/runtime/arcane/modules/AIResponseURLPolicy.js",
+    "arcane-os/modules/AIRuntimeState.js": "./node_modules/arcane-os/runtime/arcane/modules/AIRuntimeState.js",
+    "arcane-os/modules/AnsiText.js": "./node_modules/arcane-os/runtime/arcane/modules/AnsiText.js",
+    "arcane-os/modules/ApiModelDatabase.js": "./node_modules/arcane-os/runtime/arcane/modules/ApiModelDatabase.js",
+    "arcane-os/modules/AppDataScope.js": "./node_modules/arcane-os/runtime/arcane/modules/AppDataScope.js",
+    "arcane-os/modules/AppearancePreferences.js": "./node_modules/arcane-os/runtime/arcane/modules/AppearancePreferences.js",
+    "arcane-os/modules/ArcaneCommunicationBridge.js": "./node_modules/arcane-os/runtime/arcane/modules/ArcaneCommunicationBridge.js",
+    "arcane-os/modules/ArcaneNavigationPolicy.js": "./node_modules/arcane-os/runtime/arcane/modules/ArcaneNavigationPolicy.js",
+    "arcane-os/modules/ArcaneNetworkPolicy.js": "./node_modules/arcane-os/runtime/arcane/modules/ArcaneNetworkPolicy.js",
+    "arcane-os/modules/AsyncBoundary.js": "./node_modules/arcane-os/runtime/arcane/modules/AsyncBoundary.js",
+    "arcane-os/modules/BrowserTestSuite.js": "./node_modules/arcane-os/runtime/arcane/modules/BrowserTestSuite.js",
+    "arcane-os/modules/CalculatorEngine.js": "./node_modules/arcane-os/runtime/arcane/modules/CalculatorEngine.js",
+    "arcane-os/modules/ChartLibrary.js": "./node_modules/arcane-os/runtime/arcane/modules/ChartLibrary.js",
+    "arcane-os/modules/ChatRecords.js": "./node_modules/arcane-os/runtime/arcane/modules/ChatRecords.js",
+    "arcane-os/modules/CommunicationAppController.js": "./node_modules/arcane-os/runtime/arcane/modules/CommunicationAppController.js",
+    "arcane-os/modules/CommunicationHub.js": "./node_modules/arcane-os/runtime/arcane/modules/CommunicationHub.js",
+    "arcane-os/modules/CommunicationPreferences.js": "./node_modules/arcane-os/runtime/arcane/modules/CommunicationPreferences.js",
+    "arcane-os/modules/CommunicationProviderRegistry.js": "./node_modules/arcane-os/runtime/arcane/modules/CommunicationProviderRegistry.js",
+    "arcane-os/modules/ComponentContracts.js": "./node_modules/arcane-os/runtime/arcane/modules/ComponentContracts.js",
+    "arcane-os/modules/ConfiguredAIChatSession.js": "./node_modules/arcane-os/runtime/arcane/modules/ConfiguredAIChatSession.js",
+    "arcane-os/modules/ConversationActionItems.js": "./node_modules/arcane-os/runtime/arcane/modules/ConversationActionItems.js",
+    "arcane-os/modules/ConversationClosingReport.js": "./node_modules/arcane-os/runtime/arcane/modules/ConversationClosingReport.js",
+    "arcane-os/modules/ConversationTimebox.js": "./node_modules/arcane-os/runtime/arcane/modules/ConversationTimebox.js",
+    "arcane-os/modules/CoreLocalModelCatalog.js": "./node_modules/arcane-os/runtime/arcane/modules/CoreLocalModelCatalog.js",
+    "arcane-os/modules/DBLS.js": "./node_modules/arcane-os/runtime/arcane/modules/DBLS.js",
+    "arcane-os/modules/DBOPFS.js": "./node_modules/arcane-os/runtime/arcane/modules/DBOPFS.js",
+    "arcane-os/modules/DBOPFSDocumentLibrary.js": "./node_modules/arcane-os/runtime/arcane/modules/DBOPFSDocumentLibrary.js",
+    "arcane-os/modules/DBOPFSWorker.js": "./node_modules/arcane-os/runtime/arcane/modules/DBOPFSWorker.js",
+    "arcane-os/modules/DataMaintenance.js": "./node_modules/arcane-os/runtime/arcane/modules/DataMaintenance.js",
+    "arcane-os/modules/DevelopmentWorkspace.js": "./node_modules/arcane-os/runtime/arcane/modules/DevelopmentWorkspace.js",
+    "arcane-os/modules/DirectoryPicker.js": "./node_modules/arcane-os/runtime/arcane/modules/DirectoryPicker.js",
+    "arcane-os/modules/DocumentLexicalSearch.js": "./node_modules/arcane-os/runtime/arcane/modules/DocumentLexicalSearch.js",
+    "arcane-os/modules/DocumentNavigation.js": "./node_modules/arcane-os/runtime/arcane/modules/DocumentNavigation.js",
+    "arcane-os/modules/Errors.js": "./node_modules/arcane-os/runtime/arcane/modules/Errors.js",
+    "arcane-os/modules/GifEncoder.js": "./node_modules/arcane-os/runtime/arcane/modules/GifEncoder.js",
+    "arcane-os/modules/HTMLImport.js": "./node_modules/arcane-os/runtime/arcane/modules/HTMLImport.js",
+    "arcane-os/modules/InMemoryCommunicationProvider.js": "./node_modules/arcane-os/runtime/arcane/modules/InMemoryCommunicationProvider.js",
+    "arcane-os/modules/IsolatedModelQuestionRunner.js": "./node_modules/arcane-os/runtime/arcane/modules/IsolatedModelQuestionRunner.js",
+    "arcane-os/modules/LocalAIReadiness.js": "./node_modules/arcane-os/runtime/arcane/modules/LocalAIReadiness.js",
+    "arcane-os/modules/LocalAIReadinessController.js": "./node_modules/arcane-os/runtime/arcane/modules/LocalAIReadinessController.js",
+    "arcane-os/modules/MD.js": "./node_modules/arcane-os/runtime/arcane/modules/MD.js",
+    "arcane-os/modules/Mail.js": "./node_modules/arcane-os/runtime/arcane/modules/Mail.js",
+    "arcane-os/modules/MailApi.mjs": "./node_modules/arcane-os/runtime/arcane/modules/MailApi.mjs",
+    "arcane-os/modules/MailOutbox.mjs": "./node_modules/arcane-os/runtime/arcane/modules/MailOutbox.mjs",
+    "arcane-os/modules/MailTransport.mjs": "./node_modules/arcane-os/runtime/arcane/modules/MailTransport.mjs",
+    "arcane-os/modules/MarkdownSpeech.js": "./node_modules/arcane-os/runtime/arcane/modules/MarkdownSpeech.js",
+    "arcane-os/modules/Marked.min.js": "./node_modules/arcane-os/runtime/arcane/modules/Marked.min.js",
+    "arcane-os/modules/MemoryRecords.js": "./node_modules/arcane-os/runtime/arcane/modules/MemoryRecords.js",
+    "arcane-os/modules/MessageAdvisory.js": "./node_modules/arcane-os/runtime/arcane/modules/MessageAdvisory.js",
+    "arcane-os/modules/ModelDefinition.js": "./node_modules/arcane-os/runtime/arcane/modules/ModelDefinition.js",
+    "arcane-os/modules/Ollama.js": "./node_modules/arcane-os/runtime/arcane/modules/Ollama.js",
+    "arcane-os/modules/OllamaModelIdentifier.js": "./node_modules/arcane-os/runtime/arcane/modules/OllamaModelIdentifier.js",
+    "arcane-os/modules/OllamaSettings.js": "./node_modules/arcane-os/runtime/arcane/modules/OllamaSettings.js",
+    "arcane-os/modules/OpenMeteoWeatherProvider.js": "./node_modules/arcane-os/runtime/arcane/modules/OpenMeteoWeatherProvider.js",
+    "arcane-os/modules/PersistentAIChatSession.js": "./node_modules/arcane-os/runtime/arcane/modules/PersistentAIChatSession.js",
+    "arcane-os/modules/PreferenceStore.js": "./node_modules/arcane-os/runtime/arcane/modules/PreferenceStore.js",
+    "arcane-os/modules/PreparedSpeech.js": "./node_modules/arcane-os/runtime/arcane/modules/PreparedSpeech.js",
+    "arcane-os/modules/QRCode.min.js": "./node_modules/arcane-os/runtime/arcane/modules/QRCode.min.js",
+    "arcane-os/modules/Questionnaire.js": "./node_modules/arcane-os/runtime/arcane/modules/Questionnaire.js",
+    "arcane-os/modules/RecordLinkIndex.js": "./node_modules/arcane-os/runtime/arcane/modules/RecordLinkIndex.js",
+    "arcane-os/modules/RecordPassageIndex.js": "./node_modules/arcane-os/runtime/arcane/modules/RecordPassageIndex.js",
+    "arcane-os/modules/RecordReviewStore.js": "./node_modules/arcane-os/runtime/arcane/modules/RecordReviewStore.js",
+    "arcane-os/modules/RiskSignalAnalyzer.js": "./node_modules/arcane-os/runtime/arcane/modules/RiskSignalAnalyzer.js",
+    "arcane-os/modules/ScamRiskPolicy.js": "./node_modules/arcane-os/runtime/arcane/modules/ScamRiskPolicy.js",
+    "arcane-os/modules/ScopedOPFSCache.js": "./node_modules/arcane-os/runtime/arcane/modules/ScopedOPFSCache.js",
+    "arcane-os/modules/ScreenCapture.js": "./node_modules/arcane-os/runtime/arcane/modules/ScreenCapture.js",
+    "arcane-os/modules/SpeechPlayback.js": "./node_modules/arcane-os/runtime/arcane/modules/SpeechPlayback.js",
+    "arcane-os/modules/StaticDocumentCatalog.js": "./node_modules/arcane-os/runtime/arcane/modules/StaticDocumentCatalog.js",
+    "arcane-os/modules/SystemAppearance.js": "./node_modules/arcane-os/runtime/arcane/modules/SystemAppearance.js",
+    "arcane-os/modules/SystemPlatformPresentation.js": "./node_modules/arcane-os/runtime/arcane/modules/SystemPlatformPresentation.js",
+    "arcane-os/modules/SystemToolRegistry.js": "./node_modules/arcane-os/runtime/arcane/modules/SystemToolRegistry.js",
+    "arcane-os/modules/TerminalClient.js": "./node_modules/arcane-os/runtime/arcane/modules/TerminalClient.js",
+    "arcane-os/modules/TerminalCommandRegistry.js": "./node_modules/arcane-os/runtime/arcane/modules/TerminalCommandRegistry.js",
+    "arcane-os/modules/ThemeBootstrap.js": "./node_modules/arcane-os/runtime/arcane/modules/ThemeBootstrap.js",
+    "arcane-os/modules/ThemeManager.js": "./node_modules/arcane-os/runtime/arcane/modules/ThemeManager.js",
+    "arcane-os/modules/TimeGuard.js": "./node_modules/arcane-os/runtime/arcane/modules/TimeGuard.js",
+    "arcane-os/modules/ToolCallRouter.js": "./node_modules/arcane-os/runtime/arcane/modules/ToolCallRouter.js",
+    "arcane-os/modules/WaitForComponent.js": "./node_modules/arcane-os/runtime/arcane/modules/WaitForComponent.js",
+    "arcane-os/modules/YouTubeMedia.js": "./node_modules/arcane-os/runtime/arcane/modules/YouTubeMedia.js",
+    "arcane-os/modules/uPlot.iife.min.js": "./node_modules/arcane-os/runtime/arcane/modules/uPlot.iife.min.js",
+    "arcane-os/ollama-model-identifier": "./node_modules/arcane-os/runtime/arcane/modules/OllamaModelIdentifier.js",
+    "arcane-os/preference-store": "./node_modules/arcane-os/runtime/arcane/modules/PreferenceStore.js",
+    "arcane-os/pwa": "./node_modules/arcane-os/browser-runtime/pwa.mjs",
+    "arcane-os/speech-playback": "./node_modules/arcane-os/runtime/arcane/modules/SpeechPlayback.js",
+    "arcane-os/speech-text": "./node_modules/arcane-os/browser-runtime/speech-text.mjs",
+    "event-pubsub": "./node_modules/arcane-os/browser-runtime/dependencies/event-pubsub/index.js",
+    "strong-type": "./node_modules/arcane-os/runtime/strong-type/index.js"
+  }
+}
+</script>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="arcane-app-id" content="opensync-pwa">
+
+        <title>OpenSync</title>
+
+        <link rel="stylesheet" href="./node_modules/arcane-os/runtime/arcane/css/theme.css">
+        <link rel="stylesheet" href="./node_modules/arcane-os/runtime/arcane/css/primitives.css">
+        <link rel="stylesheet" href="./opensync-pwa.css">
+
+
+    <link rel="manifest" href="/arcane.webmanifest">
+<script type="module" async data-arcane-pwa src="/arcane-pwa.mjs"></script>
+</head>
+
+    <body>
+        <header class="app-header">
+            <h1>OpenSync Synchronizer</h1>
+            <div class="header-actions">
+                <button type="button" id="connect-device" class="arcane-button">
+                    Connect
+                </button>
+                <button type="button" id="send-settings" class="arcane-button">
+                    Send
+                </button>
+                <button type="button" id="run-stop" class="arcane-button">
+                    Run/Stop
+                </button>
+            </div>
+        </header>
+        <section aria-labelledby="system-heading">
+            <div class="section-header">
+                <h2 id="system-heading">System</h2>
+                <div class="header-actions">
+                    <button type="button" id="reset-all" class="arcane-button">
+                        Reset all
+                    </button>
+                    <button type="button" id="reset-system" class="arcane-button">
+                        Reset system
+                    </button>
+                </div>
+            </div>
+
+            <!-- Outer grid: two columns, one row -->
+            <div class="system-layout">
+
+                <fieldset>
+                    <legend>Internal rate timer</legend>
+
+                    <!-- Timer grid: three columns, two rows -->
+                    <div class="system-timer-grid">
+
+                        <!-- Row 1: enable, divider, on counts -->
+                        <div class="arcane-field">
+                            <label for="system-enable">Enable</label>
+                            <input
+                                type="checkbox"
+                                id="system-enable"
+                                name="enable"
+                            >
+                        </div>
+
+                        <div class="arcane-field">
+                            <label for="system-divider">Divider</label>
+                            <input
+                                type="number"
+                                id="system-divider"
+                                name="divider"
+                                min="1"
+                                max="65500"
+                                step="1"
+                                value="1"
+                            >
+                        </div>
+
+                        <div class="arcane-field">
+                            <label for="system-on-counts">On counter</label>
+                            <input
+                                type="number"
+                                id="system-on-counts"
+                                name="onCounts"
+                                min="1"
+                                max="1000000000"
+                                step="1"
+                                value="1"
+                            >
+                        </div>
+
+                        <!-- Row 2: period, burst counts, off counts -->
+                        <div class="arcane-field">
+                            <label for="system-period">Period</label>
+                            <div class="period-controls">
+                                <input
+                                    type="number"
+                                    id="system-period"
+                                    name="period"
+                                    step="any"
+                                    min="0"
+                                    value="0.1"
+                                >
+                                <select id="system-period-unit" name="periodUnit"
+                                        aria-label="Period units">
+                                    <option value="ns">ns</option>
+                                    <option value="us">us</option>
+                                    <option value="ms">ms</option>
+                                    <option value="s" selected>s</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="arcane-field">
+                            <label for="system-burst-counts">Burst counter</label>
+                            <input
+                                type="number"
+                                id="system-burst-counts"
+                                name="burstCounts"
+                                min="0"
+                                max="30000000"
+                                step="1"
+                                value="0"
+                            >
+                        </div>
+
+                        <div class="arcane-field">
+                            <label for="system-off-counts">Off counter</label>
+                            <input
+                                type="number"
+                                id="system-off-counts"
+                                name="offCounts"
+                                min="0"
+                                max="1000000000"
+                                step="1"
+                                value="0"
+                            >
+                        </div>
+
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Trigger / gate</legend>
+
+                    <!-- Trigger grid: two columns, two rows -->
+                    <div class="system-trigger-grid">
+
+                        <!-- Row 1 -->
+                        <div class="arcane-field">
+                            <label for="system-trigger-mode">Trigger mode</label>
+                            <select id="system-trigger-mode" name="triggerMode">
+                                <option value="disabled">Disabled</option>
+                                <option value="triggered">Triggered</option>
+                            </select>
+                        </div>
+
+                        <div class="arcane-field">
+                            <label for="system-gate-mode">Gate mode</label>
+                            <select id="system-gate-mode" name="gateMode">
+                                <option value="disabled">Disabled</option>
+                                <option value="pulse">Pulse</option>
+                                <option value="output">Output</option>
+                                <option value="channel">Channel</option>
+                            </select>
+                        </div>                     
+
+                        <!-- Row 2 -->
+                         <div class="arcane-field">
+                            <label for="system-trigger-edge">Trigger edge</label>
+                            <select id="system-trigger-edge" name="triggerEdge">
+                                <option value="rising">Rising</option>
+                                <option value="falling">Falling</option>
+                            </select>
+                        </div>
+
+                        <div class="arcane-field">
+                            <label for="system-gate-logic">Gate logic</label>
+                            <select id="system-gate-logic" name="gateLogic">
+                                <option value="high">High</option>
+                                <option value="low">Low</option>
+                            </select>
+                        </div>
+
+                    </div>
+                </fieldset>
+
+            </div>
+        </section>
+
+        <section id="channels" aria-labelledby="channels-heading">
+            <div class="section-header channels-header">
+                <h2 id="channels-heading">Channels</h2>
+
+                <ul class="channel-list" aria-label="Select channel">
+                    <li>
+                        <button type="button" class="arcane-button channel-button"
+                                data-channel="A" aria-pressed="true">
+                            CH A
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" class="arcane-button channel-button"
+                                data-channel="B" aria-pressed="false">
+                            CH B
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" class="arcane-button channel-button"
+                                data-channel="C" aria-pressed="false">
+                            CH C
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" class="arcane-button channel-button"
+                                data-channel="D" aria-pressed="false">
+                            CH D
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" class="arcane-button channel-button"
+                                data-channel="E" aria-pressed="false">
+                            CH E
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" class="arcane-button channel-button"
+                                data-channel="F" aria-pressed="false">
+                            CH F
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" class="arcane-button channel-button"
+                                data-channel="G" aria-pressed="false">
+                            CH G
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" class="arcane-button channel-button"
+                                data-channel="H" aria-pressed="false">
+                            CH H
+                        </button>
+                    </li>
+                </ul>
+                <button type="button" id="reset-channel" class="arcane-button">
+                    Reset channel
+                </button>
+            </div>
+
+            <fieldset id="channel-editor" data-channel="A">
+                <legend id="channel-editor-heading">CH A settings</legend>
+
+                <div class="channel-options">
+                    <div class="arcane-field channel-enable">
+                        <label for="channel-enable">Enable</label>
+                        <input type="checkbox" id="channel-enable" name="enable">
+                    </div>
+
+                    <div class="channel-mode">
+                        <label class="arcane-field">
+                            <span class="arcane-field__label">Mode</span>
+                            <select name="mode">
+                                <option value="lvttl" selected>LVTTL</option>
+                                <option value="ttl">TTL</option>
+                            </select>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Four columns, two rows -->
+                <div class="channel-controls">
+
+                    <!-- Row 1 -->
+                    <label class="arcane-field">
+                        <span class="arcane-field__label">Divider</span>
+                        <input type="number" name="divider"
+                            min="1"
+                            max="65500"
+                            step="1"
+                            value="1"
+                        >
+                    </label>
+
+                    <label class="arcane-field">
+                        <span class="arcane-field__label">Wait counter</span>
+                        <input type="number" name="waitCount"
+                            min="0" 
+                            max="1000000000"
+                            step="1" 
+                            value="0"
+                        >
+                    </label>
+
+                    <label class="arcane-field">
+                        <span class="arcane-field__label">On counter</span>
+                        <input type="number" name="onCount"
+                            min="1"
+                            max="1000000000"
+                            step="1" 
+                            value="1"
+                        >
+                    </label>
+
+                    <label class="arcane-field">
+                        <span class="arcane-field__label">Gate mode</span>
+                        <select name="gateMode">
+                            <option value="disabled">Disabled</option>
+                            <option value="pulse">Pulse</option>
+                            <option value="output">Output</option>
+                        </select>
+                    </label>
+
+                    <!-- Row 2 -->
+                    <label class="arcane-field">
+                        <span class="arcane-field__label">Sync</span>
+                        <select name="sync">
+                            <option value="T0">T0</option>
+                            <option value="A">CH A</option>
+                            <option value="B">CH B</option>
+                            <option value="C">CH C</option>
+                            <option value="D">CH D</option>
+                            <option value="E">CH E</option>
+                            <option value="F">CH F</option>
+                            <option value="G">CH G</option>
+                            <option value="H">CH H</option>
+                        </select>
+                    </label>
+
+                    <label class="arcane-field">
+                        <span class="arcane-field__label">Burst counter</span>
+                        <input type="number" name="burstCount"
+                            min="0" 
+                            max="30000000"
+                            step="1" 
+                            value="0"
+                        >
+                    </label>
+
+                    <label class="arcane-field">
+                        <span class="arcane-field__label">Off counter</span>
+                        <input type="number" name="offCount"
+                            min="0" 
+                            max="1000000000"
+                            step="1" 
+                            value="0"
+                        >
+                    </label>
+
+                    <label class="arcane-field">
+                        <span class="arcane-field__label">Gate logic</span>
+                        <select name="gateLogic">
+                            <option value="high">High</option>
+                            <option value="low">Low</option>
+                        </select>
+                    </label>
+
+                </div>
+
+                <hr>
+
+                <!-- Two state/delay pairs per row -->
+                <div class="channel-sequence">
+
+                    <div class="state-delay-pair">
+                        <label class="arcane-field">
+                            <span class="arcane-field__label">State 1</span>
+                            <select name="state1">
+                                <option value="off">Off</option>
+                                <option value="on">On</option>
+                            </select>
+                        </label>
+
+                        <div class="arcane-field">
+                            <label for="channel-delay-1">Delay</label>
+                            <div class="delay-controls">
+                                <input type="number" id="channel-delay-1" name="delay1"
+                                    min="0" step="any" value="0">
+                                <select id="channel-delay-1-unit" name="delay1Unit"
+                                        aria-label="Delay 1 units">
+                                    <option value="ns">ns</option>
+                                    <option value="us">us</option>
+                                    <option value="ms">ms</option>
+                                    <option value="s" selected>s</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="state-delay-pair">
+                        <label class="arcane-field">
+                            <span class="arcane-field__label">State 4</span>
+                            <select name="state4">
+                                <option value="off">Off</option>
+                                <option value="on">On</option>
+                            </select>
+                        </label>
+
+                        <div class="arcane-field">
+                            <label for="channel-delay-4">Delay</label>
+                            <div class="delay-controls">
+                                <input type="number" id="channel-delay-4" name="delay4"
+                                    min="0" step="any" value="0">
+                                <select id="channel-delay-4-unit" name="delay4Unit"
+                                        aria-label="Delay 4 units">
+                                    <option value="ns">ns</option>
+                                    <option value="us">us</option>
+                                    <option value="ms">ms</option>
+                                    <option value="s" selected>s</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="state-delay-pair">
+                        <label class="arcane-field">
+                            <span class="arcane-field__label">State 2</span>
+                            <select name="state2">
+                                <option value="off">Off</option>
+                                <option value="on">On</option>
+                            </select>
+                        </label>
+
+                        <div class="arcane-field">
+                            <label for="channel-delay-2">Delay</label>
+                            <div class="delay-controls">
+                                <input type="number" id="channel-delay-2" name="delay2"
+                                    min="0" step="any" value="0">
+                                <select id="channel-delay-2-unit" name="delay2Unit"
+                                        aria-label="Delay 2 units">
+                                    <option value="ns">ns</option>
+                                    <option value="us">us</option>
+                                    <option value="ms">ms</option>
+                                    <option value="s" selected>s</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="state-delay-pair">
+                        <label class="arcane-field">
+                            <span class="arcane-field__label">State 5</span>
+                            <select name="state5">
+                                <option value="off">Off</option>
+                                <option value="on">On</option>
+                            </select>
+                        </label>
+
+                        <div class="arcane-field">
+                            <label for="channel-delay-5">Delay</label>
+                            <div class="delay-controls">
+                                <input type="number" id="channel-delay-5" name="delay5"
+                                    min="0" step="any" value="0">
+                                <select id="channel-delay-5-unit" name="delay5Unit"
+                                        aria-label="Delay 5 units">
+                                    <option value="ns">ns</option>
+                                    <option value="us">us</option>
+                                    <option value="ms">ms</option>
+                                    <option value="s" selected>s</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="state-delay-pair">
+                        <label class="arcane-field">
+                            <span class="arcane-field__label">State 3</span>
+                            <select name="state3">
+                                <option value="off">Off</option>
+                                <option value="on">On</option>
+                            </select>
+                        </label>
+
+                        <div class="arcane-field">
+                            <label for="channel-delay-3">Delay</label>
+                            <div class="delay-controls">
+                                <input type="number" id="channel-delay-3" name="delay3"
+                                    min="0" step="any" value="0">
+                                <select id="channel-delay-3-unit" name="delay3Unit"
+                                        aria-label="Delay 3 units">
+                                    <option value="ns">ns</option>
+                                    <option value="us">us</option>
+                                    <option value="ms">ms</option>
+                                    <option value="s" selected>s</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="state-delay-pair">
+                        <label class="arcane-field">
+                            <span class="arcane-field__label">State 6</span>
+                            <select name="state6">
+                                <option value="off">Off</option>
+                                <option value="on">On</option>
+                            </select>
+                        </label>
+
+                        <div class="arcane-field">
+                            <label for="channel-delay-6">Delay</label>
+                            <div class="delay-controls">
+                                <input type="number" id="channel-delay-6" name="delay6"
+                                    min="0" step="any" value="0">
+                                <select id="channel-delay-6-unit" name="delay6Unit"
+                                        aria-label="Delay 6 units">
+                                    <option value="ns">ns</option>
+                                    <option value="us">us</option>
+                                    <option value="ms">ms</option>
+                                    <option value="s" selected>s</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </fieldset>
+        </section>
+
+        <section aria-label="SCPI terminal">
+            <h2>SCPI Terminal</h2>
+            <div id="scpi-terminal-container"></div>
+        </section>
+
+        <script type="module" src="./modules/App.js"></script>
+    </body>
+</html>

@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 2,
+  "id": "opensync-pwa",
+  "displayName": "OpenSync Synchronizer",
+  "description": "OpenSync synchronizer control panel.",
+  "version": "0.1.0",
+  "publisher": {
+    "id": "the-wizard-nexus",
+    "name": "The Wizard Nexus"
+  },
+  "package": {
+    "entry": "index.html",
+    "strategy": "static",
+    "include": [
+      "opensync-pwa.css",
+      "index.html",
+      "manifest.json",
+      "modules",
+      "entities",
+      "opensync_logo.png"
+    ],
+    "exclude": [],
+    "shared": [
+      "browser-runtime"
+    ],
+    "pwa": {
+      "enabled": true,
+      "manifest": {
+        "name": "OpenSync Synchronizer",
+        "short_name": "OpenSync",
+        "display": "standalone",
+        "icons": [
+          {
+            "src": "opensync_logo.png",
+            "sizes": "1254x1254",
+            "type": "image/png",
+            "purpose": "any"
+          }
+        ]
+      }
+    }
+  },
+  "native": {
+    "type": "app",
+    "icon": null,
+    "order": 100,
+    "bundledApps": []
+  },
+  "requirements": {
+    "arcaneProtocol": "arcane/1",
+    "features": []
+  },
+  "targets": [
+    "browser"
+  ]
+}
