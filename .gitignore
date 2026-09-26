@@ -4,6 +4,7 @@
 *.o
 *.zip
 *.ipynb_checkpoints
+*.hustory
 .coverage
 __pycache__
 
