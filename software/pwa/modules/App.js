@@ -189,8 +189,11 @@ async function sendSettingsToDevice() {
 
     console.log(`Result of send: ${result}`);
 
+    // TODO: Move all these alerts to arcane modal
     if (result) {
         alert(result);
+    } else {
+        alert('Settings sucessfully uploaded to device');
     }
 }
 
