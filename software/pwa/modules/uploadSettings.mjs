@@ -95,12 +95,14 @@ async function uploadChannelSettings(device, user, channel_id = 0) {
     const delays = channelSettings.delays;
     const units = channelSettings.units;
 
-    if (
+    const hasBuffer = states.length > 0;
+    const isNotValid =
         states.length < 1 ||
         states.length > 6 ||
         states.length !== delays.length ||
-        states.length !== units.length
-    ) {
+        states.length !== units.length;
+
+    if (hasBuffer && isNotValid) {
         return `Channel ${channelNumber} requires 1–6 matching state, delay, and unit entries.`;
     }
 
@@ -171,20 +173,22 @@ async function uploadChannelSettings(device, user, channel_id = 0) {
         return `Channel ${channelNumber} off counter failed: got ${resp} from ${command}`;
     }
 
-    // Send all state/delay pairs in one command:
-    // pulse1:buffer on,15us,off,1ms,...
-    const buffer = [];
+    if (hasBuffer) {
+        // Send all state/delay pairs in one command:
+        // pulse1:buffer on,15us,off,1ms,...
+        const buffer = [];
 
-    for (let index = 0; index < states.length; index++) {
-        buffer.push(states[index]);
-        buffer.push(`${delays[index]}${units[index]}`);
-    }
+        for (let index = 0; index < states.length; index++) {
+            buffer.push(states[index]);
+            buffer.push(`${delays[index]}${units[index]}`);
+        }
 
-    command = `${pulse}:buffer ${buffer.join(',')}`;
-    resp = await device.send(command);
+        command = `${pulse}:buffer ${buffer.join(',')}`;
+        resp = await device.send(command);
 
-    if (resp) {
-        return `Channel ${channelNumber} state/delay buffer failed: got ${resp} from ${command}`;
+        if (resp) {
+            return `Channel ${channelNumber} state/delay buffer failed: got ${resp} from ${command}`;
+        }
     }
 
     command = `${pulse}:cgate:mode ${channelSettings.gate_mode}`;
