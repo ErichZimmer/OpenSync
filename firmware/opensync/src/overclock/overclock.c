@@ -1,8 +1,8 @@
+#include "overclock.h"
+
 #include "hardware/clocks.h"
 #include "hardware/vreg.h"
 #include "pico/stdlib.h"
-
-#include "overclock.h"
 
 
 // TODO: Add compile-time ocnventions for clock speed? (e.g., 4 ns .. 2.5 ns resolution)

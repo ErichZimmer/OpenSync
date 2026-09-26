@@ -27,18 +27,18 @@ set(SCPI_SOURCE
 set(OPENSYNC_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/overclock/overclock.c
     ${CMAKE_CURRENT_SOURCE_DIR}/sequencer/sequencer_common.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/sequencer/sequencer_clock.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/sequencer/sequencer_output.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/sequencer/sequencer_clock_internal.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/sequencer/sequencer_clock_t0.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/sequencer/sequencer_clock_triggers.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/sequencer/sequencer_outputs.c
     ${CMAKE_CURRENT_SOURCE_DIR}/status/sequencer_status.c
     ${CMAKE_CURRENT_SOURCE_DIR}/status/debug_status.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/serial/serial_int_output.c
     ${CMAKE_CURRENT_SOURCE_DIR}/serial/scpi-def.c
     ${CMAKE_CURRENT_SOURCE_DIR}/serial/scpi_common.c
     ${CMAKE_CURRENT_SOURCE_DIR}/serial/scpi_system.c
     ${CMAKE_CURRENT_SOURCE_DIR}/serial/scpi_device.c
     ${CMAKE_CURRENT_SOURCE_DIR}/serial/scpi_instrument.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/serial/scpi_clock_sequencer.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/serial/scpi_pulse_sequencer.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/serial/scpi_sequencer.c
     ${CMAKE_CURRENT_SOURCE_DIR}/system/core_1.c
     ${CMAKE_CURRENT_SOURCE_DIR}/system/core_2.c
     ${CMAKE_CURRENT_SOURCE_DIR}/usb_desc/usb_descriptors.c
@@ -57,15 +57,9 @@ pico_set_program_name(opensync "OpenSync")
 pico_set_program_version(opensync "0.1") # this number is irrespective of firmware!?
 
 # Generate PIO headers
-pico_generate_pio_header(opensync ${CMAKE_CURRENT_SOURCE_DIR}/pio_assembly/sequencer_pio_clock_freerun.pio)
-
-pico_generate_pio_header(opensync ${CMAKE_CURRENT_SOURCE_DIR}/pio_assembly/sequencer_pio_clock_triggered_rising.pio)
-pico_generate_pio_header(opensync ${CMAKE_CURRENT_SOURCE_DIR}/pio_assembly/sequencer_pio_clock_triggered_falling.pio)
-
-pico_generate_pio_header(opensync ${CMAKE_CURRENT_SOURCE_DIR}/pio_assembly/sequencer_pio_clock_gated_high.pio)
-pico_generate_pio_header(opensync ${CMAKE_CURRENT_SOURCE_DIR}/pio_assembly/sequencer_pio_clock_gated_low.pio)
-
-pico_generate_pio_header(opensync ${CMAKE_CURRENT_SOURCE_DIR}/pio_assembly/sequencer_pio_pulse_sequencer.pio)
+pico_generate_pio_header(opensync ${CMAKE_CURRENT_SOURCE_DIR}/pio_assembly/sequencer_pio_clock_internal_gated.pio)
+pico_generate_pio_header(opensync ${CMAKE_CURRENT_SOURCE_DIR}/pio_assembly/sequencer_pio_clock_t0_gated.pio)
+pico_generate_pio_header(opensync ${CMAKE_CURRENT_SOURCE_DIR}/pio_assembly/sequencer_pio_output.pio)
 
 # Enable native USB OTG
 pico_enable_stdio_uart(opensync 0)
@@ -80,6 +74,7 @@ target_include_directories(opensync PRIVATE
 
 target_compile_definitions(opensync PUBLIC
     USE_FULL_ERROR_LIST
+    USE_UNITS_TIME=1
 )
 
 # Add any user requested libraries including the standard library

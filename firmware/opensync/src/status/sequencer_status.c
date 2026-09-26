@@ -1,6 +1,7 @@
 #include "sequencer_status.h"
 
 #include <stdint.h>
+
 #include "pico/mutex.h"
 
 
@@ -12,6 +13,7 @@ const uint32_t ABORT_REQUESTED = 3;
 const uint32_t ABORTING = 4;
 const uint32_t ABORTED = 5;
 const uint32_t DISARMING = 6;
+const uint32_t PROGRAM_FAILURE = 10;
 
 const uint32_t STAND_BY = 0;
 
@@ -62,6 +64,8 @@ const char* sequencer_status_to_str(uint32_t status_copy)
             return "ABORTED"; 
         case DISARMING:
             return "DISARMING"; 
+        case PROGRAM_FAILURE:
+            return "PROGRAM FAILURE";
         default:
             return "Not Supported";
     }

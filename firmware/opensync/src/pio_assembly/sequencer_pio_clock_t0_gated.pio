@@ -1,0 +1,34 @@
+; Target: Pico 2 / RP2350.
+.program sequencer_pio_clock_t0_gated
+.pio_version 1
+.fifo txget
+
+.wrap_target
+duty_reload:
+    mov osr, rxfifo[0]
+    mov x, osr
+    mov osr, rxfifo[1]
+    mov y, osr
+on_next:
+    jmp x-- on_event
+off_next:
+    jmp y-- off_event
+.wrap
+
+on_event:
+    wait 0 pin 0
+public on_wait_high:
+    wait 1 pin 0
+    jmp pin on_inhibited
+    set pins, 1              [3]
+    jmp on_finish
+on_inhibited:
+    set pins, 0              [4]
+on_finish:
+    set pins, 0
+    jmp on_next
+off_event:
+    wait 0 pin 0
+public off_wait_high:
+    wait 1 pin 0
+    jmp off_next

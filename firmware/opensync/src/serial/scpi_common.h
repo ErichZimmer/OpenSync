@@ -18,18 +18,13 @@ enum {
 };
 
 extern const int32_t STATEFUL;
-extern const double OFFSET_NANOSECOND;
-extern const double OFFSET_MICROSECOND;
-extern const double OFFSET_MILLISECOND;
-extern const double OFFSET_SECOND;
-extern const double OFFSET_MINUTE;
-extern const double OFFSET_HOUR;
-
-bool convert_nanos_to_cycles(
-    uint64_t nanoseconds,
-    uint32_t clock_divider,
-    uint32_t* cycles
-);
+extern const uint32_t COUNTERS_MAX;
+extern const uint32_t BCOUNTER_MAX;
+extern const uint32_t DIVIDER_MAX;
+extern const double DELAY_CLOCK_MIN;
+extern const double DELAY_CLOCK_MAX;
+extern const double DELAY_PULSE_MIN;
+extern const double DELAY_PULSE_MAX;
 
 bool is_running();
 

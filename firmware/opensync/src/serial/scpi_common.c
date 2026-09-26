@@ -1,40 +1,21 @@
+#include "scpi_common.h"
+
 #include <stdbool.h>
 #include <stdint.h>
+
 #include "scpi/scpi.h"
 
 #include "status/sequencer_status.h"
-#include "scpi_common.h"
 
 
 const int32_t STATEFUL = -1;
-const uint64_t CLOCK_CYCLES_MAX  = 4294967200; // 2^32 - 96
-const uint64_t CLOCK_CYCLE_NANOS = 4; // Each clock cycle is 4 ns long
-const double OFFSET_NANOSECOND  = 1.0;
-const double OFFSET_MICROSECOND = 1e3;
-const double OFFSET_MILLISECOND = 1e6;
-const double OFFSET_SECOND      = 1e9;
-const double OFFSET_MINUTE      = 6e10;
-const double OFFSET_HOUR        = 3.6e12;
-
-
-// Convert nanoseconds to cycles, return 1 if success, 0 is not
-// TODO: round to nearest clock cycle using doubles instead of integer arithmetic
-bool convert_nanos_to_cycles(
-    uint64_t nanoseconds,
-    uint32_t clock_divider,
-    uint32_t* cycles
-){
-    uint64_t clock_cycles_raw = nanoseconds / ((uint64_t) (clock_divider) * CLOCK_CYCLE_NANOS);
-
-    if (clock_cycles_raw > CLOCK_CYCLES_MAX)
-    {
-        return 0;
-    }
-
-    *cycles = (uint32_t) clock_cycles_raw;
-
-    return 1;
-}
+const double DELAY_CLOCK_MIN = 200e-9; // 200 ns in seconds
+const double DELAY_CLOCK_MAX = 16.0;   // 10 seconds
+const double DELAY_PULSE_MIN = 44e-9;  // 44 ns in seconds
+const double DELAY_PULSE_MAX = 8.0;    // 8 seconds
+const uint32_t COUNTERS_MAX = 1000000000; // 1 billion max
+const uint32_t BCOUNTER_MAX = 30000000; // 30 million max
+const uint32_t DIVIDER_MAX = 65500;
 
 
 bool is_running()

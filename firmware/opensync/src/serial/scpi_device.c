@@ -1,3 +1,5 @@
+#include "scpi_device.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
@@ -12,13 +14,10 @@
 #include "scpi/scpi.h"
 
 #include "system/core_1.h"
-#include "structs/clock_config.h"
-#include "structs/pulse_config.h"
 #include "status/sequencer_status.h"
 #include "status/debug_status.h"
-#include "scpi_clock_sequencer.h"
-#include "scpi_pulse_sequencer.h"
-#include "scpi_common.h"
+#include "serial/scpi_sequencer.h"
+#include "serial/scpi_common.h"
 
 
 // Return system status
@@ -164,7 +163,8 @@ scpi_result_t SCPI_DeviceStart(
     // Push arming status to sequencer core
     multicore_fifo_push_blocking(ARM_SEQUENCER);
 
-    // TODO: wait and check for status change?
+    // TODO: wait and check for status change to prevent race conditions?
+    sleep_us(500);
 
     return SCPI_RES_OK;
 }
@@ -221,25 +221,8 @@ scpi_result_t SCPI_DeviceReset(
         return SCPI_RES_ERR;
     }
 
-    // Reset clock containers
-    for(uint32_t clock_id = 0; clock_id < CLOCKS_MAX; clock_id++)
-    {
-        clock_sequencer_state_reset(
-            clock_id
-        );
-    }
-
-    // Reset pulse containers
-    for(uint32_t pulse_id = 0; pulse_id < CLOCKS_MAX; pulse_id++)
-    {
-        pulse_sequencer_state_reset(
-            pulse_id
-        );
-    }
-
-    // Clear static instruction data caches
-    pulse_sequencer_cache_clear();
-    clock_sequencer_cache_clear();
+    // Reset SCPI configs
+    pulse_channels_clear();
 
     // Finally, set sebug and sequencer status to default
     // TODO: Add reset functions for each

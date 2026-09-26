@@ -1,0 +1,90 @@
+.program sequencer_pio_output
+.pio_version 1
+.fifo txrx
+
+frame_done:
+    pull block
+    jmp y-- instruction_pull ; More P waveforms: discard O and continue
+
+; P group finished. Extract O and restore gate-mode discrimination.
+; With left shifting, OUT Y,31 extracts O from (O << 1).
+; Shift count 31 is below threshold 32, but above threshold 1.
+
+load_off:
+    out y, 31
+
+; Initialization enters here with raw W in Y and OSR empty.
+; This makes initial W skips ignore the gate.
+
+public initial_skip_entry:
+off_next:
+    jmp !y load_on
+
+off_t0_wait:
+    wait 0 pin 0
+
+public off_wait_high:
+    wait 1 pin 0
+    jmp !osre off_gate_check
+    jmp off_count
+
+off_gate_check:
+    jmp pin off_t0_wait       ; Asserted gate: do not advance O
+
+off_count:
+    jmp y-- off_next
+
+
+; Begin a new P group.
+; ISR holds P-1 because frame_done uses a decrement-and-branch.
+
+load_on:
+    mov y, isr
+
+public instruction_pull:
+    pull block               ; Stage first waveform word before T0
+    out x, 1                 ; Extract requested output state
+
+on_t0_wait:
+    wait 0 pin 0
+
+public on_wait_high:
+    wait 1 pin 0
+    jmp !osre on_gate_check
+    jmp frame_dispatch
+
+on_gate_check:
+    jmp pin on_t0_wait        ; Reject event, retain staged word
+
+
+; Ordinary segment state-write spacing remains D+10 cycles.
+; Automatic wrap returns subsequent words to frame_dispatch.
+
+.wrap_target
+frame_dispatch:
+    jmp !osre frame_mode0 [1]
+
+frame_inhibit:
+    jmp pin frame_force_low
+
+frame_normal:
+    mov pins, x
+    jmp frame_delay_load
+
+frame_mode0:
+    jmp frame_normal
+
+frame_force_low:
+    set pins, 0 [1]
+
+frame_delay_load:
+    out x, 31
+    jmp !x frame_done         ; Zero delay identifies the terminator
+
+frame_delay:
+    jmp x-- frame_delay
+
+frame_pull:
+    pull block
+    out x, 1
+.wrap

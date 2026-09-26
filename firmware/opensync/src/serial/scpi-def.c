@@ -1,3 +1,4 @@
+#include "scpi-def.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -6,12 +7,10 @@
 #include "pico/unique_id.h"
 #include "scpi/scpi.h"
 
-#include "scpi-def.h"
+#include "serial/scpi_system.h"
+#include "serial/scpi_device.h"
+#include "serial/scpi_sequencer.h"
 
-#include "scpi_system.h"
-#include "scpi_device.h"
-#include "scpi_clock_sequencer.h"
-#include "scpi_pulse_sequencer.h"
 
 static char scpi_input_buffer[SCPI_INPUT_BUFFER_LENGTH];
 
@@ -62,10 +61,7 @@ const scpi_command_t scpi_commands[] = {
     /* OpenSync device settings */
     INSTRUMENT_DEVICE_COMMANDS
 
-    /* OpenSync device clock sequencer settings */
-    INSTRUMENT_CLOCK_COMMANDS
-
-    /* OpenSync device pulse sequencer settings */
+    /* OpenSync device sequencer settings */
     INSTRUMENT_PULSE_COMMANDS
 
     SCPI_CMD_LIST_END
@@ -96,7 +92,7 @@ int SCPI_Error(
 
 scpi_interface_t scpi_interface = {
     .write = SCPI_Write,
-    .error = SCPI_Error,
+    .error = NULL,
     .reset = SCPI_DeviceReset,            
     .control = NULL,
     .flush = NULL,

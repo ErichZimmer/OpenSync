@@ -11,6 +11,7 @@ extern const uint32_t ABORT_REQUESTED;
 extern const uint32_t ABORTING;
 extern const uint32_t ABORTED;
 extern const uint32_t DISARMING;
+extern const uint32_t PROGRAM_FAILURE;
 
 extern const uint32_t STAND_BY;
 

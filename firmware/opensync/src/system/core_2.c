@@ -11,19 +11,17 @@
 #include "pico/time.h"
 #include "hardware/dma.h"
 
-#include "core_1.h"
+#include "system/core_1.h"
 #include "overclock/overclock.h"
-#include "structs/clock_config.h"
-#include "structs/pulse_config.h"
 #include "status/sequencer_status.h"
 #include "status/debug_status.h"
-#include "sequencer/sequencer_clock.h"
 #include "serial/scpi-def.h"
+#include "serial/scpi_sequencer.h"
 
 #include "fast_serial.h"
 
 // Serial buffer//
-#define SERIAL_BUFFER_SIZE 64
+#define SERIAL_BUFFER_SIZE 128
 char serial_buf[SERIAL_BUFFER_SIZE];
 
 
@@ -43,12 +41,29 @@ void core_2_init()
 	// Initialize device SCPI interface
     scpi_instrument_init();
 
+    // Clear any data in SCPI pulse sequencer interface
+    pulse_channels_clear();
+
+    // Memory initialization and defualt selection will go here.
+    
+
 	// Intialize sequencer cores
 	multicore_launch_core1(core_1_init);
-    multicore_fifo_pop_blocking();
 
-	// Set system status to idle
-	sequencer_status_set(IDLE);
+    const uint32_t core_1_state = multicore_fifo_pop_blocking();
+
+    if (!core_1_state)
+    {
+        SCPI_ErrorPush(
+            &scpi_context, 
+            SCPI_ERROR_SYSTEM_ERROR
+        );
+        // Core 1 has already set PROGRAM_FAILURE.
+    }
+    else
+    {
+        sequencer_status_set(IDLE);
+    }
 
     while(1)
     {  

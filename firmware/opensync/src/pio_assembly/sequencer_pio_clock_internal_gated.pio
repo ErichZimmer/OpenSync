@@ -1,0 +1,22 @@
+; Target: Pico 2 / RP2350.
+.program sequencer_pio_clock_internal_gated
+.pio_version 1
+.fifo txrx
+.side_set 1 opt
+
+.wrap_target
+public instruction_pull:
+    pull block               side 0
+    mov y, osr               ; One reserved burst, N-1
+public trigger_wait:
+    wait 0 pin 0
+    wait 1 pin 0
+public pulse_inhibit:
+    jmp pin trigger_wait     ; Rejected edges reuse this reserved burst
+pulse:
+    nop                      side 1 [4]
+    mov x, isr               side 0
+delay:
+    jmp x-- delay
+    jmp y-- pulse
+.wrap
