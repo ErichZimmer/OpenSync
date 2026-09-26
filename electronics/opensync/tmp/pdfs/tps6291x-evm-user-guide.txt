@@ -1,0 +1,763 @@
+www.ti.com                                                                                                                                                               Table of Contents
+
+User’s Guide
+TPS6291x Step-Down Converter Evaluation Module User's
+Guide
+
+
+                                                                                     ABSTRACT
+The TPS6291xEVM-077 (BSR077) facilitates the evaluation of the TPS6291x 2-A and 3-A pin-to-pin compatible
+Low Noise ( < 20 μVRMS) and Low Ripple ( < 10 μVRMS) buck converters in small 2-mm by 2-mm QFN packages.
+The BSR077-003 uses the 3-A TPS62913 to output a 1.2-V output voltage from input voltages between 3 V
+and 17 V. The BSR077-002 uses the 2-A TPS62912 to output a 3.3-V output voltage from input voltages up to
+17 V. Due to its extremely low noise, the TPS6291x is a high-efficiency alternative to low-dropout (LDO) linear
+regulators in noise-sensitive circuits, such as data converters, clocks, and amplifiers in telecom infrastructure,
+medical, test and measurement, and aerospace and defense applications.
+
+
+
+
+                                                                            Table of Contents
+1 Introduction.............................................................................................................................................................................2
+   1.1 Performance Specification................................................................................................................................................. 2
+   1.2 Modifications...................................................................................................................................................................... 2
+2 Setup........................................................................................................................................................................................5
+   2.1 Input/Output Connector Descriptions................................................................................................................................. 5
+   2.2 Ripple Measurement Setup................................................................................................................................................6
+3 Test Results ............................................................................................................................................................................9
+4 Board Layout ........................................................................................................................................................................10
+5 Schematic and Bill of Materials...........................................................................................................................................13
+   5.1 Schematic........................................................................................................................................................................ 13
+6 Bill of Materials..................................................................................................................................................................... 14
+A Ripple Measurements With Mis-oriented Inductor ...........................................................................................................15
+Revision History.......................................................................................................................................................................17
+
+                                                                                List of Figures
+Figure 1-1. Loop Response Measurement Modification (Bottom Layer)..................................................................................... 3
+Figure 1-2. Loop Response Measurement Modification (Top Layer)...........................................................................................4
+Figure 3-1. Thermal Performance (VIN = 12 V, VOUT = 1.2 V, IOUT = 3000 mA, JP2 Open).........................................................9
+Figure 3-2. Loop Response Measurement (VIN = 12 V, VOUT = 1.2 V, IOUT = 3000 mA, JP2 open)............................................ 9
+Figure 4-1. Top Assembly.......................................................................................................................................................... 10
+Figure 4-2. Top Layer.................................................................................................................................................................10
+Figure 4-3. Internal Layer 1 .......................................................................................................................................................11
+Figure 4-4. Internal Layer 2........................................................................................................................................................11
+Figure 4-5. Bottom Layer .......................................................................................................................................................... 12
+Figure 4-6. Bottom Layer (Mirrored).......................................................................................................................................... 12
+Figure 5-1. TPS62913EVM-077 Schematic...............................................................................................................................13
+Figure 5-2. TPS62912EVM-077 Schematic...............................................................................................................................13
+
+                                                                                 List of Tables
+Table 1-1. TPS62913EVM-077 Performance Specification Summary.........................................................................................2
+Table 1-2. TPS62912EVM-077 Performance Specification Summary.........................................................................................2
+Table 6-1. TPS6291xEVM-077 Bill of Materials.........................................................................................................................14
+
+Trademarks
+All trademarks are the property of their respective owners.
+
+
+
+
+SLVUBX2B – AUGUST 2020 – REVISED MAY 2021                                                               TPS6291x Step-Down Converter Evaluation Module User's Guide                            1
+Submit Document Feedback
+                                                                  Copyright © 2021 Texas Instruments Incorporated
+Introduction                                                                                                                         www.ti.com
+
+
+1 Introduction
+The TPS6291x family of devices are Low Noise, Low Ripple, synchronous, step-down converters in a small 2- ×
+2- × 1-mm QFN package. Two different devices in this family support 2 A or 3 A of output current.
+1.1 Performance Specification
+Table 1-1 and Table 1-2 provides a summary of the TPS6291xEVM-077 performance specifications.
+                              Table 1-1. TPS62913EVM-077 Performance Specification Summary
+    Specification                   Test Conditions                                        MIN            TYP           MAX           Unit
+    Input Voltage                   JP2 open or across 1 MHz and S-CONF                     3              12            17            V
+    Output Voltage Setpoint                                                                                1.2                         V
+    Output Current                                                                          0                             3            A
+    S-CONF (R4) Setting             1 MHz with SYNC available, no spread                                  52.3                         kΩ
+                                    spectrum, output discharge enabled
+
+                              Table 1-2. TPS62912EVM-077 Performance Specification Summary
+    Specification                   Test Conditions                                        MIN            TYP           MAX           Unit
+
+    Input Voltage                                                                          3.5             12            17            V
+    Output Voltage Setpoint                                                                                3.3                         V
+    Output Current                                                                          0                             2            A
+    S-CONF (R4) Setting             2.2 MHz with SYNC available, no spread                                27.4                         kΩ
+                                    spectrum, output discharge enabled
+
+
+
+1.2 Modifications
+The printed-circuit board (PCB) for this EVM is designed to accommodate some modifications by the user.
+Additional input and output capacitors can be added. Also, the input voltage at which the IC turns on can be
+adjusted with two resistors, the soft start time and low frequency noise filtering can be changed, a feedforward
+capacitor can be added, and the switching frequency, output discharge setting, and spread spectrum setting can
+be changed. Finally, the loop response can be measured. See the device data sheet for details of the various
+settings.
+
+1.2.1 Input and Output Capacitors
+C14 is provided for an additional input capacitor. This capacitor is not required for proper operation but can be
+used to reduce the input voltage ripple.
+C15, C17, and C18 are provided for additional bulk output capacitors. These capacitors are not required for
+proper operation but can be used to reduce the output voltage ripple. The total output capacitance must
+remain within the recommended range in the data sheet for proper operation. C16 and C19 are provided for
+high-frequency bypass capacitors.
+
+1.2.2 Configurable Enable Threshold Voltage
+With JP1 removed, R6 and R7 can be installed to set a user-selectable input voltage at which the IC turns on.
+1.2.3 NR/SS Capacitor
+C9 sets the soft start time and the low frequency noise filtering. This capacitor can be changed to set other soft
+start times and noise filtering levels.
+1.2.4 Feedforward Capacitor
+C13 is provided as a feedforward capacitor (CFF). Installing this capacitor can reduce the low-frequency noise,
+especially for higher output voltages.
+
+
+
+
+2        TPS6291x Step-Down Converter Evaluation Module User's Guide                                  SLVUBX2B – AUGUST 2020 – REVISED MAY 2021
+                                                                                                                        Submit Document Feedback
+                                                    Copyright © 2021 Texas Instruments Incorporated
+www.ti.com                                                                                                                      Introduction
+
+1.2.5 S-CONF Resistor
+R4 selects the switching frequency, spread spectrum, output discharge, and clock synchronization settings. This
+resistor can be changed and JP2 also selects different settings.
+1.2.6 Loop Response Measurement
+The loop response can be measured with simple changes to the circuitry. First, install a 49.9-Ω resistor across
+R5's pads on the back of the PCB and install a 0-Ω resistor across R8's pads on the back of the PCB. The pads
+are spaced to allow installation of a 0603-sized resistors. Second, cut the trace on the bottom layer below the
+added 49.9-Ω resistor. Figure 1-1 shows these changes. Third, cut the short section of trace on the top layer
+between the via on pin 3 and C4. Figure 1-2 shows this change. Lastly, replace the ferrite bead (FB1) with a
+0-Ω resistor. The second LC filter must be removed to break the complete feedback loop and measure the loop
+response. With these changes, an AC signal (10-mV, peak-to-peak amplitude recommended) can be injected
+into the control loop across the added 49.9-Ω resistor. Figure 3-2 shows the results of this test.
+
+
+
+
+                     Figure 1-1. Loop Response Measurement Modification (Bottom Layer)
+
+
+
+
+SLVUBX2B – AUGUST 2020 – REVISED MAY 2021                                 TPS6291x Step-Down Converter Evaluation Module User's Guide     3
+Submit Document Feedback
+                                            Copyright © 2021 Texas Instruments Incorporated
+Introduction                                                                                                                       www.ti.com
+
+
+
+
+                           Figure 1-2. Loop Response Measurement Modification (Top Layer)
+
+1.2.7 Single LC Filter Operation
+For applications which do not require the lowest output voltage ripple, the TPS6291x may be operated without
+the second LC filter. To operate with a single LC filter, replace FB1 with a 0-Ω resistor. C6 and/or C8 may
+be removed to reduce the amount of output capacitance. The total output capacitance must remain within the
+recommended range in the data sheet for proper operation.
+
+
+
+
+4      TPS6291x Step-Down Converter Evaluation Module User's Guide                                  SLVUBX2B – AUGUST 2020 – REVISED MAY 2021
+                                                                                                                      Submit Document Feedback
+                                                  Copyright © 2021 Texas Instruments Incorporated
+www.ti.com                                                                                                                              Setup
+
+
+2 Setup
+This section describes how to properly use the EVM.
+
+2.1 Input/Output Connector Descriptions
+ J1, Pin 1 and 2 – VIN            Positive input connection from the input supply for the EVM.
+
+ J1, Pin 3 and 4 – S+/S-          Input voltage sense connections. Measure the input voltage at this point.
+
+ J1, Pin 5 and 6 – GND            Return connection from the input supply for the EVM.
+
+ J2, Pin 1 and 2 –                Filtered output voltage connection
+ VOUT_FILT
+ J2, Pin 3 and 4 – S+/S-          Output voltage sense connections. Measure the output voltage at this point.
+
+ J2, Pin 5 and 6 – GND            Output return connection
+ J3 – PG/GND                      The PG output is on pin 1 of this header with a convenient ground on pin 2.
+
+ J4 – VOUT Ripple                 Use this SMA connector to measure the output voltage ripple before the second
+ Measurement                      LC filter.
+
+ J5 – VOUT_FILT Ripple            Use this SMA connector to measure the output voltage ripple after the second LC
+ Measurement                      filter.
+
+ JP1 – EN/SYNC                    EN/SYNC pin input jumper. Place the supplied jumper across ON and EN to turn
+                                  on the IC. Place the jumper across OFF and EN to turn off the IC. Remove the
+                                  jumper to set a configurable enable threshold voltage with R6 and R7.
+                                  With the jumper removed, a clock signal can be applied on JP1 to synchronize
+                                  the IC's switching. To allow the IC to accept the applied SYNC signal, the jumper
+                                  on JP2 needs to be removed before applying the input voltage.
+
+ JP2 – S-CONF                     S-CONF pin input jumper. Place the supplied jumper across 2.2 MHz and S-
+                                  CONF to operate the IC with a 2.2-MHz switching frequency without spread
+                                  spectrum or output discharge. Place the jumper across 1 MHz and S-CONF to
+                                  operate the IC with a 1-MHz switching frequency without spread spectrum or
+                                  output discharge. Remove the jumper to operate the IC with the S-CONF settings
+                                  set by R4 and to allow clock synchronization.
+
+                                                                         Note
+                                        Set the JP2 jumper position before enabling the IC. Changing JP2 after
+                                        enabling the IC has no effect.
+
+                                                                          Note
+                                        When using the 2.2-MHz setting, ensure that the input voltage and
+                                        output voltage do not violate the minimum on-time in the device data
+                                        sheet.
+
+ JP3 – PG Pullup Voltage          PG pin pullup voltage jumper. Place the supplied jumper on JP3 to connect the
+                                  PG pin pullup resistor to VOUT. Alternatively, the jumper can be removed and a
+                                  different voltage can be supplied on pin 2 to pull up the PG pin to a different level.
+                                  This externally applied voltage should remain below 18 V.
+
+
+
+
+SLVUBX2B – AUGUST 2020 – REVISED MAY 2021                                 TPS6291x Step-Down Converter Evaluation Module User's Guide       5
+Submit Document Feedback
+                                            Copyright © 2021 Texas Instruments Incorporated
+Setup                                                                                                                               www.ti.com
+
+2.2 Ripple Measurement Setup
+The extremely low noise and low ripple levels of the TPS6291x necessitate a low-noise test setup for accurately
+measuring the output voltage ripple. The SMA connectors, J4 and J5, should be used to measure the output
+voltage ripple, before and after the second LC filter. Do not use a normal 10x oscilloscope probe with a
+high-impedance termination to the oscilloscope. Instead, connect the SMA connector directly to the oscilloscope
+with a coaxial (coax) cable through a DC blocker. A DC blocker enables the use of the smallest V/div setting
+on the oscilloscope to view the ripple. To prevent noise pickup and block reflections on the coax cable, the
+oscilloscope should be set to full bandwidth (BW) and DC coupling with a 50-Ω termination.
+Figure 2-1 and Figure 2-4 show the correct measurement settings and output voltage ripple result, while Figure
+2-2, Figure 2-3, Figure 2-5, and Figure 2-6 show common measurement methods and settings that cannot
+accurately measure the very low output voltage ripple. The measurements in Appendix A show the higher ripple
+that results when the inductor is not installed in its low-noise orientation.
+
+
+
+
+    VIN = 12 V, VOUT = 1.2 V, IOUT = 1000 mA, JP2 Open, Full BW, DC Coupling, 50-Ω Termination With DC Blocker
+
+                                       Figure 2-1. Output Voltage Ripple, Measured at J4
+
+
+
+
+    VIN = 12 V, VOUT = 1.2 V, IOUT = 1000 mA, JP2 Open, Full BW, DC Coupling, 50-Ω Termination With DC Blocker
+
+                         Figure 2-2. Output Voltage Ripple, Measured across C4 With 1x Probe
+
+
+
+6       TPS6291x Step-Down Converter Evaluation Module User's Guide                                  SLVUBX2B – AUGUST 2020 – REVISED MAY 2021
+                                                                                                                       Submit Document Feedback
+                                                   Copyright © 2021 Texas Instruments Incorporated
+www.ti.com                                                                                                                                Setup
+
+
+
+
+     VIN = 12 V, VOUT = 1.2 V, IOUT = 1000 mA, JP2 Open, Full BW, AC Coupling, High-Impedance Termination Without DC Blocker
+
+                     Figure 2-3. Output Voltage Ripple, Measured Across C4 With 10x Probe
+
+
+
+
+     VIN = 12 V, VOUT = 1.2 V, IOUT = 1000 mA, JP2 Open, Full BW, DC Coupling, 50-Ω Termination With DC Blocker
+
+                                   Figure 2-4. Output Voltage Ripple, Measured at J5
+
+
+
+
+SLVUBX2B – AUGUST 2020 – REVISED MAY 2021                                   TPS6291x Step-Down Converter Evaluation Module User's Guide       7
+Submit Document Feedback
+                                              Copyright © 2021 Texas Instruments Incorporated
+Setup                                                                                                                               www.ti.com
+
+
+
+
+    VIN = 12 V, VOUT = 1.2 V, IOUT = 1000 mA, JP2 Open, Full BW, DC Coupling, 50-Ω Termination With DC Blocker
+
+                         Figure 2-5. Output Voltage Ripple, Measured Across C7 With 1x Probe
+
+
+
+
+    VIN = 12 V, VOUT = 1.2 V, IOUT = 1000 mA, JP2 Open, Full BW, AC Coupling, High-impedance Termination Without DC Blocker
+
+                        Figure 2-6. Output Voltage Ripple, Measured Across C7 With 10x Probe
+
+
+
+
+8       TPS6291x Step-Down Converter Evaluation Module User's Guide                                  SLVUBX2B – AUGUST 2020 – REVISED MAY 2021
+                                                                                                                       Submit Document Feedback
+                                                   Copyright © 2021 Texas Instruments Incorporated
+www.ti.com                                                                                                                         Test Results
+
+
+3 Test Results
+The TPS6291xEVM-077 was used to take all the data in the TPS6291x data sheet. See the device data sheet
+for the performance of this EVM.
+Figure 3-1 shows the thermal performance of the EVM. "Spot" shows the temperature of the PCB. Figure 3-2
+shows the loop response measurement.
+
+
+
+
+             Figure 3-1. Thermal Performance (VIN = 12 V, VOUT = 1.2 V, IOUT = 3000 mA, JP2 Open)
+                                         90                                                              180
+                                                                                             Gain (dB)
+                                         70                                                  Phase (deg) 140
+                                         50                                                                100
+
+                                         30                                                                60
+                             Gain (dB)
+
+
+
+
+                                         10                                                                20
+
+                                         -10                                                               -20
+
+                                         -30                                                               -60
+
+                                         -50                                                               -100
+
+                                         -70                                                               -140
+
+                                         -90                                                             -180
+                                           100        1000           10000             100000        1000000
+                                                                 Frequency (Hz)                          D001
+
+        Figure 3-2. Loop Response Measurement (VIN = 12 V, VOUT = 1.2 V, IOUT = 3000 mA, JP2 open)
+
+
+
+
+SLVUBX2B – AUGUST 2020 – REVISED MAY 2021                                      TPS6291x Step-Down Converter Evaluation Module User's Guide    9
+Submit Document Feedback
+                                                 Copyright © 2021 Texas Instruments Incorporated
+Board Layout                                                                                                                     www.ti.com
+
+
+4 Board Layout
+This section provides the EVM board layout and illustrations in Figure 4-1 through Figure 4-6. The Gerbers are
+available on the EVM product page. Revision B of the PCB just added a pin 1 indicator for the inductor, in the
+silkscreen, to ensure that the inductor is assembled with the lowest-noise polarity.
+
+
+
+
+                                                     Figure 4-1. Top Assembly
+
+
+
+
+                                                        Figure 4-2. Top Layer
+
+
+
+
+10   TPS6291x Step-Down Converter Evaluation Module User's Guide                                  SLVUBX2B – AUGUST 2020 – REVISED MAY 2021
+                                                                                                                    Submit Document Feedback
+                                                Copyright © 2021 Texas Instruments Incorporated
+www.ti.com                                                                                                                   Board Layout
+
+
+
+
+                                                Figure 4-3. Internal Layer 1
+
+
+
+
+                                                Figure 4-4. Internal Layer 2
+
+
+
+
+SLVUBX2B – AUGUST 2020 – REVISED MAY 2021                                 TPS6291x Step-Down Converter Evaluation Module User's Guide   11
+Submit Document Feedback
+                                            Copyright © 2021 Texas Instruments Incorporated
+Board Layout                                                                                                                     www.ti.com
+
+
+
+
+                                                     Figure 4-5. Bottom Layer
+
+
+
+
+                                              Figure 4-6. Bottom Layer (Mirrored)
+
+
+
+
+12   TPS6291x Step-Down Converter Evaluation Module User's Guide                                  SLVUBX2B – AUGUST 2020 – REVISED MAY 2021
+                                                                                                                    Submit Document Feedback
+                                                Copyright © 2021 Texas Instruments Incorporated
+www.ti.com                                                                                                                                                                                                                                    Schematic and Bill of Materials
+
+
+5 Schematic and Bill of Materials
+This section provides the EVM schematic and bill of materials (BOM).
+5.1 Schematic
+Figure 5-1 and Figure 5-2 illustrate the EVM schematics.
+                                                                                                                                                                                                        VOUT                                               VOUT_FILT
+                                                                                                                                                                                                         J4                                                        J5
+                                                                                                                                                                                                  2                                                        2
+                                                                                                                                                                                                  3                                                        3
+                                                                                                                                                                                                  4                                                        4
+                                                                                                                                                                                                  5                                                        5
+
+
+
+
+                                                                                                                                                                                                        1
+
+
+
+
+                                                                                                                                                                                                                                                                   1
+                                                                                                                                                                                           GND                                                    GND
+
+
+
+
+                                                                                                                                                                                                 C11                                                                           C12
+                                                                                                                                              SW                                                470pF                                                                         470pF
+                                                                                                                                              TP1
+                                                                                                            U1
+             J1                                                                                                                                                                            GND                                                                          GND                                               J2
+                                                                                                                                                    L1
+                   1                 VIN                                                               6                           2   SW                                                                                                                                             VOUT_FILT                       1
+       VIN                                                                                                  VIN              SW
+                   2                                                                                                                                                                                                                                                                                                  2        VOUT_FILT
+3V to 17V                                                                                                                                           2.2µH                                                                               FB1
+                   3                                                                           EN       1                          3   VOUT                                                                                                                                                                           3
+        S+                                                                                                  EN/SYNC          VO                                                                                                                                                                                                S+
+                   4                          C10    C14    C3     C2                                                                                                                                                                                                                                                 4
+        S-                                                                 C1                                                                                                                             C4     C5     C6     C15    C16         C7        C8                C17       C18        C19                         S-
+                   5                                 10uF   10uF   10uF                        SCONF   10                          9   FB                                      R8   VOUT_FILT                                                                                                                         5
+                                              47uF                                                          S-CONF           FB
+     GND           6                                 25V    25V    25V    2200pF                                                                                                                         22uF   22uF   22uF   22uF   2200pF      22uF      22uF              22uF      22uF       2200pF              6        GND
+                                                                                                       7                           8   SS                                      0
+                                                                                                            PSNS           NR/SS
+                                                                                                                                                                           R5
+                                                                                                                                   5   PG                                  49.9
+                                                                                                                             PG
+
+                               GND                                                                                                 4
+                                                                                                                           PGND
+                                                                                                            TPS62913RPUR                                                   R1         C13
+                                                                                                                                                            C9
+                                                                                                                                                                           2.43k      100nF                                                                                                               GND
+                                                                                                                                                            0.47µF
+
+
+                                                                                         GND                                           GND
+                                                                                                                                                                           R2
+                                                                                                                                                                           4.87k
+                                                                                                                                                                                                                                               VOUT_FILT
+                                                                                                                                                                                                                                                                       JP3
+                                                                                                                                                                                                                                                               1
+                                                                                                                                                                                                                                                               2
+             JP1                       R6
+                   1   VIN                                                                                                                                               GND
+      ON                              1.00M
+                   2
+EN/SYNC
+                   3                 R7                                                                                                                                                                                                                    R3
+     OFF
+                                 1.00M                                                                                                                                                                                                                     10.0k
+                                                                                                                                                                                                                                                                                                           J3
+                       GND                                                                                                                                                                                                                                                                            1
+                                                                                                                                                                                                                                                                                                                PG
+                                                                                                                                                                                                                                                                                                      2
+                                                                                                                                                                                                                                                                                                                GND
+             JP2
+                   1     VIN
+ 2.2 MHz
+                   2
+ S-CONF
+                   3
+   1 MHz
+
+                                                                                     R4
+                                                                                     52.3k
+                       GND
+
+
+
+
+                                                                                   GND
+
+
+
+
+                                                                                               Figure 5-1. TPS62913EVM-077 Schematic
+                                                                                                                                                                                                        VOUT                                               VOUT_FILT
+                                                                                                                                                                                                         J4                                                        J5
+                                                                                                                                                                                                  2                                                        2
+                                                                                                                                                                                                  3                                                        3
+                                                                                                                                                                                                  4                                                        4
+                                                                                                                                                                                                  5     1                                                  5
+
+
+
+
+                                                                                                                                                                                                                                                                   1
+                                                                                                                                                                                           GND                                                    GND
+
+
+
+
+                                                                                                                                                                                                 C11                                                                           C12
+                                                                                                                                              SW                                                470pF                                                                         470pF
+                                                                                                                                              TP1
+                                                                                                            U1
+             J1                                                                                                                                                                            GND                                                                          GND                                               J2
+                                                                                                                                                    L1
+                   1                 VIN                                                               6                           2   SW                                                                                                                                             VOUT_FILT                       1
+       VIN                                                                                                  VIN              SW
+                   2                                                                                                                                                                                                                                                                                                  2        VOUT_FILT
+3V to 17V                                                                                                                                           2.2µH                                                                               FB1
+                   3                                                                           EN       1                          3   VOUT                                                                                                                                                                           3
+        S+                                                                                                  EN/SYNC          VO                                                                                                                                                                                                S+
+                   4                          C10    C14    C3     C2                                                                                                                                                                                                                                                 4
+        S-                                                                 C1                                                                                                                             C4     C5     C6     C15    C16         C7        C8                C17       C18        C19                         S-
+                   5                                 10uF   10uF   10uF                        SCONF   10                          9   FB                                      R8   VOUT_FILT                                                                                                                         5
+                                              47uF                                                          S-CONF           FB
+     GND           6                                 25V    25V    25V    2200pF                                                                                                                         22uF   22uF   22uF   22uF   2200pF      22uF      22uF              22uF      22uF       2200pF              6        GND
+                                                                                                       7                           8   SS                                      0
+                                                                                                            PSNS           NR/SS
+                                                                                                                                                                           R5
+                                                                                                                                   5   PG                                  49.9
+                                                                                                                             PG
+
+                               GND                                                                                                 4
+                                                                                                                           PGND
+                                                                                                            TPS62912RPUR                                                   R1         C13
+                                                                                                                                                            C9             15.4k      100nF                                                                                                               GND
+                                                                                                                                                            0.47µF
+
+
+                                                                                         GND                                           GND
+                                                                                                                                                                           R2
+                                                                                                                                                                           4.87k
+                                                                                                                                                                                                                                               VOUT_FILT
+                                                                                                                                                                                                                                                                       JP3
+                                                                                                                                                                                                                                                               1
+                                                                                                                                                                                                                                                               2
+             JP1                       R6
+                   1   VIN                                                                                                                                               GND
+      ON                              1.00M
+                   2
+EN/SYNC
+                   3                 R7                                                                                                                                                                                                                    R3
+     OFF
+                                 1.00M                                                                                                                                                                                                                     10.0k
+                                                                                                                                                                                                                                                                                                           J3
+                       GND                                                                                                                                                                                                                                                                            1
+                                                                                                                                                                                                                                                                                                                PG
+                                                                                                                                                                                                                                                                                                      2
+                                                                                                                                                                                                                                                                                                                GND
+             JP2
+                   1     VIN
+ 2.2 MHz
+                   2
+ S-CONF
+                   3
+   1 MHz
+
+                                                                                     R4
+                                                                                     27.4k
+                       GND
+
+
+
+
+                                                                                   GND
+
+
+
+
+                                                                                               Figure 5-2. TPS62912EVM-077 Schematic
+
+
+
+
+SLVUBX2B – AUGUST 2020 – REVISED MAY 2021                                                                                                                            TPS6291x Step-Down Converter Evaluation Module User's Guide                                                                                                     13
+Submit Document Feedback
+                                                                                                            Copyright © 2021 Texas Instruments Incorporated
+Bill of Materials                                                                                                                                                                 www.ti.com
+
+
+6 Bill of Materials
+Table 6-1 lists the BOM for this EVM.
+
+                                                                      Table 6-1. TPS6291xEVM-077 Bill of Materials
+                               Reference
+     -002        -003                                  Value         Description                                                 Package    Part Number            Manufacturer
+                               Designator
+
+      1             1               C1                2200pF         CAP, CERM, 2200 pF, 50 V, +/- 10%, X7R                      0402       GRM155R71H222KA01D     muRata
+
+      2             2             C2, C3                10µF         CAP, CERM, 10µF, 25 V, +/- 10%, X7S                         0805       C2012X7S1E106K125AC TDK
+
+      5             5      C4, C5, C6, C7, C8           22µF         CAP, CERM, 22 µF, 10 V, +/- 20%, X7S                        0805       C2012X7S1A226M125AC TDK
+
+      1             1               C9                 0.47µF        CAP, CERM, 0.47 µF, 25 V, +/- 10%, X7R                      0603       C1608X7R1E474K080AE TDK
+
+      1             1              C10                  47µF         CAP, TA, 47 µF, 35 V, +/- 10%, 0.3 Ω                        7343-43    T495X476K035ATE300     Kemet
+
+      2             2           C11, C12               470pF         CAP, CERM, 470 pF, 50 V, +/- 5%, C0G/NP0                    0402       GRM1555C1H471JA01D     muRata
+
+      1             1              FB1                               Ferrite bead, 8.5-Ω at 100 MHz, 4mΩ DCR, 8A                 0603       BLE18PS080SN1          muRata
+
+      1             1               L1                 2.2µH         Inductor Power Shielded Wirewound 2.2µH 20%                 4 x 4 mm   XGL4030-222MEC         Coilcraft
+                                                                     Composite 8.7A 13.5mΩ DCR
+
+      0             1               R1                 2.43kΩ        RES, 2.43 kΩ, 1%, 0.1 W                                     0603       Std                    Std
+
+      1             0               R1                 15.4kΩ        RES, 15.4 kΩ, 1%, 0.1 W                                     0603       Std                    Std
+
+      1             1               R2                 4.87kΩ        RES, 4.87 kΩ, 1%, 0.1 W                                     0603       Std                    Std
+
+      1             1               R3                 10.0kΩ        RES, 10.0 kΩ, 1%, 0.1 W                                     0603       Std                    Std
+
+      1             0               R4                 27.4kΩ        RES, 27.4 kΩ, 1%, 0.1 W                                     0603       Std                    Std
+
+      0             1               R4                 52.3kΩ        RES, 52.3 kΩ, 1%, 0.1 W                                     0603       Std                    Std
+
+      1             0               U1              TPS629121        3V to 17V, 2A Low Noise (20 µVRMS) and Low Ripple 2 x 2 mm             TPS62912RPUR           Texas Instruments
+                                                                     (200 µVPP) buck converter
+
+      0             1               U1              TPS629131        3V to 17V, 3A Low Noise (20 µVRMS) and Low Ripple 2 x 2 mm             TPS62913RPUR           Texas Instruments
+                                                                     (200 µVPP) buck converter
+
+
+1. The TPS6291xEVM-077 may be populated with TPS6291x (U1) devices that do not contain the correct top-side markings on the top of the device
+   itself. These devices are still fully-tested TPS6291x devices.
+
+
+
+
+14          TPS6291x Step-Down Converter Evaluation Module User's Guide                                                                            SLVUBX2B – AUGUST 2020 – REVISED MAY 2021
+                                                                                                                                                                     Submit Document Feedback
+                                                                               Copyright © 2021 Texas Instruments Incorporated
+www.ti.com                                                                               Ripple Measurements With Mis-oriented Inductor
+
+
+A Ripple Measurements With Mis-oriented Inductor
+This section shows the output ripple measurement results when the inductor is not installed in its low-noise
+orientation. This was the case on the Revision A EVMs.
+
+
+
+
+     VIN = 12 V, VOUT = 1.2 V, IOUT = 1000 mA, JP2 Open, Full BW, DC Coupling, 50-Ω Termination With DC Blocker
+
+                                   Figure A-1. Output Voltage Ripple, Measured at J4
+
+
+
+
+     VIN = 12 V, VOUT = 1.2 V, IOUT = 1000 mA, JP2 Open, Full BW, DC Coupling, 50-Ω Termination With DC Blocker
+
+                      Figure A-2. Output Voltage Ripple, Measured across C4 With 1x Probe
+
+
+
+
+SLVUBX2B – AUGUST 2020 – REVISED MAY 2021                                   TPS6291x Step-Down Converter Evaluation Module User's Guide   15
+Submit Document Feedback
+                                              Copyright © 2021 Texas Instruments Incorporated
+Ripple Measurements With Mis-oriented Inductor                                                                                    www.ti.com
+
+
+
+
+     VIN = 12 V, VOUT = 1.2 V, IOUT = 1000 mA, JP2 Open, Full BW, AC Coupling, High-Impedance Termination Without DC Blocker
+
+                      Figure A-3. Output Voltage Ripple, Measured Across C4 With 10x Probe
+
+
+
+
+     VIN = 12 V, VOUT = 1.2 V, IOUT = 1000 mA, JP2 Open, Full BW, DC Coupling, 50-Ω Termination With DC Blocker
+
+                                     Figure A-4. Output Voltage Ripple, Measured at J5
+
+
+
+
+16    TPS6291x Step-Down Converter Evaluation Module User's Guide                                  SLVUBX2B – AUGUST 2020 – REVISED MAY 2021
+                                                                                                                     Submit Document Feedback
+                                                 Copyright © 2021 Texas Instruments Incorporated
+www.ti.com                                                                                                                                     Revision History
+
+
+
+
+     VIN = 12 V, VOUT = 1.2 V, IOUT = 1000 mA, JP2 Open, Full BW, DC Coupling, 50-Ω Termination With DC Blocker
+
+                          Figure A-5. Output Voltage Ripple, Measured Across C7 With 1x Probe
+
+
+
+
+     VIN = 12 V, VOUT = 1.2 V, IOUT = 1000 mA, JP2 Open, Full BW, AC Coupling, High-impedance Termination Without DC Blocker
+
+                         Figure A-6. Output Voltage Ripple, Measured Across C7 With 10x Probe
+
+Revision History
+NOTE: Page numbers for previous revisions may differ from page numbers in the current version.
+Changes from Revision A (March 2021) to Revision B (May 2021)                                                                                            Page
+• Updated user's guide title................................................................................................................................... 2
+• Updated the numbering format for tables, figures, and cross-references throughout the document. ................2
+
+
+Changes from Revision * (August 2020) to Revision A (March 2021)                                                                Page
+• Updated all images in the Ripple Measurement Setup section.......................................................................... 6
+• Moved original Ripple Measurement Setup section to Appendix..................................................................... 15
+
+
+
+
+SLVUBX2B – AUGUST 2020 – REVISED MAY 2021                                              TPS6291x Step-Down Converter Evaluation Module User's Guide             17
+Submit Document Feedback
+                                                       Copyright © 2021 Texas Instruments Incorporated
+                                       IMPORTANT NOTICE AND DISCLAIMER
+TI PROVIDES TECHNICAL AND RELIABILITY DATA (INCLUDING DATA SHEETS), DESIGN RESOURCES (INCLUDING REFERENCE
+DESIGNS), APPLICATION OR OTHER DESIGN ADVICE, WEB TOOLS, SAFETY INFORMATION, AND OTHER RESOURCES “AS IS”
+AND WITH ALL FAULTS, AND DISCLAIMS ALL WARRANTIES, EXPRESS AND IMPLIED, INCLUDING WITHOUT LIMITATION ANY
+IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE OR NON-INFRINGEMENT OF THIRD
+PARTY INTELLECTUAL PROPERTY RIGHTS.
+These resources are intended for skilled developers designing with TI products. You are solely responsible for (1) selecting the appropriate
+TI products for your application, (2) designing, validating and testing your application, and (3) ensuring your application meets applicable
+standards, and any other safety, security, regulatory or other requirements.
+These resources are subject to change without notice. TI grants you permission to use these resources only for development of an
+application that uses the TI products described in the resource. Other reproduction and display of these resources is prohibited. No license
+is granted to any other TI intellectual property right or to any third party intellectual property right. TI disclaims responsibility for, and you
+will fully indemnify TI and its representatives against, any claims, damages, costs, losses, and liabilities arising out of your use of these
+resources.
+TI’s products are provided subject to TI’s Terms of Sale or other applicable terms available either on ti.com or provided in conjunction with
+such TI products. TI’s provision of these resources does not expand or otherwise alter TI’s applicable warranties or warranty disclaimers for
+TI products.
+TI objects to and rejects any additional or different terms you may have proposed. IMPORTANT NOTICE
+
+                             Mailing Address: Texas Instruments, Post Office Box 655303, Dallas, Texas 75265
+                                            Copyright © 2022, Texas Instruments Incorporated
+

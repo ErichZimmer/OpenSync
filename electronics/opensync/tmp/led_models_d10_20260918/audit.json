@@ -1,0 +1,77 @@
+{
+  "before_sha256": "e8a55668f878b36db6f9f400365def8037fdd89c8fe77b89a5d2436768392cb6",
+  "candidate_sha256": "100ab5f3c68810b0403f99381008329ba9175946f960b740ad2e10e275af9c3b",
+  "updated_refs": [
+    "D2",
+    "D3",
+    "D4",
+    "D5",
+    "D6",
+    "D7",
+    "D8",
+    "D9",
+    "D12",
+    "D13"
+  ],
+  "source_ref": "D10",
+  "source_models": [
+    {
+      "filename": "${EASYEDA2KICAD}/easyeda2kicad.3dshapes/LED-SMD_L4.0-W3.6_A67F-U2BA-1-3A4B-30-R33.wrl",
+      "offset": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "show": false,
+      "opacity": 1.0
+    },
+    {
+      "filename": "${KIPRJMOD}/library/LED_replacement_cad/LED_A67F.step",
+      "offset": [
+        0.0,
+        -1.5,
+        2.0
+      ],
+      "rotation": [
+        -0.0,
+        -0.0,
+        -0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "show": true,
+      "opacity": 1.0
+    }
+  ],
+  "other_project_hashes": {
+    "fp-lib-table": "5a57a22944d5c6b5600e9449d93edc7813bdfc6b79afbe88fba344fa8fe179f1",
+    "opensync.kicad_prl": "79df08d6034f57cdfc3906d0b7537e1edc63d6a1324f1093f39614f026a412de",
+    "opensync.kicad_pro": "e57cbb42d0f985f2b60265d5c51976e293ed751b7064e5b328b9e2433dbdcda2",
+    "opensync.kicad_sch": "4bbbf0f47aa1090a1e61f5794a7c4bfd388547d461d673537cbf0f8f7eae1dfa",
+    "opensync_channel_input.kicad_sch": "b62dc8e4d0533976dc79305af4982a94c29c2ae805d819fb1282104310641d83",
+    "opensync_channel_output.kicad_sch": "aafe64b5b60dff0332ffd801b2e720b7484367aa2cdd8c7aca8f90222cbe71dc",
+    "opensync_holes_mounting.kicad_sch": "057d63e47726ec41909fd3c5b3d1c11a90552287e6db0b347e31286ab51808a1",
+    "opensync_interface_power.kicad_sch": "12f63c618d34546ba9ec40d5623068c5cc87fc9418429e3796ea4ad0e9b8267f",
+    "opensync_interface_usb.kicad_sch": "89e7bf722ce919a8c21bdeec7c414a0920cd10ec23ba9979e88f0cbf035a56eb",
+    "opensync_microcontroller.kicad_sch": "fc55d6d14237eea00bbb42efb820b815d6a8c6a6ee52dd3129de645c954e4199",
+    "opensync_panel_indicator.kicad_sch": "2fccad79b3a696e6fa79b640ae83872a65803dc589f2034a61506f3bc4f4892e",
+    "sym-lib-table": "f6e831ccfe29f068e2f2bd3d184d965a97445fbaa0838240ef55e9e95affe6be",
+    "library\\LED_replacement_cad\\LED_A67F.step": "ef24688d4079f87dfde609e53d7a245a9a35577637f8b35ac0f52a4a27005761"
+  },
+  "all_non_model_board_data_identical": true,
+  "applied": true,
+  "final_sha256": "100ab5f3c68810b0403f99381008329ba9175946f960b740ad2e10e275af9c3b"
+}

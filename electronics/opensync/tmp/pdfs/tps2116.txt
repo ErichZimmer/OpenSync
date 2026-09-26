@@ -1,0 +1,1147 @@
+                                                                                                                                  TPS2116
+                                                                                               SLVSFG1A – JANUARY 2021 – REVISED MAY 2021
+
+    TPS2116 1.6 V to 5.5 V, 2.5-A Low IQ Power Mux with Manual and Priority Switchover
+
+1 Features                                                               3 Description
+•    Input voltage range: 1.6 V to 5.5 V                                 The TPS2116 is a power mux device with a voltage
+•    Maximum continuous current: 2.5 A                                   rating of 1.6 V to 5.5 V and a maximum current rating
+•    On-resistance: 40 mΩ (typical)                                      of 2.5 A. The device uses N-channel MOSFETs to
+•    VIN2 standby current: 50 nA (typical)                               switch between supplies while providing a controlled
+•    Quiescent current: 1.32 uA (typical)                                slew rate when voltage is first applied.
+•    Switchover modes:
+                                                                         Due to its low quiescent of 1.32 uA (typical) and low
+     – Priority mode                                                     standby current of 50 nA (typical), the TPS2116 is
+     – Manual mode                                                       ideal for systems where a battery is connected to one
+•    Controlled output slew rate:                                        of the inputs. These low currents extend the life and
+     – 1.3 ms (typical) at 3.3 V                                         operation of the battery when in use.
+•    Reverse Current Blocking when VOUT > VINx
+•    Thermal shutdown                                                    The TPS2116 can be configured for two different
+                                                                         switchover behaviors depending on the application.
+2 Applications                                                           Automatic priority mode prioritizes the supply
+•    Backup battery systems                                              connected to VIN1 and switches over to the
+•    E-Meters                                                            secondary supply (VIN2) when VIN1 drops. Manual
+•    Motor Drives                                                        mode allows the user to toggle a GPIO or enable
+•    Building Automation                                                 signal to switch between channels.
+                                                                                             Device Information(1)
+                                                                               PART NUMBER           PACKAGE           BODY SIZE (NOM)
+                                                                         TPS2116                SOT (8)               2.1 mm x 1.6 mm
+
+                                                                         (1)    For all available packages, see the orderable addendum at
+                                                                                the end of the data sheet.
+
+
+
+
+                                                          Basic Application
+
+
+
+
+       An IMPORTANT NOTICE at the end of this data sheet addresses availability, warranty, changes, use in safety-critical applications,
+       intellectual property matters and other important disclaimers. PRODUCTION DATA.
+TPS2116
+SLVSFG1A – JANUARY 2021 – REVISED MAY 2021                                                                                                                       www.ti.com
+
+
+                                                                        Table of Contents
+1 Features............................................................................1     7.4 VINx Collapse Rate...................................................11
+2 Applications..................................................................... 1       7.5 Output Voltage Drop................................................. 12
+3 Description.......................................................................1       7.6 Device Functional Modes..........................................12
+4 Revision History.............................................................. 2        8 Application and Implementation.................................. 14
+5 Pin Configuration and Functions...................................3                       8.1 Application Information............................................. 14
+6 Specifications.................................................................. 4        8.2 Typical Application.................................................... 14
+  6.1 Absolute Maximum Ratings ....................................... 4                  9 Power Supply Recommendations................................16
+  6.2 ESD Ratings .............................................................. 4        10 Layout...........................................................................17
+  6.3 Recommended Operating Conditions ........................4                            10.1 Layout Guidelines................................................... 17
+  6.4 Thermal Information ...................................................4              10.2 Layout Example...................................................... 17
+  6.5 Electrical Characteristics ............................................5            11 Device and Documentation Support..........................18
+  6.6 Switching Characteristics ...........................................7                11.1 Documentation Support.......................................... 18
+  6.7 Timing Diagrams ........................................................ 7            11.2 Receiving Notification of Documentation Updates.. 18
+  6.8 Typical Characteristics................................................ 8             11.3 Trademarks............................................................. 18
+7 Detailed Description......................................................10              11.4 Electrostatic Discharge Caution.............................. 18
+  7.1 Overview................................................................... 10        11.5 Glossary.................................................................. 18
+  7.2 Functional Block Diagram......................................... 10                12 Mechanical, Packaging, and Orderable
+  7.3 Feature Description...................................................10              Information.................................................................... 18
+
+
+
+4 Revision History
+Changes from Revision * (January 2021) to Revision A (May 2021)                                                               Page
+• Changed status from "Advance Information" to "Production Data".....................................................................1
+
+
+
+
+2       Submit Document Feedback                                                                                           Copyright © 2021 Texas Instruments Incorporated
+
+                                                                      Product Folder Links: TPS2116
+                                                                                                                                 TPS2116
+www.ti.com                                                                                   SLVSFG1A – JANUARY 2021 – REVISED MAY 2021
+
+
+5 Pin Configuration and Functions
+
+
+
+
+                                              Figure 5-1. DRL Package 8-Pin SOT Top View
+
+                                                       Table 5-1. Pin Functions
+                         PIN
+                                                            I/O                                  DESCRIPTION
+           NAME                        NO.
+            GND                          1                   -          Device ground.
+           VOUT                        2, 7                 O           Output power.
+            VIN1                         3                   I          Channel 1 input power.
+                                                                        Selects between VIN1 and VIN2. When PR1 is high VIN1 is
+            PR1                          4                   I
+                                                                        selected, and when PR1 is low VIN2 is selected.
+                                                                        Device is put into Priority mode when MODE is tied to VIN1 and
+           MODE                          5                   I
+                                                                        manual mode when MODE is pulled up to an external voltage.
+            VIN2                         6                   I          Channel 2 input power.
+             ST                          8                  O           Open drain status pin. Pulled low when VIN1 is not being used.
+
+
+
+
+Copyright © 2021 Texas Instruments Incorporated                                                           Submit Document Feedback         3
+                                                        Product Folder Links: TPS2116
+TPS2116
+SLVSFG1A – JANUARY 2021 – REVISED MAY 2021                                                                                              www.ti.com
+
+
+6 Specifications
+6.1 Absolute Maximum Ratings
+over operating free-air temperature range (unless otherwise noted)(1)
+                                                                                                      MIN                MAX            UNIT
+    VIN1, VIN2        Input Voltage                                                                  –0.3                    6           V
+    VOUT              Output Voltage                                                                 –0.3                    6           V
+    VST, VPR1,
+                      Control Pin Voltage                                                            –0.3                    6           V
+    VMODE
+    IMAX              Maximum Current                                                                                      2.5           A
+                      Maximum Pulsed Current
+    IMAX,PLS                                                                                                                 4           A
+                      Max duration 1ms, Duty cycle of 2%
+                                                                                                                     Internally
+    TJ                Junction temperature                                                                                               °C
+                                                                                                                       Limited
+    Tstg              Storage temperature                                                             –65                 150            °C
+
+(1)        Stresses beyond those listed under Absolute Maximum Rating may cause permanent damage to the device. These are stress
+           ratings only, which do not imply functional operation of the device at these or any other conditions beyond those indicated
+           under Recommended Operating Condition. Exposure to absolute-maximum-rated conditions for extended periods may affect device
+           reliability.
+
+
+6.2 ESD Ratings
+                                                                                                                         VALUE            UNIT
+                                                                     Human body model (HBM), per ANSI/ESDA/
+                                                                                                                          ±2000
+                                                                     JEDEC JS-001, all pins(1)
+    V(ESD)       Electrostatic discharge                                                                                                      V
+                                                                     Charged device model (CDM), per JEDEC
+                                                                                                                          ±500
+                                                                     specification JESD22-C101, all pins(2)
+
+(1)        JEDEC document JEP155 states that 500-V HBM allows safe manufacturing with a standard ESD control process.
+(2)        JEDEC document JEP157 states that 250-V CDM allows safe manufacturing with a standard ESD control process.
+
+
+6.3 Recommended Operating Conditions
+over operating free-air temperature range (unless otherwise noted)
+                                                                                                   MIN             NOM        MAX         UNIT
+    VIN1, VIN2   Input Voltage                                                                      1.6                           5.5         V
+    VOUT         Output Voltage                                                                      0                            5.5         V
+    VST,
+    VMODE,       Control Pin Voltage                                                                 0                            5.5         V
+    VPR1
+    TA           Ambient Temperature                                                               –40                            105        °C
+
+
+
+6.4 Thermal Information
+                                                                                                      TPS2116
+                                       THERMAL METRIC(1)                                             DRL (SOT)                          UNIT
+                                                                                                          8-PINS
+    RθJA              Junction-to-ambient thermal resistance                                              111.5                         °C/W
+    RθJC(top)         Junction-to-case (top) thermal resistance                                            19.4                         °C/W
+    RθJB              Junction-to-board thermal resistance                                                 35.8                         °C/W
+    ΨJT               Junction-to-top characterization parameter                                           1.2                          °C/W
+    ΨJB               Junction-to-board characterization parameter                                         19.1                         °C/W
+
+
+
+
+4          Submit Document Feedback                                                                 Copyright © 2021 Texas Instruments Incorporated
+
+                                                           Product Folder Links: TPS2116
+                                                                                                                                     TPS2116
+www.ti.com                                                                                     SLVSFG1A – JANUARY 2021 – REVISED MAY 2021
+
+6.4 Thermal Information (continued)
+                                                                                                       TPS2116
+                                    THERMAL METRIC(1)                                                 DRL (SOT)                  UNIT
+                                                                                                       8-PINS
+ RθJC(bot)           Junction-to-case (bottom) thermal resistance                                        N/A                     °C/W
+
+(1)       For more information about traditional and new thermal metrics, see the Semiconductor and IC Package Thermal Metrics application
+          report.
+
+
+6.5 Electrical Characteristics
+Over operating free-air temperature range and operating voltage range of 1.6V to 5.5V (unless otherwise noted). Typical
+specifications are at an input voltage of 3.3V and ambient temperature of 25°C.
+                    PARAMETER                            TEST CONDITIONS                     TA                MIN    TYP     MAX     UNIT
+ Power Consumption
+                                                                                      25°C                             1.1              uA
+                                                  VIN2 powers VOUT
+                                                                                      -40°C to 85°C                            1.9      uA
+                                                  VIN1 > VIN2 + 0.1V
+ ISTBY,                                                                               -40°C to 105°C                             2      uA
+             VIN1 Standby Current
+ VIN1                                                                                 25°C                            0.22              uA
+                                                  VIN2 powers VOUT
+                                                                                      -40°C to 85°C                           0.31      uA
+                                                  VIN2 > VIN1 + 0.2V
+                                                                                      -40°C to 105°C                          0.32      uA
+                                                                                      25°C                             1.2              uA
+                                                  VIN1 powers VOUT
+                                                                                      -40°C to 85°C                              2      uA
+                                                  VIN2 > VIN1 + 0.2V
+ ISTBY,                                                                               -40°C to 105°C                           2.1      uA
+             VIN2 Standby Current
+ VIN2                                                                                 25°C                            0.05              uA
+                                                  VIN1 powers VOUT
+                                                                                      -40°C to 85°C                           0.07      uA
+                                                  VIN1 > VIN2 + 0.1V
+                                                                                      -40°C to 105°C                          0.09      uA
+                                                                                      25°C                            1.32              uA
+                                                  VIN1 powers VOUT
+                                                                                      -40°C to 85°C                            3.6      uA
+                                                  VIN1 > VIN2 + 0.1V
+                                                                                      -40°C to 105°C                           4.4      uA
+ IQ, VIN1    VIN1 Quiescent Current
+                                                                                      25°C                             0.3              uA
+                                                  VIN1 powers VOUT
+                                                                                      -40°C to 85°C                           0.51      uA
+                                                  VIN2 > VIN1 + 0.2V
+                                                                                      -40°C to 105°C                          0.55      uA
+                                                                                      25°C                            1.35              uA
+                                                  VIN2 powers VOUT
+                                                                                      -40°C to 85°C                            3.7      uA
+                                                  VIN2 > VIN1 + 0.2V
+                                                                                      -40°C to 105°C                           4.5      uA
+ IQ, VIN2    VIN2 Quiescent Current
+                                                                                      25°C                             0.1              uA
+                                                  VIN2 powers VOUT
+                                                                                      -40°C to 85°C                           0.27      uA
+                                                  VIN1 > VIN2 + 0.1V
+                                                                                      -40°C to 105°C                          0.29      uA
+                                                                                      25°C                             0.1              uA
+                                                  MODE = 0V, PR1 = 5V
+                                                  VIN1 > VIN2                         -40°C to 85°C                            1.3      uA
+                                                  VOUT = 0V
+                                                                                      -40°C to 105°C                           2.9      uA
+ ISD,VIN1 VIN1 Shutdown Current
+                                                                                      25°C                            0.05              uA
+                                                  MODE = 0V, PR1 = 5V
+                                                  VIN1 < VIN2                         -40°C to 85°C                              1      uA
+                                                  VOUT = 0V
+                                                                                      -40°C to 105°C                           2.4      uA
+
+
+
+
+Copyright © 2021 Texas Instruments Incorporated                                                                Submit Document Feedback        5
+                                                         Product Folder Links: TPS2116
+TPS2116
+SLVSFG1A – JANUARY 2021 – REVISED MAY 2021                                                                                             www.ti.com
+
+6.5 Electrical Characteristics (continued)
+Over operating free-air temperature range and operating voltage range of 1.6V to 5.5V (unless otherwise noted). Typical
+specifications are at an input voltage of 3.3V and ambient temperature of 25°C.
+                     PARAMETER                              TEST CONDITIONS                     TA              MIN       TYP       MAX     UNIT
+                                                                                        25°C                              0.05               uA
+                                                     MODE = 0V, PR1 = 5V
+                                                     VIN2 > VIN1                        -40°C to 85°C                                 1.3    uA
+                                                     VOUT = 0V
+                                                                                        -40°C to 105°C                                2.9    uA
+    ISD,VIN2 VIN2 Shutdown Current
+                                                                                        25°C                              0.05               uA
+                                                     MODE = 0V, PR1 = 5V
+                                                     VIN2 < VIN1                        -40°C to 85°C                                 0.7    uA
+                                                     VOUT = 0V
+                                                                                        -40°C to 105°C                                2.1    uA
+                                                                                        25°C                             0.001               uA
+               Reverse leakage current out of        VOUT = 5.5V
+                                                                                        85°C                              0.05               uA
+               VINx                                  VINx = 0V, VINy = Open
+                                                                                        105°C                             0.15               uA
+    IREV
+                                                                                        25°C                              0.01               uA
+                                                 V     = 5.5V
+               Reverse leakage current into VOUT OUT                                    85°C                                0.1              uA
+                                                 VINx = 0V, VINy = Open
+                                                                                        105°C                             0.25               uA
+    IPR1       PR1 pin leakage                                                          -40°C to 105°C                                0.1    uA
+    IMODE      MODE pin leakage                                                         -40°C to 105°C                                0.1    uA
+    IST        ST pin leakage                                                           -40°C to 105°C                              0.03     uA
+    Performance
+                                                                                        25°C                                37        46     mΩ
+                                                     VINx = 5V
+                                                                                        -40°C to 85°C                                 55     mΩ
+                                                     IOUT = 200mA
+                                                                                        -40°C to 105°C                                60     mΩ
+                                                                                        25°C                                40        48     mΩ
+                                                     VINx = 3.3V
+                                                                                        -40°C to 85°C                                 55     mΩ
+                                                     IOUT = 200mA
+                                                                                        -40°C to 105°C                                59     mΩ
+    RON        On-Resistance
+                                                                                        25°C                                41        51     mΩ
+                                                     VINx = 1.8V
+                                                                                        -40°C to 85°C                                 61     mΩ
+                                                     IOUT = 200mA
+                                                                                        -40°C to 105°C                                66     mΩ
+                                                                                        25°C                                42        52     mΩ
+                                                     VINx = 1.6V
+                                                                                        -40°C to 85°C                                 68     mΩ
+                                                     IOUT = 200mA
+                                                                                        -40°C to 105°C                                74     mΩ
+    VOL,ST     Status pin VOL                        IST = 1mA                          -40°C to 105°C                                0.1     V
+                                                     ST pin pulled high to low
+    tST        Status pin response time                                                 -40°C to 105°C                        5              us
+                                                     RST = 10kΩ
+    VREF       PR1 reference voltage                                                    -40°C to 105°C          0.92          1     1.08      V
+    VIH,
+               MODE logic high threshold                                                -40°C to 105°C              1                 5.5     V
+    MODE
+
+    VIL,
+               MODE logic low threshold                                                 -40°C to 105°C              0               0.35      V
+    MODE
+
+    Protection
+               Reverse current blocking response
+    tRCB                                             VOUT > Selected VIN + 1V           -40°C to 105°C                        2              us
+               time
+               Reverse current blocking rising
+    VRCB,R                                                                              -40°C to 105°C                      42        70     mV
+               threshold (VOUT - VIN)
+               Reverse current blocking falling
+    VRCB,F                                                                              -40°C to 105°C                      17        40     mV
+               threshold (VOUT - VIN)
+               Reverse current blocking activation
+    IRCB                                                                                -40°C to 105°C                      1.4         4     A
+               current
+    TSD        Thermal shutdown                                                         -                                  170               °C
+
+6           Submit Document Feedback                                                                    Copyright © 2021 Texas Instruments Incorporated
+
+                                                            Product Folder Links: TPS2116
+                                                                                                                               TPS2116
+www.ti.com                                                                               SLVSFG1A – JANUARY 2021 – REVISED MAY 2021
+
+6.5 Electrical Characteristics (continued)
+Over operating free-air temperature range and operating voltage range of 1.6V to 5.5V (unless otherwise noted). Typical
+specifications are at an input voltage of 3.3V and ambient temperature of 25°C.
+                  PARAMETER                             TEST CONDITIONS                 TA             MIN     TYP       MAX    UNIT
+ TSDHYS Thermal shutdown hysteresis                                                 -                               20           °C
+
+
+
+6.6 Switching Characteristics
+Typical switching characteristics are defined at an ambient temperature of 25°C
+                      PARAMETER                                   TEST CONDITIONS                MIN         TYP         MAX    UNIT
+ Switchover
+ tSW         Switchover time, VINx = 5 V                RL = 10 Ω, CL = 10 uF                                  8                 us
+ tSW         Switchover time, VINx = 3.3 V              RL = 10 Ω, CL = 10 uF                                 6.2                us
+ tSW         Switchover time, VINx = 1.8 V              RL = 10 Ω, CL = 10 uF                                17.7                us
+ tD          Delay time, VINx = 5 V                     RL = 100 Ω, CL = 10 uF                                 1                ms
+ tD          Delay time, VINx = 3.3 V                   RL = 100 Ω, CL = 10 uF                                1.2               ms
+ tD          Delay time, VINx = 1.8 V                   RL = 100 Ω, CL = 10 uF                                1.4               ms
+ tSS         Soft-start time, VINx = 5 V                RL = 100 Ω, CL = 10 uF                                1.7               ms
+ tSS         Soft-start time, VINx = 3.3 V              RL = 100 Ω, CL = 10 uF                                1.3               ms
+ tSS         Soft-start time, VINx = 1.8 V              RL = 100 Ω, CL = 10 uF                                0.9               ms
+
+
+
+6.7 Timing Diagrams
+
+
+
+
+                                                  Figure 6-1. TPS2116 Timing Diagram
+
+
+
+
+Copyright © 2021 Texas Instruments Incorporated                                                     Submit Document Feedback             7
+                                                        Product Folder Links: TPS2116
+TPS2116
+SLVSFG1A – JANUARY 2021 – REVISED MAY 2021                                                                                                                                                    www.ti.com
+
+6.8 Typical Characteristics
+                                   1.5                                                                                                 1.55
+                                            -40°C                                                                                                -40°C
+                                  1.45      25°C                                                                                        1.5      25°C
+                                            85°C                                                                                       1.45      85°C
+                                   1.4      105°C                                                                                                105°C
+         Quiescent Current (PA)
+
+
+
+
+                                                                                                              Quiescent Current (PA)
+                                                                                                                                        1.4
+                                  1.35                                                                                                 1.35
+                                   1.3                                                                                                  1.3
+
+                                  1.25                                                                                                 1.25
+                                                                                                                                        1.2
+                                   1.2
+                                                                                                                                       1.15
+                                  1.15                                                                                                  1.1
+                                   1.1                                                                                                 1.05
+                                      1.5   2       2.5   3     3.5      4   4.5   5      5.5                                              1.5   2       2.5     3     3.5      4   4.5   5   5.5
+                                                          VIN1 Voltage (V)                D001
+                                                                                                                                                                 VIN2 Voltage (V)             D002
+
+     VIN2 = 1.6 V                                   VOUT = Open                                           VIN1 = 1.6 V                                   VOUT = Open
+       Figure 6-2. VIN1 Quiescent Current vs Input Voltage                                                  Figure 6-3. VIN2 Quiescent Current vs Input Voltage
+                                   1.3                                                                                                 1.35
+                                            -40°C                                                                                                -40°C
+                                  1.25      25°C                                                                                        1.3      25°C
+                                            85°C                                                                                       1.25      85°C
+                                   1.2      105°C                                                                                                105°C
+        Standby Current (PA)
+
+
+
+
+                                                                                                              Standby Current (PA)
+                                                                                                                                        1.2
+                                  1.15
+                                                                                                                                       1.15
+                                   1.1
+                                                                                                                                        1.1
+                                  1.05
+                                                                                                                                       1.05
+                                     1
+                                                                                                                                          1
+                                  0.95                                                                                                 0.95
+                                   0.9                                                                                                  0.9
+                                  0.85                                                                                                 0.85
+                                      1.5   2       2.5   3     3.5      4   4.5   5     5.5                                               1.5   2       2.5     3     3.5      4   4.5   5   5.5
+                                                          VIN1 Voltage (V)                D003
+                                                                                                                                                                 VIN2 Voltage (V)             D004
+
+     VIN2 = 1.6 V                                   VOUT = Open                                           VIN1 = 1.6 V                                   VOUT = Open
+        Figure 6-4. VIN1 Standby Current vs Input Voltage                                                    Figure 6-5. VIN2 Standby Current vs Input Voltage
+                                  0.36                                                                                                  0.4
+                                            -40°C                                                                                                -40°C
+                                  0.33      25°C                                                                                                 25°C
+                                                                                                                                       0.35
+                                   0.3      85°C                                                                                                 85°C
+                                            105°C                                                                                                105°C
+        Shutdown Current (PA)
+
+
+
+
+                                                                                                              Shutdown Current (PA)
+
+
+
+
+                                  0.27                                                                                                  0.3
+
+                                  0.24
+                                                                                                                                       0.25
+                                  0.21
+                                                                                                                                        0.2
+                                  0.18
+                                  0.15                                                                                                 0.15
+                                  0.12
+                                                                                                                                        0.1
+                                  0.09
+                                  0.06                                                                                                 0.05
+                                      1.5   2       2.5   3     3.5      4   4.5   5     5.5                                               1.5   2       2.5     3     3.5      4   4.5   5   5.5
+                                                          VIN1 Voltage (V)                D005
+                                                                                                                                                                 VIN2 Voltage (V)             D006
+
+     VIN2 = 1.6 V                                   VOUT = Open                                           VIN1 = 1.6 V                                    VOUT = 0 V
+       Figure 6-6. VIN1 Shutdown Current vs Input Voltage                                                   Figure 6-7. VIN2 Shutdown Current vs Input Voltage
+
+
+
+
+8     Submit Document Feedback                                                                                                                                 Copyright © 2021 Texas Instruments Incorporated
+
+                                                                                       Product Folder Links: TPS2116
+                                                                                                                                                                                                                        TPS2116
+www.ti.com                                                                                                                                                             SLVSFG1A – JANUARY 2021 – REVISED MAY 2021
+
+
+6.8 Typical Characteristics (continued)
+                                            60                                                                                                            60
+                                                                                            -40°C                                                                                                         -40°C
+                                            56                                              25°C                                                          56                                              25°C
+                                            52                                              85°C                                                          52                                              85°C
+                                                                                            105°C                                                                                                         105°C
+                    On-Resistance (m:)
+
+
+
+
+                                                                                                                                On-Resistance (m:)
+                                            48                                                                                                            48
+                                            44                                                                                                            44
+                                            40                                                                                                            40
+                                            36                                                                                                            36
+                                            32                                                                                                            32
+                                            28                                                                                                            28
+                                            24                                                                                                            24
+                                            20                                                                                                            20
+                                              1.5    2       2.5   3     3.5      4   4.5   5     5.5                                                       1.5    2       2.5   3     3.5      4   4.5   5   5.5
+                                                                   VIN1 Voltage (V)                 D007
+                                                                                                                                                                                 VIN2 Voltage (V)                 D008
+
+     IOUT = 200 mA                                                                                                IOUT = 200 mA
+       Figure 6-8. Channel 1 On-Resistance vs Input Voltage                                                         Figure 6-9. Channel 2 On-Resistance vs Input Voltage
+                                            240                                                                                                           160
+                                                     -40°C                                                                                                         -40°C
+                                            210      25°C                                                                                                 140      25°C
+
+
+
+
+                                                                                                                       Leakage Current out of VINx (nA)
+           Leakage Current into VOUT (nA)
+
+
+
+
+                                                     85°C                                                                                                          85°C
+                                            180      105°C                                                                                                120      105°C
+
+                                            150                                                                                                           100
+
+                                            120                                                                                                            80
+
+                                             90                                                                                                            60
+
+                                             60                                                                                                            40
+
+                                             30                                                                                                            20
+
+                                              0                                                                                                             0
+                                               1.5   2       2.5    3   3.5      4    4.5   5       5.5                                                      1.5   2       2.5    3   3.5      4    4.5   5       5.5
+                                                                   VOUT Voltage (V)                 D009
+                                                                                                                                                                                 VOUT Voltage (V)                 D010
+
+       VINx = 0 V                                              VINy = Open                                          VINx = 0 V                                               VINy = Open
+          Figure 6-10. Reverse Leakage Current into VOUT                                                              Figure 6-11. Reverse Leakage Current out of VINx
+
+
+
+
+ Figure 6-12. Output Voltage Drop vs Output Capacitance (MODE Figure 6-13. Manual Mode Switchover Behavior (MODE = 5 V, RL
+                         = 5 V, RL = 10 Ω)                                         = 10 Ω, CL = 10 uF)
+
+
+
+
+Copyright © 2021 Texas Instruments Incorporated                                                                                                                                          Submit Document Feedback                 9
+                                                                                                Product Folder Links: TPS2116
+TPS2116
+SLVSFG1A – JANUARY 2021 – REVISED MAY 2021                                                                         www.ti.com
+
+
+7 Detailed Description
+7.1 Overview
+The TPS2116 is a power mux device with a voltage rating of 1.6 V to 5.5 V and a maximum current rating of 2.5
+A. The device uses N-channel MOSFETs to switch between supplies while providing a controlled slew rate when
+voltage is first applied.
+The TPS2116 can be configured for two different switchover behaviors depending on the application. Automatic
+priority mode prioritizes the supply connected to VIN1 and switches over to the secondary supply (VIN2) when
+VIN1 drops. Manual mode allows the user to toggle a GPIO or enable signal to switch between channels.
+Due to its low quiescent of 1.32 uA (typical) and standby current of 50 nA (typical), the TPS2116 is ideal for
+systems where a battery is connected to one of the inputs. These low currents extend the life and operation of
+the battery when in use.
+7.2 Functional Block Diagram
+
+
+
+
+7.3 Feature Description
+The below sections detail the features of the TPS2116.
+7.3.1 Truth Table
+The below table shows the expected behavior of the TPS2116. For Priority mode, VIN1 is connected to PR1
+through a resistor divider.
+           MODE                VIN1           VIN2                  PR1                 ST                      VOUT
+                               High
+                                               X                                       High                     VIN1
+            VIN1           (VPR1 > VREF)                    VIN1 through resistor
+       (Priority mode)         Low                                 divider
+                                             ≥ 1.6 V                                    Low                     VIN2
+                           (VPR1 < VREF)
+
+     External Bias ≥ 1 V      ≥ 1.6 V          X                    High               High                     VIN1
+      (Manual mode)             X            ≥ 1.6 V                Low                 Low                     VIN2
+                                X              X                    High                Low                      Hi-Z
+  External Bias ≤ 0.35
+                              > VIN2           X                    Low                High                     VIN1
+   V (Manual mode)
+                                X            > VIN1                 Low                 Low                     VIN2
+
+
+
+10       Submit Document Feedback                                                   Copyright © 2021 Texas Instruments Incorporated
+
+                                             Product Folder Links: TPS2116
+                                                                                                                     TPS2116
+www.ti.com                                                                           SLVSFG1A – JANUARY 2021 – REVISED MAY 2021
+
+X = do not care
+7.3.2 Soft Start
+When an input voltage is applied to the TPS2116 and the output voltage is lower than 1 V, the output will be
+brought up with soft start to minimize the inrush current due to output capacitance. However, when the device
+switches from one power supply to another (switchover) and VOUT > 1 V, soft start is not used to minimize the
+output voltage drop. For linear soft start behavior, it is recommended to have an output capacitance of at least
+0.1 µF.
+7.3.3 Status Indication
+The ST pin is an open drain output that should be pulled up to an external voltage for proper operation. When
+the TPS2116 is powering the output using VIN1, the ST pin will be pulled high by the external voltage source.
+Even if the device is blocking reverse current from VOUT to VIN1, selection of VIN1 will keep the ST pin pulled
+high. When the TPS2116 is powering the output using VIN2 or both channels are disabled, the ST pin will be
+pulled low. During thermal shutdown, the ST pin will be pulled low regardless of the channel being used.
+7.3.4 Reverse Current Blocking
+The TPS2116 initiates reverse current blocking (RCB) when the VOUT voltage is externally biased and exceeds
+the input voltage supply being used. Once the output voltage is higher than the input voltage by 42mV (VRCB,R),
+the device will shut off. During this state, the leakage into VOUT and out of VIN is defined by IREV. Once the
+voltage difference between the output and input lowers to 17mV (VRCB,F), the channel will turn back on.
+
+
+
+
+                                          Figure 7-1. Reverse Current Blocking Behavior
+
+If RCB is expected to occur, it is recommended to clamp the output or use a high output capacitance (about
+100µF). This will prevent voltage spikes from damaging the device due to output inductance.
+7.4 VINx Collapse Rate
+The TPS2116 uses the highest voltage supply to power the device. When one supply drops below the other, the
+device changes the supply used to power the device. If the supply powering the device drops at a rate faster
+than 1 V/10 μs, the other supply must be at 2.5 V or higher to prevent the device from resetting. If the other
+supply is lower than 2.5 V, then the device may not be able to switch to the supply quickly enough, and the
+device will reset and turn on with soft start timing if VOUT < 1 V.
+
+
+
+
+Copyright © 2021 Texas Instruments Incorporated                                                 Submit Document Feedback      11
+                                                     Product Folder Links: TPS2116
+TPS2116
+SLVSFG1A – JANUARY 2021 – REVISED MAY 2021                                                                         www.ti.com
+
+7.5 Output Voltage Drop
+The output voltage drop during switchover from one supply to another is based on the load capacitance and load
+resistance. The stronger the resistive load, the faster the output will discharge. The higher the capacitance on
+the output, the less the voltage will drop during switchover.
+7.6 Device Functional Modes
+The below sections detail the two different configuraiton options for the device.
+7.6.1 Priority/Manual Mode
+When MODE is tied high, PR1 determines the channel selected. To configure VIN1 as the priority supply,
+connect MODE to VIN1 and set the proper threshold through a resistor divider from VIN1 to PR1. To configure
+manual selection, pull up MODE to an external supply and follow the truth table. When PR1 is pulled above
+VREF, the voltage on VIN1 is used to power the output, and when it is pulled below VREF, VIN2 is used to power
+the output. The expected behavior for the device is shown in the waveform below.
+
+
+
+
+                                     Figure 7-2. Priority/Manual Mode Switching
+
+When PR1 is toggled, the device implements a break-before-make switchover which shuts off both channels
+before turning on the new channel to power the output. This means that for time tSW, the output is unpowered
+and will dip depending on the load current and output capacitance. If the output voltage is greater than the input
+supply being switched to, then the device will not turn on the new channel until the output has discharged down
+to VIN + VRCB to prevent reverse current flow.
+When MODE is pulled low and PR1 is pulled high, the device enters shutdown. Both channels are turned off and
+the output is high impedance. When the PR1 pin is pulled low, the higher voltage supply between VIN1 and VIN2
+is passed to the output.
+7.6.1.1 Priority Switching
+In the case where VIN1 takes priority over VIN2, a resistor divider can be used to set the switchover voltage
+threshold. When VIN1 is first applied, PR1 is brought high and VOUT is powered by that input. As VIN1 begins
+
+12    Submit Document Feedback                                                      Copyright © 2021 Texas Instruments Incorporated
+
+                                              Product Folder Links: TPS2116
+                                                                                                                  TPS2116
+www.ti.com                                                                        SLVSFG1A – JANUARY 2021 – REVISED MAY 2021
+
+to drop, the voltage on PR1 is lowered until it crosses the VREF threshold. At this point, the device switches over
+to VIN2.
+7.6.1.2 Manual Switching
+For applications where a GPIO pin is used to select which input passes to the output, the GPIO pin can be
+directly connected to the PR1 pin when MODE is tied high (≥1V). When the GPIO is pulled high, VIN1 is used,
+and when the GPIO pin is pulled low, VIN2 is used.
+Manual mode can also disable both channels by pulling the MODE pin low and keeping PR1 high. In this state,
+the output of the device is high impedance and the leakage on each input is the shutdown current, ISD,VINx.
+
+
+
+
+Copyright © 2021 Texas Instruments Incorporated                                              Submit Document Feedback      13
+                                                  Product Folder Links: TPS2116
+TPS2116
+SLVSFG1A – JANUARY 2021 – REVISED MAY 2021                                                                      www.ti.com
+
+
+8 Application and Implementation
+                                                         Note
+      Information in the following applications sections is not part of the TI component specification,
+      and TI does not warrant its accuracy or completeness. TI’s customers are responsible for
+      determining suitability of components for their purposes, as well as validating and testing their design
+      implementation to confirm system functionality.
+
+8.1 Application Information
+This section highlights some of the design considerations when implementing this device in various applications.
+8.2 Typical Application
+This typical application demonstrates how the TPS2116 device can be used to control inrush current for high
+output capacitances.
+
+
+
+
+                                  Figure 8-1. TPS2116 Typical Application Diagram
+
+8.2.1 Design Requirements
+For this example, the values below are used as the design parameters.
+                                        Table 8-1. Design Parameters
+                         PARAMETER                                                 VALUE
+                       VIN1 Input Voltage                                            5V
+
+                             Mode                                                  Priority
+
+                       Output Capacitance                                          100 µF
+
+                     Maximum Inrush Current                                        500 mA
+
+
+
+
+14    Submit Document Feedback                                                   Copyright © 2021 Texas Instruments Incorporated
+
+                                              Product Folder Links: TPS2116
+                                                                                                                      TPS2116
+www.ti.com                                                                            SLVSFG1A – JANUARY 2021 – REVISED MAY 2021
+
+
+8.2.2 Detailed Design Procedure
+To determine how much inrush current is caused by the output capacitor, use the equation below.
+      IINRUSH = COUT × VOUT / tSS                                                                                      (1)
+where
+• IINRUSH = amount of inrush current caused by COUT
+• COUT = capacitance on VOUT
+• tSS = output voltage soft start time
+• VOUT = final value of the output voltage
+With a final output voltage of 5 V, the expected rise time is 1.7 ms. Using the inrush current equation, the inrush
+current caused by a 100-µF capacitance would be 294 mA, well below the 500-mA target.
+8.2.3 Application Curves
+The below oscilloscope capture shows 5 V being applied to VIN1. The output comes up with slew rate control
+and limits the inrush current to below 500 mA.
+
+
+
+
+                                             Figure 8-2. TPS2116 Inrush Current Control
+
+
+
+
+Copyright © 2021 Texas Instruments Incorporated                                                  Submit Document Feedback      15
+                                                      Product Folder Links: TPS2116
+TPS2116
+SLVSFG1A – JANUARY 2021 – REVISED MAY 2021                                                                         www.ti.com
+
+
+9 Power Supply Recommendations
+The device is designed to operate with a VIN range of 1.6 V to 5.5 V. The VIN power supplies must be well
+regulated and placed as close to the device terminals as possible. The power supplies must be able to withstand
+all transient load current steps. In most situations, using an input capacitance (CIN) of 1 μF is sufficient to prevent
+the supply voltage from dipping when the switch is turned on. In cases where the power supply is slow to
+respond to a large transient current or large load current step, additional bulk capacitance may be required on
+the input.
+
+
+
+
+16    Submit Document Feedback                                                      Copyright © 2021 Texas Instruments Incorporated
+
+                                              Product Folder Links: TPS2116
+                                                                                                                        TPS2116
+www.ti.com                                                                              SLVSFG1A – JANUARY 2021 – REVISED MAY 2021
+
+
+10 Layout
+10.1 Layout Guidelines
+For best performance, all traces must be as short as possible. To be most effective, the input and output
+capacitors must be placed close to the device to minimize the effects that parasitic trace inductances may have
+on normal operation. Using wide traces for VIN1, VIN2, VOUT, and GND helps minimize the parasitic electrical
+effects.
+
+10.2 Layout Example
+
+
+
+
+                                                  Figure 10-1. TPS2116 Layout Example
+
+
+
+
+Copyright © 2021 Texas Instruments Incorporated                                                    Submit Document Feedback      17
+                                                        Product Folder Links: TPS2116
+TPS2116
+SLVSFG1A – JANUARY 2021 – REVISED MAY 2021                                                                                    www.ti.com
+
+
+11 Device and Documentation Support
+11.1 Documentation Support
+11.1.1 Related Documentation
+For related documentation see the following:
+• Basics of Power MUX
+• 11 Ways to Protect Your Power Path
+11.2 Receiving Notification of Documentation Updates
+To receive notification of documentation updates, navigate to the device product folder on ti.com. Click on
+Subscribe to updates to register and receive a weekly digest of any product information that has changed. For
+change details, review the revision history included in any revised document.
+11.3 Trademarks
+All trademarks are the property of their respective owners.
+11.4 Electrostatic Discharge Caution
+                This integrated circuit can be damaged by ESD. Texas Instruments recommends that all integrated circuits be handled
+                with appropriate precautions. Failure to observe proper handling and installation procedures can cause damage.
+                ESD damage can range from subtle performance degradation to complete device failure. Precision integrated circuits may
+                be more susceptible to damage because very small parametric changes could cause the device not to meet its published
+                specifications.
+
+
+11.5 Glossary
+ TI Glossary         This glossary lists and explains terms, acronyms, and definitions.
+
+12 Mechanical, Packaging, and Orderable Information
+The following pages include mechanical, packaging, and orderable information. This information is the most
+current data available for the designated devices. This data is subject to change without notice and revision of
+this document. For browser-based versions of this data sheet, refer to the left-hand navigation.
+
+
+
+
+18    Submit Document Feedback                                                                 Copyright © 2021 Texas Instruments Incorporated
+
+                                                   Product Folder Links: TPS2116
+                                                                                                                                                                      PACKAGE OPTION ADDENDUM
+
+       www.ti.com                                                                                                                                                                                                    31-Oct-2025
+
+
+
+
+PACKAGING INFORMATION
+
+       Orderable part number          Status     Material type      Package | Pins      Package qty | Carrier        RoHS             Lead finish/              MSL rating/               Op temp (°C)          Part marking
+                                        (1)            (2)                                                             (3)            Ball material             Peak reflow                                           (6)
+                                                                                                                                            (4)                      (5)
+
+           TPS2116DRLR                Active      Production      SOT-5X3 (DRL) | 8      4000 | LARGE T&R             Yes              Call TI | Sn        Level-1-260C-UNLIM              -40 to 125                2116
+          TPS2116DRLR.A               Active      Production      SOT-5X3 (DRL) | 8      4000 | LARGE T&R             Yes                  SN              Level-1-260C-UNLIM              -40 to 105                2116
+
+(1)
+      Status: For more details on status, see our product life cycle.
+
+(2)
+   Material type: When designated, preproduction parts are prototypes/experimental devices, and are not yet approved or released for full production. Testing and final process, including without limitation quality assurance,
+reliability performance testing, and/or process qualification, may not yet be complete, and this item is subject to further changes or possible discontinuation. If available for ordering, purchases will be subject to an additional
+waiver at checkout, and are intended for early internal evaluation purposes only. These items are sold without warranties of any kind.
+
+(3)
+      RoHS values: Yes, No, RoHS Exempt. See the TI RoHS Statement for additional information and value definition.
+
+(4)
+   Lead finish/Ball material: Parts may have multiple material finish options. Finish options are separated by a vertical ruled line. Lead finish/Ball material values may wrap to two lines if the finish value exceeds the maximum
+column width.
+
+(5)
+  MSL rating/Peak reflow: The moisture sensitivity level ratings and peak solder (reflow) temperatures. In the event that a part has multiple moisture sensitivity ratings, only the lowest level per JEDEC standards is shown.
+Refer to the shipping label for the actual reflow temperature that will be used to mount the part to the printed circuit board.
+
+(6)
+      Part marking: There may be an additional marking, which relates to the logo, the lot trace code information, or the environmental category of the part.
+
+Multiple part markings will be inside parentheses. Only one part marking contained in parentheses and separated by a "~" will appear on a part. If a line is indented then it is a continuation of the previous line and the two
+combined represent the entire part marking for that device.
+
+Important Information and Disclaimer:The information provided on this page represents TI's knowledge and belief as of the date that it is provided. TI bases its knowledge and belief on information provided by third parties, and
+makes no representation or warranty as to the accuracy of such information. Efforts are underway to better integrate information from third parties. TI has taken and continues to take reasonable steps to provide representative
+and accurate information but may not have conducted destructive testing or chemical analysis on incoming materials and chemicals. TI and TI suppliers consider certain information to be proprietary, and thus CAS numbers
+and other limited information may not be available for release.
+
+In no event shall TI's liability arising out of such information exceed the total purchase price of the TI part(s) at issue in this document sold by TI to Customer on an annual basis.
+
+
+
+
+                                                                                                          Addendum-Page 1
+                                                                   PACKAGE MATERIALS INFORMATION
+
+www.ti.com                                                                                                                  18-Jul-2021
+
+
+
+TAPE AND REEL INFORMATION
+
+
+
+
+*All dimensions are nominal
+             Device           Package Package Pins   SPQ       Reel   Reel   A0            B0     K0     P1     W     Pin1
+                               Type Drawing                  Diameter Width (mm)          (mm)   (mm)   (mm)   (mm) Quadrant
+                                                               (mm) W1 (mm)
+      TPS2116DRLR             SOT-5X3   DRL    8     4000      180.0      8.4      2.75   1.9    0.8    4.0    8.0     Q3
+
+
+
+
+                                                           Pack Materials-Page 1
+                                                                PACKAGE MATERIALS INFORMATION
+
+www.ti.com                                                                                                           18-Jul-2021
+
+
+
+
+*All dimensions are nominal
+             Device           Package Type   Package Drawing   Pins     SPQ     Length (mm)   Width (mm)   Height (mm)
+      TPS2116DRLR               SOT-5X3           DRL           8       4000       210.0        185.0         35.0
+
+
+
+
+                                                        Pack Materials-Page 2
+                                                                                                                PACKAGE OUTLINE
+ DRL0008A                                                           SCALE 8.000
+                                                                                                           SOT-5X3 - 0.6 mm max height
+                                                                                                                        PLASTIC SMALL OUTLINE
+
+
+
+
+                                                    1.3
+                                        B
+                                                    1.1
+                                                                                          A
+                              PIN 1
+                           ID AREA
+
+                                        1
+                                                                                   8
+
+                             6X 0.5
+
+
+                                                                                        2.2
+                      2X 1.5
+                                                                                        2.0
+                                                                                       NOTE 3
+
+
+
+
+                                                                                   5
+                                        4
+                        0.27
+                      8X
+                        0.17
+               0.1     C A B                        1.7                                                                  0.05
+                                                                                                             2X 0 -10
+                                                    1.5                                                                  0.00
+               0.05
+                                                                                       2X 4 -15
+
+
+
+                       0.6 MAX                                                                C
+
+                                                                                                  SEATING PLANE
+                            0.18
+                            0.08                                                                  0.05 C
+                                                   SYMM
+                                  0.4
+                               8X
+                                  0.2
+
+
+
+
+                                SYMM
+
+
+
+
+                                                                                                                                4224486/G 11/2024
+NOTES:
+
+1. All linear dimensions are in millimeters. Any dimensions in parenthesis are for reference only. Dimensioning and tolerancing
+   per ASME Y14.5M.
+2. This drawing is subject to change without notice.
+3. This dimension does not include mold flash, protrusions, or gate burrs. Mold flash, interlead flash, protrusions, or gate burrs shall not
+   exceed 0.15 mm per side.
+4.Reference JEDEC Registration MO-293, Variation UDAD
+
+
+
+
+                                                                                  www.ti.com
+                                                                                  EXAMPLE BOARD LAYOUT
+ DRL0008A                                                                              SOT-5X3 - 0.6 mm max height
+                                                                                                           PLASTIC SMALL OUTLINE
+
+
+
+
+                                               8X (0.67)
+                                                                  SYMM
+
+
+                                8X (0.3)   1                                                  8
+
+
+
+
+                                                                                                  SYMM
+
+
+
+
+                               6X (0.5)
+
+                                                                                              5
+                                           4
+
+                           (R0.05) TYP
+                                                                  (1.48)
+
+
+                                                    LAND PATTERN EXAMPLE
+                                                       EXPOSED METAL SHOWN
+                                                            SCALE:30X
+
+
+
+
+                   0.05 MAX                                                0.05 MIN
+                   AROUND                                                  AROUND
+
+
+                 EXPOSED                                                   EXPOSED
+                   METAL                                                     METAL
+
+                 SOLDER MASK                        METAL                  METAL UNDER                     SOLDER MASK
+                 OPENING                                                   SOLDER MASK                     OPENING
+                                NON SOLDER MASK                                          SOLDER MASK
+                                    DEFINED                                                DEFINED
+                                  (PREFERRED)
+
+                                                       SOLDERMASK DETAILS
+
+
+
+
+                                                                                                                 4224486/G 11/2024
+
+NOTES: (continued)
+
+5. Publication IPC-7351 may have alternate designs.
+6. Solder mask tolerances between and around signal pads can vary based on board fabrication site.
+7. Land pattern design aligns to IPC-610, Bottom Termination Component (BTC) solder joint inspection criteria.
+
+
+
+
+                                                                  www.ti.com
+                                                                               EXAMPLE STENCIL DESIGN
+ DRL0008A                                                                             SOT-5X3 - 0.6 mm max height
+                                                                                                           PLASTIC SMALL OUTLINE
+
+
+
+
+                                                 8X (0.67)
+                                                                   SYMM
+
+
+                                 8X (0.3)   1                                                   8
+
+
+
+
+                                                                                                    SYMM
+
+
+
+
+                                 6X (0.5)
+
+                                                                                                5
+                                            4
+
+                            (R0.05) TYP
+                                                                   (1.48)
+
+
+                                                     SOLDER PASTE EXAMPLE
+                                                     BASED ON 0.1 mm THICK STENCIL
+                                                              SCALE:30X
+
+
+
+
+                                                                                                                  4224486/G 11/2024
+
+NOTES: (continued)
+
+8. Laser cutting apertures with trapezoidal walls and rounded corners may offer better paste release. IPC-7525 may have alternate
+   design recommendations.
+9. Board assembly site may have different recommendations for stencil design.
+
+
+
+
+                                                                  www.ti.com
+                                         IMPORTANT NOTICE AND DISCLAIMER
+TI PROVIDES TECHNICAL AND RELIABILITY DATA (INCLUDING DATASHEETS), DESIGN RESOURCES (INCLUDING REFERENCE
+DESIGNS), APPLICATION OR OTHER DESIGN ADVICE, WEB TOOLS, SAFETY INFORMATION, AND OTHER RESOURCES “AS IS”
+AND WITH ALL FAULTS, AND DISCLAIMS ALL WARRANTIES, EXPRESS AND IMPLIED, INCLUDING WITHOUT LIMITATION ANY
+IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE OR NON-INFRINGEMENT OF THIRD
+PARTY INTELLECTUAL PROPERTY RIGHTS.
+These resources are intended for skilled developers designing with TI products. You are solely responsible for (1) selecting the appropriate
+TI products for your application, (2) designing, validating and testing your application, and (3) ensuring your application meets applicable
+standards, and any other safety, security, regulatory or other requirements.
+These resources are subject to change without notice. TI grants you permission to use these resources only for development of an
+application that uses the TI products described in the resource. Other reproduction and display of these resources is prohibited. No license
+is granted to any other TI intellectual property right or to any third party intellectual property right. TI disclaims responsibility for, and you fully
+indemnify TI and its representatives against any claims, damages, costs, losses, and liabilities arising out of your use of these resources.
+TI’s products are provided subject to TI’s Terms of Sale, TI’s General Quality Guidelines, or other applicable terms available either on
+ti.com or provided in conjunction with such TI products. TI’s provision of these resources does not expand or otherwise alter TI’s applicable
+warranties or warranty disclaimers for TI products. Unless TI explicitly designates a product as custom or customer-specified, TI products
+are standard, catalog, general purpose devices.
+TI objects to and rejects any additional or different terms you may propose.
+IMPORTANT NOTICE
+
+                                                Copyright © 2025, Texas Instruments Incorporated
+                                                                Last updated 10/2025
+

@@ -1,0 +1,127 @@
+{
+    "$schema": "https://schemas.kicad.org/erc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-09-18T00:03:41",
+    "ignored_checks": [
+        {
+            "description": "Global label only appears once in the schematic",
+            "key": "single_global_label"
+        },
+        {
+            "description": "Four connection points are joined together",
+            "key": "four_way_junction"
+        },
+        {
+            "description": "SPICE model issue",
+            "key": "simulation_model_issue"
+        },
+        {
+            "description": "Assigned footprint doesn't match footprint filters",
+            "key": "footprint_filter"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning"
+    ],
+    "kicad_version": "10.0.6",
+    "sheets": [
+        {
+            "path": "/",
+            "uuid_path": "/5101ac75-6b12-4b1f-bd09-4cdc912f4174",
+            "violations": [
+                {
+                    "description": "Symbol '824011' doesn't match copy in library '824011'",
+                    "items": [
+                        {
+                            "description": "Symbol D14 [824011]",
+                            "pos": {
+                                "x": 1.6383,
+                                "y": 1.2065
+                            },
+                            "uuid": "503ce309-4e5b-4b72-8b34-7dd3541f9b14"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_mismatch"
+                }
+            ]
+        },
+        {
+            "path": "/Microcontroller Circuitry/",
+            "uuid_path": "/5101ac75-6b12-4b1f-bd09-4cdc912f4174/20a7c7e4-10c4-408b-81a5-cf38e9f12066",
+            "violations": []
+        },
+        {
+            "path": "/Output Channel 1/",
+            "uuid_path": "/5101ac75-6b12-4b1f-bd09-4cdc912f4174/3cb82c8d-c9e4-4e34-a356-773f01e07004",
+            "violations": []
+        },
+        {
+            "path": "/Output Channel 2/",
+            "uuid_path": "/5101ac75-6b12-4b1f-bd09-4cdc912f4174/d684b028-6ef5-4cac-b43b-ba0c3983fa97",
+            "violations": []
+        },
+        {
+            "path": "/Output Channel 3/",
+            "uuid_path": "/5101ac75-6b12-4b1f-bd09-4cdc912f4174/c0f86c29-acdd-41df-9b25-530ca193de89",
+            "violations": []
+        },
+        {
+            "path": "/Output Channel 4/",
+            "uuid_path": "/5101ac75-6b12-4b1f-bd09-4cdc912f4174/545009de-d40f-4f20-9ca9-c5a0de9686c1",
+            "violations": []
+        },
+        {
+            "path": "/Output Channel 5/",
+            "uuid_path": "/5101ac75-6b12-4b1f-bd09-4cdc912f4174/8d41da60-085f-42c2-a235-b62c1a0832fa",
+            "violations": []
+        },
+        {
+            "path": "/Output Channel 6/",
+            "uuid_path": "/5101ac75-6b12-4b1f-bd09-4cdc912f4174/b69ea223-350e-4afd-a6aa-a1f04020bfb4",
+            "violations": []
+        },
+        {
+            "path": "/Output Channel 7/",
+            "uuid_path": "/5101ac75-6b12-4b1f-bd09-4cdc912f4174/077d24c9-ccaf-472b-834e-11e51223667a",
+            "violations": []
+        },
+        {
+            "path": "/Output Channel 8/",
+            "uuid_path": "/5101ac75-6b12-4b1f-bd09-4cdc912f4174/e702e59a-d628-4644-9d31-a6a83921e308",
+            "violations": []
+        },
+        {
+            "path": "/Mounting Holes/",
+            "uuid_path": "/5101ac75-6b12-4b1f-bd09-4cdc912f4174/3162bf87-6939-4bc8-bbc1-bb53fa3499f5",
+            "violations": []
+        },
+        {
+            "path": "/Input Channel 1/",
+            "uuid_path": "/5101ac75-6b12-4b1f-bd09-4cdc912f4174/327d9d38-80cd-4367-93dc-4a30e21a8db1",
+            "violations": []
+        },
+        {
+            "path": "/Input Channel 2/",
+            "uuid_path": "/5101ac75-6b12-4b1f-bd09-4cdc912f4174/5a0d5756-f8a0-451e-8494-0b99a19c3b6f",
+            "violations": []
+        },
+        {
+            "path": "/USB Interface/",
+            "uuid_path": "/5101ac75-6b12-4b1f-bd09-4cdc912f4174/1cdb46c1-0ce4-4d77-8201-94392c7d6513",
+            "violations": []
+        },
+        {
+            "path": "/Power Interface/",
+            "uuid_path": "/5101ac75-6b12-4b1f-bd09-4cdc912f4174/d21f1f07-0dd9-47a5-8053-812c1f8a1804",
+            "violations": []
+        },
+        {
+            "path": "/Indicator Panel/",
+            "uuid_path": "/5101ac75-6b12-4b1f-bd09-4cdc912f4174/f93f3138-0e5e-4633-a8e0-03053deab00d",
+            "violations": []
+        }
+    ],
+    "source": "opensync.kicad_sch"
+}

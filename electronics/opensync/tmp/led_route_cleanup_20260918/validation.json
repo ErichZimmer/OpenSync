@@ -1,0 +1,137 @@
+{
+  "candidate": "C:\\Users\\Research\\repos\\OpenSync\\electronics\\opensync\\opensync\\opensync.kicad_pcb",
+  "before": {
+    "totals": {
+      "segments": 166,
+      "vias": 38,
+      "length_mm": 1085.791
+    },
+    "nets": {
+      "/Indicator Panel/LED_A": {
+        "segments": 14,
+        "vias": 4,
+        "length_mm": 128.088
+      },
+      "/Indicator Panel/LED_ACTIVE": {
+        "segments": 12,
+        "vias": 2,
+        "length_mm": 45.127
+      },
+      "/Indicator Panel/LED_B": {
+        "segments": 13,
+        "vias": 4,
+        "length_mm": 121.447
+      },
+      "/Indicator Panel/LED_C": {
+        "segments": 13,
+        "vias": 4,
+        "length_mm": 114.51
+      },
+      "/Indicator Panel/LED_D": {
+        "segments": 16,
+        "vias": 2,
+        "length_mm": 131.268
+      },
+      "/Indicator Panel/LED_E": {
+        "segments": 17,
+        "vias": 2,
+        "length_mm": 118.9
+      },
+      "/Indicator Panel/LED_F": {
+        "segments": 15,
+        "vias": 4,
+        "length_mm": 97.554
+      },
+      "/Indicator Panel/LED_G": {
+        "segments": 19,
+        "vias": 6,
+        "length_mm": 95.278
+      },
+      "/Indicator Panel/LED_GATE": {
+        "segments": 20,
+        "vias": 4,
+        "length_mm": 74.636
+      },
+      "/Indicator Panel/LED_H": {
+        "segments": 13,
+        "vias": 4,
+        "length_mm": 83.417
+      },
+      "/Indicator Panel/LED_TRIG": {
+        "segments": 14,
+        "vias": 2,
+        "length_mm": 75.566
+      }
+    }
+  },
+  "after": {
+    "totals": {
+      "segments": 147,
+      "vias": 32,
+      "length_mm": 1035.989
+    },
+    "nets": {
+      "/Indicator Panel/LED_A": {
+        "segments": 10,
+        "vias": 2,
+        "length_mm": 119.304
+      },
+      "/Indicator Panel/LED_ACTIVE": {
+        "segments": 16,
+        "vias": 4,
+        "length_mm": 68.656
+      },
+      "/Indicator Panel/LED_B": {
+        "segments": 10,
+        "vias": 2,
+        "length_mm": 113.268
+      },
+      "/Indicator Panel/LED_C": {
+        "segments": 10,
+        "vias": 2,
+        "length_mm": 107.431
+      },
+      "/Indicator Panel/LED_D": {
+        "segments": 10,
+        "vias": 2,
+        "length_mm": 104.003
+      },
+      "/Indicator Panel/LED_E": {
+        "segments": 11,
+        "vias": 2,
+        "length_mm": 98.532
+      },
+      "/Indicator Panel/LED_F": {
+        "segments": 11,
+        "vias": 2,
+        "length_mm": 92.284
+      },
+      "/Indicator Panel/LED_G": {
+        "segments": 19,
+        "vias": 6,
+        "length_mm": 95.419
+      },
+      "/Indicator Panel/LED_GATE": {
+        "segments": 22,
+        "vias": 6,
+        "length_mm": 88.844
+      },
+      "/Indicator Panel/LED_H": {
+        "segments": 13,
+        "vias": 2,
+        "length_mm": 80.347
+      },
+      "/Indicator Panel/LED_TRIG": {
+        "segments": 15,
+        "vias": 2,
+        "length_mm": 67.901
+      }
+    }
+  },
+  "added_copper": 107,
+  "removed_copper": 132,
+  "modified_copper": 0,
+  "footprints_pads_models_preserved": true,
+  "non_LED_copper_preserved": true,
+  "zone_definitions_preserved": true
+}

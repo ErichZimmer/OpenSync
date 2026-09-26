@@ -1,0 +1,2731 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-09-18T00:08:16",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning"
+    ],
+    "kicad_version": "10.0.6",
+    "schematic_parity": [],
+    "source": "led-draft.kicad_pcb",
+    "unconnected_items": [
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Track [+5V] on F.Cu, length 1.0750 mm",
+                    "pos": {
+                        "x": 132.7,
+                        "y": 71.9
+                    },
+                    "uuid": "ce8a6744-1b89-4c14-b755-9e690b1f785c"
+                },
+                {
+                    "description": "Track [+5V] on F.Cu, length 1.3850 mm",
+                    "pos": {
+                        "x": 146.04,
+                        "y": 71.75
+                    },
+                    "uuid": "9281a6f2-e1bd-418c-b72c-108aead876c1"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Via [+1V1] on F.Cu - B.Cu",
+                    "pos": {
+                        "x": 87.2,
+                        "y": 87.9
+                    },
+                    "uuid": "4c8ec9ab-318e-4d71-b34e-8feccc2351e1"
+                },
+                {
+                    "description": "Track [+1V1] on In2.Cu, length 4.6500 mm",
+                    "pos": {
+                        "x": 85.9,
+                        "y": 90.25
+                    },
+                    "uuid": "0018876c-e345-4f84-8d3f-6a7a869031e6"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        }
+    ],
+    "violations": [
+        {
+            "description": "Thermal relief connection to zone incomplete (layer F.Cu; zone min spoke count 2; actual 1)",
+            "items": [
+                {
+                    "description": "Zone '3V3' [+3V3] on F.Cu, priority 0",
+                    "pos": {
+                        "x": 191.0,
+                        "y": 49.0
+                    },
+                    "uuid": "04962362-ae03-45b1-9c38-d16ea3d5785e"
+                },
+                {
+                    "description": "Pad 1 [+3V3] of C1 on F.Cu",
+                    "pos": {
+                        "x": 87.485,
+                        "y": 81.7
+                    },
+                    "uuid": "5e32a654-5535-4900-b4ad-1605dbbbee76"
+                }
+            ],
+            "severity": "error",
+            "type": "starved_thermal"
+        },
+        {
+            "description": "Silkscreen clipped by board edge",
+            "items": [
+                {
+                    "description": "Segment on Edge.Cuts",
+                    "pos": {
+                        "x": 35.0,
+                        "y": 50.0
+                    },
+                    "uuid": "c0ab16e7-fab1-4795-8b8e-6d819de437ea"
+                },
+                {
+                    "description": "Segment of J13 on F.Silkscreen",
+                    "pos": {
+                        "x": 57.88,
+                        "y": 48.62
+                    },
+                    "uuid": "4ce1e4b9-2960-44e8-ba4b-10b52bb310fc"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "Silkscreen clipped by board edge",
+            "items": [
+                {
+                    "description": "Segment on Edge.Cuts",
+                    "pos": {
+                        "x": 35.0,
+                        "y": 50.0
+                    },
+                    "uuid": "c0ab16e7-fab1-4795-8b8e-6d819de437ea"
+                },
+                {
+                    "description": "Segment of J13 on F.Silkscreen",
+                    "pos": {
+                        "x": 70.12,
+                        "y": 57.0
+                    },
+                    "uuid": "97b44380-5b5e-4cd5-96c6-e96dda7dd741"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "Silkscreen clipped by board edge",
+            "items": [
+                {
+                    "description": "Segment on Edge.Cuts",
+                    "pos": {
+                        "x": 35.0,
+                        "y": 50.0
+                    },
+                    "uuid": "c0ab16e7-fab1-4795-8b8e-6d819de437ea"
+                },
+                {
+                    "description": "Segment of J14 on F.Silkscreen",
+                    "pos": {
+                        "x": 40.4,
+                        "y": 57.6
+                    },
+                    "uuid": "1dc7b14b-cdad-4a06-af7d-1603333b4b99"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "Silkscreen clipped by board edge",
+            "items": [
+                {
+                    "description": "Segment on Edge.Cuts",
+                    "pos": {
+                        "x": 35.0,
+                        "y": 50.0
+                    },
+                    "uuid": "c0ab16e7-fab1-4795-8b8e-6d819de437ea"
+                },
+                {
+                    "description": "Segment of J14 on F.Silkscreen",
+                    "pos": {
+                        "x": 49.6,
+                        "y": 49.1
+                    },
+                    "uuid": "bf7a8c9e-017a-4027-885a-c1878f3d70f5"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'RP2350_80QFN_minimal'",
+            "items": [
+                {
+                    "description": "Footprint C57",
+                    "pos": {
+                        "x": 166.0,
+                        "y": 120.8
+                    },
+                    "uuid": "019d2c96-b37b-4959-99de-46f11ba300eb"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'RP2350_80QFN_minimal'",
+            "items": [
+                {
+                    "description": "Footprint C35",
+                    "pos": {
+                        "x": 116.0,
+                        "y": 123.064593
+                    },
+                    "uuid": "05d36182-b7e9-4f4e-ab61-e43d08fce6d6"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'ABM8-272-T3'",
+            "items": [
+                {
+                    "description": "Footprint Y1",
+                    "pos": {
+                        "x": 85.0,
+                        "y": 102.0
+                    },
+                    "uuid": "0b4ed843-73a4-470d-a07c-dc88932e8585"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'SN74LVC1G17DCKR'",
+            "items": [
+                {
+                    "description": "Footprint U35",
+                    "pos": {
+                        "x": 64.0,
+                        "y": 120.0
+                    },
+                    "uuid": "0b50dfaa-0f3a-4d7c-bd13-88c9f145f39a"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'RP2350_80QFN_minimal'",
+            "items": [
+                {
+                    "description": "Footprint C14",
+                    "pos": {
+                        "x": 92.5,
+                        "y": 83.7
+                    },
+                    "uuid": "0c4c44f2-f3fa-417a-9be4-f3d6ac8b5f3a"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'XL-C4040UGC'",
+            "items": [
+                {
+                    "description": "Footprint D7",
+                    "pos": {
+                        "x": 162.0,
+                        "y": 54.0
+                    },
+                    "uuid": "0cacc118-8020-4973-aad0-ef06ee096e25"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'XL-C4040UGC'",
+            "items": [
+                {
+                    "description": "Footprint D4",
+                    "pos": {
+                        "x": 138.0,
+                        "y": 54.0
+                    },
+                    "uuid": "1324fd84-f9e1-48aa-b220-d6ffeb7ac4c5"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'RP2350_80QFN_minimal'",
+            "items": [
+                {
+                    "description": "Footprint C4",
+                    "pos": {
+                        "x": 88.0,
+                        "y": 80.7
+                    },
+                    "uuid": "13f7daf6-2c7a-4b61-89e5-daa43a95d705"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'RP2350_80QFN_minimal'",
+            "items": [
+                {
+                    "description": "Footprint C1",
+                    "pos": {
+                        "x": 88.0,
+                        "y": 81.7
+                    },
+                    "uuid": "16a48533-ab82-466d-8534-042593716d85"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'RP2350_80QFN_minimal'",
+            "items": [
+                {
+                    "description": "Footprint C65",
+                    "pos": {
+                        "x": 62.1,
+                        "y": 119.1
+                    },
+                    "uuid": "1b401411-c2c4-42f6-b330-fc61a1989b96"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'RP2350_80QFN_minimal'",
+            "items": [
+                {
+                    "description": "Footprint C25",
+                    "pos": {
+                        "x": 91.0,
+                        "y": 123.25
+                    },
+                    "uuid": "2147db1b-c4df-4530-8db0-1eb4853d8b5a"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'SN74LVC1G17DCKR'",
+            "items": [
+                {
+                    "description": "Footprint U33",
+                    "pos": {
+                        "x": 52.9,
+                        "y": 120.0
+                    },
+                    "uuid": "227a5020-ad20-4b41-b4d9-7d1db41704b4"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library '705530001'",
+            "items": [
+                {
+                    "description": "Footprint J9",
+                    "pos": {
+                        "x": 164.0,
+                        "y": 135.0
+                    },
+                    "uuid": "24376235-23aa-46ca-ac5b-c513e519d505"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'RP2350_80QFN_minimal'",
+            "items": [
+                {
+                    "description": "Footprint C37",
+                    "pos": {
+                        "x": 116.0,
+                        "y": 120.614593
+                    },
+                    "uuid": "2dc3fea6-0341-4c03-afb5-efde300449cb"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'RP2350_80QFN_minimal'",
+            "items": [
+                {
+                    "description": "Footprint C7",
+                    "pos": {
+                        "x": 86.4,
+                        "y": 96.3
+                    },
+                    "uuid": "2dca3b3e-d15e-41eb-92dc-956af57ad7ac"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library '705530001'",
+            "items": [
+                {
+                    "description": "Footprint J11",
+                    "pos": {
+                        "x": 53.0,
+                        "y": 135.0
+                    },
+                    "uuid": "30560070-9df0-44fa-8a1c-4b9389e0d904"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'RP2350_80QFN_minimal'",
+            "items": [
+                {
+                    "description": "Footprint C32",
+                    "pos": {
+                        "x": 105.0,
+                        "y": 120.614593
+                    },
+                    "uuid": "305a8da4-f2f2-4a79-9b72-2f541bcd44b4"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'XL-C4040UGC'",
+            "items": [
+                {
+                    "description": "Footprint D8",
+                    "pos": {
+                        "x": 170.0,
+                        "y": 54.0
+                    },
+                    "uuid": "34d91fa5-3239-489f-b8eb-0e229ca0562a"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'RP2350_80QFN_minimal'",
+            "items": [
+                {
+                    "description": "Footprint L1",
+                    "pos": {
+                        "x": 88.0,
+                        "y": 77.9
+                    },
+                    "uuid": "3de6f44e-958d-4ac3-8bbd-49ae033cf98a"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'Ferrite_SMD_Wurth'",
+            "items": [
+                {
+                    "description": "Footprint FB1",
+                    "pos": {
+                        "x": 61.7,
+                        "y": 68.0
+                    },
+                    "uuid": "41a42033-9c7d-4347-99e5-7fbce4d86b39"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'RP2350_80QFN_minimal'",
+            "items": [
+                {
+                    "description": "Footprint U1",
+                    "pos": {
+                        "x": 85.0,
+                        "y": 88.0
+                    },
+                    "uuid": "441c1127-cc4f-46b5-9440-379ceefd6a0a"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'RP2350_80QFN_minimal'",
+            "items": [
+                {
+                    "description": "Footprint C27",
+                    "pos": {
+                        "x": 91.0,
+                        "y": 120.8
+                    },
+                    "uuid": "4aa0cc14-86fd-4e4c-9388-99cb67b04243"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'SN74LVC1G17DCKR'",
+            "items": [
+                {
+                    "description": "Footprint U36",
+                    "pos": {
+                        "x": 65.3,
+                        "y": 115.0
+                    },
+                    "uuid": "4abc8322-44da-4ee1-b529-79785408e727"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'RP2350_80QFN_minimal'",
+            "items": [
+                {
+                    "description": "Footprint C22",
+                    "pos": {
+                        "x": 80.0,
+                        "y": 120.8
+                    },
+                    "uuid": "4c9aa31b-9ae1-4fbb-b6f0-b4bb017e1d73"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'RP2350_80QFN_minimal'",
+            "items": [
+                {
+                    "description": "Footprint C10",
+                    "pos": {
+                        "x": 83.7,
+                        "y": 96.3
+                    },
+                    "uuid": "4d43d1b1-0894-43ec-aad0-5445c508755e"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'RP2350_80QFN_minimal'",
+            "items": [
+                {
+                    "description": "Footprint C50",
+                    "pos": {
+                        "x": 155.0,
+                        "y": 123.25
+                    },
+                    "uuid": "4f9af017-caed-4fdc-9e88-eaf3ed858cfd"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'RP2350_80QFN_minimal'",
+            "items": [
+                {
+                    "description": "Footprint C63",
+                    "pos": {
+                        "x": 51.0,
+                        "y": 119.1
+                    },
+                    "uuid": "50eccae8-957c-4702-a047-13d739784405"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'RP2350_80QFN_minimal'",
+            "items": [
+                {
+                    "description": "Footprint C40",
+                    "pos": {
+                        "x": 130.0,
+                        "y": 123.25
+                    },
+                    "uuid": "54d44448-da1f-42b3-9416-5722196bda50"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'SN74LVC1G17DCKR'",
+            "items": [
+                {
+                    "description": "Footprint U34",
+                    "pos": {
+                        "x": 54.2,
+                        "y": 115.0
+                    },
+                    "uuid": "54d71127-ca7e-4021-864b-1de71019da9a"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library '705530001'",
+            "items": [
+                {
+                    "description": "Footprint J12",
+                    "pos": {
+                        "x": 64.0,
+                        "y": 135.0
+                    },
+                    "uuid": "64177277-cea2-4603-b2f3-935da33c078f"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library '61400416121'",
+            "items": [
+                {
+                    "description": "Footprint J13",
+                    "pos": {
+                        "x": 64.0,
+                        "y": 56.97
+                    },
+                    "uuid": "681bb26d-2359-4010-b084-f48fbd8082ef"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'RP2350_80QFN_minimal'",
+            "items": [
+                {
+                    "description": "Footprint C55",
+                    "pos": {
+                        "x": 166.0,
+                        "y": 123.25
+                    },
+                    "uuid": "6a771ef3-ed72-413d-ad29-2bc74b34123f"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'RP2350_80QFN_minimal'",
+            "items": [
+                {
+                    "description": "Footprint C64",
+                    "pos": {
+                        "x": 52.3,
+                        "y": 114.2
+                    },
+                    "uuid": "6b36d92d-8a86-4450-909b-b3e319ea72f0"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'XL-C4040UGC'",
+            "items": [
+                {
+                    "description": "Footprint D10",
+                    "pos": {
+                        "x": 98.0,
+                        "y": 54.0
+                    },
+                    "uuid": "6d1b2c23-0be8-4327-b392-883e024145ab"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'XL-C4040UGC'",
+            "items": [
+                {
+                    "description": "Footprint D2",
+                    "pos": {
+                        "x": 122.0,
+                        "y": 54.0
+                    },
+                    "uuid": "70a3b517-1f16-49ef-8072-94eaef02fc79"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'RP2350_80QFN_minimal'",
+            "items": [
+                {
+                    "description": "Footprint C13",
+                    "pos": {
+                        "x": 77.0,
+                        "y": 89.7
+                    },
+                    "uuid": "7370b10e-7bcd-4cab-a8a8-5c6bf7d69c0b"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'RP2350_80QFN_minimal'",
+            "items": [
+                {
+                    "description": "Footprint C20",
+                    "pos": {
+                        "x": 80.0,
+                        "y": 123.25
+                    },
+                    "uuid": "77719647-2b1b-4bad-9bc1-c8f987a88abd"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'RP2350_80QFN_minimal'",
+            "items": [
+                {
+                    "description": "Footprint C30",
+                    "pos": {
+                        "x": 105.0,
+                        "y": 123.064593
+                    },
+                    "uuid": "7d082498-42be-4e2c-bac4-b8c0aa31699e"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'RP2350_80QFN_minimal'",
+            "items": [
+                {
+                    "description": "Footprint C11",
+                    "pos": {
+                        "x": 82.6,
+                        "y": 81.4
+                    },
+                    "uuid": "7d5d9c62-882b-4f55-9e00-6ec0c872bcdb"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'footprints'",
+            "items": [
+                {
+                    "description": "Footprint U14",
+                    "pos": {
+                        "x": 153.0,
+                        "y": 122.0
+                    },
+                    "uuid": "7eab1f2e-4cc3-4e11-aaf7-a630306e1f20"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'RP2350_80QFN_minimal'",
+            "items": [
+                {
+                    "description": "Footprint C52",
+                    "pos": {
+                        "x": 155.0,
+                        "y": 120.8
+                    },
+                    "uuid": "8487c2b2-7458-401f-93d7-db8cb9f66672"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'RP2350_80QFN_minimal'",
+            "items": [
+                {
+                    "description": "Footprint C79",
+                    "pos": {
+                        "x": 44.2,
+                        "y": 73.2
+                    },
+                    "uuid": "84bc8be6-a7dc-42a6-855d-69e9cfb6b7d9"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'XL-C4040UGC'",
+            "items": [
+                {
+                    "description": "Footprint D6",
+                    "pos": {
+                        "x": 154.0,
+                        "y": 54.0
+                    },
+                    "uuid": "873428bb-ab70-4c80-8d5f-c28d86273ab5"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library '705530001'",
+            "items": [
+                {
+                    "description": "Footprint J7",
+                    "pos": {
+                        "x": 139.0,
+                        "y": 135.0
+                    },
+                    "uuid": "87f539c6-47db-4ecd-8d2f-a136159e7bcb"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'footprints'",
+            "items": [
+                {
+                    "description": "Footprint U8",
+                    "pos": {
+                        "x": 114.0,
+                        "y": 121.814593
+                    },
+                    "uuid": "8c7d7adb-4c9f-419c-9af0-ab329c674189"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library '824011'",
+            "items": [
+                {
+                    "description": "Footprint D14",
+                    "pos": {
+                        "x": 65.0,
+                        "y": 71.0
+                    },
+                    "uuid": "8e15adf3-5f9c-4ca1-813a-c1f97ee241b3"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'XL-C4040UGC'",
+            "items": [
+                {
+                    "description": "Footprint D12",
+                    "pos": {
+                        "x": 106.0,
+                        "y": 54.0
+                    },
+                    "uuid": "915ff526-518d-45a4-b4d3-0e7fdadda189"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'XL-C4040UGC'",
+            "items": [
+                {
+                    "description": "Footprint D9",
+                    "pos": {
+                        "x": 178.0,
+                        "y": 54.0
+                    },
+                    "uuid": "91aad952-2eec-4ae1-adb5-1ddf5d6c113d"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library '705530001'",
+            "items": [
+                {
+                    "description": "Footprint J2",
+                    "pos": {
+                        "x": 78.0,
+                        "y": 135.0
+                    },
+                    "uuid": "952a99b9-2714-44b5-9ca3-160e5dcd1129"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'RP2350_80QFN_minimal'",
+            "items": [
+                {
+                    "description": "Footprint C45",
+                    "pos": {
+                        "x": 141.0,
+                        "y": 123.25
+                    },
+                    "uuid": "9cc9b2a0-b7f4-4478-80d5-1d1e67030f77"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'RP2350_80QFN_minimal'",
+            "items": [
+                {
+                    "description": "Footprint C42",
+                    "pos": {
+                        "x": 130.0,
+                        "y": 120.8
+                    },
+                    "uuid": "a02a7ca3-f538-484e-bd5c-0e55c83f909a"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'footprints'",
+            "items": [
+                {
+                    "description": "Footprint U10",
+                    "pos": {
+                        "x": 128.0,
+                        "y": 122.0
+                    },
+                    "uuid": "a0edef54-11ae-47e1-a0a3-d11765e8337e"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'RP2350_80QFN_minimal'",
+            "items": [
+                {
+                    "description": "Footprint C15",
+                    "pos": {
+                        "x": 92.5,
+                        "y": 92.5
+                    },
+                    "uuid": "a1f22de9-2c15-4415-a2e7-b47a6331e308"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library '705530001'",
+            "items": [
+                {
+                    "description": "Footprint J6",
+                    "pos": {
+                        "x": 128.0,
+                        "y": 135.0
+                    },
+                    "uuid": "a651b861-a72e-4021-a58b-fbf5fc2cab4a"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'RP2350_80QFN_minimal'",
+            "items": [
+                {
+                    "description": "Footprint C66",
+                    "pos": {
+                        "x": 63.4,
+                        "y": 114.2
+                    },
+                    "uuid": "aa7bf554-b6ec-4b1f-bfd8-e49d25c72adf"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'RP2350_80QFN_minimal'",
+            "items": [
+                {
+                    "description": "Footprint C47",
+                    "pos": {
+                        "x": 141.0,
+                        "y": 120.8
+                    },
+                    "uuid": "ae6ee3f4-807e-41f1-886d-3347a432a286"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'RP2350_80QFN_minimal'",
+            "items": [
+                {
+                    "description": "Footprint C8",
+                    "pos": {
+                        "x": 93.0,
+                        "y": 87.6
+                    },
+                    "uuid": "b0ee19ca-2493-488e-891d-c83eb6bebe9c"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'footprints'",
+            "items": [
+                {
+                    "description": "Footprint U2",
+                    "pos": {
+                        "x": 78.0,
+                        "y": 122.0
+                    },
+                    "uuid": "b1434d07-7164-4981-9305-e5b1c65bb2e4"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library '2_1825027_0'",
+            "items": [
+                {
+                    "description": "Footprint SW3",
+                    "pos": {
+                        "x": 87.0,
+                        "y": 55.0
+                    },
+                    "uuid": "b31b6a5b-d05b-403b-b3ce-cde0a4a69934"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library '705530001'",
+            "items": [
+                {
+                    "description": "Footprint J8",
+                    "pos": {
+                        "x": 153.0,
+                        "y": 135.0
+                    },
+                    "uuid": "b736b83f-e0ae-483e-b795-eeb8aac8bac6"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'RP2350_80QFN_minimal'",
+            "items": [
+                {
+                    "description": "Footprint C16",
+                    "pos": {
+                        "x": 93.0,
+                        "y": 88.6
+                    },
+                    "uuid": "b7c6d9cb-62e9-42be-93d4-ee40e7095aa3"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'XL-C4040UGC'",
+            "items": [
+                {
+                    "description": "Footprint D3",
+                    "pos": {
+                        "x": 130.0,
+                        "y": 54.0
+                    },
+                    "uuid": "bb3e5a87-882f-4ee2-924d-014f8f081ff4"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'RP2350_80QFN_minimal'",
+            "items": [
+                {
+                    "description": "Footprint C17",
+                    "pos": {
+                        "x": 81.4,
+                        "y": 94.7
+                    },
+                    "uuid": "bce56d43-7e73-438a-a6fa-8f2b6ad13af3"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'RP2350_80QFN_minimal'",
+            "items": [
+                {
+                    "description": "Footprint C12",
+                    "pos": {
+                        "x": 76.5,
+                        "y": 85.5
+                    },
+                    "uuid": "be4e9d57-9560-4c5c-9e04-1de506c47919"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'XL-C4040UGC'",
+            "items": [
+                {
+                    "description": "Footprint D13",
+                    "pos": {
+                        "x": 114.0,
+                        "y": 54.0
+                    },
+                    "uuid": "c89dd7d6-0037-4fe3-9a8f-8713f55b6a2f"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'RP2350_80QFN_minimal'",
+            "items": [
+                {
+                    "description": "Footprint C77",
+                    "pos": {
+                        "x": 44.0,
+                        "y": 92.5
+                    },
+                    "uuid": "cdf7c9dc-cc4c-43b8-a718-dda1ba73a231"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library '705530001'",
+            "items": [
+                {
+                    "description": "Footprint J4",
+                    "pos": {
+                        "x": 103.0,
+                        "y": 134.814593
+                    },
+                    "uuid": "d1f1a4be-6f27-4f1c-aba6-9ccd299df6bb"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library '705530001'",
+            "items": [
+                {
+                    "description": "Footprint J3",
+                    "pos": {
+                        "x": 89.0,
+                        "y": 135.0
+                    },
+                    "uuid": "d1f27ffa-befb-4cc8-a111-d87608ee8767"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'footprints'",
+            "items": [
+                {
+                    "description": "Footprint U6",
+                    "pos": {
+                        "x": 103.0,
+                        "y": 121.814593
+                    },
+                    "uuid": "d1f5f14a-ed93-45c7-a9d9-6adae66337b5"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'XL-C4040UGC'",
+            "items": [
+                {
+                    "description": "Footprint D5",
+                    "pos": {
+                        "x": 146.0,
+                        "y": 54.0
+                    },
+                    "uuid": "d254ada4-8b9c-406e-8973-e480a76de0d0"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'RP2350_80QFN_minimal'",
+            "items": [
+                {
+                    "description": "Footprint C6",
+                    "pos": {
+                        "x": 77.1,
+                        "y": 87.8
+                    },
+                    "uuid": "d69447ae-faab-41a3-b917-5c43908b192d"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'RP2350_80QFN_minimal'",
+            "items": [
+                {
+                    "description": "Footprint C9",
+                    "pos": {
+                        "x": 84.0,
+                        "y": 79.2
+                    },
+                    "uuid": "d725b348-b185-4a36-b94c-68ac21b0544d"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'footprints'",
+            "items": [
+                {
+                    "description": "Footprint U12",
+                    "pos": {
+                        "x": 139.0,
+                        "y": 122.0
+                    },
+                    "uuid": "da580bd2-a88c-4fb0-9ee2-1b51b9b92bef"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'RP2350_80QFN_minimal'",
+            "items": [
+                {
+                    "description": "Footprint C3",
+                    "pos": {
+                        "x": 86.6,
+                        "y": 98.4
+                    },
+                    "uuid": "e01865ea-c6ae-40bd-8938-d1f5c6c659ec"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'footprints'",
+            "items": [
+                {
+                    "description": "Footprint U4",
+                    "pos": {
+                        "x": 89.0,
+                        "y": 122.0
+                    },
+                    "uuid": "e496d0cc-d8a0-42eb-a1ff-eb5d7800f663"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'RP2350_80QFN_minimal'",
+            "items": [
+                {
+                    "description": "Footprint C5",
+                    "pos": {
+                        "x": 90.2,
+                        "y": 81.4
+                    },
+                    "uuid": "e739aaea-889b-4093-9588-6746dee2a8df"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'footprints'",
+            "items": [
+                {
+                    "description": "Footprint U16",
+                    "pos": {
+                        "x": 164.0,
+                        "y": 122.0
+                    },
+                    "uuid": "e970f20c-c85b-4a74-83c3-7586c1dcc4f9"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'RP2350_80QFN_minimal'",
+            "items": [
+                {
+                    "description": "Footprint C2",
+                    "pos": {
+                        "x": 83.6,
+                        "y": 98.4
+                    },
+                    "uuid": "ed20c5ce-94fa-451c-a1df-95359510530d"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'TPS63802DLAR'",
+            "items": [
+                {
+                    "description": "Footprint U32",
+                    "pos": {
+                        "x": 44.8,
+                        "y": 81.3
+                    },
+                    "uuid": "ee72e6c1-2d32-4369-9d9b-ee1eba6f5c72"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'RP2350_80QFN_minimal'",
+            "items": [
+                {
+                    "description": "Footprint C73",
+                    "pos": {
+                        "x": 44.0,
+                        "y": 95.2
+                    },
+                    "uuid": "f18c93ed-fa5c-4d3a-bc4d-b434d4ca2df4"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library '705530001'",
+            "items": [
+                {
+                    "description": "Footprint J5",
+                    "pos": {
+                        "x": 114.0,
+                        "y": 134.814593
+                    },
+                    "uuid": "f98f7e23-ebac-494d-82fe-7f8bd8bc5879"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "Text height out of range (board setup constraints silk text height min height 1.0000 mm; actual 0.7874 mm)",
+            "items": [
+                {
+                    "description": "Reference field of Y1",
+                    "pos": {
+                        "x": 82.05,
+                        "y": 101.55
+                    },
+                    "uuid": "adb16a13-19f8-4010-bba9-4a1f9c0a1dc8"
+                }
+            ],
+            "severity": "warning",
+            "type": "text_height"
+        },
+        {
+            "description": "Text height out of range (board setup constraints silk text height min height 1.0000 mm; actual 0.6400 mm)",
+            "items": [
+                {
+                    "description": "Reference field of U35",
+                    "pos": {
+                        "x": 67.1,
+                        "y": 119.0
+                    },
+                    "uuid": "a59c1163-5c86-44f7-9332-0545a7634b08"
+                }
+            ],
+            "severity": "warning",
+            "type": "text_height"
+        },
+        {
+            "description": "Text height out of range (board setup constraints silk text height min height 1.0000 mm; actual 0.6400 mm)",
+            "items": [
+                {
+                    "description": "Reference field of U33",
+                    "pos": {
+                        "x": 56.0,
+                        "y": 120.0
+                    },
+                    "uuid": "4b628724-2606-484e-bbac-b001acc86b19"
+                }
+            ],
+            "severity": "warning",
+            "type": "text_height"
+        },
+        {
+            "description": "Text height out of range (board setup constraints silk text height min height 1.0000 mm; actual 0.6400 mm)",
+            "items": [
+                {
+                    "description": "Reference field of U36",
+                    "pos": {
+                        "x": 68.1,
+                        "y": 114.0
+                    },
+                    "uuid": "cdbbc1b0-9d5e-4494-b00b-7c8c01833019"
+                }
+            ],
+            "severity": "warning",
+            "type": "text_height"
+        },
+        {
+            "description": "Text height out of range (board setup constraints silk text height min height 1.0000 mm; actual 0.6400 mm)",
+            "items": [
+                {
+                    "description": "Reference field of U34",
+                    "pos": {
+                        "x": 57.0,
+                        "y": 115.0
+                    },
+                    "uuid": "64abd662-361e-45c7-a874-2ae80f3a35b1"
+                }
+            ],
+            "severity": "warning",
+            "type": "text_height"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Reference field of R4",
+                    "pos": {
+                        "x": 37.67,
+                        "y": 130.0
+                    },
+                    "uuid": "56274a76-835a-4419-83e0-67d40eaefdc2"
+                },
+                {
+                    "description": "Segment of SW1 on F.Silkscreen",
+                    "pos": {
+                        "x": 37.675,
+                        "y": 129.35
+                    },
+                    "uuid": "d8b194d6-6977-4b32-9bca-184b242aeb8d"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Reference field of R46",
+                    "pos": {
+                        "x": 162.1,
+                        "y": 101.57
+                    },
+                    "uuid": "48a64f4c-8f5b-4107-9a8b-e016418f7bfd"
+                },
+                {
+                    "description": "Segment of C51 on F.Silkscreen",
+                    "pos": {
+                        "x": 161.74,
+                        "y": 100.195563
+                    },
+                    "uuid": "61bf27cb-3908-4c02-894c-431c94e9eafe"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Segment of C51 on F.Silkscreen",
+                    "pos": {
+                        "x": 162.804437,
+                        "y": 101.26
+                    },
+                    "uuid": "2ff711fb-682a-443a-ae2d-eb00c7e54f35"
+                },
+                {
+                    "description": "Reference field of R46",
+                    "pos": {
+                        "x": 162.1,
+                        "y": 101.57
+                    },
+                    "uuid": "48a64f4c-8f5b-4107-9a8b-e016418f7bfd"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Reference field of R45",
+                    "pos": {
+                        "x": 162.7,
+                        "y": 89.83
+                    },
+                    "uuid": "435a6511-ed6f-453d-ae57-d7c0947c3e4b"
+                },
+                {
+                    "description": "Reference field of C48",
+                    "pos": {
+                        "x": 164.6,
+                        "y": 90.9
+                    },
+                    "uuid": "56331041-b851-4e0f-bb95-5b84242df347"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Reference field of R41",
+                    "pos": {
+                        "x": 146.1,
+                        "y": 101.57
+                    },
+                    "uuid": "0da3bd7b-7e56-42c0-99c6-cece44f889fa"
+                },
+                {
+                    "description": "Segment of C46 on F.Silkscreen",
+                    "pos": {
+                        "x": 145.74,
+                        "y": 100.195563
+                    },
+                    "uuid": "ed93969b-7a8f-4467-a512-e8d515a101f6"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Reference field of R41",
+                    "pos": {
+                        "x": 146.1,
+                        "y": 101.57
+                    },
+                    "uuid": "0da3bd7b-7e56-42c0-99c6-cece44f889fa"
+                },
+                {
+                    "description": "Segment of C46 on F.Silkscreen",
+                    "pos": {
+                        "x": 146.804437,
+                        "y": 101.26
+                    },
+                    "uuid": "7f1e7761-3603-47ed-96f4-35d0503bb394"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Reference field of R36",
+                    "pos": {
+                        "x": 130.1,
+                        "y": 101.57
+                    },
+                    "uuid": "323b25ff-0dc8-434a-9c80-8f9629b3b9ae"
+                },
+                {
+                    "description": "Segment of C41 on F.Silkscreen",
+                    "pos": {
+                        "x": 129.74,
+                        "y": 100.195563
+                    },
+                    "uuid": "5992d566-ee1f-4efc-83a6-a43fc6fd522e"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Segment of C41 on F.Silkscreen",
+                    "pos": {
+                        "x": 130.804437,
+                        "y": 101.26
+                    },
+                    "uuid": "11c520a1-c66a-40dd-9f98-4252d68dca59"
+                },
+                {
+                    "description": "Reference field of R36",
+                    "pos": {
+                        "x": 130.1,
+                        "y": 101.57
+                    },
+                    "uuid": "323b25ff-0dc8-434a-9c80-8f9629b3b9ae"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Segment of C26 on F.Silkscreen",
+                    "pos": {
+                        "x": 146.804437,
+                        "y": 80.26
+                    },
+                    "uuid": "44c98ac2-5b53-4fb8-b3a9-575a966e8b1f"
+                },
+                {
+                    "description": "Reference field of R21",
+                    "pos": {
+                        "x": 146.1,
+                        "y": 80.57
+                    },
+                    "uuid": "c299f8aa-44b9-49bc-81cc-2001412945a8"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Segment of C26 on F.Silkscreen",
+                    "pos": {
+                        "x": 145.74,
+                        "y": 79.195563
+                    },
+                    "uuid": "418fe186-aed4-46f4-bde2-71f615d6375e"
+                },
+                {
+                    "description": "Reference field of R21",
+                    "pos": {
+                        "x": 146.1,
+                        "y": 80.57
+                    },
+                    "uuid": "c299f8aa-44b9-49bc-81cc-2001412945a8"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Reference field of C43",
+                    "pos": {
+                        "x": 148.6,
+                        "y": 90.9
+                    },
+                    "uuid": "7a7d596d-2df9-4708-847d-508a161787ef"
+                },
+                {
+                    "description": "Reference field of R40",
+                    "pos": {
+                        "x": 146.7,
+                        "y": 89.83
+                    },
+                    "uuid": "b23e7468-21b7-4731-bd86-2b1e92294b21"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Segment of C21 on F.Silkscreen",
+                    "pos": {
+                        "x": 129.74,
+                        "y": 79.195563
+                    },
+                    "uuid": "b94ccd0f-0f80-476b-834c-ff1450de33af"
+                },
+                {
+                    "description": "Reference field of R16",
+                    "pos": {
+                        "x": 130.1,
+                        "y": 80.57
+                    },
+                    "uuid": "bb5fe335-22f8-4c63-8469-0e869b2c7070"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Segment of C21 on F.Silkscreen",
+                    "pos": {
+                        "x": 130.804437,
+                        "y": 80.26
+                    },
+                    "uuid": "aa0e59c9-0de0-42ea-8ad0-76ef3578ab4c"
+                },
+                {
+                    "description": "Reference field of R16",
+                    "pos": {
+                        "x": 130.1,
+                        "y": 80.57
+                    },
+                    "uuid": "bb5fe335-22f8-4c63-8469-0e869b2c7070"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Reference field of R35",
+                    "pos": {
+                        "x": 130.7,
+                        "y": 89.83
+                    },
+                    "uuid": "25587069-cd23-4672-b703-67957bed1a45"
+                },
+                {
+                    "description": "Reference field of C38",
+                    "pos": {
+                        "x": 132.6,
+                        "y": 90.9
+                    },
+                    "uuid": "93193f47-f132-4210-bc89-17260c86ff1e"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Reference field of C18",
+                    "pos": {
+                        "x": 132.6,
+                        "y": 69.9
+                    },
+                    "uuid": "71e8ea15-3d55-432a-933d-94eb46cf8ea7"
+                },
+                {
+                    "description": "Reference field of R15",
+                    "pos": {
+                        "x": 130.7,
+                        "y": 68.83
+                    },
+                    "uuid": "ff6b4b2e-294f-41a8-a57e-a9e5ba6eb888"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Reference field of R20",
+                    "pos": {
+                        "x": 146.7,
+                        "y": 68.83
+                    },
+                    "uuid": "8a478125-b26b-4355-9b8d-a0c6d6143650"
+                },
+                {
+                    "description": "Reference field of C23",
+                    "pos": {
+                        "x": 148.6,
+                        "y": 69.9
+                    },
+                    "uuid": "ae2d0d3e-935d-45be-9d56-6bc5f03b7872"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Footprint text of SW3 (*)",
+                    "pos": {
+                        "x": 88.778,
+                        "y": 55.0
+                    },
+                    "uuid": "5f25c7bc-9932-454f-87ee-583b0ae2b24d"
+                },
+                {
+                    "description": "Segment of SW3 on F.Silkscreen",
+                    "pos": {
+                        "x": 88.432999,
+                        "y": 56.155674
+                    },
+                    "uuid": "8123bdc9-478a-4457-84b4-1cd223d46d33"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Footprint text of SW3 (*)",
+                    "pos": {
+                        "x": 88.778,
+                        "y": 55.0
+                    },
+                    "uuid": "0741adc1-154b-4ed1-ab5d-16b6ad585d4b"
+                },
+                {
+                    "description": "Segment of SW3 on F.Silkscreen",
+                    "pos": {
+                        "x": 88.432999,
+                        "y": 56.155674
+                    },
+                    "uuid": "8123bdc9-478a-4457-84b4-1cd223d46d33"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Reference field of R30",
+                    "pos": {
+                        "x": 178.7,
+                        "y": 68.83
+                    },
+                    "uuid": "128cfc62-9b38-4c73-a47a-75a4f962d83c"
+                },
+                {
+                    "description": "Reference field of C33",
+                    "pos": {
+                        "x": 180.6,
+                        "y": 69.9
+                    },
+                    "uuid": "378edcb3-be95-47eb-b4f7-77722a8b7048"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Segment of C36 on F.Silkscreen",
+                    "pos": {
+                        "x": 177.74,
+                        "y": 79.195563
+                    },
+                    "uuid": "4546f080-b8ab-4cc0-861b-b60cf0d95573"
+                },
+                {
+                    "description": "Reference field of R31",
+                    "pos": {
+                        "x": 178.1,
+                        "y": 80.57
+                    },
+                    "uuid": "f7d3f3b7-ef17-4da1-b066-38854df31147"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Segment of C36 on F.Silkscreen",
+                    "pos": {
+                        "x": 178.804437,
+                        "y": 80.26
+                    },
+                    "uuid": "adf82652-cae4-4e70-9a74-5d9e34715973"
+                },
+                {
+                    "description": "Reference field of R31",
+                    "pos": {
+                        "x": 178.1,
+                        "y": 80.57
+                    },
+                    "uuid": "f7d3f3b7-ef17-4da1-b066-38854df31147"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Reference field of R25",
+                    "pos": {
+                        "x": 162.7,
+                        "y": 68.83
+                    },
+                    "uuid": "6ac82e26-d501-4114-97a0-5bd95c3c9e25"
+                },
+                {
+                    "description": "Reference field of C28",
+                    "pos": {
+                        "x": 164.6,
+                        "y": 69.9
+                    },
+                    "uuid": "7671c7e2-20ea-4e3d-babd-8f2e53427d8b"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Reference field of R66",
+                    "pos": {
+                        "x": 147.6,
+                        "y": 57.8
+                    },
+                    "uuid": "696521fb-a5bd-4040-9e7a-bb96cd95bbcc"
+                },
+                {
+                    "description": "Reference field of R67",
+                    "pos": {
+                        "x": 150.0,
+                        "y": 57.0
+                    },
+                    "uuid": "855bd359-b93f-45d3-8dd5-e74d61302da2"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Segment of C31 on F.Silkscreen",
+                    "pos": {
+                        "x": 162.804437,
+                        "y": 80.26
+                    },
+                    "uuid": "defc6f4c-fd75-4bd8-9dee-e8e143341e5e"
+                },
+                {
+                    "description": "Reference field of R26",
+                    "pos": {
+                        "x": 162.1,
+                        "y": 80.57
+                    },
+                    "uuid": "f9b1442a-7337-43f3-b74d-c6460b2f887f"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Segment of C31 on F.Silkscreen",
+                    "pos": {
+                        "x": 161.74,
+                        "y": 79.195563
+                    },
+                    "uuid": "df7aba55-8004-4af5-a6ed-f034045b381a"
+                },
+                {
+                    "description": "Reference field of R26",
+                    "pos": {
+                        "x": 162.1,
+                        "y": 80.57
+                    },
+                    "uuid": "f9b1442a-7337-43f3-b74d-c6460b2f887f"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Reference field of C53",
+                    "pos": {
+                        "x": 180.6,
+                        "y": 90.9
+                    },
+                    "uuid": "3f061a77-919e-4aa2-90b0-3a426bd179f7"
+                },
+                {
+                    "description": "Reference field of R50",
+                    "pos": {
+                        "x": 178.7,
+                        "y": 89.83
+                    },
+                    "uuid": "9e677721-f8cb-4b68-b93d-8941a0356d15"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Segment of C56 on F.Silkscreen",
+                    "pos": {
+                        "x": 177.74,
+                        "y": 100.195563
+                    },
+                    "uuid": "3b57b254-a89f-427f-af56-baba991a49c6"
+                },
+                {
+                    "description": "Reference field of R51",
+                    "pos": {
+                        "x": 178.1,
+                        "y": 101.57
+                    },
+                    "uuid": "a3de4d2a-ddf8-451b-af24-b310c70858ba"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Segment of C56 on F.Silkscreen",
+                    "pos": {
+                        "x": 178.804437,
+                        "y": 101.26
+                    },
+                    "uuid": "a3b22b6a-2c21-40fb-addc-8f5603a19810"
+                },
+                {
+                    "description": "Reference field of R51",
+                    "pos": {
+                        "x": 178.1,
+                        "y": 101.57
+                    },
+                    "uuid": "a3de4d2a-ddf8-451b-af24-b310c70858ba"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Reference field of C12",
+                    "pos": {
+                        "x": 74.6,
+                        "y": 84.3
+                    },
+                    "uuid": "f7c47946-ff20-44a0-b995-b1b34469e85c"
+                },
+                {
+                    "description": "Reference field of R57",
+                    "pos": {
+                        "x": 76.8,
+                        "y": 83.4
+                    },
+                    "uuid": "ffa4efb6-434a-4bb6-917c-d08eee8c3843"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Reference field of R4",
+                    "pos": {
+                        "x": 37.67,
+                        "y": 130.0
+                    },
+                    "uuid": "56274a76-835a-4419-83e0-67d40eaefdc2"
+                },
+                {
+                    "description": "Pad 2 [Net-(R4-Pad2)] of SW1 on F.Cu",
+                    "pos": {
+                        "x": 37.8,
+                        "y": 130.375
+                    },
+                    "uuid": "22fbb3bf-cf9e-45cb-bc89-58b8f74c52c5"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Footprint text of U2 (*)",
+                    "pos": {
+                        "x": 80.147,
+                        "y": 120.3744
+                    },
+                    "uuid": "fb422c76-78f8-4aa3-bbcf-93852d6055e9"
+                },
+                {
+                    "description": "Pad 2 [+3V3] of C22 on F.Cu",
+                    "pos": {
+                        "x": 80.0,
+                        "y": 120.285
+                    },
+                    "uuid": "d438c436-6868-45ea-aee0-2957598f3fce"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Footprint text of U2 (*)",
+                    "pos": {
+                        "x": 80.147,
+                        "y": 120.3744
+                    },
+                    "uuid": "d8b229cb-7ee6-4f87-b7fd-87612b6e871a"
+                },
+                {
+                    "description": "Pad 2 [+3V3] of C22 on F.Cu",
+                    "pos": {
+                        "x": 80.0,
+                        "y": 120.285
+                    },
+                    "uuid": "d438c436-6868-45ea-aee0-2957598f3fce"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Reference field of C48",
+                    "pos": {
+                        "x": 164.6,
+                        "y": 90.9
+                    },
+                    "uuid": "56331041-b851-4e0f-bb95-5b84242df347"
+                },
+                {
+                    "description": "Pad 2 [GND] of R45 on F.Cu",
+                    "pos": {
+                        "x": 163.21,
+                        "y": 91.0
+                    },
+                    "uuid": "4b2d3ac3-4a40-4e72-bccd-2cb515b2e239"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Footprint text of U16 (*)",
+                    "pos": {
+                        "x": 166.147,
+                        "y": 120.3744
+                    },
+                    "uuid": "f7166e24-27e7-49ed-bd0e-243a772397a5"
+                },
+                {
+                    "description": "Pad 2 [+3V3] of C57 on F.Cu",
+                    "pos": {
+                        "x": 166.0,
+                        "y": 120.285
+                    },
+                    "uuid": "bc066509-31b1-48a2-aa1e-2080aa16bfea"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Footprint text of U16 (*)",
+                    "pos": {
+                        "x": 166.147,
+                        "y": 120.3744
+                    },
+                    "uuid": "3aa71458-eac4-4990-9ac7-3333a55916ee"
+                },
+                {
+                    "description": "Pad 2 [+3V3] of C57 on F.Cu",
+                    "pos": {
+                        "x": 166.0,
+                        "y": 120.285
+                    },
+                    "uuid": "bc066509-31b1-48a2-aa1e-2080aa16bfea"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Footprint text of U14 (*)",
+                    "pos": {
+                        "x": 155.147,
+                        "y": 120.3744
+                    },
+                    "uuid": "9a6289d7-b259-4d97-b3b1-b835b47dd0fb"
+                },
+                {
+                    "description": "Pad 2 [+3V3] of C52 on F.Cu",
+                    "pos": {
+                        "x": 155.0,
+                        "y": 120.285
+                    },
+                    "uuid": "07a8eaed-5d01-4435-b31e-ac80cb74c77b"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Footprint text of U14 (*)",
+                    "pos": {
+                        "x": 155.147,
+                        "y": 120.3744
+                    },
+                    "uuid": "009d1243-84a4-44cd-9608-12fb1d82789e"
+                },
+                {
+                    "description": "Pad 2 [+3V3] of C52 on F.Cu",
+                    "pos": {
+                        "x": 155.0,
+                        "y": 120.285
+                    },
+                    "uuid": "07a8eaed-5d01-4435-b31e-ac80cb74c77b"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Footprint text of U6 (*)",
+                    "pos": {
+                        "x": 105.147,
+                        "y": 120.188993
+                    },
+                    "uuid": "a364108e-2401-4dd1-935d-e181789e14b7"
+                },
+                {
+                    "description": "Pad 2 [+3V3] of C32 on F.Cu",
+                    "pos": {
+                        "x": 105.0,
+                        "y": 120.099593
+                    },
+                    "uuid": "2310140c-3106-486e-b375-5f4229195f68"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Footprint text of U6 (*)",
+                    "pos": {
+                        "x": 105.147,
+                        "y": 120.188993
+                    },
+                    "uuid": "700bff47-b6b5-4b28-9852-ef33c19c0e5d"
+                },
+                {
+                    "description": "Pad 2 [+3V3] of C32 on F.Cu",
+                    "pos": {
+                        "x": 105.0,
+                        "y": 120.099593
+                    },
+                    "uuid": "2310140c-3106-486e-b375-5f4229195f68"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Footprint text of U4 (*)",
+                    "pos": {
+                        "x": 91.147,
+                        "y": 120.3744
+                    },
+                    "uuid": "cd041539-a671-47ef-a138-1431196c39f9"
+                },
+                {
+                    "description": "Pad 2 [+3V3] of C27 on F.Cu",
+                    "pos": {
+                        "x": 91.0,
+                        "y": 120.285
+                    },
+                    "uuid": "52e0a68c-9b84-48c7-b5e2-2428068004f7"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Footprint text of U4 (*)",
+                    "pos": {
+                        "x": 91.147,
+                        "y": 120.3744
+                    },
+                    "uuid": "b7fc1f39-ff85-4ba2-8e13-3f71decc90ce"
+                },
+                {
+                    "description": "Pad 2 [+3V3] of C27 on F.Cu",
+                    "pos": {
+                        "x": 91.0,
+                        "y": 120.285
+                    },
+                    "uuid": "52e0a68c-9b84-48c7-b5e2-2428068004f7"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Reference field of C43",
+                    "pos": {
+                        "x": 148.6,
+                        "y": 90.9
+                    },
+                    "uuid": "7a7d596d-2df9-4708-847d-508a161787ef"
+                },
+                {
+                    "description": "Pad 2 [GND] of R40 on F.Cu",
+                    "pos": {
+                        "x": 147.21,
+                        "y": 91.0
+                    },
+                    "uuid": "842927c7-2c52-4e61-a09b-f1de6c35307a"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Reference field of C38",
+                    "pos": {
+                        "x": 132.6,
+                        "y": 90.9
+                    },
+                    "uuid": "93193f47-f132-4210-bc89-17260c86ff1e"
+                },
+                {
+                    "description": "Pad 2 [GND] of R35 on F.Cu",
+                    "pos": {
+                        "x": 131.21,
+                        "y": 91.0
+                    },
+                    "uuid": "70bb56be-dfa3-4c51-8148-5ce79e261ac3"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Reference field of C18",
+                    "pos": {
+                        "x": 132.6,
+                        "y": 69.9
+                    },
+                    "uuid": "71e8ea15-3d55-432a-933d-94eb46cf8ea7"
+                },
+                {
+                    "description": "Pad 2 [GND] of R15 on F.Cu",
+                    "pos": {
+                        "x": 131.21,
+                        "y": 70.0
+                    },
+                    "uuid": "b0b17b89-26c1-49e2-8ec2-3fcafd6c81a8"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Reference field of C33",
+                    "pos": {
+                        "x": 180.6,
+                        "y": 69.9
+                    },
+                    "uuid": "378edcb3-be95-47eb-b4f7-77722a8b7048"
+                },
+                {
+                    "description": "Pad 2 [GND] of R30 on F.Cu",
+                    "pos": {
+                        "x": 179.21,
+                        "y": 70.0
+                    },
+                    "uuid": "93946cb3-539e-4a6d-bda3-194f9f71c35f"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Reference field of C23",
+                    "pos": {
+                        "x": 148.6,
+                        "y": 69.9
+                    },
+                    "uuid": "ae2d0d3e-935d-45be-9d56-6bc5f03b7872"
+                },
+                {
+                    "description": "Pad 2 [GND] of R20 on F.Cu",
+                    "pos": {
+                        "x": 147.21,
+                        "y": 70.0
+                    },
+                    "uuid": "85b4d4c8-d35d-4f6e-89be-ec80c6c8a49c"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Reference field of C28",
+                    "pos": {
+                        "x": 164.6,
+                        "y": 69.9
+                    },
+                    "uuid": "7671c7e2-20ea-4e3d-babd-8f2e53427d8b"
+                },
+                {
+                    "description": "Pad 2 [GND] of R25 on F.Cu",
+                    "pos": {
+                        "x": 163.21,
+                        "y": 70.0
+                    },
+                    "uuid": "8276ec52-7e77-4c99-971a-5062b8b44878"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Reference field of C53",
+                    "pos": {
+                        "x": 180.6,
+                        "y": 90.9
+                    },
+                    "uuid": "3f061a77-919e-4aa2-90b0-3a426bd179f7"
+                },
+                {
+                    "description": "Pad 2 [GND] of R50 on F.Cu",
+                    "pos": {
+                        "x": 179.21,
+                        "y": 91.0
+                    },
+                    "uuid": "43ad7ac1-6944-4011-9d04-60729bfc6f44"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Footprint text of U10 (*)",
+                    "pos": {
+                        "x": 130.147,
+                        "y": 120.3744
+                    },
+                    "uuid": "46c1b65f-620c-4e79-956a-96513f6df93c"
+                },
+                {
+                    "description": "Pad 2 [+3V3] of C42 on F.Cu",
+                    "pos": {
+                        "x": 130.0,
+                        "y": 120.285
+                    },
+                    "uuid": "eb31b797-8441-4cd6-8243-dee8e3069b8f"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Footprint text of U10 (*)",
+                    "pos": {
+                        "x": 130.147,
+                        "y": 120.3744
+                    },
+                    "uuid": "4f0902fe-bf51-4c86-a760-8ac142776e58"
+                },
+                {
+                    "description": "Pad 2 [+3V3] of C42 on F.Cu",
+                    "pos": {
+                        "x": 130.0,
+                        "y": 120.285
+                    },
+                    "uuid": "eb31b797-8441-4cd6-8243-dee8e3069b8f"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Footprint text of U12 (*)",
+                    "pos": {
+                        "x": 141.147,
+                        "y": 120.3744
+                    },
+                    "uuid": "6db7fcaa-6beb-4472-bc7d-e3b0a1d3c217"
+                },
+                {
+                    "description": "Pad 2 [+3V3] of C47 on F.Cu",
+                    "pos": {
+                        "x": 141.0,
+                        "y": 120.285
+                    },
+                    "uuid": "b39e3de6-1058-4d33-a82d-6f0818e9f707"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Footprint text of U12 (*)",
+                    "pos": {
+                        "x": 141.147,
+                        "y": 120.3744
+                    },
+                    "uuid": "7124ebcd-f2fb-4067-8b45-31d19bb698cc"
+                },
+                {
+                    "description": "Pad 2 [+3V3] of C47 on F.Cu",
+                    "pos": {
+                        "x": 141.0,
+                        "y": 120.285
+                    },
+                    "uuid": "b39e3de6-1058-4d33-a82d-6f0818e9f707"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Footprint text of U8 (*)",
+                    "pos": {
+                        "x": 116.147,
+                        "y": 120.188993
+                    },
+                    "uuid": "49f75fa2-179d-41a9-9561-5a9b2fc5c8db"
+                },
+                {
+                    "description": "Pad 2 [+3V3] of C37 on F.Cu",
+                    "pos": {
+                        "x": 116.0,
+                        "y": 120.099593
+                    },
+                    "uuid": "14260179-87fb-4091-8c1f-6adf5100348a"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Footprint text of U8 (*)",
+                    "pos": {
+                        "x": 116.147,
+                        "y": 120.188993
+                    },
+                    "uuid": "d92d0801-e7f2-4b9a-8416-84189ad54eb4"
+                },
+                {
+                    "description": "Pad 2 [+3V3] of C37 on F.Cu",
+                    "pos": {
+                        "x": 116.0,
+                        "y": 120.099593
+                    },
+                    "uuid": "14260179-87fb-4091-8c1f-6adf5100348a"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        }
+    ]
+}

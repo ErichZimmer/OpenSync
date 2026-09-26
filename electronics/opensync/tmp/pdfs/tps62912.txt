@@ -1,0 +1,1988 @@
+                                                                                                                             TPS62912, TPS62913
+                                                                                              SLVSFP4B – AUGUST 2020 – REVISED MARCH 2021
+
+     TPS6291x 3-V to 17-V, 2-A/3-A Low Noise and Low Ripple Buck Converter with
+                     Integrated Ferrite Bead Filter Compensation
+
+1 Features                                                             3 Description
+•   Low output 1/f noise < 20 µVRMS                                    The TPS6291x devices are a family of high-efficiency,
+    (100 Hz to 100 kHz)                                                low noise and low ripple current mode synchronous
+•   Low output voltage ripple < 10 µVRMS after ferrite                 buck converters. The devices are ideal for noise
+    bead                                                               sensitive applications that would normally use an LDO
+•   High PSRR of > 65 dB (up to 100 kHz)                               for post regulation such as high-speed ADCs, clock
+•   2.2-MHz or 1-MHz fixed frequency peak current                      and jitter cleaner, serializer, de-serializer, and radar
+    mode control                                                       applications.
+•   Synchronizable with external clock (optional)                      The devices operate at a fixed switching frequency of
+•   Integrated loop compensation supports ferrite                      2.2 MHz or 1 MHz, and can be synchronized to an
+    bead for second stage L-C filter with 30-dB                        external clock.
+    attenuation (optional)                                             To further reduce the output voltage ripple, the device
+•   Spread spectrum modulation (optional)                              integrates loop compensation to operate with an
+•   3.0-V to 17-V input voltage range                                  optional second-stage ferrite bead L-C filter. This
+•   0.8-V to 5.5-V output voltage range                                allows an output voltage ripple below 10 µVRMS.
+•   57-mΩ/20-mΩ RDSon                                                  Low-frequency noise levels, similar to a low-noise
+•   Output voltage accuracy of ±1%                                     LDO, are achieved by filtering the internal voltage
+•   Precise enable input allows                                        reference with a capacitor connected to the NR/SS
+    – User-defined undervoltage lockout                                pin.
+    – Exact sequencing                                                 The optional spread spectrum modulation scheme
+•   Adjustable soft start                                              spreads the DC/DC switching frequency over a wider
+•   Power-good output                                                  span, which lowers the mixing spurs.
+•   Output discharge (optional)
+                                                                                               Device Information
+•   –40°C to 150°C junction temperature range
+                                                                         DEVICE         OUTPUT                         (1)
+•   2.0-mm × 2.0-mm QFN with 0.5-mm pitch                                                              PACKAGE                  BODY SIZE (NOM)
+                                                                          NAME         CURRENT
+•   Create a custom design using the TPS6291x with                     TPS62912             2A
+    the WEBENCH® Power Designer                                                                         QFN (10)                 2.0 mm × 2.0 mm
+                                                                       TPS62913             3A
+2 Applications                                                         (1)    For all available packages, see the orderable addendum at
+•   Telecom infrastructure                                                    the end of the data sheet.
+•   Test and measurement
+•   Aerospace and defense (radar/avionics)
+•   Medical
+                                                                                                                                      Ferrite
+                                                                                                       2.2µH                          Bead
+                                                             Vin                     VIN         SW                                                      Vo
+                                                             12V                                                                                      3.3V/3A
+                                                              2x10µF                 EN/SYNC     VO
+                                                                                                                             3x22µF
+                                                                                     S-CONF      FB
+                                                                                                                                            15.4k
+                                                                             2.2nF                                                                  2x22µF
+                                                                                     PSNS      NR/SS
+                                                                                                               470nF                        4.87k
+                                                                                     PGND        PG
+
+
+
+
+                                                                                              Typical Application
+            Output Noise Versus Frequency
+
+
+
+     An IMPORTANT NOTICE at the end of this data sheet addresses availability, warranty, changes, use in safety-critical applications,
+     intellectual property matters and other important disclaimers. PRODUCTION DATA.
+TPS62912, TPS62913
+SLVSFP4B – AUGUST 2020 – REVISED MARCH 2021                                                                                                                      www.ti.com
+
+
+                                                                        Table of Contents
+1 Features............................................................................1     7.4 Device Functional Modes..........................................21
+2 Applications..................................................................... 1     8 Application and Implementation.................................. 22
+3 Description.......................................................................1       8.1 Application Information............................................. 22
+4 Revision History.............................................................. 2          8.2 Typical Applications.................................................. 22
+5 Pin Configuration and Functions...................................3                     9 Power Supply Recommendations................................30
+6 Specifications.................................................................. 4      10 Layout...........................................................................30
+  6.1 Absolute Maximum Ratings ....................................... 4                    10.1 Layout Guidelines................................................... 30
+  6.2 ESD Ratings .............................................................. 4          10.2 Layout Example...................................................... 31
+  6.3 Recommended Operating Conditions ........................4                          11 Device and Documentation Support..........................33
+  6.4 Thermal Information ...................................................5              11.1 Device Support........................................................33
+  6.5 Electrical Characteristics ............................................5              11.2 Receiving Notification of Documentation Updates.. 33
+  6.6 Typical Characteristics................................................ 7             11.3 Support Resources................................................. 33
+7 Detailed Description......................................................17              11.5 Electrostatic Discharge Caution.............................. 33
+  7.1 Overview................................................................... 17        11.6 Glossary.................................................................. 33
+  7.2 Functional Block Diagram......................................... 17                12 Mechanical, Packaging, and Orderable
+  7.3 Feature Description...................................................18              Information.................................................................... 34
+
+
+
+4 Revision History
+Changes from Revision A (September 2020) to Revision B (March 2021)                                                        Page
+• Changed device status from Advance Information to Production Data ............................................................. 1
+
+
+
+
+2       Submit Document Feedback                                                                                           Copyright © 2021 Texas Instruments Incorporated
+
+                                                              Product Folder Links: TPS62912 TPS62913
+                                                                                                                                      TPS62912, TPS62913
+www.ti.com                                                                                                      SLVSFP4B – AUGUST 2020 – REVISED MARCH 2021
+
+
+5 Pin Configuration and Functions
+                                                           PGND 4                            3 VO
+                                                               PG 5                          2 SW
+                                                              VIN 6                          1 EN/SYNC
+
+                                                                      7     8       9 10
+
+
+
+
+                                                                            NR/SS
+                                                                                    FB
+                                                                                         S-CONF
+                                                                     PSNS
+                                          Figure 5-1. 10-Pin QFN RPU Package (Top View)
+
+                                                              Table 5-1. Pin Functions
+           PIN
+                           I/O                                                                    DESCRIPTION
+    NO.     NAME
+                                 Enable/Disable pin including threshold-comparator. Connect to logic low to disable the device. Pull high to enable the device.
+     1      EN/SYNC         I    This pin has an internal pulldown resistor of typically 500 kΩ when the device is disabled. Apply a clock to this pin to
+                                 synchronize the device.
+     2      SW             I/O   Switch pin of the power stage
+     3      VO              I    Output voltage sense pin. This pin needs to be connected directly after the first inductor.
+     4      PGND                 Power ground connection
+                                 Open-drain power-good output. This pin is pulled to GND when VOUT is below the power-good threshold. It requires a pullup
+     5      PG              O
+                                 resistor to output a logic high. It can be left open or tied to GND if not used.
+     6      VIN             I    Power supply input voltage pin
+     7      PSNS            I    Power sense ground. Connect directly to the ground plane.
+     8      NR/SS           O    A capacitor connected to this pin sets the soft-start time and low frequency noise level of the device.
+     9      FB              I    Feedback pin of the device
+     10     S-CONF          O    Smart Configuration pin. This pin configures the operation modes of the device. See Table 7-1.
+
+
+
+
+Copyright © 2021 Texas Instruments Incorporated                                                                                Submit Document Feedback           3
+                                                      Product Folder Links: TPS62912 TPS62913
+TPS62912, TPS62913
+SLVSFP4B – AUGUST 2020 – REVISED MARCH 2021                                                                                               www.ti.com
+
+
+6 Specifications
+6.1 Absolute Maximum Ratings
+over operating junction temperature range (unless otherwise noted)(1)
+                                                                                                        MIN                MAX            UNIT
+                         VIN, EN/SYNC, PG, S-CONF                                                      – 0.3                  18           V
+                         SW (DC)                                                                       – 0.3          VIN + 0.3            V
+    Voltage(2)           SW (AC, less than 10ns)(3)                                                    – 2.5                  21           V
+                         VO, FB, NR/SS                                                                 – 0.3                   6           V
+                         PSNS                                                                          – 0.3                  0.3          V
+    Sink Current         PG                                                                                                   10          mA
+    TJ                   Junction temperature                                                           –40                150             °C
+    Tstg                 Storage temperature                                                            –65                150             °C
+
+(1)          Stresses beyond those listed under Absolute Maximum Rating may cause permanent damage to the device. These are stress
+             ratings only, which do not imply functional operation of the device at these or any other conditions beyond those indicated
+             under Recommended Operating Condition. Exposure to absolute-maximum-rated conditions for extended periods may affect device
+             reliability.
+(2)          All voltage values are with respect to the network ground terminal
+(3)          While switching
+
+
+6.2 ESD Ratings
+                                                                                                                      VALUE                UNIT
+                                                       Human body model (HBM), per ANSI/ESDA/JEDEC JS-001,
+                                                                                                                      ±2000
+                                                       all pins(1)
+    V(ESD)             Electrostatic discharge                                                                                              V
+                                                       Charged device model (CDM), per JEDEC specification
+                                                                                                                       ±500
+                                                       JESD22-C101, all pins(2)
+
+(1)          JEDEC document JEP155 states that 500-V HBM allows safe manufacturing with a standard ESD control process.
+(2)          JEDEC document JEP157 states that 250-V CDM allows safe manufacturing with a standard ESD control process.
+
+
+6.3 Recommended Operating Conditions
+over operating junction temperature range (unless otherwise noted)
+                                                                                                     MIN          NOM           MAX         UNIT
+    VIN             Input voltage                                                                     3.0                            17         V
+    VOUT            Output voltage                                                                    0.8                           5.5         V
+    CIN             Effective input capacitance                                                         5            10                        µF
+    L1              Effective output inductance                                                     -30%       2.2 / 4.7            20%        µH
+    COUT            Effective output capacitance                                                       40            47              80        µF
+    Lf              Effective filter inductance                                                         0            10              50        nH
+    Cf              Effective filter capacitance                                                       20            40             160        µF
+    COUT + Cf       Effective total output capacitance, including first and second L-C filter          40                           200        µF
+    IOUT            Output current for TPS62913                                                         0                             3         A
+    IOUT            Output current for TPS62912                                                         0                             2         A
+    TJ (1)          Junction temperature                                                             –40                            150        °C
+
+(1)          Operating lifetime is derated at junction temperatures above 125°C.
+
+
+
+
+4            Submit Document Feedback                                                                  Copyright © 2021 Texas Instruments Incorporated
+
+                                                         Product Folder Links: TPS62912 TPS62913
+                                                                                                                                TPS62912, TPS62913
+www.ti.com                                                                                           SLVSFP4B – AUGUST 2020 – REVISED MARCH 2021
+
+
+6.4 Thermal Information
+                                                                                                     TPS6291x
+                           THERMAL METRIC(1)                                                     RPU 10-pin QFN                              UNIT
+                                                                                 JEDEC 51-7 PCB              TPS6291xEVM-077
+ RθJA             Junction-to-ambient thermal resistance                                87.7                          56.6                   °C/W
+ RθJC(top)        Junction-to-case (top) thermal resistance                             61.9                          n/a (2)                °C/W
+ RθJB             Junction-to-board thermal resistance                                  22.2                          n/a (2)                °C/W
+ ΨJT              Junction-to-top characterization parameter                             1.9                           1.3                   °C/W
+ YJB              Junction-to-board characterization parameter                          22.2                          22.7                   °C/W
+
+(1)       For more information about traditional and new thermal metrics, see the Semiconductor and IC Package Thermal Metrics application
+          report.
+(2)       Not applicable to an EVM
+
+
+6.5 Electrical Characteristics
+Over recommended input voltage range, TJ= -40℃ to 150℃. Typical values are at Vin=12V andTJ=25℃ (unless otherwise
+noted)
+                       PARAMETER                                          TEST CONDITIONS                     MIN          TYP       MAX      UNIT
+ SUPPLY
+                                                            EN = High, no load, device switching, fsw
+ IQ            Quiescent current                                                                                                 5            mA
+                                                            = 1 MHz
+ ISD           Shutdown current                             EN = GND, TJ = -40°C to 125°C                                    0.3       70      µA
+ VUVLO         Undervoltage lockout                         VIN rising, TJ = -40°C to 125°C                   2.85         2.92        3.0     V
+ VUVLO         Undervoltage lockout                         VIN rising                                                                3.04     V
+ VHYS          Undervoltage lockout hysteresis                                                                               200              mV
+               Thermal shutdown threshold                   TJ rising                                                        170               °C
+ TJSD
+               Thermal shutdown hysteresis                  TJ falling                                                          20             °C
+ CONTROL and INTERFACE
+               High-level input-threshold voltage at EN/
+ VH_EN                                                                                                        0.97         1.01       1.04     V
+               SYNC
+               Low-level input-threshold voltage at EN/
+ VL_EN                                                                                                        0.87           0.9      0.93     V
+               SYNC
+               High-level input-threshold clock signal on
+ VH_SYNC                                                    EN/SYNC = clock                                     1.1                            V
+               EN/SYNC
+               Low-level input-threshold clock signal on
+ VL_SYNC                                                    EN/SYNC = clock                                                            0.4     V
+               EN/SYNC
+                                                            EN/SYNC = GND or VIN, –40℃ ≤ TJ ≤
+ IEN,LKG       Input leakage current into EN/SYNC                                                                                5    160      nA
+                                                            125℃
+ RPD           Pulldown resistor on EN/SYNC                 EN/SYNC = Low                                       330          500               kΩ
+                                                            Time from EN/SYNC high to device starts
+ tdelay        Enable delay time                                                                                                 1             ms
+                                                            switching, RS-CONF = 80.6 kΩ
+ INR/SS        NR/SS source current                                                                           67.5              75    82.5     µA
+                                                            RS-CONF tolerance for all settings
+ RS-CONF       S-CONF resistor step range accuracy                                                            –4%                     +4%
+                                                            according to S-CONF Table
+ VPG           Power good threshold                         VFB rising, referenced to VFB nominal             93%          95%        98%
+ VPG           Power good threshold                         VFB falling, referenced to VFB nominal            88%          90%        93%
+ VPG,OL        Low-level output voltage at PG pin           ISINK = 1 mA                                                               0.4     V
+ IPG,LKG       Input leakage current into PG pin            VPG = 5 V; –40℃ ≤ TJ ≤ 125℃                                          5    500      nA
+ tPG,DLY       Power good delay time                        VFB falling                                                          8             µs
+ OUTPUT
+
+
+
+Copyright © 2021 Texas Instruments Incorporated                                                                   Submit Document Feedback           5
+                                                    Product Folder Links: TPS62912 TPS62913
+TPS62912, TPS62913
+SLVSFP4B – AUGUST 2020 – REVISED MARCH 2021                                                                                       www.ti.com
+
+Over recommended input voltage range, TJ= -40℃ to 150℃. Typical values are at Vin=12V andTJ=25℃ (unless otherwise
+noted)
+                          PARAMETER                               TEST CONDITIONS                      MIN        TYP        MAX      UNIT
+    ton          Minimum on-time                      VIN ≥ 5 V, Iout = 1 A                                         35          70      ns
+    toff         Minimum off-time                     VIN ≥ 5 V, Iout = 1 A                                         50          60      ns
+    VFB          Feedback regulation accuracy         –40℃ ≤TJ ≤ 150℃                                0.792         0.8      0.812       V
+    VFB          Feedback regulation accuracy         –40℃ ≤ TJ ≤ 125℃                               0.792         0.8      0.808       V
+    IFB,LKG      Input leakage current into FB        VFB = 0.8 V, –40℃ ≤ TJ ≤ 125℃                                  1          70     nA
+    IVO,LKG      Input leakage current into VO        VVO = 1.2 V, –40℃ ≤ TJ ≤ 125℃                               0.01          30     µA
+                                                      VIN = 12 V, 1.2 VOUT, 1 A, CNR/SS = 470
+    PSRR         Power supply rejection ratio         nF, fsw = 1 MHz, CFF = open, L1 = 2.2 µH,                     65                 dB
+                                                      COUT = 3 × 22 µF, f ≤ 100 kHz
+                                                      VIN = 5 V, 1.2 VOUT, 1 A, CNR/SS = 470 nF,
+    PSRR         Power supply rejection ratio         fsw = 2.2 MHz, CFF = open, L1 = 2.2 µH,                       70                 dB
+                                                      COUT = 3 × 22 µF, f ≤ 100 kHz
+                                                      VIN = 12 V, BW = 100 Hz to 100 kHz, CNR/
+                                                      SS = 470 nF, fSW = 1 MHz, VOUT = 1.2 V,
+    VNRMS        Output voltage RMS noise                                                                         24.4               µVRMS
+                                                      CFF = open, L1 = 2.2 µH, COUT = 3 × 22
+                                                      µF
+                                                      VIN = 5 V, BW = 100 Hz to 100 kHz, CNR/
+                                                      SS = 470 nF, fSW = 2.2 Hz, VOUT = 1.2 V,
+    VNRMS        Output voltage RMS noise                                                                         13.5               µVRMS
+                                                      CFF = open, L1 = 2.2 µH, COUT = 3 × 22
+                                                      µF
+                                                      VIN = 12 V, fSW = 1 MHz, VOUT = 1.2 V, L1
+    Vopp         Output ripple voltage at fSW         = 4.7 µH, COUT = 3 × 22 µF, Lf = 10 nH,                        9               µVRMS
+                                                      Cf = 2 × 22 µF
+                                                      VIN = 5 V, fSW = 2.2 MHz, VOUT = 1.2 V, L1
+    Vopp         Output ripple voltage at fSW         = 2.2 µH, COUT = 3 × 22 µF, Lf = 10 nH,                    < 2.2               µVRMS
+                                                      Cf = 2 × 22 μF
+                                                      EN/SYNC = GND, VOUT = 1.2 V, VIN ≥ 5
+    RDIS         Output discharge resistance                                                                          7                 Ω
+                                                      V. See Typical Char for plot.
+                                                      EN/SYNC = GND, VOUT = 5 V, VIN ≥ 5 V.
+    RDIS         Output discharge resistance                                                                        32                  Ω
+                                                      See Typical Char for plot.
+    fSW          Switching frequency                  2.2-MHz setting                                 1.98         2.2        2.42    MHz
+    fSW          Synchronization range                2.2-MHz setting                                   1.9        2.2        2.42    MHz
+    fSW          Switching frequency                  1-MHz setting                                     0.9          1        1.18    MHz
+    fSW          Synchronization range                1-MHz setting                                   0.86           1         1.2    MHz
+    DSYNC        Synchronization duty cycle                                                           45%                     55%
+                                                      Phase delay from EN/SYNC rising edge
+    tsync_elay   Synchronization phase delay                                                                        90                  ns
+                                                      to SW rising edge
+    ISWpeak      Peak switch current limit            TPS62912                                          2.9        3.5         4.0      A
+    ISWpeak      Peak switch current limit            TPS62913                                          3.7        4.3         5.1      A
+    ISWvalley    Valley switch current limit          TPS62912                                                     3.4                  A
+    ISWvalley    Valley switch current limit          TPS62913                                                     4.2                  A
+    Inegvalley Negative valley current limit                                                                     –1.39      –0.96       A
+                 High-side FET on-resistance          VIN ≥ 5 V                                                     57          95     mΩ
+    RDS(ON)
+                 Low-side FET on-resistance           VIN ≥ 5 V                                                     20          39     mΩ
+
+
+
+
+6          Submit Document Feedback                                                                Copyright © 2021 Texas Instruments Incorporated
+
+                                                 Product Folder Links: TPS62912 TPS62913
+                                                                                                                  TPS62912, TPS62913
+www.ti.com                                                                                   SLVSFP4B – AUGUST 2020 – REVISED MARCH 2021
+
+
+6.6 Typical Characteristics
+VIN = 12 V, VOUT = 1.2 V, TA = 25°C, BOM = Table 8-1, (unless otherwise noted)
+
+
+
+
+                                                                                                BW = 10 kHz
+   12 V to 1.2 V, 1 A       2.2 μH, 1 MHz         First L-C Only
+                                                                        12 V to 1.2 V, 1 A     2.2 μH, 1 MHz       First L-C Only
+           Figure 6-1. VOUT Ripple After the First L-C Filter
+                                                                             Figure 6-2. VOUT Ripple FFT After the First L-C Filter
+
+
+
+
+                                                                                               BW = 10 kHz
+   12 V to 1.2 V, 1 A      2.2 μH, 1 MHz      First and second L-C
+                                                                        12 V to 1.2 V, 1 A     2.2 μH, 1 MHz   First and second L-C
+         Figure 6-3. VOUT Ripple After the Second L-C Filter
+                                                                           Figure 6-4. VOUT Ripple FFT After the Second L-C Filter
+
+
+
+
+   12 V to 1.2 V, 1 A       2.2 μH, 1 MHz         First L-C Only        12 V to 1.2 V, 1 A    2.2 μH, 1 MHz    First and second L-C
+
+              With Random Spread Spectrum Enabled                                With Random Spread Spectrum Enabled
+
+           Figure 6-5. VOUT Ripple After the First L-C Filter                Figure 6-6. VOUT Ripple After the Second L-C Filter
+
+
+
+Copyright © 2021 Texas Instruments Incorporated                                                           Submit Document Feedback         7
+                                                   Product Folder Links: TPS62912 TPS62913
+TPS62912, TPS62913
+SLVSFP4B – AUGUST 2020 – REVISED MARCH 2021                                                                                    www.ti.com
+
+6.6 Typical Characteristics (continued)
+
+
+
+
+    12 V to 1.8 V, 1 A    2.2 μH, 1 MHz        First L-C Only
+                                                                                             BW = 10 kHz
+
+                                                                      12 V to 1.8 V, 1 A    2.2 μH, 1 MHz          First L-C Only
+           Figure 6-7. VOUT Ripple After the First L-C Filter
+                                                                           Figure 6-8. VOUT Ripple FFT After the First L-C Filter
+
+
+
+
+    12 V to 1.8 V, 1 A   2.2 μH, 1 MHz     First and second L-C
+                                                                                            BW = 10 kHz
+
+                                                                      12 V to 1.8 V, 1 A   2.2 μH, 1 MHz      First and second L-C
+         Figure 6-9. VOUT Ripple After the Second L-C Filter
+                                                                         Figure 6-10. VOUT Ripple FFT After the Second L-C Filter
+
+
+
+
+    12 V to 3.3 V, 1 A   2.2 μH, 2.2 MHz       First L-C Only
+                                                                                             BW = 10 kHz
+
+                                                                      12 V to 3.3 V, 1 A   2.2 μH, 2.2 MHz         First L-C Only
+          Figure 6-11. VOUT Ripple After the First L-C Filter
+                                                                          Figure 6-12. VOUT Ripple FFT After the First L-C Filter
+
+
+
+
+8      Submit Document Feedback                                                                 Copyright © 2021 Texas Instruments Incorporated
+
+                                                 Product Folder Links: TPS62912 TPS62913
+                                                                                                                  TPS62912, TPS62913
+www.ti.com                                                                                   SLVSFP4B – AUGUST 2020 – REVISED MARCH 2021
+
+
+6.6 Typical Characteristics (continued)
+
+
+
+
+   12 V to 3.3 V, 1 A     2.2 μH, 2.2 MHz     First and second L-C
+                                                                                               BW = 10 kHz
+
+                                                                        12 V to 3.3 V, 1 A    2.2 μH, 2.2 MHz   First and second L-C
+         Figure 6-13. VOUT Ripple After the Second L-C Filter
+                                                                           Figure 6-14. VOUT Ripple FFT After the Second L-C Filter
+
+
+
+
+    5 V to 1.2 V, 1 A      2.2 μH, 2.2 MHz        First L-C Only
+                                                                                                BW = 10 kHz
+
+                                                                         5 V to 1.2 V, 1 A    2.2 μH, 2.2 MHz       First L-C Only
+          Figure 6-15. VOUT Ripple After the First L-C Filter
+                                                                            Figure 6-16. VOUT Ripple FFT After the First L-C Filter
+
+
+
+
+    5 V to 1.2 V, 1 A     2.2 μH, 2.2 MHz     First and second L-C
+                                                                                               BW = 10 kHz
+
+                                                                         5 V to 1.2 V, 1 A    2.2 μH, 2.2 MHz   First and second L-C
+         Figure 6-17. VOUT Ripple after the Second L-C Filter
+                                                                           Figure 6-18. VOUT Ripple FFT After the Second L-C Filter
+
+
+
+
+Copyright © 2021 Texas Instruments Incorporated                                                           Submit Document Feedback         9
+                                                   Product Folder Links: TPS62912 TPS62913
+TPS62912, TPS62913
+SLVSFP4B – AUGUST 2020 – REVISED MARCH 2021                                                                                   www.ti.com
+
+6.6 Typical Characteristics (continued)
+
+
+
+
+     5 V to 1.8 V, 1 A    2.2 μH, 2.2 MHz       First L-C Only
+                                                                                             BW = 10 kHz
+
+                                                                       5 V to 1.8 V, 1 A   2.2 μH, 2.2 MHz        First L-C Only
+           Figure 6-19. VOUT Ripple After the First L-C Filter
+                                                                          Figure 6-20. VOUT Ripple FFT After the First L-C Filter
+
+
+
+
+     5 V to 1.8 V, 1 A   2.2 μH, 2.2 MHz    First and second L-C
+                                                                                            BW = 10 kHz
+
+                                                                       5 V to 1.8 V, 1 A   2.2 μH, 2.2 MHz   First and second L-C
+         Figure 6-21. VOUT Ripple After the Second L-C Filter
+                                                                         Figure 6-22. VOUT Ripple FFT After the Second L-C Filter
+
+
+
+
+     5 V to 3.3 V, 1 A    2.2 μH, 2.2 MHz       First L-C Only
+                                                                                             BW = 10 kHz
+
+                                                                       5 V to 3.3 V, 1 A   2.2 μH, 2.2 MHz        First L-C Only
+           Figure 6-23. VOUT Ripple After the First L-C Filter
+                                                                          Figure 6-24. VOUT Ripple FFT After the First L-C Filter
+
+
+
+
+10      Submit Document Feedback                                                               Copyright © 2021 Texas Instruments Incorporated
+
+                                                 Product Folder Links: TPS62912 TPS62913
+                                                                                                                      TPS62912, TPS62913
+www.ti.com                                                                                   SLVSFP4B – AUGUST 2020 – REVISED MARCH 2021
+
+
+6.6 Typical Characteristics (continued)
+
+
+
+
+    5 V to 3.3 V, 1 A     2.2 μH, 2.2 MHz     First and second L-C
+                                                                                                BW = 10 kHz
+
+                                                                         5 V to 3.3 V, 1 A    2.2 μH, 2.2 MHz      First and second L-C
+         Figure 6-25. VOUT Ripple After the Second L-C Filter
+                                                                           Figure 6-26. VOUT Ripple FFT After the Second L-C Filter
+
+
+
+
+    6 V to 1.2 V, 1 A       2.2 μH, 1 MHz          BW = 50 Hz           12 V to 1.2 V, 2 A      2.2 μH, 1 MHz           BW = 10 kHz
+
+                S-CONF = OFF, Triangular, Random                                     S-CONF = OFF, Triangular, Random
+
+            Figure 6-27. Spread Spectrum FFT - 50-Hz BW                         Figure 6-28. Spread Spectrum FFT - 10-kH BW
+
+
+
+
+       12 V to 1.2 V         2.2 μH, 1 MHz         First L-C Only          12 V to 1.2 V       2.2 μH, 1 MHz       After ferrite bead filter
+
+     NR/SS = Open, 100 nF, 470 nF, 2.2 μF, BW = 100 Hz to 100 kHz         NR/SS = Open, 100 nF, 470 nF, 2.2 μF, BW = 100 Hz to 100 kHz
+
+
+           Figure 6-29. Output Noise Density vs Frequency                      Figure 6-30. Output Noise Density vs Frequency
+
+
+
+
+Copyright © 2021 Texas Instruments Incorporated                                                                Submit Document Feedback        11
+                                                   Product Folder Links: TPS62912 TPS62913
+TPS62912, TPS62913
+SLVSFP4B – AUGUST 2020 – REVISED MARCH 2021                                                                                              www.ti.com
+
+6.6 Typical Characteristics (continued)
+
+
+
+
+        12 V to 1.2 V         2.2 μH, 1 MHz          First L-C Only         12 V to 1.2 V        2.2 μH, 1 MHz       After ferrite bead filter
+
+     NR/SS = 470 nF, CFF = Open, 100 nF, 1 μF, BW = 100 Hz to 100 kHz     NR/SS = 470 nF, CFF = Open, 100 nF, 1 μF, BW = 100 Hz to 100 kHz
+
+
+            Figure 6-31. Output Noise Density vs Frequency                       Figure 6-32. Output Noise Density vs Frequency
+
+
+
+
+        12 V to 1.8 V         2.2 μH, 1 MHz          First L-C Only          12 V to 1.8 V       2.2 μH, 1 MHz       After ferrite bead filter
+
+       NR/SS = Open, 100 nF, 470 nF, 2.2 μF, BW = 100 Hz to 100 kHz         NR/SS = Open, 100 nF, 470 nF, 2.2 μF, BW = 100 Hz to 100 kHz
+
+
+            Figure 6-33. Output Noise Density vs Frequency                       Figure 6-34. Output Noise Density vs Frequency
+
+
+
+
+        12 V to 1.8 V         2.2 μH, 1 MHz          First L-C Only         12 V to 1.8 V        2.2 μH, 1 MHz      After ferrite bead filter
+
+     NR/SS = 470 nF, CFF = Open, 100 nF, 1 μF, BW = 100 Hz to 100 kHz     NR/SS = 470 nF, CFF = Open, 100 nF, 1 μF, BW = 100 Hz to 100 kHz
+
+
+            Figure 6-35. Output Noise Density vs Frequency                       Figure 6-36. Output Noise Density vs Frequency
+
+
+
+
+12       Submit Document Feedback                                                                     Copyright © 2021 Texas Instruments Incorporated
+
+                                                     Product Folder Links: TPS62912 TPS62913
+                                                                                                                     TPS62912, TPS62913
+www.ti.com                                                                                   SLVSFP4B – AUGUST 2020 – REVISED MARCH 2021
+
+
+6.6 Typical Characteristics (continued)
+
+
+
+
+                                                                           12 V to 3.3 V        2.2 μH, 2.2 MHz     After ferrite bead filter
+       12 V to 3.3 V        2.2 μH, 2.2 MHz        First L-C Only
+                                                                          NR/SS = Open, 100 nF, 470 nF, 2.2 μF, BW = 100 Hz to 100 kHz
+     NR/SS = Open, 100 nF, 470 nF, 2.2 μF, BW = 100 Hz to 100 kHz
+
+                                                                               Figure 6-38. Output Noise Density vs Frequency
+           Figure 6-37. Output Noise Density vs Frequency
+
+
+
+
+       12 V to 3.3 V        2.2 μH, 2.2 MHz        First L-C Only          12 V to 3.3 V        2.2 μH, 2.2 MHz     After ferrite bead filter
+
+   NR/SS = 470 nF, CFF = Open, 100 nF, 1 μF, BW = 100 Hz to 100 kHz     NR/SS = 470 nF, CFF = Open, 100 nF, 1 μF, BW = 100 Hz to 100 kHz
+
+
+           Figure 6-39. Output Noise Density vs Frequency                      Figure 6-40. Output Noise Density vs Frequency
+
+
+
+
+       5 V to 1.2 V         2.2 μH, 2.2 MHz        First L-C Only           5 V to 1.2 V        2.2 μH, 2.2 MHz     After ferrite bead filter
+
+     NR/SS = Open, 100 nF, 470 nF, 2.2 μF, BW = 100 Hz to 100 kHz         NR/SS = Open, 100 nF, 470 nF, 2.2 μF, BW = 100 Hz to 100 kHz
+
+
+           Figure 6-41. Output Noise Density vs Frequency                      Figure 6-42. Output Noise Density vs Frequency
+
+
+
+
+Copyright © 2021 Texas Instruments Incorporated                                                             Submit Document Feedback            13
+                                                   Product Folder Links: TPS62912 TPS62913
+TPS62912, TPS62913
+SLVSFP4B – AUGUST 2020 – REVISED MARCH 2021                                                                                                 www.ti.com
+
+6.6 Typical Characteristics (continued)
+
+
+
+
+       5 V to 3.3 V           2.2 μH, 2.2 MHz       First L-C Only               5 V to 3.3 V         2.2 μH, 2.2 MHz     After ferrite bead filter
+
+     NR/SS = Open, 100 nF, 470 nF, 2.2 μF, BW = 100 Hz to 100 kHz              NR/SS = Open, 100 nF, 470 nF, 2.2 μF, BW = 100 Hz to 100 kHz
+
+
+          Figure 6-43. Output Noise Density vs Frequency                            Figure 6-44. Output Noise Density vs Frequency
+
+
+
+
+     12 V to 1.2 V            2.2 μH, 1 MHz         1 A, 2 A, 3 A              12 V to 1.2 V          2.2 μH, 1 MHz           1 A, 2 A, 3 A
+
+                      First L-C Only, No Ferrite Bead                                             After Ferrite Bead Filter
+
+                      Figure 6-45. PSRR vs Frequency                                            Figure 6-46. PSRR vs Frequency
+
+
+
+
+     12 V to 1.8 V            2.2 μH, 1 MHz         1 A, 2 A, 3 A              12 V to 1.8 V          2.2 μH, 1 MHz           1 A, 2 A, 3 A
+
+                      First L-C Only, No Ferrite Bead                                                After Ferrite Bead
+
+                      Figure 6-47. PSRR vs Frequency                                            Figure 6-48. PSRR vs Frequency
+
+
+
+
+14     Submit Document Feedback                                                                           Copyright © 2021 Texas Instruments Incorporated
+
+                                                        Product Folder Links: TPS62912 TPS62913
+                                                                                                                  TPS62912, TPS62913
+www.ti.com                                                                                    SLVSFP4B – AUGUST 2020 – REVISED MARCH 2021
+
+
+6.6 Typical Characteristics (continued)
+
+
+
+
+                              VIN = 5 V                                                           VIN = 5 V
+
+      Figure 6-49. High-Side RDS(ON) vs Junction Temperature                Figure 6-50. Low-Side RDS(ON) vs Junction Temperature
+
+
+
+
+                              1 MHz, 2 A                                      5 VIN to 0.8 VOUT                   1 MHz
+
+          Figure 6-51. FB Pin Voltage Error vs Input Voltage                      Figure 6-52. Output Voltage Error vs Load
+
+
+
+
+         12 VIN to 0.8 VOUT                       1 MHz                            12 VIN                         1 MHz
+
+              Figure 6-53. Output Voltage Error vs Load                        Figure 6-54. Oscillator Frequency vs Temperature
+
+
+
+
+Copyright © 2021 Texas Instruments Incorporated                                                            Submit Document Feedback     15
+                                                    Product Folder Links: TPS62912 TPS62913
+TPS62912, TPS62913
+SLVSFP4B – AUGUST 2020 – REVISED MARCH 2021                                                                                 www.ti.com
+
+6.6 Typical Characteristics (continued)
+
+
+
+
+            12 VIN                      2.2 MHz                                         VIN: 3 V, 5 V, 12 V
+
+        Figure 6-55. Oscillator Frequency vs Temperature                  Figure 6-56. Shutdown Current vs Temperature
+
+
+
+
+                                          VIN: 12 V                        25°C
+
+                                  Figure 6-57. Output Discharge Resistance vs Output Voltage
+
+
+
+
+16    Submit Document Feedback                                                               Copyright © 2021 Texas Instruments Incorporated
+
+                                              Product Folder Links: TPS62912 TPS62913
+                                                                                                                                                        TPS62912, TPS62913
+www.ti.com                                                                                                              SLVSFP4B – AUGUST 2020 – REVISED MARCH 2021
+
+
+7 Detailed Description
+7.1 Overview
+The TPS6291x low-noise, low-ripple synchronous buck converter is a fixed frequency current mode converter.
+The converter has a filtered internal reference to achieve a low-noise output similar to low-noise LDOs. The
+converter achieves lower output voltage ripple by using a switching frequency of either 2.2 MHz or 1 MHz and a
+larger inductance. The output voltage ripple can be further reduced by adding a small second stage L-C filter to
+the output. This can be a ferrite bead or a small inductor, followed by an output capacitor. Internal compensation
+maintains stability with an external filter inductor up to 50 nH. To avoid voltage drops across this second stage
+filter, the device regulates the output voltage after the filter. The TPS6291x family supports an optional spread
+spectrum modulation. For example, when powering ADCs, spread spectrum modulation reduces the mixing
+spurs. Switching frequency, spread spectrum modulation, and output discharge are set using the S-CONF pin.
+7.2 Functional Block Diagram
+                                                                                                      PG                                                     VIN
+
+
+
+                                                                                                                                      High Side
+                                                                                                                                    Current Sense
+                                                                          VPG     +
+
+                                                                          VFB     t
+
+
+
+                                                                                                                   Slope
+                                                               Undervoltage
+EN/SYNC                                +                                                                        Compensation             G
+                                                                  lockout
+                              1.0V     t                     Thermal shutdown
+                 RPD
+
+
+
+
+                                            Clock
+                                           Detector
+
+
+
+                                                                            MUX                            MOSFET Driver
+                                                                                                         Anti Shoot Through
+                             EN/SYNC                                                                   Converter Control Logic                                       SW
+
+
+
+
+                 MODE                                             1MHz/2.2MHz
+                                Spread Spectrum                            MODE
+                                  Modulation                                                                                                   Low Side
+                                                                                                                                             Current Sense
+
+                                                                                                                                                                      PGND
+
+                       VIN
+                                                                                            Comparator
+
+
+                                                                                                                                               2nd stage filter       FB
+                                                                                                                                t              compensation
+                                                                                                                           GM
+                             Start-up readout                                                                                   +
+                                                                                                                                                                      VO
+                                                       S-CONF                                   VIN
+ S-CONF                              ADC              Register                  MODE
+                                                      Selection                                                        GM Amplifier
+                                                                                                       INR/SS
+
+
+
+                                                                                                      Softstart
+
+                                                                                       Rf                                                                    RDIS
+                                                                        VREF
+                                                                        0.8V
+                                                                                                                                       Output voltage
+                                                                                                                    MODE                 discharge
+                                                                                                                                            logic
+
+
+
+                                                      PSNS                                    NR/SS
+
+
+Copyright © 2021 Texas Instruments Incorporated                                                                                              Submit Document Feedback      17
+                                                                  Product Folder Links: TPS62912 TPS62913
+TPS62912, TPS62913
+SLVSFP4B – AUGUST 2020 – REVISED MARCH 2021                                                                            www.ti.com
+
+7.3 Feature Description
+7.3.1 Smart Config (S-CONF)
+This S-CONF pin configures the device based on the resistor value. This pin is read after EN/SYNC goes high.
+The device configuration cannot be changed during operation. The S-CONF value is re-read if EN is pulled
+below 200 mV or if VIN falls below UVLO. Table 7-1 shows the configuration options of the following:
+•    Switching frequency
+•    Spread spectrum modulation
+•    Output discharge
+•    Synchronization
+                                  Table 7-1. S-CONF Device Configuration Modes
+                    SWITCHING                                         OUTPUT
+     S-CONF                             SPREAD SPECTRUM                                       SYNCHRONIZATION
+                    FREQUENCY                                       DISCHARGE
+      VIN             2.2 MHz                     OFF                   OFF                             No
+      GND              1 MHz                      OFF                   OFF                             No
+     4.87 kΩ          2.2 MHz                     OFF                   OFF                   1.9 MHz to 2.42 MHz
+     6.04kΩ           2.2MHz                     Triangle               OFF                             No
+     7.5 kΩ           2.2 MHz                    Random                 OFF                             No
+     9.31 kΩ           1 MHz                      OFF                   OFF                    0.9 MHz to 1.2 MHz
+     11.5kΩ            1MHz                      Triangle               OFF                             No
+     14.3 kΩ           1 MHz                     Random                 OFF                             No
+                                                                    Discharge On
+     18.2 kΩ          2.2 MHz                     OFF                    ON                             No
+     22.1 kΩ           1 MHz                      OFF                    ON                             No
+     27.4 kΩ          2.2 MHz                     OFF                    ON                   1.9 MHz to 2.42 MHz
+      34kΩ            2.2MHz                     Triangle                ON                             No
+     42.2 kΩ          2.2 MHz                    Random                  ON                             No
+     52.3 kΩ           1 MHz                      OFF                    ON                    0.9 MHz to 1.2 MHz
+     64.9kΩ            1MHz                      Triangle                ON                             No
+     80.6 kΩ           1 MHz                     Random                  ON                             No
+
+
+7.3.2 Device Enable (EN/SYNC)
+The device is enabled by pulling the EN/SYNC pin high, and has an accurate rising threshold voltage of typically
+1.01 V. Once the device is enabled, the operation mode is set by the configuration of the S-CONF pin. This
+occurs during the device start-up delay time tdelay. Once tdelay expires, the internal soft-start circuitry ramps
+up the output voltage over the soft-start time set by the CNR/SS capacitor. The start-up delay time tdelay varies
+depending on the selected S-CONF value. It is shortest with smaller S-CONF resistors.
+The EN/SYNC pin has an active pulldown resistor RPD. This prevents an uncontrolled start-up of the device, in
+case the EN/SYNC pin cannot be driven to a low level. The pulldown resistor is disconnected after start-up. With
+EN set to a low level, the device enters shutdown and the pulldown resistor is activated again.
+7.3.3 Device Synchronization (EN/SYNC)
+The EN/SYNC pin is also used for device synchronization. Once a clock signal is applied to this pin, the device
+is enabled and reads the configuration of the S-CONF pin. The external clock frequency must be within the
+clock synchronization frequency range set by the S-CONF pin. When the clock signal changes from a clock to a
+static high, then the device switches from external clock to internal clock. To shutdown the device when using an
+external clock, EN/SYNC must go low for at least 10 µs.
+
+
+
+
+18     Submit Document Feedback                                                         Copyright © 2021 Texas Instruments Incorporated
+
+                                              Product Folder Links: TPS62912 TPS62913
+                                                                                                                       TPS62912, TPS62913
+www.ti.com                                                                                         SLVSFP4B – AUGUST 2020 – REVISED MARCH 2021
+
+The clock signal can be a logic signal with a logic level as specified in the electrical table, and can be applied
+directly to the EN/SYNC pin. External logic, such as an AND gate, can be used to combine separate enable and
+clock inputs, as shown in Figure 7-1.
+
+                                                                                  TPS6291x
+                                                              EN
+                                                                                   EN/SYNC
+                                                             CLK
+
+
+
+                                     Figure 7-1. Synchronization with Separate Enable Signal (optional)
+
+7.3.4 Spread Spectrum Modulation
+Using the S-CONF pin enables or disables spread spectrum modulation. DC/DC converters generate an output
+voltage ripple at the switching frequency. When powering ADCs or an analog front end (AFE), the switching
+frequency generates high frequency mixing spurs as well as a low frequency spur in the output frequency
+spectrum. Using the optional second stage L-C filter reduces the ripple of the converter and spurs by up to 30
+dB.
+The device has integrated two different spread spectrum modulation (SSM) schemes that are selected by
+the resistor connected to the S-CONF pin acording to Table 7-1. It is possible to select random or triangle
+modulation to spread the switching frequency over a larger frequency range. The triangular SSM is modulated
+based on the switching frequency, and results in 1.9 kHz for 1 MHz switching frequency and 4.3 kHz for
+2.2 MHz switching frequency. The modulation spread is ±10% of the device switching frequency. This SSM
+provides high attenuation when the receiver bandwidth is less than the modulation frequency, typically the
+case for systems using Fast Fourier Transforms (FFT) post processing as in high speed ADC applications.
+For applications sensitive to noise at the modulation frequency, random SSM is used. Using a random spread
+spectrum modulation also reduces the spurs in the output spectrum as shown in Figure 6-2. The random
+SSM operates with the same frequency spread and modulation period as the triangular SSM. The randomized
+modulation uses a Fibonacci Linear-Feedback Shift Register (LFSR) so that every tone is generated once during
+the pseudo-random generation period. The frequency spreading is shown in Figure 7-2.The attenuation using
+random or triangle SSM is shown in Figure 6-28.
+
+                                                                                                  fSW
+                                                                                             Unmodulated
+                                                                Spectral envelope of         (single tone)
+                                                                triangular modulation
+                                                                     (+/- 10% fSW)
+                          Amplitude (dB)
+
+
+
+
+                                                                Spectral envelope of
+                                                                random modulation
+                                                                   (+/- 10% fSW)
+
+
+
+                                                 fMOD
+                                              Triangular
+                                             (single tone)    Increased noise floor
+                                                             with random modulation
+
+
+
+
+                                                   Figure 7-2. Spread Spectrum Modulation
+
+7.3.5 Output Discharge
+Output discharge is enabled or disabled, depending on the S-CONF setting. With output discharge enabled,
+the output voltage is pulled low by a discharge resistor RDIS of typically 7 Ω. The output discharge function is
+enabled during thermal shutdown, UVLO, or when EN/SYNC is pulled low.
+
+
+
+
+Copyright © 2021 Texas Instruments Incorporated                                                                 Submit Document Feedback     19
+                                                         Product Folder Links: TPS62912 TPS62913
+TPS62912, TPS62913
+SLVSFP4B – AUGUST 2020 – REVISED MARCH 2021                                                                                www.ti.com
+
+7.3.6 Undervoltage Lockout (UVLO)
+To avoid mis-operation of the device at low input voltages, the device is enabled once the input voltage is above
+the undervoltage lockout threshold. The device is disabled once the input voltage falls below the undervoltage
+threshold.
+7.3.7 Power-Good Output
+The device has a power-good output. The PG pin goes high impedance once the FB pin voltage is above 95%
+of the nominal voltage, and is driven low once the voltage falls below typically 90% of the nominal voltage. Table
+7-2 shows the typical PG pin logic. The PG pin is an open-drain output and is specified to sink up to 10 mA. The
+power-good output requires a pullup resistor connecting to any voltage rail less than 18 V. The PG signal can be
+used for sequencing of multiple rails by connecting to the EN pin of other converters. If not used, the PG pin can
+be left floating or connected to GND. PG has a deglitch time of typically 8 μs before going low.
+                                              Table 7-2. Power Good Pin Logic
+                                                                                                   PG LOGIC STATUS
+                                   DEVICE STATE
+                                                                                        HIGH IMPEDANCE                  LOW
+                                                     VFB ≥ VPG                                 √
+     Enabled (EN/SYNC = High)
+                                                 VFB < VPG after tPG                                                       √
+     Shutdown (EN/SYNC = Low)                                                                                              √
+                  UVLO                          0.7 V < VIN < VUVLO                                                        √
+
+         Thermal Shutdown                            TJ > TJSD                                                             √
+
+       Power Supply Removal                         VIN < 0.7 V                                √
+
+
+7.3.8 Noise Reduction and Soft-Start Capacitor (NR/SS)
+A capacitor connected to this pin reduces the low frequency noise of the converter and sets the soft-start time.
+The larger the capacitor, the lower the noise and the longer the start-up time of the converter. A 470-nF capacitor
+is typically connected to this pin for a start-up time of 5 ms, although longer and shorter start-up times can be
+used. During soft start with a light load, the device skips switching pulses as needed to not discharge the output
+voltage. The device can start into a pre-biased output voltage.
+The device achieves low noise by adding an R-C filter to the reference voltage, as shown in Section 7.2. During
+start-up, the NR/SS capacitor is charged with a constant current of 75 µA (typ) to 0.8 V. Larger NR/SS capacitors
+provide for lower low frequency noise, as shown in Figure 6-29. The maximum NR/SS cap is 3.3 µF for a
+start-up time of 35 ms. The minimum start-up time is set internally to 0.7 ms, which occurs when there is a small
+NR/SS capacitor or no NR/SS capacitor.
+7.3.9 Current Limit and Short Circuit Protection
+The device is protected against short circuits and overcurrent. The switch current limit prevents the device from
+high inductor current and from drawing excessive current from the input voltage rail. Excessive current can occur
+with a shorted/saturated inductor or a heavy load/shorted output circuit condition. If the inductor current reaches
+the threshold ISWpeak, the high-side MOSFET is turned off and the low-side MOSFET is turned on to ramp down
+the inductor current. The high-side MOSFET is turned on again only when the low-side current is below the
+low-side sourcing current limit ISWvalley.
+Due to internal propagation delay, the actual current can exceed the static current limit, especially if the input
+voltage is high and very small inductances are used. The dynamic current limit is calculated as follows:
+
+                              § VL ·
+       Ipeak (typ )   ISWpeak ¨ ¸ u tPD
+                              ©L¹                                                                                              (1)
+
+where
+•     ISWpeak is the static current limit, specified in Section 6.5
+
+20      Submit Document Feedback                                                            Copyright © 2021 Texas Instruments Incorporated
+
+                                              Product Folder Links: TPS62912 TPS62913
+                                                                                                                TPS62912, TPS62913
+www.ti.com                                                                                  SLVSFP4B – AUGUST 2020 – REVISED MARCH 2021
+
+•    L is the inductance
+•    VL is the voltage across the inductor (VIN - VOUT)
+•    tPD is the internal propagation delay, typically 50 ns
+The low-side MOSFET also contains a negative current limit to prevent excessive current from flowing back
+through the inductor to the input. If the low-side sinking current limit is exceeded, the low-side MOSFET is turned
+off. In this scenario, both MOSFETs are off until the start of the next cycle.
+7.3.10 Thermal Shutdown
+The device goes into thermal shutdown once the junction temperature exceeds typically 170°C with a 20°C
+hysteresis.
+7.4 Device Functional Modes
+7.4.1 Fixed Frequency Pulse Width Modulation
+To minimize output voltage ripple, the device operates in fixed frequency PWM operation down to no load. The
+switching frequency of 1 MHz or 2.2 MHz is selected using the S-CONF pin.
+7.4.2 Low Duty Cycle Operation
+For high input voltages or low output voltages, the 70-nsec minimum on-time limits the maximum input to output
+voltage difference and the switching frequency selected. When the minimum on-time is reached, the output
+voltage rises above the regulation point. Refer to Table 8-2 for detailed design recommendations.
+7.4.3 High Duty Cycle Operation (100% Duty Cycle)
+The device offers a low input-to-output voltage differential by entering 100% duty cycle mode. In this mode,
+the high-side MOSFET switch is constantly turned on. The minimum input voltage to maintain output voltage
+regulation, depending on the load current and the output voltage level, is calculated as:
+
+      VIN (min) VOUT (min) IOUT u (RDS (ON ) RL)                                                                               (2)
+
+where
+• VOUT(min) is the minimum output voltage the load can accept
+• IOUT is the output current
+• RDS(ON) is the RDS(ON) of the high-side MOSFET
+• RL is the DC resistance of the inductor used
+To maintain fixed frequency switching, the device requires a minimum off-time of 50 ns (typ), 60 ns (max). If this
+limit is reached during a switching pulse, the device skips switching pulses to maintain output voltage regulation.
+If the input voltage decreases further, the device enters 100% mode.
+7.4.4 Second Stage L-C Filter Compensation (Optional)
+Most low-noise and low-ripple applications use a ferrite bead and bypass capacitor before the load. Using a
+second L-C filter is especially useful for low-noise and low-ripple applications with constant load current such as
+ADCs, DACs, and Jitter Cleaner. The second stage L-C filter is optional, and the device can be used without
+this filter. Without the filter, the device has a low output voltage noise of typically 16.9 μVRMS shown in Figure
+6-37 with an output voltage ripple of 280 μVRMS shown in Figure 6-12. The second stage L-C filter attenuates
+the output voltage ripple by another approximately 30 dB shown in Figure 6-14. To improve load regulation, the
+device can remote sense the output voltage after the second stage L-C filter and is internally compensated for
+the additional double pole generated by the L-C filter.
+To keep the second stage L-C filter as small as possible, the internal compensation is optimized for a 10-nH
+to 50-nH inductance. A small ferrite bead or even a PCB trace provides sufficient inductance for output voltage
+ripple filtering. See Section 8.2.2.2.4 for details.
+
+
+
+
+Copyright © 2021 Texas Instruments Incorporated                                                          Submit Document Feedback     21
+                                                  Product Folder Links: TPS62912 TPS62913
+TPS62912, TPS62913
+SLVSFP4B – AUGUST 2020 – REVISED MARCH 2021                                                                                            www.ti.com
+
+
+8 Application and Implementation
+                                                                  Note
+        Information in the following applications sections is not part of the TI component specification,
+        and TI does not warrant its accuracy or completeness. TI’s customers are responsible for
+        determining suitability of components for their purposes, as well as validating and testing their design
+        implementation to confirm system functionality.
+
+8.1 Application Information
+The TPS6291x family of devices are optimized for low noise and low output voltage ripple.
+8.2 Typical Applications
+                                                                L1                            Lf
+                                            TPS62913
+                                                              2.2µH                          10nH
+           Vin                           VIN           SW                                                                           Vo
+           12V                                                                                                                   1.2V/3A
+                                         EN/SYNC       VO                             COUT
+              CIN       C1                                                           3x22µF
+                                                                                                  R1        CFF
+            2x10µF     2.2nF             S-CONF        FB                                                   N/P
+                                  R4                                                             2.49k
+                                 52.3k                                                                                Cf
+                                         PSNS       NR/SS                                                           2x22µF
+                                                                     Vo         CNR/SS               R2
+                                         PGND         PG
+                                                                                470nF               4.87k
+                                                               R3
+                                                              100k
+
+
+
+                                                   Figure 8-1. Typical Schematic
+
+Table 8-1 shows the list of components for the application curves in Section 8.2.3, unless otherwise noted.
+                                                   Table 8-1. List of Components
+      REFERENCE                     PART NUMBER                                DESCRIPTION                          MANUFACTURER(1)
+                                                                      Low Noise and low ripple buck
+        TPS62913        TPS62913                                                                                      Texas Instruments
+                                                                               converter
+            L1          XGL4030-222MEC or XGL4030-472MEC                  Inductor: 2.2 μH or 4.7 μH                       Coilcraft
+                                                                 Ceramic capacitors: 2 × 10 µF ±10%
+           CIN          C2012X7S1E106K125AC                                                                                  TDK
+                                                                  25-V ceramic capacitor X7S 0805
+                                                                  Ceramic capacitors: 3 × 22 µF, 10 V,
+          COUT          C2012X7S1A226M125AC                                                                                  TDK
+                                                                          ±20%, X7S, 0805
+            Lf          BLE18PS080SN1                                           Ferrite Bead                                MuRata
+                                                                  Ceramic capacitor: 2 × 22 µF, 10 V,
+            Cf          C2012X7S1A226M125AC                                                                                  TDK
+                                                                          ±20%, X7S, 0805
+           C1           GRM155R71H222KA01D                           Ceramic capacitor: 2200 pF, 50 V,                      MuRata
+                                                                            ±10%, X7R, 0402
+       CNR/SS, CFF                                                           Ceramic capacitor                             Standard
+      R1, R2, R3, R4                                                              Resistor                                 Standard
+
+(1)     See the Third-Party Porducts Disclaimer
+
+8.2.1 Design Requirements
+The external components have to fulfill the needs of the application, but also meet the stability criteria of the
+control loop of the device. The device is optimized to work within a range of external components, and can be
+optimized for the following:
+
+
+22      Submit Document Feedback                                                                        Copyright © 2021 Texas Instruments Incorporated
+
+                                                  Product Folder Links: TPS62912 TPS62913
+                                                                                                                                TPS62912, TPS62913
+www.ti.com                                                                                      SLVSFP4B – AUGUST 2020 – REVISED MARCH 2021
+
+•     Efficiency
+•     Output ripple
+•     Component count
+•     Lowest 1/f noise
+Typical applications that have input voltages of ≤ 6 V use a 2.2-µH inductor with a 2.2-MHz switching frequency.
+Applications that have input voltages > 6 V can be optimized for efficiency using a 2.2-µH inductor with a 1-MHz
+switching frequency. In this case, the output voltage ripple doubles compared to the use of a 4.7-µH inductor,
+which is typically acceptable when powering high speed ADCs. Optimization for powering clock and PLL circuits
+that need a 3.3-V output use a 2.2-µH inductor with 2.2-MHz switching frequency, minimizing output voltage
+ripple and low frequency noise.
+For the application cases that are not found in Table 8-2, there are two methods to design the TPS6291x circuit.
+Section 8.2.2.1 uses Webench to design the circuit automatically or the calculations in Section 8.2.2.2 can be
+used instead.
+                                Table 8-2. Typical Single L-C Filter Design Recommendations
+                                                                                                                          (2)
+      DESIGN GOAL                    VIN                    VOUT                   FSW                INDUCTOR                       OUTPUT
+                                                                                                                                              (3)
+                                                                                                                                   CAPACITORS
+                                        (1)                        (1)
+           Typical                 12 V                  ≤ 2.0 V                  1 MHz                   2.2 µH                 3 × 22 µF, 10 V, 0805
+           Typical                  12 V            2.0 V < VOUT ≤ 3.3 V          1 MHz                   4.7 µH                 3 × 22 µF, 10 V, 0805
+           Typical                  12 V                  > 3.3 V                 2.2 MHz                 2.2 µH                 1 × 47 µF, 1210 and 2
+                                                                                                                                  × 22 µF, 10 V, 0805
+                                                                                                                  (4)
+    Higher Efficiency               12 V            2.0 V < VOUT ≤ 3.3 V          1 MHz                  2.2 µH                  3 × 22 µF, 10 V, 0805
+ (with higher ripple and
+          noise)
+    Low ripple/noise PLL            12 V            2.6 V ≤ VOUT ≤ 3.3 V          2.2 MHz                 2.2 µH                 3 × 22 µF, 10V, 0805
+     and Clock Supply
+           Typical                  5V                    ≤ 3.3 V                 2.2 MHz                 2.2 µH                 3 × 22 µF, 10 V, 0805
+           Typical                  5V                    > 3.3V                  2.2 MHz                 2.2 µH                 1 × 47 µF, 1210 and 2
+                                                                                                                                  × 22 µF, 10 V, 0805
+
+(1)     The maximum input to output voltage difference is limited by the device maximum minimum on-time of 70 ns. This is especially
+        important for input voltages above 12 V or output voltages below 1 V. See Section 8.2.2.2.1.
+(2)     For inductor part numbers, see Table 8-4.
+(3)     For output capacitor part numbers, see Table 8-5.
+(4)     The TPS62913 requires a 4.7-µH inductor when using the 1-MHz switching frequency to supply more than 2.5-A load current when the
+        output voltage is greater than 2.0 V.
+
+The second stage L-C filter is optional, as the device can be used without this filter to achieve below 20-μVRMS
+noise typically. A second stage filter is added to provide additional attenuation of the output ripple voltage. The
+output voltage is sensed after the second L-C filter by connecting the FB resistors to the second stage L-C filter
+capacitor. This provides remote sense, minimizing output voltage drop due to the ferrite bead. Refer to Table 8-3
+for second stage L-C filter recommendations based on the output voltage.
+                      Table 8-3. Second Stage L-C (Ferrite Bead) Filter Design Recommendations
+                                                                            (2)                                         (1)
+ VOUT (V)                        FERRITE BEAD IMPEDANCE (AT 100 MHZ)                     OUTPUT CAPACITORS
+ ≤ 3.3 V                         8 to 20 Ω                                               2 × 22 µF, 10 V, 0805
+ > 3.3 V                         8 to 20 Ω                                               3 × 22 µF, 10 V, 0805
+
+(1)     For output capacitor part numbers, see Table 8-5.
+(2)     For second stage L-C filter part numbers, see Table 8-6.
+
+8.2.2 Detailed Design Procedure
+If the specific design is not found in the Table 8-2 section, WEBENCH is recommended to generate the design.
+Alternatively, the manual design procedure in External Component Selection can be followed.
+
+Copyright © 2021 Texas Instruments Incorporated                                                                  Submit Document Feedback                23
+                                                    Product Folder Links: TPS62912 TPS62913
+TPS62912, TPS62913
+SLVSFP4B – AUGUST 2020 – REVISED MARCH 2021                                                                            www.ti.com
+
+8.2.2.1 Custom Design With WEBENCH® Tools
+Click here to create a custom design using the TPS6291x device with the WEBENCH® Power Designer.
+1.   Start by entering the input voltage (VIN), output voltage (VOUT), and output current (IOUT) requirements.
+2.   Optimize the design for key parameters such as efficiency, footprint, and cost.
+3.   Open the advanced tab to optimize for output voltage ripple.
+4.   Once in a TPS6291x design, you can enable the second stage L-C filter and change other settings from the
+     drop-down on the left.
+The WEBENCH Power Designer provides a customized schematic along with a list of materials with real-time
+pricing and component availability.
+In most cases, these actions are available:
+•    Run electrical simulations to see important waveforms and circuit performance
+•    Export customized schematic and layout into popular CAD formats
+•    Print PDF reports for the design, and share the design with colleagues
+Get more information about WEBENCH tools at www.ti.com/WEBENCH.
+
+8.2.2.2 External Component Selection
+
+8.2.2.2.1 Switching Frequency Selection
+The switching frequency can be chosen to optimize efficiency (1 MHz) or ripple/noise (2.2 MHz). Using the 2.2-
+MHz setting increases the gain of the feedback loop and can result in lower output noise. However, additional
+considerations for minimum on-time and duty cycle must also be considered. First, calculate the duty cycle
+using Equation 3. Higher efficiency results in a shorter on-time, so a conservative approach is to use a higher
+efficiency than expected in the application.
+
+           VOUT
+     D
+          VIN uK                                                                                                           (3)
+
+where
+• η is the estimated efficiency (use the value from the efficiency curves or 0.9 as an conservative assumption)
+Then, calculate the on-time with both 1 MHz and 2.2 MHz using Equation 4. The on-time must always remain
+above the minimum on-time of 70 nsec. Use the maximum input voltage and maximum efficiency to determine
+the minimum duty cycle, Dmin. Use the maximum switching frequency for fSW.
+
+                   D min
+     tON _ min
+                 fSW _ max                                                                                                 (4)
+
+then
+• If tON_min min < 70 ns with 2.2 MHz, use 1 MHz.
+• If tON_min min < 70 ns with 1 MHz, reduce the maximum input voltage.
+• If tON_min min ≥ 70 ns for both cases, use 1 MHz for highest efficiency, or 2.2 MHz for lowest noise and ripple.
+8.2.2.2.2 Inductor Selection for the First L-C Filter
+The inductor selection is dependent on the selected switching frequency and the duty cycle. When using the
+2.2-MHz frequency, only use a 2.2-µH inductor. When using the 1-MHz frequency, calculate the maximum duty
+cycle using the minimum input voltage. If Dmax is above 45%, only use a 4.7-µH inductor. If Dmax is below 45%
+and the output voltage is 2 V or less, use only a 2.2-µH inductor. If Dmax is below 45% and the output voltage is
+above 2 V, use a 4.7-µH inductor to achieve the full output current or a 2.2-µH inductor for higher efficiency with
+a reduced maximum output current.
+
+
+24    Submit Document Feedback                                                          Copyright © 2021 Texas Instruments Incorporated
+
+                                              Product Folder Links: TPS62912 TPS62913
+                                                                                                                 TPS62912, TPS62913
+www.ti.com                                                                                   SLVSFP4B – AUGUST 2020 – REVISED MARCH 2021
+
+The inductor also has to be rated for the appropriate saturation current. Equation 5 and Equation 6 calculate the
+maximum inductor current under static load conditions. The formula takes the converter efficiency into account.
+The calculation must be done for the maximum input voltage where the peak switch current is highest.
+
+              VOUT §     VOUT ·
+                  u ¨1
+               K © VIN uK ¸¹
+      'IL
+                   fSW u L                                                                                                       (5)
+
+                          'IL
+      IPEAK     IOUT
+                           2                                                                                                     (6)
+
+where
+•    ƒSW is the switching frequency (typically 1 MHz or 2.2 MHz)
+•    L is inductance
+•    η is estimated efficiency (use the value from the efficiency curves or 0.9 as an conservative assumption)
+
+                                                     Note
+       The calculation must be done for the maximum input voltage of the application.
+
+Calculating the maximum inductor current using the actual operating conditions gives the minimum saturation
+current. A margin of 20% is recommended to be added to cover for load transients during operation.
+See Table 8-4 for typical inductors.
+                                                     Table 8-4. Inductor Selection
+ INDUCTOR VALUE                 MANUFACTURER              PART NUMBER              SIZE (L X W X H IN mm)      ISAT/DCR (30% DROP)
+ 2.2 µH                         Coilcraft                 XGL4020-222              4 × 4 × 2.1                 6.2 A / 19.5 mΩ
+ 2.2 µH                         Coilcraft                 XGL4030-222              4 × 4 × 3.1                 7 A / 13.5 mΩ
+ 2.2 µH                         Wurth Elektronik          74438356022              4.1 × 4.1 × 2.1             5.2 A / 35 mΩ
+ 2.2 µH                         Wurth Elektronik          74438357022              4.1 × 4.1 × 3.1             7 A / 26 mΩ
+ 2.2 µH                         MuRata                    DFE322520FD-2R2M=P2 3.2 × 2.5 × 2                    5 A / 46 mΩ
+ 4.7 µH                         Coilcraft                 XGL4020-472              4 × 4 × 2.1                 4.1 A / 43.0 mΩ
+ 4.7 µH                         Coilcraft                 XGL4030-472              4 × 4 × 3.1                 4.4 A / 28.5 mΩ
+ 4.7 µH for TPS62912 only MuRata                          DFE322520FD-4R7M=P2 3.2 × 2.5 × 2                    3.4 A / 98 mΩ
+
+
+8.2.2.2.3 Output Capacitor Selection
+The effective output capacitance can range from 40 μF (minimum) up to 200 μF (maximum) for a single L-C
+system design. When using a second L-C filter, the first L-C filter must have output capacitance between 40
+μF and 80 μF, the second stage L-C filter (if used) must have at least 20 μF of capacitance, and the total
+capacitance for both L-C filters must be less than 200 μF. Load transient testing and measuring the bode plot are
+good ways to verify stability.
+Ceramic capacitors (X5R or X7R) are recommended. Ceramic capacitors have a DC-Bias effect, which has
+a strong influence on the final effective capacitance. Choose the right capacitor carefully in combination with
+considering its package size and voltage rating. The ESR and ESL of the output capacitor are also important
+considerations in selecting the output capacitors for low noise applications. Smaller package sizes typically
+have lower ESL and ESR. 0805 or smaller packages are recommended, as long as they provide the required
+capacitance and voltage rating for stable operation. Table 8-5 lists recommended output capacitors.
+                                             Table 8-5. Recommended Output Capacitors
+ CAPACITOR TYPE                 CAPACITOR VALUE       MANUFACTURER                             VOLTAGE (V)         PACKAGE
+ Bulk Capacitor                 22 μF, X7S            TDK C2012X7S1A226M125AC                  10                  0805
+
+
+
+Copyright © 2021 Texas Instruments Incorporated                                                           Submit Document Feedback     25
+                                                   Product Folder Links: TPS62912 TPS62913
+TPS62912, TPS62913
+SLVSFP4B – AUGUST 2020 – REVISED MARCH 2021                                                                                  www.ti.com
+
+                               Table 8-5. Recommended Output Capacitors (continued)
+ CAPACITOR TYPE           CAPACITOR VALUE        MANUFACTURER                           VOLTAGE (V)              PACKAGE
+ Bulk Capacitor           47 μF, X7R             Murata GRM32ER71A476ME15L              10                       1210
+
+
+8.2.2.2.4 Ferrite Bead Selection for Second L-C Filter
+Using a ferrite bead for the second stage L-C filter minimizes the external component count because most of the
+noise sensitive circuits use a RF bead for high frequency attenuation as a default component at their inputs.
+It is important to select a ferrite bead with sufficiently high inductance at full load, and with low DC resistance
+(below 10 mΩ) to keep the converter efficiency as high as possible. The ferrite bead inductance decreases with
+increased load current. Therefore, the ferrite bead should have a current rating much higher than the desired
+load current.
+The recommendation is to choose a ferrite bead with an impedance of 8 Ω to 20 Ω at 100 MHz. Refer to Table
+8-6 for possible ferrite beads.
+                                          Table 8-6. Recommended Ferrite Beads
+ PART NUMBER          MANUFACTURER               SIZE    IMPEDANCE AT      INDUCTANCE AT          DC RESISTANCE CURRENT
+                                                         100 MHZ           100 MHz                              RATING
+                                                                           (CALCULATED)
+ BLE18PS080SN1        MuRata                     0603    8.5 Ω             13.5 nH                4 mΩ                  5A
+ 74279221100          Wurth Elektronik           1206    10 Ω              15.9 nH                3 mΩ                  10.5 A
+ 7427922808           Wurth Electronik           0603    8Ω                12.7 nH                5 mΩ                  9.5 A
+
+
+The internal compensation has been designed to be stable with up to 50 nH of inductance in the second stage
+filter. To achieve low ripple, the second L-C filter requires only 5-nH to 10-nH inductance. The inductance can
+be estimated from the ferrite bead impedance specification at 100 MHz, with the assumption that the inductance
+is similar at the selected converter switching frequency of 1 MHz or 2.2 MHz, and can be verified through tools
+available on some manufacturer websites. The inductance of a ferrite bead is calculated using Equation 7:
+
+                  Z
+     L
+            2uS u f                                                                                                              (7)
+
+where
+•    Z is the impedance of the ferrite bead in ohms at the specified frequency (usually 100 MHz)
+•    f is the specified frequency (usually 100 MHz)
+8.2.2.2.5 Input Capacitor Selection
+For the best output and input voltage filtering, X5R or X7R ceramic capacitors are recommended. The input bulk
+capacitor minimizes input voltage ripple, suppresses input voltage spikes, and provides a stable system rail for
+the device. A 10-μF or larger input capacitor is recommended. Having two in parallel further improves the input
+voltage ripple filtering, minimizing noise coupling into adjacent circuits. The voltage rating of the cap must also
+be taken into consideration, and must provide the required 5-μF minimum effective capacitance after DC bias
+derating.
+In addition to the bulk input cap, a smaller cap must be placed directly from the VIN pin to the PGND pin to
+minimize input loop parasitic inductance, thereby minimizing the high frequency noise of the device. The input
+cap placement affects the output noise, so care needs to be taken in placing both the bulk cap and bypass caps
+as shown in Section 10.2. Table 8-7 lists recommended input capacitors.
+                                         Table 8-7. Recommended Input Capacitors
+ INPUT CAP TYPE            CAPACITOR VALUE           MANUFACTURER             VOLTAGE RATING (V)           PACKAGE SIZE
+ Bulk Cap                  10 μF, X7S                TDK                      25                           0805
+                                                     C2012X7S1E106K125AC
+
+
+
+26    Submit Document Feedback                                                               Copyright © 2021 Texas Instruments Incorporated
+
+                                              Product Folder Links: TPS62912 TPS62913
+                                                                                                                TPS62912, TPS62913
+www.ti.com                                                                                  SLVSFP4B – AUGUST 2020 – REVISED MARCH 2021
+
+                                      Table 8-7. Recommended Input Capacitors (continued)
+ INPUT CAP TYPE                CAPACITOR VALUE           MANUFACTURER             VOLTAGE RATING (V)          PACKAGE SIZE
+ Bypass Cap                    2.2 nF, X7R               Murata                   25                          0402
+                                                         GRM155R71E222KA01D
+
+
+8.2.2.2.6 Setting the Output Voltage
+Choose resistors R1 and R2 to set the output voltage within a range of 0.8 V to 5.5 V, according to Equation
+8. To keep the feedback network robust from noise, and to reduce the self-generated noise of resistors, set R2
+equal to or lower than 5 kΩ. Lower values of FB resistors achieve better noise immunity, and lower light load
+efficiency, as explained in the Design Considerations for a Resistive Feedback Divider in a DC/DC Converter
+Technical Brief.
+
+                æV       ö        æV       ö
+      R1 = R2 ´ ç OUT - 1÷ = R2 ´ ç OUT - 1÷
+                  V
+                è FB     ø        è 0.8V   ø                                                                                   (8)
+
+A feedforward capacitor (CFF) is not required for proper operation, but can further improve output noise.
+However, care must be taken in choosing the CFF, since the power good (PG) function may not be valid with
+a large CFF during start-up, and can cause spurious triggering of the PG pin during a large load transient. The
+noise performance with various CFF is shown in Figure 6-31. Refer to the Pros and Cons Using a Feedforward
+Capacitor with a Low Dropout Regulator Application Report for a discussion of the pros and cons of using a
+feedforward capacitor.
+8.2.2.2.7 NR/SS Capacitor Selection
+As described in Section 7.3.8, the NR/SS cap affects both the total noise and the soft-start time. The
+recommended value for a 5-ms soft-start time and good noise performance is 470 nF. The maximum NR/SS cap
+is 3.3 μF for a start-up time of 35 ms. Values greater than 1 μF have minimal improvement in noise performance.
+Use Equation 9 and Equation 10 to calculate the soft-start time based on desired soft-start time or the chosen
+capacitor value.
+               § CNRSS *0.8 ·
+      tSS ( s) ¨            ¸
+               © INRSS ¹                                                                                                       (9)
+
+                        INRSS u tSS
+      CNRSS ( F )
+                           0.8                                                                                               (10)
+
+
+
+
+Copyright © 2021 Texas Instruments Incorporated                                                          Submit Document Feedback     27
+                                                  Product Folder Links: TPS62912 TPS62913
+TPS62912, TPS62913
+SLVSFP4B – AUGUST 2020 – REVISED MARCH 2021                                                                              www.ti.com
+
+8.2.3 Application Curves
+
+VIN=12 V, VOUT=1.2 V, TA=25°C, BOM = Table 8-1, (unless otherwise noted)
+
+
+
+
+            0.8 Vout     2.2 μH, 1 MHz          1st L-C Only                 1.2 Vout    2.2 μH, 1 MHz           1st L-C Only
+
+
+         Figure 8-2. Efficiency vs Load Current                           Figure 8-3. Efficiency vs Load Current
+
+
+
+
+            1.8 Vout     2.2 μH, 1 MHz          1st L-C Only                 3.3 Vout    4.7 μH, 1 MHz           1st L-C Only
+
+
+         Figure 8-4. Efficiency vs Load Current                           Figure 8-5. Efficiency vs Load Current
+
+
+
+
+            3.3 Vout   2.2 μH, 2.2 MHz          1st L-C Only                 5.4 Vout   2.2 μH, 2.2 MHz          1st L-C Only
+
+
+         Figure 8-6. Efficiency vs Load Current                           Figure 8-7. Efficiency vs Load Current
+
+28    Submit Document Feedback                                                            Copyright © 2021 Texas Instruments Incorporated
+
+                                              Product Folder Links: TPS62912 TPS62913
+                                                                                                                  TPS62912, TPS62913
+www.ti.com                                                                                   SLVSFP4B – AUGUST 2020 – REVISED MARCH 2021
+
+
+
+
+           5 V to 1.2 V      2.2 μH, 2.2 MHz        1st L-C Only              5 V to 1.8 V      2.2 μH, 2.2 MHz       1st L-C Only
+
+
+           Figure 8-8. Efficiency vs Load Current                             Figure 8-9. Efficiency vs Load Current
+
+
+
+
+                                                                                     12 V to 1.2 V                        No load
+
+         12 V to 1.2 V         2.2 μH, 1 MHz        1st L-C Only            2.2 μH, 1 MHz setting        1 MHz to 1.2 MHz to 1 MHz
+
+
+      Figure 8-10. Output Voltage vs Load Current                       Figure 8-11. Transition from Internal to External
+                                                                                              CLK
+
+
+
+
+         12 V to 1.2 V         2.2 μH, 1 MHz        1st L-C Only             12 V to 1.2 V        2.2 μH, 1 MHz      After 2nd L-C
+                     300 mA to 2.7 A to 300 mA                                         300 mA to 2.7 A to 300 mA
+
+                  Figure 8-12. Load Transient                                        Figure 8-13. Load Transient
+
+
+Copyright © 2021 Texas Instruments Incorporated                                                           Submit Document Feedback     29
+                                                  Product Folder Links: TPS62912 TPS62913
+TPS62912, TPS62913
+SLVSFP4B – AUGUST 2020 – REVISED MARCH 2021                                                                                www.ti.com
+
+
+
+
+        12 V to 1.8 V     2.2 μH, 1 MHz         1st L-C Only             12 V to 1.8 V     2.2 μH, 1 MHz          After 2nd L-C
+                  300 mA to 2.7 A to 300 mA                                        300 mA to 2.7 A to 300 mA
+
+                Figure 8-14. Load Transient                                      Figure 8-15. Load Transient
+
+
+
+
+        12 V to 3.3 V   2.2 μH, 2.2 MHz         1st L-C Only             12 V to 3.3 V   2.2 μH, 2.2 MHz          After 2nd L-C
+
+                  300 mA to 2.7 A to 300 mA                                        300 mA to 2.7 A to 300 mA
+
+
+                Figure 8-16. Load Transient                                      Figure 8-17. Load Transient
+
+
+9 Power Supply Recommendations
+The power supply to the TPS6291x needs to have a current rating according to the supply voltage, output
+voltage, and output current of the TPS6291x.
+10 Layout
+10.1 Layout Guidelines
+A proper layout is critical for the operation of any switched mode power supply, especially at high switching
+frequencies. Therefore, the PCB layout of the TPS6291x demands careful attention to ensure best performance.
+A poor layout can lead to issues like bad line and load regulation, instability, increased EMI radiation, and noise
+sensitivity. Refer to the Five Steps to a Great PCB Layout for a Step-Down Converter Technical Brief for a
+detailed discussion of general best practices. Specific recommendations for the device are listed below.
+•    The input capacitor or capacitors should be placed as close as possible to the VIN and PGND pins of the
+     device. This is the most critical component placement. Route the input capacitors directly to the VIN and
+     PGND pins avoiding vias.
+
+30    Submit Document Feedback                                                              Copyright © 2021 Texas Instruments Incorporated
+
+                                              Product Folder Links: TPS62912 TPS62913
+                                                                                                                TPS62912, TPS62913
+www.ti.com                                                                                  SLVSFP4B – AUGUST 2020 – REVISED MARCH 2021
+
+•    Place the inductor close to the SW pin. Minimize the copper area at the switch node.
+•    Place the output capacitor ground close to the PGND pin and route it directly avoiding vias. Minimize the
+     length of the connection from the inductor to the output capacitor.
+•    Connect the VO pin directly to the first output capacitor, COUT.
+•    Sensitive traces, such as the connections to the NR/SS, VO, and FB pins need to be connected with short
+     traces and be routed away from any noise source, such as the SW pin.
+•    Connect the PSNS pin directly to the system GND plane with a via.
+•    Place the second L-C filter, Lf and Cf, near the load to reduce any radiated coupling around the second L-C
+     filter
+•    Avoid placing the ferrite bead in the keep out region as shown in Figure 10-2
+•    Place the FB resistors, R1 and R2, close to the FB pin and route the VOUT connection from R1 to the load as
+     a remote sense trace. If a second L-C filter is used, this connection should be made after Lf.
+•    The recommended layout is implemented on the EVM and shown in its User's Guide, TPS6291xEVM-077
+     User's Guide, as well as in Figure 10-2.
+10.2 Layout Example
+
+
+
+
+                                    Figure 10-1. Recommended Layout for Single L-C Filter
+
+                                                        Note
+       The start winding of the inductor, as shown in the figures as a black dot, needs to be connected to the
+       DC/DC converter switch pin, SW, to minimize capacitive coupling to the surrounding area.
+
+                                                        Note
+       The red dot indicates where the feedback sense should be placed for the best DC regulation. For a
+       single L-C configuration, it is placed near the VOUT capacitors. For a second L-C filter design, the
+       feedback sense is placed near the load after the VOUT_FILT capacitors.
+
+
+
+
+Copyright © 2021 Texas Instruments Incorporated                                                          Submit Document Feedback     31
+                                                  Product Folder Links: TPS62912 TPS62913
+TPS62912, TPS62913
+SLVSFP4B – AUGUST 2020 – REVISED MARCH 2021                                                                            www.ti.com
+
+
+
+
+                                 Keep out
+                                 area for
+                               ferrite bead
+
+                      Figure 10-2. Recommended Layout for Design with Second L-C Filter
+
+                                                          Note
+      The ferrite bead can be placed closer to the device as long as it is outside the keep out area, as
+      shown in the figure as a red rectangular area. This placement avoids capacitive and electromagnetic
+      coupling to the output of the ferrite bead. If the ferrite bead is placed in the keep out area, the filtering
+      effect of the ferrite bead is greatly reduced. If the ferrite bead is routed through a via to the back side
+      of the board, ensure adequate ground plane between the layers if the ferrite bead will be in this area.
+
+
+
+
+32    Submit Document Feedback                                                          Copyright © 2021 Texas Instruments Incorporated
+
+                                              Product Folder Links: TPS62912 TPS62913
+                                                                                                                   TPS62912, TPS62913
+www.ti.com                                                                                  SLVSFP4B – AUGUST 2020 – REVISED MARCH 2021
+
+
+11 Device and Documentation Support
+11.1 Device Support
+11.1.1 Third-Party Products Disclaimer
+TI'S PUBLICATION OF INFORMATION REGARDING THIRD-PARTY PRODUCTS OR SERVICES DOES NOT
+CONSTITUTE AN ENDORSEMENT REGARDING THE SUITABILITY OF SUCH PRODUCTS OR SERVICES
+OR A WARRANTY, REPRESENTATION OR ENDORSEMENT OF SUCH PRODUCTS OR SERVICES, EITHER
+ALONE OR IN COMBINATION WITH ANY TI PRODUCT OR SERVICE.
+11.1.2 Development Support
+11.1.2.1 Custom Design With WEBENCH® Tools
+Click here to create a custom design using the TPS6291x device with the WEBENCH® Power Designer.
+1.    Start by entering the input voltage (VIN), output voltage (VOUT), and output current (IOUT) requirements.
+2.    Optimize the design for key parameters such as efficiency, footprint, and cost.
+3.    Open the advanced tab to optimize for output voltage ripple.
+4.    Once in a TPS6291x design, you can enable the second stage L-C filter and change other settings from the
+      drop-down on the left.
+The WEBENCH Power Designer provides a customized schematic along with a list of materials with real-time
+pricing and component availability.
+In most cases, these actions are available:
+•    Run electrical simulations to see important waveforms and circuit performance
+•    Export customized schematic and layout into popular CAD formats
+•    Print PDF reports for the design, and share the design with colleagues
+Get more information about WEBENCH tools at www.ti.com/WEBENCH.
+
+11.2 Receiving Notification of Documentation Updates
+To receive notification of documentation updates, navigate to the device product folder on ti.com. Click on
+Subscribe to updates to register and receive a weekly digest of any product information that has changed. For
+change details, review the revision history included in any revised document.
+11.3 Support Resources
+TI E2E™ support forums are an engineer's go-to source for fast, verified answers and design help — straight
+from the experts. Search existing answers or ask your own question to get the quick design help you need.
+Linked content is provided "AS IS" by the respective contributors. They do not constitute TI specifications and do
+not necessarily reflect TI's views; see TI's Terms of Use.
+11.4 Trademarks
+TI E2E™ is a trademark of Texas Instruments.
+WEBENCH® is a registered trademark of Texas Instruments.
+All trademarks are the property of their respective owners.
+11.5 Electrostatic Discharge Caution
+                    This integrated circuit can be damaged by ESD. Texas Instruments recommends that all integrated circuits be handled
+                    with appropriate precautions. Failure to observe proper handling and installation procedures can cause damage.
+                    ESD damage can range from subtle performance degradation to complete device failure. Precision integrated circuits may
+                    be more susceptible to damage because very small parametric changes could cause the device not to meet its published
+                    specifications.
+
+
+11.6 Glossary
+ TI Glossary              This glossary lists and explains terms, acronyms, and definitions.
+
+Copyright © 2021 Texas Instruments Incorporated                                                            Submit Document Feedback          33
+                                                  Product Folder Links: TPS62912 TPS62913
+TPS62912, TPS62913
+SLVSFP4B – AUGUST 2020 – REVISED MARCH 2021                                                                            www.ti.com
+
+
+12 Mechanical, Packaging, and Orderable Information
+The following pages include mechanical, packaging, and orderable information. This information is the most
+current data available for the designated devices. This data is subject to change without notice and revision of
+this document. For browser-based versions of this data sheet, refer to the left-hand navigation.
+
+
+
+
+34    Submit Document Feedback                                                          Copyright © 2021 Texas Instruments Incorporated
+
+                                              Product Folder Links: TPS62912 TPS62913
+                                                                                                                                                                      PACKAGE OPTION ADDENDUM
+
+       www.ti.com                                                                                                                                                                                                    9-Nov-2025
+
+
+
+
+PACKAGING INFORMATION
+
+       Orderable part number          Status     Material type      Package | Pins      Package qty | Carrier        RoHS             Lead finish/              MSL rating/               Op temp (°C)          Part marking
+                                        (1)            (2)                                                             (3)            Ball material             Peak reflow                                           (6)
+                                                                                                                                            (4)                      (5)
+
+          TPS62912RPUR                Active      Production     VQFN-HR (RPU) | 10      3000 | LARGE T&R             Yes                  SN             Level-2-260C-1 YEAR              -40 to 150               26PH
+         TPS62912RPUR.A               Active      Production     VQFN-HR (RPU) | 10      3000 | LARGE T&R             Yes                  SN             Level-2-260C-1 YEAR              -40 to 150               26PH
+          TPS62913RPUR                Active      Production     VQFN-HR (RPU) | 10      3000 | LARGE T&R             Yes                  SN             Level-2-260C-1 YEAR              -40 to 150               26QH
+         TPS62913RPUR.A               Active      Production     VQFN-HR (RPU) | 10      3000 | LARGE T&R             Yes                  SN             Level-2-260C-1 YEAR              -40 to 150               26QH
+
+(1)
+      Status: For more details on status, see our product life cycle.
+
+(2)
+   Material type: When designated, preproduction parts are prototypes/experimental devices, and are not yet approved or released for full production. Testing and final process, including without limitation quality assurance,
+reliability performance testing, and/or process qualification, may not yet be complete, and this item is subject to further changes or possible discontinuation. If available for ordering, purchases will be subject to an additional
+waiver at checkout, and are intended for early internal evaluation purposes only. These items are sold without warranties of any kind.
+
+(3)
+      RoHS values: Yes, No, RoHS Exempt. See the TI RoHS Statement for additional information and value definition.
+
+(4)
+   Lead finish/Ball material: Parts may have multiple material finish options. Finish options are separated by a vertical ruled line. Lead finish/Ball material values may wrap to two lines if the finish value exceeds the maximum
+column width.
+
+(5)
+  MSL rating/Peak reflow: The moisture sensitivity level ratings and peak solder (reflow) temperatures. In the event that a part has multiple moisture sensitivity ratings, only the lowest level per JEDEC standards is shown.
+Refer to the shipping label for the actual reflow temperature that will be used to mount the part to the printed circuit board.
+
+(6)
+      Part marking: There may be an additional marking, which relates to the logo, the lot trace code information, or the environmental category of the part.
+
+Multiple part markings will be inside parentheses. Only one part marking contained in parentheses and separated by a "~" will appear on a part. If a line is indented then it is a continuation of the previous line and the two
+combined represent the entire part marking for that device.
+
+Important Information and Disclaimer:The information provided on this page represents TI's knowledge and belief as of the date that it is provided. TI bases its knowledge and belief on information provided by third parties, and
+makes no representation or warranty as to the accuracy of such information. Efforts are underway to better integrate information from third parties. TI has taken and continues to take reasonable steps to provide representative
+and accurate information but may not have conducted destructive testing or chemical analysis on incoming materials and chemicals. TI and TI suppliers consider certain information to be proprietary, and thus CAS numbers
+and other limited information may not be available for release.
+
+In no event shall TI's liability arising out of such information exceed the total purchase price of the TI part(s) at issue in this document sold by TI to Customer on an annual basis.
+
+
+
+
+                                                                                                          Addendum-Page 1
+                                                                               PACKAGE MATERIALS INFORMATION
+
+www.ti.com                                                                                                                                         3-Sep-2026
+
+
+
+TAPE AND REEL INFORMATION
+
+       REEL DIMENSIONS                                                                      TAPE DIMENSIONS
+                                                                                       K0         P1
+
+
+
+                                                                                                                        B0 W
+                                        Reel
+                                      Diameter
+                                                                                    Cavity             A0
+                                                                A0   Dimension designed to accommodate the component width
+                                                                B0   Dimension designed to accommodate the component length
+                                                                K0   Dimension designed to accommodate the component thickness
+                                                                W    Overall width of the carrier tape
+                                                                P1   Pitch between successive cavity centers
+
+
+                                       Reel Width (W1)
+                              QUADRANT ASSIGNMENTS FOR PIN 1 ORIENTATION IN TAPE
+
+                                                                                                       Sprocket Holes
+
+
+                                                 Q1        Q2          Q1    Q2
+
+                                                 Q3        Q4          Q3    Q4                    User Direction of Feed
+
+
+
+                                                            Pocket Quadrants
+
+
+*All dimensions are nominal
+             Device           Package Package Pins              SPQ       Reel   Reel   A0                    B0         K0     P1     W     Pin1
+                               Type Drawing                             Diameter Width (mm)                  (mm)       (mm)   (mm)   (mm) Quadrant
+                                                                          (mm) W1 (mm)
+     TPS62912RPUR             VQFN-     RPU           10        3000        180.0           8.4        2.3    2.3       1.15   4.0    8.0     Q2
+                               HR
+     TPS62913RPUR             VQFN-     RPU           10        3000        180.0           8.4        2.3    2.3       1.15   4.0    8.0     Q2
+                               HR
+
+
+
+
+                                                                      Pack Materials-Page 1
+                                                                PACKAGE MATERIALS INFORMATION
+
+www.ti.com                                                                                                              3-Sep-2026
+
+
+
+ TAPE AND REEL BOX DIMENSIONS
+
+
+
+
+                                                               Width (mm)
+                                                                              H
+                      W
+
+
+
+
+                                                          L
+
+
+
+
+*All dimensions are nominal
+             Device           Package Type   Package Drawing   Pins         SPQ    Length (mm)   Width (mm)   Height (mm)
+     TPS62912RPUR              VQFN-HR            RPU           10          3000      210.0        185.0         35.0
+     TPS62913RPUR              VQFN-HR            RPU           10          3000      210.0        185.0         35.0
+
+
+
+
+                                                        Pack Materials-Page 2
+                                                                                                           PACKAGE OUTLINE
+RPU0010A                                                                                          VQFN-HR - 1 mm max height
+                                                                                                PLASTIC QUAD FLAT PACK-NO LEAD
+
+
+                                              B                      2.1                   A
+                                                                     1.9
+
+
+
+
+                           PIN 1 INDEX AREA                                               2.1
+                                                                                          1.9
+
+
+
+
+                                           1.0
+                                           0.8                                                      C
+
+                                                                                                         SEATING PLANE
+                                       0.05
+                                       0.00                                                             0.08 C
+
+
+
+
+                                                                     PKG
+                                           3X 0.55
+                                              0.35                                       3X 0.9                          (0.2) TYP
+                                                                                            0.7
+
+                                  7X 0.5             3                               4
+
+
+
+                                                                                                1
+                                   PKG
+
+                                       0.25          1
+                                                                                     6
+                                                                                               6X 0.25
+                                                                                                  0.15
+                                                                                                    0.1    C A B
+                                                         10                                         0.05    C
+                                                                                 7
+                                         4X 0.4                 PIN 1 ID
+                                            0.3
+                                                              (45o X 0.1)                4X 0.3
+                                                                                            0.2
+                                                                     1.5                            0.1    C A B
+                                                                                                    0.05    C
+                                                                                                                          4224937 /A 04/2019
+NOTES:
+
+ 1.   All linear dimensions are in millimeters. Any dimensions in parenthesis are for reference only. Dimensioning and tolerancing
+      per ASME Y14.5M.
+ 2.   This drawing is subject to change without notice.
+
+
+
+
+                                                                    www.ti.com
+                                                                                    EXAMPLE BOARD LAYOUT
+RPU0010A                                                                                    VQFN-HR - 1 mm max height
+                                                                                         PLASTIC QUAD FLAT PACK-NO LEAD
+
+
+                                                                  (1.5)
+                                                                  PKG
+                                             7X (0.5)                                       4X (0.25)
+                                                     10                              7
+
+                                       4X (0.55)
+
+
+                          (R0.05)                                                                   (0.25)
+                                                                                              6
+                                             1
+                                      PKG                                                                     (1.675)
+
+
+                                                                                                        (1)
+
+
+
+                                             3
+                                                                                              4
+
+                           6X (0.2)
+                                                                           3X
+                                3X (0.65)
+                                                                          (0.7)
+                                    3X (1)                                  3X
+                                                                          (0.875)
+
+
+                                                          LAND PATTERN EXAMPLE
+                                                            EXPOSED METAL SHOWN
+                                                                 SCALE: 25X
+
+
+
+
+                                                                                     0.05 MIN
+                0.05 MAX
+                                                                                   ALL AROUND
+              ALL AROUND                           METAL                                                                SOLDER MASK
+                                                                                                                        OPENING
+
+
+
+          EXPOSED                                  SOLDER MASK                    EXPOSED                                 METAL UNDER
+            METAL                                  OPENING                          METAL                                 SOLDER MASK
+                       NON- SOLDER MASK
+                            DEFINED                                                               SOLDER MASK
+                                                                                                    DEFINED
+                         (PREFERRED)
+
+                                                          SOLDER MASK DETAILS
+                                                               NOT TO SCALE                                               4224937 /A 04/2019
+
+NOTES: (continued)
+
+ 3.   For more information, see Texas Instruments literature number SLUA271 (www.ti.com/lit/slua271).
+ 4.   Solder mask tolerances between and around signal pads can vary based on board fabrication site.
+
+
+
+
+                                                               www.ti.com
+                                                                                  EXAMPLE STENCIL DESIGN
+RPU0010A                                                                               VQFN-HR - 1 mm max height
+                                                                                       PLASTIC QUAD FLAT PACK-NO LEAD
+
+
+
+
+                                                                (1.5)
+                                                                PKG
+                                            7X (0.5)                                   4X (0.25)
+                                                       10                          7
+
+                                      4X (0.55)
+
+
+                          (R0.05)                                                              (0.25)
+                                                                                         6
+                                            1
+                                      PKG                                                                (1.675)
+
+
+                                                                                                   (1)
+
+
+
+                                            3
+                                                                                         4
+
+                           6X (0.2)
+                                                                         3X
+                              3X (0.65)
+                                                                        (0.7)
+                                3X (1)                                    3X
+                                                                        (0.875)
+
+
+
+
+                                                       SOLDER PASTE EXAMPLE
+                                                   BASED ON 0.100 mm THICK STENCIL
+                                                             SCALE: 25X
+
+
+
+
+                                                                                                                   4224937 /A 04/2019
+
+NOTES: (continued)
+
+5.   Laser cutting apertures with trapezoidal walls and rounded corners may offer better paste release. IPC-7525 may have alternate
+     design recommendations.
+
+
+
+
+                                                             www.ti.com
+                                         IMPORTANT NOTICE AND DISCLAIMER
+TI PROVIDES TECHNICAL AND RELIABILITY DATA (INCLUDING DATASHEETS), DESIGN RESOURCES (INCLUDING REFERENCE
+DESIGNS), APPLICATION OR OTHER DESIGN ADVICE, WEB TOOLS, SAFETY INFORMATION, AND OTHER RESOURCES “AS IS”
+AND WITH ALL FAULTS, AND DISCLAIMS ALL WARRANTIES, EXPRESS AND IMPLIED, INCLUDING WITHOUT LIMITATION ANY
+IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE OR NON-INFRINGEMENT OF THIRD
+PARTY INTELLECTUAL PROPERTY RIGHTS.
+These resources are intended for skilled developers designing with TI products. You are solely responsible for (1) selecting the appropriate
+TI products for your application, (2) designing, validating and testing your application, and (3) ensuring your application meets applicable
+standards, and any other safety, security, regulatory or other requirements.
+These resources are subject to change without notice. TI grants you permission to use these resources only for development of an
+application that uses the TI products described in the resource. Other reproduction and display of these resources is prohibited. No license
+is granted to any other TI intellectual property right or to any third party intellectual property right. TI disclaims responsibility for, and you fully
+indemnify TI and its representatives against any claims, damages, costs, losses, and liabilities arising out of your use of these resources.
+TI’s products are provided subject to TI’s Terms of Sale, TI’s General Quality Guidelines, or other applicable terms available either on
+ti.com or provided in conjunction with such TI products. TI’s provision of these resources does not expand or otherwise alter TI’s applicable
+warranties or warranty disclaimers for TI products. Unless TI explicitly designates a product as custom or customer-specified, TI products
+are standard, catalog, general purpose devices.
+TI objects to and rejects any additional or different terms you may propose.
+IMPORTANT NOTICE
+
+                                                Copyright © 2026, Texas Instruments Incorporated
+                                                                Last updated 10/2025
+

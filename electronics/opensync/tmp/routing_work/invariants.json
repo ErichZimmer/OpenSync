@@ -1,0 +1,91 @@
+{
+  "footprints": 221,
+  "pad_definitions_unchanged": true,
+  "fields_3d_models_unchanged": true,
+  "outline_unchanged": true,
+  "permitted_rigid_transforms": [
+    {
+      "reference": "R79",
+      "before": {
+        "position": [
+          42600000,
+          92100000
+        ],
+        "angle": -90.0
+      },
+      "after": {
+        "position": [
+          42600000,
+          92100000
+        ],
+        "angle": 90.0
+      }
+    },
+    {
+      "reference": "R65",
+      "before": {
+        "position": [
+          136800000,
+          57800000
+        ],
+        "angle": -90.0
+      },
+      "after": {
+        "position": [
+          136800000,
+          57800000
+        ],
+        "angle": 90.0
+      }
+    },
+    {
+      "reference": "L2",
+      "before": {
+        "position": [
+          49300000,
+          81300000
+        ],
+        "angle": -90.0
+      },
+      "after": {
+        "position": [
+          48600000,
+          81300000
+        ],
+        "angle": -90.0
+      }
+    }
+  ],
+  "before_tracks_and_vias": 751,
+  "after_tracks_and_vias": 1463,
+  "before_zones": 18,
+  "after_zones": 32,
+  "original_non_usb_copper_nets_widths_layers_unchanged": true,
+  "removed_original_copper_count": 7,
+  "authorized_usb_pad_net_changes": [
+    {
+      "reference": "L4",
+      "pad": "1",
+      "before": "/Microcontroller Circuitry/USB_D-",
+      "after": "/Microcontroller Circuitry/USB_D+"
+    },
+    {
+      "reference": "L4",
+      "pad": "4",
+      "before": "/Microcontroller Circuitry/USB_D+",
+      "after": "/Microcontroller Circuitry/USB_D-"
+    },
+    {
+      "reference": "J13",
+      "pad": "2",
+      "before": "Net-(D14-I{slash}O_1)",
+      "after": "Net-(D14-I{slash}O_2)"
+    },
+    {
+      "reference": "J13",
+      "pad": "3",
+      "before": "Net-(D14-I{slash}O_2)",
+      "after": "Net-(D14-I{slash}O_1)"
+    }
+  ]
+}

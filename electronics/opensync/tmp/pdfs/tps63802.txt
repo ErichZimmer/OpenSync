@@ -1,0 +1,2012 @@
+                                                                                                                                                      TPS63802
+www.ti.com                                                                                                                                     TPS63802
+                                                                                                          SLVSEU9D – NOVEMBER 2018 – REVISED JANUARY 2021
+                                                                                                          SLVSEU9D – NOVEMBER 2018 – REVISED JANUARY 2021
+
+              TPS63802 2-A, High-efficient, Low IQ Buck-boost Converter in DFN Package
+
+1 Features                                                                  2 Applications
+•    Input voltage range: 1.3 V to 5.5 V                                    •                    System pre-regulator (tracking and telematics,
+     – Device input voltage > 1.8 V for start-up                                                 portable POS, home automation, IP network
+•    Output voltage range: 1.8 V to 5.2 V (adjustable)                                           camera)
+•    2-A output current for VI ≥ 2.3 V, VO = 3.3 V                          •                    Point-of-load regulation (wired sensor, port/cable
+•    High efficiency over the entire load range                                                  adapter and dongle, electronic smart lock, IoT)
+     – 11-µA operating quiescent current                                    •                    Battery back-up supply (electricity meter, data
+                                                                                                 concentrator, power quality meter)
+     – Power save mode and mode selection for
+        forced PWM-mode                                                     •                    Thermoelectric device supply (TEC, optical
+                                                                                                 modules)
+•    Peak current buck-boost mode architecture
+                                                                            •                    General purpose voltage stabilizer and converter
+     – Defined transition points between buck, buck-
+        boost, and boost operation modes                                    3 Description
+     – Forward and reverse current operation                                The TPS63802 is a high efficiency, high output current
+     – Start-up into pre-biased outputs                                     buck-boost converter. Depending on the input voltage,
+•    Safety and robust operation features                                   it automatically operates in boost, buck, or in a novel
+     – Integrated soft start                                                4-cycle buck-boost mode when the input voltage is
+     – Overtemperature- and overvoltage-protection                          approximately equal to the output voltage. The
+     – True shutdown function with load disconnect                          transitions between modes happen at defined
+     – Forward and backward current limit                                   thresholds and avoid unwanted toggling within the
+                                                                            modes to reduce output voltage ripple. The device
+•    Small solution size of 21.5 mm2
+                                                                            output voltages are individually set by a resistive
+     – Tiny SON/DFN package (similar to QFN)                                divider within a wide output voltage range. An 11-μA
+     – Small 0.47-µH inductor                                               quiescent current enables the highest efficiency for
+     – Works with a 22-µF minimum output capacitor                          little to no-load conditions.
+•    Create a custom design using the TPS63802 with
+                                                                                                                Device Information
+     the WEBENCH® Power Designer
+                                                                                         PART NUMBER                PACKAGE(1)            BODY SIZE (NOM)
+                                                                                                                 10-Pin VSON-HR
+                                                                             TPS63802                                                  3.0 mm × 2.0 mm
+                                                                                                                 (0.5 mm pitch)
+
+                                                                            (1)                   For all available packages, see the orderable addendum at
+                                                                                                  the end of the datasheet.
+                                          0.47 µH
+                                                                                                 100
+                                                                                                  90
+                                     L1              L2
+                                                                                                  80
+                                                                    VOUT
+         VIN
+    1.3 V ± 5.5 V
+                               VIN                    VOUT          3.3 V                         70
+                                                                                Efficiency (%)
+
+
+
+
+                    10 F                                         22 F                             60
+                               EN                         PG
+                                          TPS63802
+                                                                                                  50
+                               MODE                       FB
+                                                                                                  40
+                                                                                                  30
+                               GND                    AGND
+                                                                                                                                                VIN = 3.0 V
+                                                                                                  20                                            VIN = 3.3 V
+                                                                                                  10                                            VIN = 3.6 V
+                                                                                                                                                VIN = 4.2 V
+                                                                                                  0
+                           Typical Application                                                    100P        1m          10m            100m          1      2
+                                                                                                                      Output Current (A)                       D001
+                                                                                                                                                              D001
+
+                                                                                                  Efficiency vs Output Current (VO = 3.3 V)
+
+
+
+
+       An©IMPORTANT
+Copyright                NOTICEIncorporated
+           2021 Texas Instruments at the end of this data sheet addresses availability, warranty, changes, use in safety-critical
+                                                                                                               Submit  Document   applications,
+                                                                                                                                    Feedback                          1
+          intellectual property matters and other important disclaimers. PRODUCTION DATA.
+                                                           Product Folder Links: TPS63802
+TPS63802
+SLVSEU9D – NOVEMBER 2018 – REVISED JANUARY 2021                                                                                                                  www.ti.com
+
+
+                                                                        Table of Contents
+1 Features............................................................................1     9.4 Device Functional Modes..........................................13
+2 Applications..................................................................... 1     10 Application and Implementation................................ 17
+3 Description.......................................................................1       10.1 Application Information........................................... 17
+4 Revision History.............................................................. 2          10.2 Typical Application.................................................. 17
+5 Description (continued).................................................. 3             11 Power Supply Recommendations..............................27
+6 Device Comparison Table...............................................3                 12 Layout...........................................................................28
+7 Pin Configuration and Functions...................................4                       12.1 Layout Guidelines................................................... 28
+8 Specifications.................................................................. 5        12.2 Layout Example...................................................... 28
+  8.1 Absolute Maximum Ratings........................................ 5                  13 Device and Documentation Support..........................29
+  8.2 ESD Ratings............................................................... 5          13.1 Device Support....................................................... 29
+  8.3 Recommended Operating Conditions.........................5                            13.2 Documentation Support.......................................... 29
+  8.4 Thermal Information....................................................5              13.3 Receiving Notification of Documentation Updates..29
+  8.5 Electrical Characteristics.............................................6              13.4 Support Resources................................................. 30
+  8.6 Typical Characteristics................................................ 8             13.5 Trademarks............................................................. 30
+9 Detailed Description........................................................9             13.6 Electrostatic Discharge Caution..............................30
+  9.1 Overview..................................................................... 9       13.7 Glossary..................................................................30
+  9.2 Functional Block Diagram........................................... 9               14 Mechanical, Packaging, and Orderable
+  9.3 Feature Description...................................................10              Information.................................................................... 30
+
+
+
+4 Revision History
+Changes from Revision C (June 2020) to Revision D (January 2021)                                           Page
+• Updated the numbering format for tables, figures and cross-references throughout the document. .................1
+
+Changes from Revision B (September 2019) to Revision C (June 2020)                                                                                   Page
+• Added device comparison ................................................................................................................................. 3
+• Changed 1x 22 µF to 2x 22 µF......................................................................................................................... 19
+• Changed Part Number from TPS63802RMW to TPS63802DLA .....................................................................20
+• Change MODE from High to Low in Application Curves ................................................................................. 20
+• Deleted layout guideline to separate AGND and PGND ..................................................................................28
+• Changed Use a common-power GND, but connect AGND and PGND through via at a different layer. to Use a
+  common ground node for power ground and a different one for control ground to minimize the effects of
+  ground noise. Connect these ground nodes at any place close to one of the ground pins of the IC. ..............28
+
+Changes from Revision A (January 2019) to Revision B (September 2019)                                                                               Page
+• Changed the device status from Advanced Information to Production Data ..................................................... 1
+• Changed package group name ......................................................................................................................... 1
+• Added related documentation ..........................................................................................................................29
+
+
+
+
+2       Submit Document Feedback                                                                                           Copyright © 2021 Texas Instruments Incorporated
+
+                                                                     Product Folder Links: TPS63802
+                                                                                                                               TPS63802
+www.ti.com                                                                                 SLVSEU9D – NOVEMBER 2018 – REVISED JANUARY 2021
+
+
+5 Description (continued)
+The TPS63802 comes in a 1.4 mm x 2.3 mm thermally enhanced HotRod™ dual flat no-lead (DFN) package.
+With the tiny bill-off material, the solution size can be small.
+6 Device Comparison Table
+     PART                                                                         SWITCH CURRENT LIMIT BOOST
+                     OUTPUT VOLTAGE           I(Q;VIN) (TYP.)   C(O,EFF) (MIN.)                              PACKAGE
+    NUMBER                                                                                  (MIN.)
+    TPS63802              Adjustable              11 µA              7 µF                       4A                 VSON
+ SIMILAR TI PARTS
+    TPS63805              Adjustable              11 µA              7 µF                       4A                 WCSP
+    TPS63810         fixed: 3.3 V/3.45 V
+                                                  15 µA             16 µF                      5.2 A               WCSP
+    TPS63811        or I2C programmable
+
+
+
+
+Copyright © 2021 Texas Instruments Incorporated                                                             Submit Document Feedback         3
+                                                          Product Folder Links: TPS63802
+TPS63802
+SLVSEU9D – NOVEMBER 2018 – REVISED JANUARY 2021                                                                                www.ti.com
+
+
+7 Pin Configuration and Functions
+
+                                                  EN         1        10          VIN
+
+                                                MODE         2         9          L1
+
+                                                AGND         3    8               GND
+
+                                                  FB         4         7          L2
+
+                                                  PG         5         6          VOUT
+
+
+                                                                            Not to scale
+
+                                      Figure 7-1. 10-Pin DLA Package (Top View)
+
+                                                     Table 7-1. Pin Functions
+           PIN
+                                                                           DESCRIPTION
+    NAME          NO.
+     EN            1       Device Enable input. Set HIGH to enable and LOW to disable. It must not be left floating.
+    MODE           2       PFM/PWM mode selection. Set LOW for power save mode, set HIGH for forced PWM mode. It must not be
+                           left floating.
+    AGND           3       Analog ground
+     FB            4       Voltage feedback sensing pin
+     PG            5       Power good indicator, open-drain output
+    VOUT           6       Power stage output
+     L2            7       Connection for inductor
+    GND            8       Power ground
+     L1            9       Connection for inductor
+     VIN          10       Supply voltage input
+
+
+
+
+4     Submit Document Feedback                                                                  Copyright © 2021 Texas Instruments Incorporated
+
+                                                     Product Folder Links: TPS63802
+                                                                                                                                                TPS63802
+www.ti.com                                                                                        SLVSEU9D – NOVEMBER 2018 – REVISED JANUARY 2021
+
+
+8 Specifications
+8.1 Absolute Maximum Ratings
+over junction temperature range (unless otherwise noted)(1)
+                                                                                                                              MIN              MAX       UNIT
+                                  VIN, L1, L2, EN, MODE, VOUT, FB, PG                                                        –0.3                6        V
+ Voltage(2)
+                                  L1, L2 (AC, less than 10 ns)                                                                 –3                9        V
+ Operating junction temperature, TJ                                                                                           –40              150        °C
+ Storage temperature, Tstg                                                                                                    –65              150        °C
+
+(1)       Stresses beyond those listed under Absolute Maximum Ratings may cause permanent damage to the device. These are stress ratings
+          only, which do not imply functional operation of the device at these or any other conditions beyond those indicated under
+          Recommended Operating Conditions. Exposure to absolute-maximum-rated conditions for extended periods may affect device
+          reliability.
+(2)       All voltage values are with respect to network ground pin.
+
+8.2 ESD Ratings
+                                                                                                                                    VALUE        UNIT
+                                         Human-body model (HBM), per ANSI/ESDA/JEDEC JS-001(1)                                      ±2000
+ V(ESD)        Electrostatic discharge                                                                                                               V
+                                         Charged-device model (CDM), per JEDEC specification JESD22-C101(2)                         ±500
+
+(1)       JEDEC document JEP155 states that 500-V HBM allows safe manufacturing with a standard ESD control process.
+(2)       JEDEC document JEP157 states that 250-V CDM allows safe manufacturing with a standard ESD control process.
+
+8.3 Recommended Operating Conditions
+                                                                                                              MIN           NOM       MAX        UNIT
+ VI                 Input voltage                                                                         1.3 (1)                       5.5          V
+ VO                 Output voltage                                                                             1.8                   5.2 (2)         V
+ CI                 Effective capacitance connected to VIN                                                      4              5                 μF
+ L                  Effective inductance                                                                      0.37          0.47      0.57       μH
+                                                                                1.8 V ≤ VO ≤ 2.3 V             10                                μF
+ CO                 TPS63802 Effective capacitance connected to VOUT
+                                                                                VO > 2.3 V                      7            8.2                 µF
+                                                                                Operating junction
+ TJ                 Operating junction temperature                                                            –40                      125        °C
+                                                                                temperature
+
+(1)       Minimum startup voltage of VI > 1.8 V until power good
+(2)       VO margin for accuracy and load steps is considerd in absolut maximum ratings
+
+8.4 Thermal Information
+over operating free-air temperature range (unless otherwise noted)(1)
+                                                                                                               TPS63802
+                                         THERMAL METRIC                                                          VSON                           UNIT
+                                                                                                                10 PINS
+ RΘJA                  Junction-to-ambient thermal resistance                                                        81.0                       °C/W
+ RΘJC(top)             Junction-to-case (top) thermal resistance                                                     36.4                       °C/W
+ RΘJB                  Junction-to-board thermal resistance                                                          23.4                       °C/W
+ ΨJT                   Junction-to-top characterization parameter                                                    0.9                        °C/W
+ ΨJB                   Junction-to-board characterization parameter                                                  23.5                       °C/W
+ RΘJC(bot)             Junction-to-case (bottom) thermal resistance                                                  n/a                        °C/W
+
+(1)       For more information about traditional and new thermal metrics, see the Semiconductor and IC Package Thermal Metrics application
+          report.
+
+
+
+
+Copyright © 2021 Texas Instruments Incorporated                                                                            Submit Document Feedback             5
+                                                                 Product Folder Links: TPS63802
+TPS63802
+SLVSEU9D – NOVEMBER 2018 – REVISED JANUARY 2021                                                                                                        www.ti.com
+
+8.5 Electrical Characteristics
+VIN= 1.8 V to 5.5 V, VOUT = 1.8 V to 5.2 V , TJ= –40°C to +125°C, typical values are at VIN= 3.6 V, VOUT = 3.3 V and TJ=
+25°C (unless otherwise noted)
+                      PARAMETER                                                TEST CONDITIONS                              MIN         TYP        MAX     UNIT
+    SUPPLY
+                  Minimum input voltage for full load,
+    VIN;LOAD                                           IOUT = 2 A, VOUT = 3.3 V, TJ = 25°C                                               2.3                 V
+                  once started
+                                                        TPS63802; TJ = 25°C, EN = VIN = 3.6 V, VOUT = 3.3 V, not
+    IQ;VIN        Quiescent current into VIN                                                                                              11                 μA
+                                                        switching
+    ISD           Shutdown current into VIN             EN = low, -40°C ≤ TJ ≤ 85°C, VIN = 3.6 V, VOUT = 0 V                             45         600      nA
+                  Undervoltage lockout threshold        VIN falling, VOUT ≥ 1.8 V, once started                              1.2        1.25       1.29      V
+    UVLO
+                  Undervoltage lockout threshold        VIN rising                                                           1.6         1.7       1.79      V
+    TSD           Thermal shutdown                      Temperature rising                                                              150                  °C
+    TSD;HYST      Thermal shutdown hysteresis                                                                                            20                  °C
+    SOFT-START, POWER GOOD
+                                                        TJ = 25°C, VIN = 3.6 V, VOUT = 3.3 V, IO = 3.5 A, time from
+    Tramp         Soft-start, Current limit ramp time                                                                                   224                  µs
+                                                        first switching to power good
+                                                        TJ = 25°C, VIN = 3.6 V, VOUT = 3.3 V, Delay from EN-edge
+                  Delay from EN-edge until rising
+    Tdelay                                              until rising                                                                    321                  µs
+                  VOUT
+                                                        first switching
+    LOGIC SIGNALS EN, MODE
+    VTHR;EN       Threshold Voltage rising for EN-Pin                                                                       1.07         1.1       1.13      V
+                  Threshold Voltage falling for EN-
+    VTHF;EN                                                                                                                 0.97           1       1.03      V
+                  Pin
+    VIH           High-level input voltage                                                                                   1.2                             V
+    VIL           Low-level input voltage                                                                                                            0.4     V
+    VPG;rising                                          VOUT rising, referenced to VOUT nominal                                          95                  %
+                  Power Good threshold voltage
+    VPG;falling                                         VOUT falling, referenced to VOUT nominal                                         90                  %
+                  Power Good low-level output
+    VPG;Low                                             ISINK = 1 mA                                                                                 0.4     V
+                  voltage
+    tPG;delay     Power Good delay time                 VFB falling                                                                      14                  µs
+    Ilkg          Input leakage current                                                                                                 0.01         0.2     µA
+    OUTPUT
+    ISD           Shutdown current into VOUT            EN = low, -40°C ≤ TJ ≤ 85°C, VIN = 3.6 V, VOUT = 3.3 V                          ±0.5       ±600      nA
+    VFB           Feedback Regulation Voltage                                                                                           500                 mV
+    VFB           Feedback Voltage accuracy             PWM mode                                                              –1                      1      %
+                                                        VOUT rising                                                          5.5         5.7         5.9     V
+                  Overvoltage Protection Threshold
+                                                        VIN rising                                                           5.5         5.7         5.9     V
+                  Peak Inductor Current to enter
+    IPWM/PFM                                            VIN = 3.6 V; VOUT = 3.3 V                                                       1.06                 A
+                  PFM-Mode
+    IFB           Feedback Input Bias Current           VFB = 500 mV                                                                       5        100      nA
+                  Peak Current Limit, Boost Mode                                                                               4           5       5.75      A
+                  Peak Current Limit, Buck-Boost
+    IPK                                                 TPS63802; VIN ≥ 2.5 V                                                              5                 A
+                  Mode
+                  Peak Current Limit, Buck Mode                                                                                          3.8                 A
+                  Peak Current Limit for Reverse
+    IPK;Reverse                                         VI = 5 V, VO = 3.3 V                                                            –0.9                 A
+                  Operation
+                                                        VIN = 3 V, VOUT = 3.3 V; I(L2) = 0.19   VIN = 3 V, VOUT = 3.3
+                  High-side FET on-resistance                                                                                            47                 mΩ
+    Buck                                                A                                       V; IO = 0.5 A
+    RDS;ON                                              VIN = 3 V, VOUT = 3.3 V; I(L2) = 0.19   VIN = 3 V, VOUT = 3.3
+                  Low-side FET on-resistance                                                                                             30                 mΩ
+                                                        A                                       V; IO = 0.5 A
+                                                        VIN = 3 V, VOUT = 3.3 V; I(L1) = 0.19   VIN = 3 V, VOUT = 3.3
+                  High-side FET on-resistance                                                                                            43                 mΩ
+    Boost                                               A                                       V; IO = 0.5 A
+    RDS;ON                                              VIN = 3 V, VOUT = 3.3 V; I(L1) = 0.19   VIN = 3 V, VOUT = 3.3
+                  Low-side FET on-resistance                                                                                             18                 mΩ
+                                                        A                                       V; IO = 0.5 A
+
+
+
+
+6            Submit Document Feedback                                                                                   Copyright © 2021 Texas Instruments Incorporated
+
+                                                                      Product Folder Links: TPS63802
+                                                                                                                                        TPS63802
+www.ti.com                                                                                        SLVSEU9D – NOVEMBER 2018 – REVISED JANUARY 2021
+
+VIN= 1.8 V to 5.5 V, VOUT = 1.8 V to 5.2 V , TJ= –40°C to +125°C, typical values are at VIN= 3.6 V, VOUT = 3.3 V and TJ=
+25°C (unless otherwise noted)
+                 PARAMETER                                            TEST CONDITIONS                           MIN      TYP      MAX     UNIT
+             Inductor Switching Frequency,
+                                                  VIN = 2.3V, VOUT = 3.3V, no Load, MODE = HIGH, TJ = 25°C                2.1             MHz
+             Boost Mode
+             Inductor Switching Frequency,
+ fSW                                              VIN = 3.3V, VOUT = 3.3V, no Load, MODE = HIGH, TJ = 25°C                1.4             MHz
+             Buck-Boost Mode
+             Inductor Switching Frequency,
+                                                  VIN = 4.3, VOUT = 3.3V, no Load, MODE = HIGH, TJ = 25°C                 1.6             MHz
+             Buck Mode
+             Line regulation                      VIN = 2.4 V to 5.5 V, VOUT = 3.3V, IOUT = 2 A                           0.3              %
+                                                  VIN= 3.6 V, VOUT = 3.3V, IOUT = 0 A to 2 A, forced-PWM
+             Load regulation                                                                                              0.1              %
+                                                  mode
+
+
+
+
+Copyright © 2021 Texas Instruments Incorporated                                                                    Submit Document Feedback         7
+                                                             Product Folder Links: TPS63802
+TPS63802
+SLVSEU9D – NOVEMBER 2018 – REVISED JANUARY 2021                                                                                                                                       www.ti.com
+
+8.6 Typical Characteristics
+
+                             16                                                                                              1.4
+                                     VI = 1.8 V                                                                                        VI = 1.8 V
+                                     VI = 3.6 V                                                                              1.2       VI = 3.6 V
+                                     VI = 5.5 V                                                                                        VI = 5.5 V
+                             12                                                                                                1
+
+
+
+
+                                                                                                     Shutdown Current (PA)
+    Quiescent Current (PA)
+
+
+
+
+                                                                                                                             0.8
+
+                              8                                                                                              0.6
+
+                                                                                                                             0.4
+
+                              4                                                                                              0.2
+
+                                                                                                                               0
+
+                              0                                                                                              -0.2
+                              -40   -20    0      20      40    60      80   100     120   140                                  -40   -20    0      20      40    60      80   100   120   140
+                                                       Temperature (qC)                                                                                  Temperature (qC)                   D004
+                                                                                            D006
+
+                 MODE = LOW                       VO = 3.3 V             IO = 0 mA, not                                                             EN = LOW
+                                                                            switching
+
+       Figure 8-1. Quiescent Current vs. Temperature                                                       Figure 8-2. Shutdown Current vs. Temperature
+
+
+
+
+8                            Submit Document Feedback                                                                                                Copyright © 2021 Texas Instruments Incorporated
+
+                                                                                   Product Folder Links: TPS63802
+                                                                                                                                                      TPS63802
+www.ti.com                                                                                         SLVSEU9D – NOVEMBER 2018 – REVISED JANUARY 2021
+
+
+9 Detailed Description
+9.1 Overview
+The TPS63802 buck-boost converter uses four internal switches to maintain synchronous power conversion at
+all possible operating conditions. This enables the device to keep high efficiency over a wide input voltage and
+output load range. To regulate the output voltage at all possible input voltage conditions, the device automatically
+transitions between buck, buck-boost, and boost operation as required by the operating conditions. Therefore, it
+operates as a buck converter when the input voltage is higher than the output voltage, and as a boost converter
+when the input voltage is lower than the output voltage. When the input voltage is close to the output voltage, it
+operates in a 3-cycle buck-boost operation. In this mode, all four switches are active (see Section 9.4.1.3). The
+RMS current through the switches and the inductor is kept at a minimum to minimize switching and conduction
+losses. Controlling the switches this way allows the converter to always keep high efficiency over the complete
+input voltage range. The device provides a seamless transition between all modes.
+9.2 Functional Block Diagram
+                                                                                          L
+
+
+                                                                                L1            L2
+
+
+
+
+                    VIN                                                                                                                      VOUT
+
+
+
+
+                     CIN                                                                                                                            COUT
+
+                                           Current       Gate                                          Gate
+                                           Sensor        Driver                                        Driver
+
+                                                             Device                                       Device
+                                                             Control                                      Control
+                                                                                                                                            PG
+
+
+
+
+                                                 VIN                          VOUT                                      Device
+                                                          VMAX Switch                                                   Control
+
+
+                     EN                +                 Device Control
+                                Ref
+                                       ±               Power Safe Mode                             +
+                               1.1 V                                                                                                        FB
+                                                                                                                    +
+                                              VIN           Protection                             ±
+                                                          Current Limit                                             ±        Ref
+                                                       Buck/Boost Control                                                  500 mV
+                                                                                     Gate
+                                                       Off-time calculation
+                                                                                     Driver
+                                                             Soft-Start
+                  MODE
+                                                                                     Power
+                                              VOUT                                   Good
+
+
+                    GND                                                                                                                      AGND
+                                            L1, L2
+
+
+
+
+Copyright © 2021 Texas Instruments Incorporated                                                                                   Submit Document Feedback       9
+                                                             Product Folder Links: TPS63802
+TPS63802
+SLVSEU9D – NOVEMBER 2018 – REVISED JANUARY 2021                                                                                    www.ti.com
+
+9.3 Feature Description
+9.3.1 Control Loop Description
+The TPS63802 uses a peak current mode control architecture. It has an inner current loop where it measures
+the peak current of the boost high-side MOSFET and compares it to a reference current. This current is the
+output of the outer voltage loop. It measures the output voltage via the FB-pin and compares it with the internal
+voltage reference. That means, the outer voltage loop measures the voltage error (VREF-VFB), and transforms it
+into the system current demand (IREF) for the inner current loop.
+Figure 9-1 shows the simplified schematic of the control loop. The error amplifier and the type-2 compensation
+represent the voltage loop. The voltage output is converted into the reference current IREF and fed into the
+current comparator.
+The scheme shows the skip-comparator handling the power-save mode (PFM) to achieve high efficiency at light
+loads. See Section 9.4.2 for further details.
+                                                     VIN                                                      L1
+
+
+
+
+                                                                                              IPK
+
+
+                                                                                                          ±
+                                                                                  IREF                             Gate
+                                                                                                                   Driver
+                                                                                                          +
+                    FB
+                                            +
+                                                     VEA
+                                   Ref      ±
+                                 500mV
+                                                                              +
+
+                                                                              ±
+                                                                    ISKIP
+
+
+
+                                    Figure 9-1. Control Loop Architecture Scheme
+
+9.3.2 Precise Device Enable: Threshold- or Delayed Enable
+The enable-pin is a digital input to enable or disable the device by applying a high or low level. The device enters
+shutdown when EN is set low. In addition, this input features a precise threshold and can be used as a
+comparator that enables and disables the part at a defined threshold. This allows you to drive the state by a
+slowly changing voltage and enables the use of an external RC network to achieve a precise power-up delay.
+The enable pin can also be used with an external voltage divider to set a user-defined minimum supply voltage.
+For proper operation, the EN pin must be terminated and must not be left floating.
+                                   VTHRESHOLD                               VDELAY
+
+
+                                                R4                                       R4
+
+                                                             EN                                      EN
+
+                                                R5                                       C5
+
+
+
+
+                Figure 9-2. Circuit Example for How to Use the Precise Device Enable Feature
+
+
+
+
+10    Submit Document Feedback                                                                      Copyright © 2021 Texas Instruments Incorporated
+
+                                                     Product Folder Links: TPS63802
+                                                                                                                          TPS63802
+www.ti.com                                                                         SLVSEU9D – NOVEMBER 2018 – REVISED JANUARY 2021
+
+
+9.3.3 Mode Selection (PFM/PWM)
+The mode-pin is a digital input to enable the automatic PWM/PFM mode that features the highest efficiency by
+allowing pulse-frequency-modulation for lower output currents. This mode is enabled by applying a low level.
+The device can be forced in PWM operation regardless of the output current to achieve minimum output ripple
+by applying a high level. This pin must not be left floating.
+9.3.4 Undervoltage Lockout (UVLO)
+To avoid mis-operation of the device at low input voltages, an undervoltage lockout is included. It activates the
+device once the input voltage (VI) has increased the UVLOrising value. Once active, the device allows operation
+down to even smaller input voltages, which is determined by the UVLOfalling. This behavior requires VO to be
+higher than the minimum value of 1.8 V.
+
+
+                                                                                          UVLOrising
+
+
+
+                                                                                          UVLOfalling
+                              VIN
+
+
+                              Device
+                              active
+
+                                Figure 9-3. Rising and Falling Undervoltage Lockout Behavior
+
+9.3.5 Soft Start
+To minimize inrush current and output voltage overshoot during start-up, the device features a controlled soft
+start-up. After the device is enabled, the device starts all internal reference and control circuits within the enable
+delay time, Tdelay. After that, the maximum switch current limit rises monotonically from 0 mA to the current limit.
+The loop stops switching once VO is reached. This allows a quick output voltage ramp for small capacitors at the
+output. The bigger the output capacitor, the longer it takes to settle Vo. A potential load during start-up will
+lengthen the duration of the output voltage ramp as well. The gradual ramp of the current limit allows a small
+inrush current for no-load conditions, as well as the possibility to start into high loads at start-up.
+The converter can start-up into pre-biased loads by a forced operation in PFM during the soft-start until the first
+switching cycle request from the output voltage control loop.
+
+
+
+
+Copyright © 2021 Texas Instruments Incorporated                                                         Submit Document Feedback   11
+                                                  Product Folder Links: TPS63802
+TPS63802
+SLVSEU9D – NOVEMBER 2018 – REVISED JANUARY 2021                                                                                  www.ti.com
+
+
+
+                       VIN
+
+
+
+
+                       EN
+
+
+
+
+                       Current Limit
+
+
+
+
+                       Inductor
+                       Current
+
+
+
+                                                                                    0.95 x VOUT
+
+
+                       VOUT
+
+
+
+
+                       Power Good
+
+
+
+                                                       Tdelay               Tramp
+
+
+
+                                                                TStart-up
+
+
+
+                                         Figure 9-4. Device Start-up Scheme
+
+9.3.6 Adjustable Output Voltage
+The device's output voltage is adjusted by applying an external resistive divider between VO, the FB-pin, and
+GND. This allows you to program the output voltage in the recommended range. The divider must provide a low-
+side resistor of less than 100 kΩ. The high-side resistor is chosen accordingly.
+9.3.7 Overtemperature Protection - Thermal Shutdown
+The device has a built-in temperature sensor which monitors the junction temperature. If the temperature
+exceeds the threshold, the device stops operating. As soon as the IC temperature has decreased below the
+programmed threshold, it starts operating again. There is a built-in hysteresis to avoid unstable operation at
+junction temperatures at the overtemperature threshold.
+9.3.8 Input Overvoltage - Reverse-Boost Protection (IVP)
+The TPS63802 can operate in reverse mode where the device transfers energy from the output back to the
+input. If the source is not able to sink the revers current, the negative current builds up a charge to the input
+capacitance and VIN rises. To protect the device and other components from that scenario, the device features
+an input voltage protection (IVP) for reverse boost operation. Once the input voltage is above the threshold, the
+converter forces PFM mode and the negative current operation is interrupted.
+The PG signal goes low to indicate that behavior.
+9.3.9 Output Overvoltage Protection (OVP)
+In case of a broken feedback-path connection, the device can loose VO information and is not able to regulate.
+To avoid an uncontrolled boosting of VO, the TPS63802 features output overvoltage protection. It measures the
+voltage on the VOUT pin and stops switching when VO is greater than the threshold to avoid harm to the
+converter and other components.
+9.3.10 Power-Good Indicator
+The power good goes high-impedance once the output is above 95% of the nominal voltage, and is driven low
+once the output voltage falls below typically 90% of the nominal voltage. This feature also indicates overvoltage
+and device shutdown cases as shown in Table 9-1. The PG pin is an open-drain output and is specified to sink
+up to 1 mA. The power-good output requires a pullup resistor connecting to any voltage rail less than 5.5 V. The
+PG signal can be used to sequence multiple rails by connecting it to the EN pin of other converters. Leave the
+PG pin unconnected when not used.
+
+12    Submit Document Feedback                                                                    Copyright © 2021 Texas Instruments Incorporated
+
+                                                  Product Folder Links: TPS63802
+                                                                                                                                TPS63802
+www.ti.com                                                                                  SLVSEU9D – NOVEMBER 2018 – REVISED JANUARY 2021
+
+                                            Table 9-1. Power-Good Indicator Truth Table
+                                                    LOGIC SIGNALS
+                                                                                                                    PG LOGIC STATUS
+       EN                     VO                           VI                  OVP                    IVP
+        X                   < 1.8 V                   < UVLO_R                   X                     X         Undefined
+      LOW                      X                        > UVLO_F                 X                     X         LOW
+      HIGH           VO < 0.9 × target-VO                > 1.3V                  X                     X         LOW
+      HIGH                     X                        > UVLO_F               HIGH                    X         LOW
+      HIGH                     X                        > UVLO_F                 X                   HIGH        LOW
+      HIGH          VO > 0.95 × target-VO               > UVLO_F               LOW                   LOW         HIGH Z
+
+
+9.4 Device Functional Modes
+9.4.1 Peak-Current Mode Architecture
+The TPS63802 is based on a peak-current mode architecture. The error amplifier provides a peak-current target
+(voltage that is translated into an equivalent current, see Figure 9-1), based on the current demand from the
+voltage loop. This target is compared to the actual inductor current during the ON-time. The ON-time is ended
+once the inductor current is equal to the current target and OFF-time is initiated. The OFF-time is calculated by
+the control and a function of VI and VO.
+
+
+
+
+                                            IPEAK
+
+
+                                                                                                                  VEAmp
+
+                                                                              IPK-PK                IIND
+
+
+                                                  TON           TOFF
+
+
+              0                                                                                                        time
+                                         Figure 9-5. Peak-Current Architecture Operation
+
+9.4.1.1 Reverse Current Operation, Negative Current
+When the TPS63802 is forced to PWM operation (MODE = HIGH), the device current can flow in reverse
+direction. This happens by the negative current capability of the TPS63802 . The error amplifier provides a peak-
+current target (voltage that is translated into an equivalent current, see Figure 9-1), even if the target has a
+negative value. The maximum average current is even more negative than the peak current.
+
+
+
+
+Copyright © 2021 Texas Instruments Incorporated                                                              Submit Document Feedback     13
+                                                           Product Folder Links: TPS63802
+TPS63802
+SLVSEU9D – NOVEMBER 2018 – REVISED JANUARY 2021                                                                      www.ti.com
+
+
+
+                                                                                                           time
+            0
+                                         IPEAK
+
+
+                                                                                                    VEAmp
+                   IIND
+                                                                     IPK-PK                         IAVG
+
+
+
+                                 Figure 9-6. Peak-Current Operation, Reverse Current
+
+9.4.1.2 Boost Operation
+When VI is smaller than VO (and the voltages are not close enough to trigger buck-boost operation), the
+TPS63802 operates in boost mode where the boost high-side and low-side switches are active. The buck high-
+side switch is always turned on and the buck low-side switch is always turned off. This lets the TPS63802
+operate as a classical boost converter.
+                                 IPEAK
+
+
+                                                                                                       VEAmp
+
+                                                                                   IIND
+
+
+                                           TON     TOFF
+                                          Figure 9-7. Peak-Current Boost Operation
+
+9.4.1.3 Buck-Boost Operation
+When VI is close to VO, the TPS63802 operates in buck-boost mode where all switches are active and the
+device repeats 3-cycles:
+•    TON: Boost-charge phase where boost low-side and buck high-side are closed and the inductor current is built
+     up
+•    TOFF: Buck discharge phase where boost high-side and buck low-side are closed and the inductor is
+     discharged
+•    TCOM: VI connected to VO where all high-side switches are closed and the input is connected to the output
+
+
+
+
+14    Submit Document Feedback                                                        Copyright © 2021 Texas Instruments Incorporated
+
+                                                  Product Folder Links: TPS63802
+                                                                                                                                    TPS63802
+www.ti.com                                                                                   SLVSEU9D – NOVEMBER 2018 – REVISED JANUARY 2021
+
+                                                          IPEAK
+
+
+                                                                                                                         VEAmp
+
+                                                                                                    IIND
+
+
+
+                     TON          TCOM            TOFF       TCOM
+                                          Figure 9-8. Peak-Current Buck-Boost Operation
+
+9.4.1.4 Buck Operation
+When VI is greater than VO (and the voltages are not close enough to trigger buck-boost operation), the
+TPS63802 operates in buck mode where the buck high-side and low-side switches are active. The boost high-
+side switch is always turned on and the boost low-side switch is always turned off. This lets the TPS63802
+operate as a classical buck converter.
+                                                  IPEAK
+
+
+                                                                                                                         VEAmp
+
+                                                                                                           IIND
+
+
+                                                      TON         TOFF
+                                                  Figure 9-9. Peak-Current Buck Operation
+
+9.4.2 Power Save Mode Operation
+Besides continuos conduction mode (PWM), the TPS63802 features power safe mode (PFM) operation to
+achieve high efficiency at light load currents. This is implemented by pausing the switching operation, depending
+on the load current.
+The skip comparator manages the switching or pause operation. It compares the current demand signal from the
+voltage loop, IREF, with the skip threshold, ISKIP, as shown in Figure 9-1. If the current demand is lower than the
+skip value, the comparator pauses switching operation. If the current demand goes higher (due to falling VO), the
+comparator activates the current loop and allows switching according to the loop behavior. Whenever the current
+loop has risen VO by bringing charge to the output, the voltage loop output, IREF (respectively VEA), decreases.
+When IREF falls below ISKIP-hysteresis, it automatically pauses again.
+
+
+
+
+Copyright © 2021 Texas Instruments Incorporated                                                                   Submit Document Feedback   15
+                                                            Product Folder Links: TPS63802
+TPS63802
+SLVSEU9D – NOVEMBER 2018 – REVISED JANUARY 2021                                                                   www.ti.com
+
+
+
+
+                    ICOIL
+
+
+
+
+                      VO
+
+
+                                                             ISKIP
+                    VEA
+                                       Hysteresis
+                    / IREF
+
+
+
+                   SKIP                                                  Pause
+                                          Switching
+                 Yes/No
+
+                                                                                                    t
+                                 Figure 9-10. Power Safe Mode Operation Curves
+
+9.4.2.1 Current Limit Operation
+To limit current and protect the device and application, the maximum peak inductor current is limited internally on
+the IC. It is measured at the buck high-side switch which turns into an input current detection. To provide a
+certain load current across all operation modes, the boost and buck-boost peak current limit is higher than in
+buck mode. It limits the input current and allows no further increase of the delivered current. When using the
+device in this mode, it behaves similar to a current source.
+The current limit depends on the operation mode (buck, buck-boost, or boost mode).
+
+
+
+
+16    Submit Document Feedback                                                     Copyright © 2021 Texas Instruments Incorporated
+
+                                                  Product Folder Links: TPS63802
+                                                                                                                                                       TPS63802
+www.ti.com                                                                                                     SLVSEU9D – NOVEMBER 2018 – REVISED JANUARY 2021
+
+
+10 Application and Implementation
+                                                                             Note
+       Information in the following applications sections is not part of the TI component specification, and TI
+       does not warrant its accuracy or completeness. TI’s customers are responsible for determining
+       suitability of components for their purposes, as well as validating and testing their design
+       implementation to confirm system functionality.
+
+10.1 Application Information
+The TPS63802 is a high efficiency, low quiescent current, non-inverting buck-boost converter, suitable for
+applications that need a regulated output voltage from an input supply that can be higher or lower than the
+output voltage.
+10.2 Typical Application
+                                                                             L1
+                                                                          0.47 µH
+
+
+
+
+                                                                    L1               L2
+                                                                                                         VIN
+                                    VIN
+                                1.3V t 5.5V                                                                                  VOUT = 3.3V
+                                                              VIN                     VOUT
+
+                                                                                                    R3
+                                                                                                 100lQ                              C2
+                                         C1
+                                                                                                                                    22 …F
+                                      10 …F                   EN                            PG                    R1
+                                                                                                                  511lQ
+
+                                                              MODE                          FB
+                                                                                                                  R2
+                                                                                                                  91lQ
+
+                                                              GND                     AGND
+
+                                                                         TPS63802
+
+
+
+
+                                                   Figure 10-1. 3.3 VOUT Typical Application
+
+10.2.1 Design Requirements
+The design guideline provides a component selection to operate the device within Table 10-1.
+Table 10-1 shows the list of components for the application characteristic curves.
+                             Table 10-1. Matrix of Output Capacitor and Inductor Combinations
+      NOMINAL                                                 NOMINAL OUTPUT CAPACITOR VALUE [µF](2)
+  INDUCTOR VALUE
+       [µH](1)                                10                                    22                               47                     66          100
+
+           0.47                               -                                     + (3)                                +                  +            +
+
+(1)    Inductor tolerance and current derating is anticipated. The effective inductance can vary by 20% and –30%.
+(2)    Capacitance tolerance and DC bias voltage derating is anticipated. The effective capacitance can vary by 20% and –50%.
+(3)    TPS63802 typical application. Other check marks indicate possible filter combinations.
+
+10.2.2 Detailed Design Procedure
+The first step is the selection of the output filter components. To simplify this process, Section 8.1 outlines
+minimum and maximum values for inductance and capacitance. Take tolerance and derating into account when
+selecting nominal inductance and capacitance.
+10.2.2.1 Custom Design With WEBENCH® Tools
+Click here to create a custom design using the TPS63802 device with the WEBENCH® Power Designer.
+
+
+Copyright © 2021 Texas Instruments Incorporated                                                                                      Submit Document Feedback   17
+                                                           Product Folder Links: TPS63802
+TPS63802
+SLVSEU9D – NOVEMBER 2018 – REVISED JANUARY 2021                                                                   www.ti.com
+
+1. Start by entering the input voltage (VIN), output voltage (VOUT), and output current (IOUT) requirements.
+2. Optimize the design for key parameters such as efficiency, footprint, and cost using the optimizer dial.
+3. Compare the generated design with other possible solutions from Texas Instruments.
+The WEBENCH Power Designer provides a customized schematic along with a list of materials with real-time
+pricing and component availability.
+In most cases, these actions are available:
+• Run electrical simulations to see important waveforms and circuit performance
+• Run thermal simulations to understand board thermal performance
+• Export customized schematic and layout into popular CAD formats
+• Print PDF reports for the design, and share the design with colleagues
+Get more information about WEBENCH tools at www.ti.com/WEBENCH.
+10.2.2.2 Inductor Selection
+The inductor selection is affected by several parameters such as the following:
+•    Inductor ripple current
+•    Output voltage ripple
+•    Transition point into power save mode
+•    Efficiency
+See Table 10-2 for typical inductors.
+For high efficiencies, the inductor must have a low DC resistance to minimize conduction losses. Especially at
+high-switching frequencies, the core material has a high impact on efficiency. When using small chip inductors,
+the efficiency is reduced, mainly due to higher inductor core losses. This needs to be considered when selecting
+the appropriate inductor. The inductor value determines the inductor ripple current. The larger the inductor value,
+the smaller the inductor ripple current and the lower the conduction losses of the converter. Conversely, larger
+inductor values cause a slower load transient response. To avoid saturation of the inductor, the peak current for
+the inductor in steady-state operation is calculated using Equation 2. Only the equation which defines the switch
+current in boost mode is shown because this provides the highest value of current and represents the critical
+current value for selecting the right inductor.
+
+                               V    -V
+      Duty Cycle Boost    D=    OUT   IN
+                                 V
+                                  OUT                                                                                 (1)
+
+                   Iout       Vin ´ D
+     IPEAK =               +
+               η ´ (1 - D)   2 ´ f ´ L                                                                                (2)
+
+where
+•    D = Duty Cycle in Boost mode
+•    f = Converter switching frequency
+•    L = Inductor value
+•    η = Estimated converter efficiency (use the number from the efficiency curves or 0.9 as an assumption)
+
+                                                              Note
+       The calculation must be done for the minimum input voltage in boost mode.
+
+Calculating the maximum inductor current using the actual operating conditions gives the minimum saturation
+current of the inductor needed. It is recommended to choose an inductor with a saturation current 20% higher
+than the value calculated using Equation 2. Table 10-2 lists the possible inductors.
+
+
+
+
+18    Submit Document Feedback                                                     Copyright © 2021 Texas Instruments Incorporated
+
+                                                  Product Folder Links: TPS63802
+                                                                                                                            TPS63802
+www.ti.com                                                                             SLVSEU9D – NOVEMBER 2018 – REVISED JANUARY 2021
+
+                                             Table 10-2. List of Recommended Inductors
+   INDUCTOR         SATURATION CURRENT
+                                                   DCR [mΩ]            PART NUMBER              MANUFACTURER(1) SIZE (LxWxH mm)
+   VALUE [µH]               [A]
+       0.47                      5.4                  7.6              XFL4015-471ME                 Coilcraft          4x4x2
+       0.47                      5.5                  26                 DFE201612E                    Toko           2.0 x 1.6 x 1.2
+
+(1)    See Third-party Products Disclaimer.
+
+10.2.2.3 Output Capacitor Selection
+For the output capacitor, it is recommended to use small ceramic capacitors placed as close as possible to the
+VOUT and PGND pins of the IC. The recommended nominal output capacitor value is a single 22 µF for all
+programmed output voltages ≤ 3.6 V. Above that voltage, 2x 22 µF capacitors are recommended.
+It is important that the effective capacitance is given according to the recommended value in Section 8.3. In
+general, consider DC bias effects resulting in less effective capacitance. The choice of the output capacitance is
+mainly a trade-off between size and transient behavior since higher capacitance reduces transient response
+overshoot and undershoot and increases transient response time. Table 10-3 lists possible output capacitors.
+There is no upper limit for the output capacitance value.
+                                          Table 10-3. List of Recommended Capacitors (1)
+   CAPACITOR                                                                                                                SIZE
+                       VOLTAGE RATING [V]             ESR [mΩ]              PART NUMBER             MANUFACTURER
+      [µF]                                                                                                                (METRIC)
+         22                       6.3                       10          GRM188R60J226MEA0                Murata          0603 (1608)
+         22                       6.3                       10          GRM187R61A226ME15                Murata          0603 (1608)
+         22                          10                     40          GRM188R61A226ME15                Murata          0603 (1608)
+         22                          10                     10           GRM187R60J226ME15               Murata          0603 (1608)
+         47                       6.3                       43           GRM188R60J476ME15               Murata          0603 (1608)
+         47                       6.3                       43           GRM219R60J476ME44               Murata          0805 (2012)
+
+(1)    See Third-party Products Disclaimer.
+
+10.2.2.4 Input Capacitor Selection
+A 10 µF input capacitor is recommended to improve line transient behavior of the regulator and EMI behavior of
+the total power supply circuit. An X5R or X7R ceramic capacitor placed as close as possible to the VIN and
+PGND pins of the IC is recommended. This capacitance can be increased without limit. If the input supply is
+located more than a few inches from the TPS63802 converter, additional bulk capacitance can be required in
+addition to the ceramic bypass capacitors. An electrolytic or tantalum capacitor with a value of 47 µF is a typical
+choice.
+                                          Table 10-4. List of Recommended Capacitors (1)
+  CAPACITOR                                                                                                                 SIZE
+                    VOLTAGE RATING [V]               ESR [mΩ]             PART NUMBER              MANUFACTURER
+     [µF]                                                                                                                 (METRIC)
+        10                     6.3                      10             GRM188R60J106ME84                Murata           0603 (1608)
+        10                      10                      40             GRM188R61A106ME69                Murata           0603 (1608)
+        22                     6.3                      10             GRM188R60J226MEA0                Murata           0603 (1608)
+
+
+10.2.2.5 Setting The Output Voltage
+The output voltage is set by an external resistor divider. The resistor divider must be connected between VOUT,
+FB, and GND. The feedback voltage is 500 mV nominal. The low-side resistor R2 (between FB and GND) must
+not exceed 100 kΩ. The high-side resistor (between FB and VOUT) R1 is calculated by Equation 3.
+
+                æV       ö
+      R1 = R2 × ç OUT - 1÷
+                è VFB    ø                                                                                                     (3)
+
+
+Copyright © 2021 Texas Instruments Incorporated                                                         Submit Document Feedback        19
+                                                      Product Folder Links: TPS63802
+TPS63802
+SLVSEU9D – NOVEMBER 2018 – REVISED JANUARY 2021                                                                               www.ti.com
+
+where
+•     VFB = 500 mV
+                                        Table 10-5. Resistor Selection for Typ. Voltages
+                    VO [V]                                             R1 [kΩ]                               R2 [kΩ]
+                      2.5                                               365                                      91
+                      3.3                                               511                                      91
+                      3.6                                               562                                      91
+                       5                                                806                                      91
+
+
+10.2.3 Application Curves
+                             Table 10-6. Components for Application Characteristic Curves (1)
+ REFERENCE                     DESCRIPTION                               PART NUMBER         MANUFACTURER        COMMENT
+                               TPS63802 2 A Buck-Boost Converter (2
+                                                                         TPS63802DLA         Texas Instruments
+                               mm x 3 mm QFN)
+                               0.47 µH, 4 mm x 4 mm x 1.5 mm, 5.4 A,
+ L1                                                                      XFL4015-471ME       Coilcraft
+                               7.6 mΩ
+                               10 µF, 0603, Ceramic Capacitor, ±20%,
+ C1                                                                      GRM188R60J106ME84   Murata
+                               6.3 V
+                               1x 22 µF, 0603, Ceramic Capacitor, ±20%,
+ C2                                                                     GRM188R60J226MEA0    Murata              VO ≤ 3.6 V
+                               6.3 V
+                               2x 22 µF, 0603, Ceramic Capacitor, ±20%,
+ C2                                                                     GRM188R60J226MEA0    Murata              VO > 3.6 V
+                               6.3 V
+ R1                            511 kΩ, 0603 Resistor, 1%, 100 mW         Standard            Standard            VO = 3.3 V
+ R1                            562 kΩ, 0603 Resistor, 1%, 100 mW         Standard            Standard            VO = 3.6 V
+ R1                            806 kΩ, 0603 Resistor, 1%, 100 mW         Standard            Standard            VO = 5 V
+ R2                            91 kΩ, 0603 Resistor, 1%, 100 mW          Standard            Standard
+ R3                            100 kΩ, 0603 Resistor, 1%, 100 mW         Standard            Standard
+
+(1)    See Third-party Products Disclaimer.
+
+
+
+
+20     Submit Document Feedback                                                                Copyright © 2021 Texas Instruments Incorporated
+
+                                                        Product Folder Links: TPS63802
+                                                                                                                            TPS63802
+www.ti.com                                                                             SLVSEU9D – NOVEMBER 2018 – REVISED JANUARY 2021
+
+                                              Table 10-7. Typical Characteristics Curves
+                         PARAMETER                                             CONDITIONS                              FIGURE
+ Output Current Capability
+ Typical Output Current Capability versus Input Voltage    VO = 3.3 V                                                 Figure 10-2
+ Switching Frequency
+ Typical Inductor Switching Frequency versus Input
+                                                           IO = 0 A, MODE = High                                      Figure 10-3
+ Voltage
+ Typical Inductor Burst Frequency versus Output Current    VO = 3.3 V                                                 Figure 10-4
+ Efficiency
+ Efficiency versus Output Current (PFM/PWM)                VI = 2.5 V to 4.2 V, VO = 3.3 V, MODE = Low                Figure 10-5
+ Efficiency versus Output Current (PWM only)               VI = 2.5 V to 4.2 V, VO = 3.3 V, MODE = High               Figure 10-6
+ Efficiency versus Output Current (PFM/PWM)                VI = 1.8 V to 5 V, VO = 3.3 V, MODE = Low                  Figure 10-7
+ Efficiency versus Output Current (PWM only)               VI = 1.8 V to 5 V, VO = 3.3 V, MODE = High                 Figure 10-8
+ Efficiency versus. Input Voltage (PFM/PWM)                VO = 3.3 V, MODE = Low                                     Figure 10-9
+ Efficiency versus Input Voltage (PWM only)                IO = 1 A, MODE = High                                     Figure 10-10
+ Regulation Accuracy
+ Load Regulation, PWM Operation                            VO = 3.3 V, MODE = High                                   Figure 10-11
+ Load Regulation, PFM/PWM Operation                        VO = 3.3 V, MODE = Low                                    Figure 10-12
+ Line Regulation, PWM Operation                            IO = 1 A, MODE = High                                     Figure 10-13
+ Line Regulation, PFM/PWM Operation                        IO = 1 A, MODE = Low                                      Figure 10-14
+ Switching Waveforms
+ Switching Waveforms, PFM Boost Operation                  VI = 2.3 V, VO = 3.3 V, MODE = Low                        Figure 10-15
+ Switching Waveforms, PFM Buck-Boost Operation             VI = 3.3 V, VO = 3.3 V, MODE = Low                        Figure 10-16
+ Switching Waveforms, PFM Buck Operation                   VI = 4.3 V, VO = 3.3 V, MODE = Low                        Figure 10-17
+ Switching Waveforms, PWM Boost Operation                  VI = 2.3 V, VO = 3.3 V, MODE = High                       Figure 10-18
+ Switching Waveforms, PWM Buck-Boost Operation             VI = 3.3 V, VO = 3.3 V, MODE = High                       Figure 10-19
+ Switching Waveforms, PWM Buck Operation                   VI = 4.3 V, VO = 3.3 V, MODE = High                       Figure 10-20
+ Transient Performance
+                                                           VI = 2.5 V, VO = 3.3 V, Load = 100 mA to 1A, MODE =
+ Load Transient, PFM/PWM Boost Operation                                                                             Figure 10-21
+                                                           Low
+                                                           VI = 3.3 V, VO = 3.3 V, Load = 100 mA to 1A, MODE =
+ Load Transient, PFM/PWM Buck-Boost Operation                                                                        Figure 10-22
+                                                           Low
+                                                           VI = 4.2 V, VO = 3.3V, Load = 100 mA to 1A, MODE =
+ Load Transient, PFM/PWM Buck Operation                                                                              Figure 10-23
+                                                           Low
+                                                           VI = 2.5 V, VO = 3.3 V, Load = 100 mA to 1A, MODE =
+ Load Transient, PWM Boost Operation                                                                                 Figure 10-24
+                                                           High
+                                                           VI = 3.3 V, VO = 3.3 V, Load = 100 mA to 1A, MODE =
+ Load Transient, PWM Buck-Boost Operation                                                                            Figure 10-25
+                                                           High
+                                                           VI = 4.2 V, VO = 3.3 V, Load = 100 mA to 1A, MODE =
+ Load Transient, PWM Buck Operation                                                                                  Figure 10-26
+                                                           High
+                                                           VI = 2.3 V to 4.3 V, VO = 3.3 V, Load = 0.5 A , MODE =
+ Line Transient, PWM Operation                                                                                       Figure 10-27
+                                                           Low
+                                                           VI = 2.3 V to 4.3 V, VO = 3.3 V, Load = 1 A , MODE =
+ Line Transient, PWM Operation                                                                                       Figure 10-28
+                                                           Low
+                                                           VI = 3 V to 3.6 V, VO = 3.3 V, Load = 0.5 A , MODE =
+ Line Transient, PWM Operation                                                                                       Figure 10-29
+                                                           Low
+ Start-up
+ Start-up Behavior from Rising Enable, PFM Operation       VI = 2.2 V, VO = 3.3 V, Load = 10 mA, MODE = Low          Figure 10-30
+ Start-up Behavior from Rising Enable, PWM Operation       VI = 2.2 V, VO = 3.3 V, Load = 10 mA, MODE = High         Figure 10-31
+
+
+
+
+Copyright © 2021 Texas Instruments Incorporated                                                           Submit Document Feedback   21
+                                                      Product Folder Links: TPS63802
+TPS63802
+SLVSEU9D – NOVEMBER 2018 – REVISED JANUARY 2021                                                                                                                                                              www.ti.com
+
+                                  4.5                                                                                                       3.0
+
+                                  4.0
+     Maximum Output Current (A)
+
+
+
+                                                                                                                                            2.5
+
+
+
+
+                                                                                                                Switching Frequency (MHz)
+                                  3.5
+
+                                  3.0
+                                                                                                                                            2.0
+                                  2.5
+
+                                  2.0
+                                                                                                                                            1.5
+                                  1.5
+
+                                  1.0                                                                                                       1.0
+                                                                                        VO = 3.3 V                                                    VO = 1.8 V
+                                  0.5                                                   VO = 3.6 V                                                    VO = 3.3 V
+                                                                                        VO = 5 V                                                      VO = 5.2 V
+                                  0.0                                                                                                       0.5
+                                     1.3   1.8   2.3     2.8     3.3    3.8       4.3   4.8       5.3                                          2.5   2.7   2.9     3.1      3.3     3.5    3.7   3.9     4.1       4.3
+                                                           Input Voltage (V)                            D002
+                                                                                                                                                                         Input Voltage (V)                          D007
+
+                                                       MODE = High                                                                           IO=0A                 MODE = High                   VI rising
+
+                Figure 10-2. Typical Output Current Capability                                                 Figure 10-3. Typical Inductor Switching Frequency
+                             versus Input Voltage                                                                             versus Input Voltage
+                                    1M                                                                                                      100
+     PFM Burst Frequency (Hz)
+
+
+
+
+                                                                                                                                             90
+                                  100k
+                                                                                                                Efficiency (%)
+
+
+
+
+                                                                                                                                             80
+
+                                   10k
+                                                                                                                                             70
+                                                                                         VI = 2.5 V                                                                                                    VI = 2.5 V
+                                                                                         VI = 3.6 V                                                                                                    VI = 3.6 V
+                                                                                         VI = 4.8 V                                                                                                    VI = 4.2 V
+                                    1k                                                                                                       60
+                                     1m                  10m                100m                                                              100P          1m           10m            100m                   1    2
+                                                           Output Current (A)                           D018                                                         Output Current (A)                             D019
+
+                                  VO = 3.6 V            MODE = Low                                                                                VO = 3.3 V                           MODE = Low
+
+                Figure 10-4. Typical Inductor Burst Frequency                                                                  Figure 10-5. Efficiency versus Output Current
+                            versus Output Current                                                                                                (PFM/PWM)
+                                  100                                                                                                       100
+                                   90
+                                   80
+                                                                                                                                             90
+                                   70
+     Efficiency (%)
+
+
+
+
+                                                                                                                Efficiency (%)
+
+
+
+
+                                   60
+                                   50                                                                                                        80
+                                   40
+                                   30
+                                                                                                                                             70
+                                   20                                                    VI = 2.5 V                                                                                                    VI = 1.8 V
+                                   10                                                    VI = 3.6 V                                                                                                    VI = 3.3 V
+                                                                                         VI = 4.2 V                                                                                                    VI = 5.0 V
+                                    0                                                                                                        60
+                                     1m                10m               100m                 1         2                                     100P          1m           10m            100m                   1    2
+                                                             Output Current (A)                         D020                                                         Output Current (A)                             D021
+
+                                  VO = 3.3 V           MODE = High                                                                          VO = 3.3 V               MODE = Low
+
+                    Figure 10-6. Efficiency versus Output Current                                                              Figure 10-7. Efficiency versus Output Current
+                                      (PWM Only)                                                                                                 (PFM/PWM)
+
+
+22                                Submit Document Feedback                                                                                                           Copyright © 2021 Texas Instruments Incorporated
+
+                                                                                        Product Folder Links: TPS63802
+                                                                                                                                                                                                                        TPS63802
+www.ti.com                                                                                                                                                        SLVSEU9D – NOVEMBER 2018 – REVISED JANUARY 2021
+
+                                    100                                                                                                              100
+                                     90
+                                     80                                                                                                               90
+                                     70
+    Efficiency (%)
+
+
+
+
+                                                                                                                     Efficiency (%)
+                                     60                                                                                                               80
+                                     50
+                                     40                                                                                                               70
+                                                                                                                                                                                                                 IO = 100 PA
+                                     30                                                                                                                                                                          IO = 10 mA
+                                     20                                                                                                               60                                                         IO = 100 mA
+                                                                                               VI = 1.8 V                                                                                                        IO = 1 A
+                                     10                                                        VI = 3.3 V                                                                                                        IO = 1.5 A
+                                                                                               VI = 5.0 V
+                                      0                                                                                                               50
+                                       1m               10m               100m                     1         2                                          2.5           2.9               3.3            3.7                 4.1
+                                                              Output Current (A)                             D022
+                                                                                                                                                                                   Input Voltage (V)                             D023
+
+                                    VO = 3.3 V              MODE = High                                                                              VO = 3.3 V              MODE = Low
+
+  Figure 10-8. Efficiency versus Input Voltage (PWM                                                                 Figure 10-9. Efficiency versus Input Voltage (PFM/
+                         Only)                                                                                                             PWM)
+                                    100                                                                                                              0.2
+
+
+                                                                                                                     Output Voltage Regulation (%)   0.1
+                                     90
+    Efficiency (%)
+
+
+
+
+                                                                                                                                                     0.0
+                                     80
+                                                                                                                                                     -0.1
+
+                                     70
+                                                                                              VO = 1.8 V                                             -0.2                                                          VI = 2.5 V
+                                                                                              VO = 3.3 V                                                                                                           VI = 3.6 V
+                                                                                              VO = 5.2 V                                                                                                           VI = 4.2 V
+                                     60                                                                                                              -0.3
+                                       1.8      2.3    2.8      3.3      3.8     4.3         4.8       5.3                                                  0          0.5            1.0                  1.5                   2.0
+                                                               Input Voltage (V)                             D024
+                                                                                                                                                                               Output Current (A)                                D026
+
+                                     IO = 1 A               MODE = Low                                                                               VO = 3.3 V               MODE = High
+
+
+ Figure 10-10. Efficiency versus Input Voltage (PWM                                                                                                  Figure 10-11. Load Regulation (PWM Only)
+                        Only)
+                                    1.5                                                                                                              0.3
+
+
+                                    1.0                                                                                                              0.2
+    Output Voltage Regulation (%)
+
+
+
+
+                                                                                                                     Output Voltage Regulation (%)
+
+
+
+
+                                    0.5                                                                                                              0.1
+
+
+                                    0.0                                                                                                              0.0
+
+
+                                    -0.5                                                                                                             -0.1
+
+                                                                                               VI = 2.5 V                                                                                                          VO = 1.8 V
+                                    -1.0                                                       VI = 3.6 V                                            -0.2                                                          VO = 3.3 V
+                                                                                               VI = 4.2 V                                                                                                          VO = 5.2 V
+                                    -1.5                                                                                                             -0.3
+                                                      0.5            1.0               1.5                   2.0                                         2.5    2.7   2.9    3.1      3.3     3.5    3.7     3.9     4.1         4.3
+                                                              Output Current (A)                             D027
+                                                                                                                                                                                   Input Voltage (V)                             D028
+
+                                    VO = 3.3 V                MODE = Low                                                                               IO = 1 A               MODE = Low
+
+                                    Figure 10-12. Load Regulation (PFM/PWM)                                                                          Figure 10-13. Line Regulation (PWM Only)
+
+
+
+Copyright © 2021 Texas Instruments Incorporated                                                                                                                                            Submit Document Feedback                     23
+                                                                                              Product Folder Links: TPS63802
+TPS63802
+SLVSEU9D – NOVEMBER 2018 – REVISED JANUARY 2021                                                                                                                                   www.ti.com
+
+                                     0.2
+     Output Voltage Regulation (%)
+
+
+
+
+                                     0.1
+
+
+
+                                     0.0
+
+
+
+                                     -0.1
+                                                                                                 VO = 1.8 V
+                                                                                                 VO = 3.3 V
+                                                                                                 VO = 5.2 V
+                                     -0.2
+                                         2.5   2.7   2.9   3.1      3.3     3.5    3.7     3.9     4.1    4.3
+                                                                 Input Voltage (V)                                   VI = 2.3 V, VO = 3.3 V    MODE = Low            IO = 40 mA
+                                                                                                              D029
+
+                                       IO = 1 A             MODE = High
+                                                                                                                      Figure 10-15. Switching Waveforms, PFM Boost
+                                                                                                                                         Operation
+                                     Figure 10-14. Line Regulation (PFM/PWM)
+
+
+
+
+ VI = 3.3 V, VO = 3.3 V                                    MODE = Low                    IO = 40 mA                   VI = 4.2 V, VO = 3.3 V     MODE = Low            IO = 40 mA
+
+     Figure 10-16. Switching Waveforms, PFM Buck-                                                                      Figure 10-17. Switching Waveforms, PFM Buck
+                    Boost Operation                                                                                                      Operation
+
+
+
+
+ VI = 2.3 V, VO = 3.3 V                                    MODE = Low                     IO = 2 A                   VI = 3.3 V, VO = 3.3 V    MODE = Low              IO = 2 A
+
+
+     Figure 10-18. Switching Waveforms, PWM Boost                                                                     Figure 10-19. Switching Waveforms, PWM Buck-
+                        Operation                                                                                                     Boost Operation
+
+
+
+
+24                                   Submit Document Feedback                                                                                    Copyright © 2021 Texas Instruments Incorporated
+
+                                                                                                 Product Folder Links: TPS63802
+                                                                                                                                    TPS63802
+www.ti.com                                                                                SLVSEU9D – NOVEMBER 2018 – REVISED JANUARY 2021
+
+
+
+
+  VI = 4.2 V, VO = 3.3 V     MODE = Low               IO = 2 A                                    IO from 100 mA to
+                                                                          VI = 2.5 V, VO = 3.3
+                                                                                                  1 A tr = 1 µs, tf = 1     MODE = Low
+                                                                                   V
+                                                                                                           µs
+    Figure 10-20. Switching Waveforms, PWM Buck
+                       Operation                                           Figure 10-21. Load Transient, PFM/PWM Boost
+                                                                                             Operation
+
+
+
+
+                              IO from 100 mA to                                                      IO from 100 mA to
+    VI = 3.3 V, VO = 3.3 V     1 A tr = 1 µs, tf =   MODE = Low            VI = 5 V, VO = 3.3 V       1 A tr = 1 µs, tf =   MODE = Low
+                                      1 µs                                                                   1 µs
+
+     Figure 10-22. Load Transient, PFM/PWM Buck-                            Figure 10-23. Load Transient, PFM/PWM Buck
+                    Boost Operation                                                          Operation
+
+
+
+
+                              IO from 100 mA to                                                      IO from 100 mA to
+    VI = 2.5 V, VO = 3.3 V     1 A tr = 1 µs, tf =   MODE = High          VI = 3.3 V, VO = 3.3 V      1 A tr = 1 µs, tf =   MODE = High
+                                      1 µs                                                                   1 µs
+
+        Figure 10-24. Load Transient, PWM Boost                            Figure 10-25. Load Transient, PWM Buck-Boost
+                        Operation                                                            Operation
+
+
+Copyright © 2021 Texas Instruments Incorporated                                                                  Submit Document Feedback   25
+                                                         Product Folder Links: TPS63802
+TPS63802
+SLVSEU9D – NOVEMBER 2018 – REVISED JANUARY 2021                                                                                     www.ti.com
+
+
+
+
+                             IO from 100 mA                                                          VI from 2.2 V to
+     VI = 5 V, VO = 3.3 V   to 1 A tr = 1 µs, tf       MODE = High                  IO = 0.5 A      4.2 V tr =1 µs, tf =   MODE = High
+                                   = 1 µs                                                                  1 µs
+
+
+ Figure 10-26. Load Transient, PWM Buck Operation                               Figure 10-27. Line Transient, PWM Operation
+
+
+
+
+                                VI from 2.2 V to                                                    VI from 3 V to 3.6
+            IO = 1 A            4.2 V tr = 1 µs, tf     MODE = High                 IO = 0.5 A      V tr = 1 µs, tf = 1    MODE = High
+                                      = 1 µs                                                                µs
+
+
+       Figure 10-28. Line Transient, PWM Operation                              Figure 10-29. Line Transient, PWM Operation
+
+
+
+
+                                                      100 mΩ resistive             VI = 4.2 V, VO =             100 mΩ resistive
+  VI = 4.2 V, VO = 3.3 V      MODE = Low                                                            MODE = High
+                                                           load                          3.3 V                       load
+
+        Figure 10-30. Start-up Behavior from Rising                              Figure 10-31. Start-up Behavior from Rising
+                  Enable, PFM Operation                                                    Enable, PWM Operation
+
+
+
+
+26      Submit Document Feedback                                                                     Copyright © 2021 Texas Instruments Incorporated
+
+                                                             Product Folder Links: TPS63802
+                                                                                                                       TPS63802
+www.ti.com                                                                         SLVSEU9D – NOVEMBER 2018 – REVISED JANUARY 2021
+
+
+11 Power Supply Recommendations
+The TPS63802 device family has no special requirements for its input power supply. The input power supply
+output current needs to be rated according to the supply voltage, output voltage, and output current of the
+TPS63802.
+
+
+
+
+Copyright © 2021 Texas Instruments Incorporated                                                     Submit Document Feedback     27
+                                                  Product Folder Links: TPS63802
+TPS63802
+SLVSEU9D – NOVEMBER 2018 – REVISED JANUARY 2021                                                                   www.ti.com
+
+
+12 Layout
+12.1 Layout Guidelines
+The PCB layout is an important step to maintain the high performance of the TPS63802 device.
+1. Place input and output capacitors as close as possible to the IC. Traces need to be kept short. Route wide
+   and direct traces to the input and output capacitor results in low trace resistance and low parasitic
+   inductance.
+2. Use a common ground node for power ground and a different one for control ground to minimize the effects
+   of ground noise. Connect these ground nodes at any place close to one of the ground pins of the IC.
+3. Use separate traces for the supply voltage of the power stage and the supply voltage of the analog stage.
+4. The sense trace connected to FB is signal trace. Keep these traces away from L1 and L2 nodes.
+12.2 Layout Example
+
+                                                              L1
+
+
+
+
+                                                    C1                  C2
+
+
+
+
+                                                                   R2    R1
+
+
+
+
+                                            Figure 12-1. TPS63802 Layout
+
+
+
+
+28    Submit Document Feedback                                                     Copyright © 2021 Texas Instruments Incorporated
+
+                                                  Product Folder Links: TPS63802
+                                                                                                                       TPS63802
+www.ti.com                                                                         SLVSEU9D – NOVEMBER 2018 – REVISED JANUARY 2021
+
+
+13 Device and Documentation Support
+13.1 Device Support
+13.1.1 Third-Party Products Disclaimer
+TI'S PUBLICATION OF INFORMATION REGARDING THIRD-PARTY PRODUCTS OR SERVICES DOES NOT
+CONSTITUTE AN ENDORSEMENT REGARDING THE SUITABILITY OF SUCH PRODUCTS OR SERVICES
+OR A WARRANTY, REPRESENTATION OR ENDORSEMENT OF SUCH PRODUCTS OR SERVICES, EITHER
+ALONE OR IN COMBINATION WITH ANY TI PRODUCT OR SERVICE.
+13.1.2 Development Support
+QFN/SON Package FAQs
+13.1.2.1 Custom Design With WEBENCH® Tools
+Click here to create a custom design using the TPS63802 device with the WEBENCH® Power Designer.
+1. Start by entering the input voltage (VIN), output voltage (VOUT), and output current (IOUT) requirements.
+2. Optimize the design for key parameters such as efficiency, footprint, and cost using the optimizer dial.
+3. Compare the generated design with other possible solutions from Texas Instruments.
+The WEBENCH Power Designer provides a customized schematic along with a list of materials with real-time
+pricing and component availability.
+In most cases, these actions are available:
+• Run electrical simulations to see important waveforms and circuit performance
+• Run thermal simulations to understand board thermal performance
+• Export customized schematic and layout into popular CAD formats
+• Print PDF reports for the design, and share the design with colleagues
+Get more information about WEBENCH tools at www.ti.com/WEBENCH.
+13.2 Documentation Support
+13.2.1 Related Documentation
+For related documentation, see the following:
+•    Texas Instruments, Selecting a DC/DC Converter for Maximum Battery Life in Pulsed-Load Applications
+     Application Report
+•    Texas Instruments, Selecting the Right DC/DC Converter for Maximum Battery Life Application Report
+•    Texas Instruments, Supercapacitor Backup Power Supply with TPS63802 Application Report
+•    Texas Instruments, Extend Battery Lifetime in Wireless Network Cameras and Video Doorbells Application
+     Note
+•    Texas Instruments, Prevent Battery Overdischarge with Precise Threshold Enable Pin Application Note
+•    Texas Instruments, Using Non-Inverting Buck-Boost Converter for Voltage Stabilization Application Report
+•    Texas Instruments, Precise Delayed Start-up with Precise Threshold Enable-pin Application Note
+•    Texas Instruments, Buck-Boost Converters Solving Power Challenges in Optical Modules Application Note
+•    Texas Instruments, Improving Load Transient Response for Controlled Loads Application Report
+•    Texas Instruments, TPS63802EVM User's Guide
+•    Texas Instruments, HotRod QFN Package PCB Attachment Application Report
+13.3 Receiving Notification of Documentation Updates
+To receive notification of documentation updates, navigate to the device product folder on ti.com. Click on
+Subscribe to updates to register and receive a weekly digest of any product information that has changed. For
+change details, review the revision history included in any revised document.
+
+
+
+
+Copyright © 2021 Texas Instruments Incorporated                                                     Submit Document Feedback     29
+                                                  Product Folder Links: TPS63802
+TPS63802
+SLVSEU9D – NOVEMBER 2018 – REVISED JANUARY 2021                                                                               www.ti.com
+
+13.4 Support Resources
+TI E2E™ support forums are an engineer's go-to source for fast, verified answers and design help — straight
+from the experts. Search existing answers or ask your own question to get the quick design help you need.
+Linked content is provided "AS IS" by the respective contributors. They do not constitute TI specifications and do
+not necessarily reflect TI's views; see TI's Terms of Use.
+13.5 Trademarks
+TI E2E™ is a trademark of Texas Instruments.
+WEBENCH® is a registered trademark of Texas Instruments.
+All trademarks are the property of their respective owners.
+13.6 Electrostatic Discharge Caution
+                This integrated circuit can be damaged by ESD. Texas Instruments recommends that all integrated circuits be handled
+                with appropriate precautions. Failure to observe proper handling and installation procedures can cause damage.
+                ESD damage can range from subtle performance degradation to complete device failure. Precision integrated circuits may
+                be more susceptible to damage because very small parametric changes could cause the device not to meet its published
+                specifications.
+
+
+13.7 Glossary
+ TI Glossary         This glossary lists and explains terms, acronyms, and definitions.
+
+14 Mechanical, Packaging, and Orderable Information
+The following pages include mechanical, packaging, and orderable information. This information is the most
+current data available for the designated devices. This data is subject to change without notice and revision of
+this document. For browser-based versions of this data sheet, refer to the left-hand navigation.
+
+
+
+
+30    Submit Document Feedback                                                                 Copyright © 2021 Texas Instruments Incorporated
+
+                                                   Product Folder Links: TPS63802
+                                                                                                                                                                      PACKAGE OPTION ADDENDUM
+
+       www.ti.com                                                                                                                                                                                                    9-Nov-2025
+
+
+
+
+PACKAGING INFORMATION
+
+       Orderable part number          Status     Material type      Package | Pins      Package qty | Carrier        RoHS             Lead finish/              MSL rating/               Op temp (°C)          Part marking
+                                        (1)            (2)                                                             (3)            Ball material             Peak reflow                                           (6)
+                                                                                                                                            (4)                      (5)
+
+           TPS63802DLAR               Active      Production     VSON-HR (DLA) | 10      3000 | LARGE T&R             Yes              Call TI | Sn        Level-1-260C-UNLIM              -40 to 125               63802
+         TPS63802DLAR.A               Active      Production     VSON-HR (DLA) | 10      3000 | LARGE T&R             Yes                  SN              Level-1-260C-UNLIM              -40 to 125               63802
+         TPS63802DLARG4               Active      Production     VSON-HR (DLA) | 10      3000 | LARGE T&R             Yes                NIPDAU            Level-1-260C-UNLIM              -40 to 125               63802
+        TPS63802DLARG4.A              Active      Production     VSON-HR (DLA) | 10      3000 | LARGE T&R             Yes                NIPDAU            Level-1-260C-UNLIM              -40 to 125               63802
+           TPS63802DLAT               Active      Production     VSON-HR (DLA) | 10       250 | SMALL T&R             Yes              Call TI | Sn        Level-1-260C-UNLIM              -40 to 125               63802
+          TPS63802DLAT.A              Active      Production     VSON-HR (DLA) | 10       250 | SMALL T&R             Yes                  SN              Level-1-260C-UNLIM              -40 to 125               63802
+
+(1)
+      Status: For more details on status, see our product life cycle.
+
+(2)
+   Material type: When designated, preproduction parts are prototypes/experimental devices, and are not yet approved or released for full production. Testing and final process, including without limitation quality assurance,
+reliability performance testing, and/or process qualification, may not yet be complete, and this item is subject to further changes or possible discontinuation. If available for ordering, purchases will be subject to an additional
+waiver at checkout, and are intended for early internal evaluation purposes only. These items are sold without warranties of any kind.
+
+(3)
+      RoHS values: Yes, No, RoHS Exempt. See the TI RoHS Statement for additional information and value definition.
+
+(4)
+   Lead finish/Ball material: Parts may have multiple material finish options. Finish options are separated by a vertical ruled line. Lead finish/Ball material values may wrap to two lines if the finish value exceeds the maximum
+column width.
+
+(5)
+  MSL rating/Peak reflow: The moisture sensitivity level ratings and peak solder (reflow) temperatures. In the event that a part has multiple moisture sensitivity ratings, only the lowest level per JEDEC standards is shown.
+Refer to the shipping label for the actual reflow temperature that will be used to mount the part to the printed circuit board.
+
+(6)
+      Part marking: There may be an additional marking, which relates to the logo, the lot trace code information, or the environmental category of the part.
+
+Multiple part markings will be inside parentheses. Only one part marking contained in parentheses and separated by a "~" will appear on a part. If a line is indented then it is a continuation of the previous line and the two
+combined represent the entire part marking for that device.
+
+Important Information and Disclaimer:The information provided on this page represents TI's knowledge and belief as of the date that it is provided. TI bases its knowledge and belief on information provided by third parties, and
+makes no representation or warranty as to the accuracy of such information. Efforts are underway to better integrate information from third parties. TI has taken and continues to take reasonable steps to provide representative
+and accurate information but may not have conducted destructive testing or chemical analysis on incoming materials and chemicals. TI and TI suppliers consider certain information to be proprietary, and thus CAS numbers
+and other limited information may not be available for release.
+
+In no event shall TI's liability arising out of such information exceed the total purchase price of the TI part(s) at issue in this document sold by TI to Customer on an annual basis.
+
+
+
+                                                                                                          Addendum-Page 1
+                               PACKAGE OPTION ADDENDUM
+
+www.ti.com                                       9-Nov-2025
+
+
+
+
+             Addendum-Page 2
+                                                                               PACKAGE MATERIALS INFORMATION
+
+www.ti.com                                                                                                                                       19-Sep-2025
+
+
+
+TAPE AND REEL INFORMATION
+
+       REEL DIMENSIONS                                                                      TAPE DIMENSIONS
+                                                                                       K0         P1
+
+
+
+                                                                                                                         B0 W
+                                        Reel
+                                      Diameter
+                                                                                    Cavity             A0
+                                                                A0   Dimension designed to accommodate the component width
+                                                                B0   Dimension designed to accommodate the component length
+                                                                K0   Dimension designed to accommodate the component thickness
+                                                                W    Overall width of the carrier tape
+                                                                P1   Pitch between successive cavity centers
+
+
+                                       Reel Width (W1)
+                              QUADRANT ASSIGNMENTS FOR PIN 1 ORIENTATION IN TAPE
+
+                                                                                                        Sprocket Holes
+
+
+                                                 Q1        Q2          Q1    Q2
+
+                                                 Q3        Q4          Q3    Q4                    User Direction of Feed
+
+
+
+                                                            Pocket Quadrants
+
+
+*All dimensions are nominal
+             Device           Package Package Pins              SPQ        Reel   Reel   A0                    B0         K0     P1     W     Pin1
+                               Type Drawing                              Diameter Width (mm)                  (mm)       (mm)   (mm)   (mm) Quadrant
+                                                                           (mm) W1 (mm)
+     TPS63802DLAT             VSON-      DLA          10         250        180.0           8.4        2.25   3.25       1.05   4.0    8.0     Q1
+                                HR
+
+
+
+
+                                                                       Pack Materials-Page 1
+                                                                PACKAGE MATERIALS INFORMATION
+
+www.ti.com                                                                                                             19-Sep-2025
+
+
+
+ TAPE AND REEL BOX DIMENSIONS
+
+
+
+
+                                                               Width (mm)
+                                                                              H
+                      W
+
+
+
+
+                                                          L
+
+
+
+
+*All dimensions are nominal
+             Device           Package Type   Package Drawing   Pins         SPQ   Length (mm)   Width (mm)   Height (mm)
+      TPS63802DLAT             VSON-HR            DLA           10          250      341.0        182.0         80.0
+
+
+
+
+                                                        Pack Materials-Page 2
+                                                                                                    PACKAGE OUTLINE
+DLA0010A                                                                                       VSON-HR - 1 mm max height
+                                                                                               PLASTIC SMALL OUTLINE - NO LEAD
+
+                                       B               2.1                      A
+                                                       1.9
+
+
+
+
+                                                                               3.1
+                                                                               2.9
+             PIN 1 INDEX AREA
+
+
+
+
+                                1.0
+                                0.8                                              C
+
+                                                                                     SEATING PLANE
+                                0.05
+                                0.00                                                    0.08 C
+                                                      SYMM                                                    (0.1) TYP
+                                  5X 0.5
+                                     0.3
+
+                         5X 0.3
+                            0.2            5
+                                                                         6
+
+                       8X 0.5
+
+
+
+                                  SYMM
+                                                                                    2
+
+
+
+
+                                                                         10
+                                           1
+
+                                                                                 5X 0.3
+                                                                                    0.2
+                                                                4X 0.8
+                                                                   0.6
+                                                                                        0.1     C A B
+                                                                                        0.05     C
+                                                              1.2
+                                                              1                                                   4223750/D 03/2019
+NOTES:
+
+ 1.   All linear dimensions are in millimeters. Any dimensions in parenthesis are for reference only. Dimensioning and tolerancing
+      per ASME Y14.5M.
+ 2.   This drawing is subject to change without notice.
+
+
+
+
+                                                              www.ti.com
+                                                                                   EXAMPLE BOARD LAYOUT
+DLA0010A                                                                                  VSON-HR - 1 mm max height
+                                                                                          PLASTIC SMALL OUTLINE - NO LEAD
+
+
+
+                                                                 PKG
+
+                                                    5X (0.9)           4X (0.75)
+                                 5X (0.6)                              (0.55)
+                       5X (0.25)
+
+                                       1                                                          10
+
+                          8X
+                         (0.5)
+
+
+
+
+                                                                                                       (0.25)
+                                    PKG
+                                                                                                                (2)
+
+
+                      (R0.05) TYP
+
+
+
+
+                                       5                                                          6
+
+                                                                                                            4X (0.25)
+                                                                                   4X (0.9)
+
+                                                                                (1.3)
+
+                                                    LAND PATTERN EXAMPLE
+                                                       EXPOSED METAL SHOWN
+                                                            SCALE: 30X
+                                                                                                        SOLDER MASK
+                         0.07 MAX                                     0.07 MIN                          OPENING
+                       ALL AROUND                                   ALL AROUND
+                                                       METAL                                               METAL UNDER
+                                                                                                           SOLDER MASK
+                                                         SOLDER MASK
+                                                         OPENING
+                EXPOSED METAL                                                                          EXPOSED METAL
+
+
+
+                                      NON- SOLDER MASK
+                                           DEFINED                                      SOLDER MASK
+                                        (PREFERRED)                                       DEFINED
+
+
+                                                     SOLDER MASK DETAILS
+                                                                                                                      4223750/D 03/2019
+
+NOTES: (continued)
+
+ 3.   For more information, see Texas Instruments literature number SLUA271 (www.ti.com/lit/slua271).
+ 4.   Solder mask tolerances between and around signal pads can vary based on board fabrication site.
+
+
+
+
+                                                               www.ti.com
+                                                                                  EXAMPLE STENCIL DESIGN
+DLA0010A                                                                                    VSON-HR - 1 mm max height
+                                                                                             PLASTIC SMALL OUTLINE - NO LEAD
+
+
+                                                                     PKG
+
+                                                       5X (0.9)
+                                                                           4X (0.75)
+                                  5X (0.6)
+                                                           (0.175)
+                        5X (0.25)
+
+                                        1                                                          10
+
+                           8X
+                          (0.5)
+
+
+                                                                                                          2X
+                                                                                                        (0.25)
+                                     PKG
+                                                                                                                 (2)
+
+
+                       (R0.05) TYP
+
+
+
+
+                                                                                                         (0.5)
+
+                                        5
+                                                                                                   6
+
+                                                                                                         4X (0.25)
+                                                       2X (0.55)
+                                                                                (0.75)
+
+                                                                                       4X (0.9)
+
+
+
+                                                     SOLDER PASTE EXAMPLE
+                                                     BASED ON 0.1 mm THICK STENCIL
+
+                                            PRINTED SOLDER COVERAGE BY AREA UNDER PACKAGE
+                                                              PAD 8: 83%
+                                                              SCALE: 30X
+
+
+
+
+                                                                                                                       4223750/D 03/2019
+
+NOTES: (continued)
+
+5.    Laser cutting apertures with trapezoidal walls and rounded corners may offer better paste release. IPC-7525 may have alternate
+design recommendations.
+
+
+
+
+                                                                  www.ti.com
+                                         IMPORTANT NOTICE AND DISCLAIMER
+TI PROVIDES TECHNICAL AND RELIABILITY DATA (INCLUDING DATASHEETS), DESIGN RESOURCES (INCLUDING REFERENCE
+DESIGNS), APPLICATION OR OTHER DESIGN ADVICE, WEB TOOLS, SAFETY INFORMATION, AND OTHER RESOURCES “AS IS”
+AND WITH ALL FAULTS, AND DISCLAIMS ALL WARRANTIES, EXPRESS AND IMPLIED, INCLUDING WITHOUT LIMITATION ANY
+IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE OR NON-INFRINGEMENT OF THIRD
+PARTY INTELLECTUAL PROPERTY RIGHTS.
+These resources are intended for skilled developers designing with TI products. You are solely responsible for (1) selecting the appropriate
+TI products for your application, (2) designing, validating and testing your application, and (3) ensuring your application meets applicable
+standards, and any other safety, security, regulatory or other requirements.
+These resources are subject to change without notice. TI grants you permission to use these resources only for development of an
+application that uses the TI products described in the resource. Other reproduction and display of these resources is prohibited. No license
+is granted to any other TI intellectual property right or to any third party intellectual property right. TI disclaims responsibility for, and you fully
+indemnify TI and its representatives against any claims, damages, costs, losses, and liabilities arising out of your use of these resources.
+TI’s products are provided subject to TI’s Terms of Sale, TI’s General Quality Guidelines, or other applicable terms available either on
+ti.com or provided in conjunction with such TI products. TI’s provision of these resources does not expand or otherwise alter TI’s applicable
+warranties or warranty disclaimers for TI products. Unless TI explicitly designates a product as custom or customer-specified, TI products
+are standard, catalog, general purpose devices.
+TI objects to and rejects any additional or different terms you may propose.
+IMPORTANT NOTICE
+
+                                                Copyright © 2025, Texas Instruments Incorporated
+                                                                Last updated 10/2025
+
