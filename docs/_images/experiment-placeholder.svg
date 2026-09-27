@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450" role="img" aria-labelledby="title description">
+  <title id="title">Experiment photograph placeholder</title>
+  <desc id="description">A neutral image placeholder awaiting a photograph of a real OpenSync experiment.</desc>
+  <rect width="800" height="450" fill="rgb(238, 243, 247)"/>
+  <rect x="150" y="60" width="500" height="235" rx="10" fill="none" stroke="rgb(122, 145, 160)" stroke-width="3" stroke-dasharray="10 8"/>
+  <circle cx="500" cy="125" r="23" fill="rgb(152, 176, 190)"/>
+  <path d="M210 250 L315 145 L420 250 L470 200 L570 250" fill="none" stroke="rgb(122, 145, 160)" stroke-width="6" stroke-linejoin="round"/>
+  <text x="400" y="355" text-anchor="middle" font-family="Arial, sans-serif" font-size="27" fill="rgb(49, 73, 89)">Experiment photograph</text>
+  <text x="400" y="395" text-anchor="middle" font-family="Arial, sans-serif" font-size="21" fill="rgb(77, 98, 112)">Placeholder</text>
+</svg>

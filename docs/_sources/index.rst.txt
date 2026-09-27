@@ -1,7 +1,7 @@
 :html_theme.sidebar_secondary.remove:
 
 OpenSync - Open source, Open hardware Synchronizer for PIV
-==========================================================
+======================
 
 OpenSync is a simple and low-cost synchronizer based on microcontroller
 technology. It provides eight (8) independent output channels and two (2)

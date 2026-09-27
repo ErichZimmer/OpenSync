@@ -1,0 +1,39 @@
+/* Keep the PyData theme's navigation, typography, and light/dark modes. */
+.opensync-tiles {
+    margin-block: 1.75rem 2.5rem;
+}
+
+.opensync-tiles .sd-card {
+    border-radius: 0.5rem;
+    border-top: 0.2rem solid var(--pst-color-primary);
+    box-shadow: none !important;
+}
+
+.opensync-tiles .sd-card-body {
+    padding: 1.4rem;
+}
+
+.opensync-tiles .sd-card-title {
+    font-size: 1.35rem;
+}
+
+.opensync-tiles .sd-card-footer {
+    padding: 0.8rem 1.4rem;
+    color: var(--pst-color-primary);
+    background-color: var(--pst-color-surface);
+}
+
+.opensync-tiles .sd-card:hover,
+.opensync-tiles .sd-card:focus-within {
+    border-color: var(--pst-color-primary);
+}
+
+.opensync-timing img {
+    background-color: rgb(255, 255, 255);
+    border-radius: 0.35rem;
+}
+
+/* Placeholder cards have no destination link. */
+.experiment-tiles .sd-card-footer {
+    color: var(--pst-color-text-muted);
+}

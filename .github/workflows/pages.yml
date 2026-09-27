@@ -1,0 +1,50 @@
+name: OpenSync documentation
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Install documentation and OpenSync import dependencies
+        run: python -m pip install -r documents/docs/requirements.txt numpy matplotlib pyserial
+
+      - name: Build documentation
+        run: python -B -m sphinx -b html -W --keep-going documents/docs/src _site
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          # Publish the generated contents at the project site's root.
+          path: _site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
