@@ -3,6 +3,9 @@ An open source synchronizer for the velocimetry of fluids using a Raspberry Pi m
 
 ![Example Timing Graph for Diode Laser](assets/opensync_demo_timing.png)
 
+## Notice
+The first batches of PCBs were ordered from JLCPCB for testing. If and when the PCBs pass testing and an initial PIV experiment is performed, the 1.0 milestone and initial release will be made along with a journal submission to HardwareX or JOH for publishment. Additionally, complete replication instructions will be included during the 1.0 milestone.
+
 ## Purpose
 OpenSync is a simple and low-cost synchronizer based on microcontroller technology. Due to the intrinsic nature of microcontrollers compared to more advanced devices (e.g., field programmable gate arrays), sub-cycle accuracy and come complex features that are typical of commercial propietary devices are not implemented. However, OpenSync remains sufficiently flexible and provides enough support for most users' needs when performing a PIV experiment. This is because OpenSync is a digital delay/pulse generator capable of having each output channel individually programmed. In adition to an all-microcontroller platform and a custom PCB, OpenSync devices provides a low-cost means to deterministic controll of laboratory equipment.
 
