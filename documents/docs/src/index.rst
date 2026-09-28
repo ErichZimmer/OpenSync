@@ -16,7 +16,7 @@ laboratory equipment.
    :gutter: 3
    :class-container: opensync-tiles
 
-   .. grid-item-card:: [i] Users Guide
+   .. grid-item-card:: 🕮 User Guide
       :link: users_guide/index
       :link-type: doc
 
@@ -34,7 +34,7 @@ laboratory equipment.
       +++
       Browse the reference ->
 
-   .. grid-item-card:: [exp] Examples (experiments)
+   .. grid-item-card:: [--✴] Examples (experiments)
       :link: examples/index
       :link-type: doc
 
@@ -87,15 +87,16 @@ OpenSync thanks Dr. Ivan Nepomnyashchikh and Professor Alex Liberzon for
 spearheading open source, open hardware equipment for the OpenPIV project.
 The `original OpenPIV discussion
 <https://groups.google.com/g/openpiv-users/c/xi7qt28IGEE>`_ helped initiate this
-project. Relatively low-cost systems from `Optolution
-<https://optolution.com/en/>`_ and `MicroVec Pte Ltd <https://piv.com.sg/>`_
-also provided inspiration very strong inspiration to complete this project.
+project. Cost effective commercial PIV systems from `Optolution 
+<https://optolution.com/en/>`_ provided a strong inspiration to complete this
+project. Additionally, certain hardware from `MicroVec Pte Ltd <https://piv.com.sg/>`_
+was used as inspiration in earlier prototypes.
 
 .. toctree::
    :hidden:
    :maxdepth: 2
 
-   Users Guide <users_guide/index>
+   User Guide <users_guide/index>
    API Reference <api_reference/index>
    Examples (experiments) <examples/index>
    User Manual <user_manual/index>

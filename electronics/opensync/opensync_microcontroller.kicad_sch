@@ -3481,7 +3481,7 @@
 		(uuid "4307c9c9-3c8d-4c93-9fee-57dbc00b25f1")
 	)
 	(junction
-		(at 185.42 60.96)
+		(at 185.42 58.42)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "4cd2388e-e6b3-43d4-8278-1f7f8404c743")
@@ -3491,6 +3491,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "50a510cd-a822-444e-a9d0-61eab1bc3cbc")
+	)
+	(junction
+		(at 185.42 66.04)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "55752b30-ca9e-437c-9ba6-b02b59dba29f")
 	)
 	(junction
 		(at 210.82 114.3)
@@ -3553,7 +3559,7 @@
 		(uuid "7dfc8640-b32f-4042-a8c2-d6efee9d57f2")
 	)
 	(junction
-		(at 185.42 63.5)
+		(at 185.42 60.96)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "8082e2bb-1868-48cc-b65d-60765581fac1")
@@ -3781,16 +3787,22 @@
 		(uuid "e9752c37-f884-4a69-a2cc-190c143631d7")
 	)
 	(no_connect
-		(at 156.21 55.88)
-		(uuid "ef32377e-fcfa-4109-85d2-9e9aade2c941")
-	)
-	(no_connect
 		(at 156.21 134.62)
 		(uuid "fbecdceb-4a4c-4d61-aba4-365238b32849")
 	)
 	(no_connect
 		(at 156.21 147.32)
 		(uuid "fc733c0f-8178-4206-a50d-c3c48e3507bc")
+	)
+	(wire
+		(pts
+			(xy 175.26 63.5) (xy 156.21 63.5)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "01848f22-71bc-4338-8808-1644f76f9957")
 	)
 	(wire
 		(pts
@@ -3811,16 +3823,6 @@
 			(type default)
 		)
 		(uuid "049d2692-d839-4118-a2d7-41955342d4c0")
-	)
-	(wire
-		(pts
-			(xy 185.42 63.5) (xy 185.42 66.04)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "051e2295-1f5a-484d-aa1b-4f3a54c5968b")
 	)
 	(wire
 		(pts
@@ -4094,6 +4096,16 @@
 	)
 	(wire
 		(pts
+			(xy 175.26 66.04) (xy 175.26 63.5)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2ea1c212-f92d-4287-86d2-e2552840966c")
+	)
+	(wire
+		(pts
 			(xy 35.56 106.68) (xy 35.56 110.49)
 		)
 		(stroke
@@ -4244,7 +4256,7 @@
 	)
 	(wire
 		(pts
-			(xy 176.53 60.96) (xy 185.42 60.96)
+			(xy 176.53 58.42) (xy 185.42 58.42)
 		)
 		(stroke
 			(width 0)
@@ -4264,7 +4276,7 @@
 	)
 	(wire
 		(pts
-			(xy 156.21 58.42) (xy 168.91 58.42)
+			(xy 156.21 55.88) (xy 168.91 55.88)
 		)
 		(stroke
 			(width 0)
@@ -4274,7 +4286,7 @@
 	)
 	(wire
 		(pts
-			(xy 156.21 63.5) (xy 175.26 63.5)
+			(xy 156.21 60.96) (xy 175.26 60.96)
 		)
 		(stroke
 			(width 0)
@@ -4534,7 +4546,7 @@
 	)
 	(wire
 		(pts
-			(xy 176.53 55.88) (xy 185.42 55.88)
+			(xy 176.53 53.34) (xy 185.42 53.34)
 		)
 		(stroke
 			(width 0)
@@ -4764,7 +4776,7 @@
 	)
 	(wire
 		(pts
-			(xy 156.21 60.96) (xy 168.91 60.96)
+			(xy 156.21 58.42) (xy 168.91 58.42)
 		)
 		(stroke
 			(width 0)
@@ -4904,7 +4916,7 @@
 	)
 	(wire
 		(pts
-			(xy 185.42 55.88) (xy 185.42 60.96)
+			(xy 185.42 53.34) (xy 185.42 58.42)
 		)
 		(stroke
 			(width 0)
@@ -5044,7 +5056,7 @@
 	)
 	(wire
 		(pts
-			(xy 182.88 63.5) (xy 185.42 63.5)
+			(xy 182.88 60.96) (xy 185.42 60.96)
 		)
 		(stroke
 			(width 0)
@@ -5094,7 +5106,7 @@
 	)
 	(wire
 		(pts
-			(xy 168.91 55.88) (xy 168.91 58.42)
+			(xy 168.91 53.34) (xy 168.91 55.88)
 		)
 		(stroke
 			(width 0)
@@ -5454,7 +5466,7 @@
 	)
 	(wire
 		(pts
-			(xy 185.42 60.96) (xy 185.42 63.5)
+			(xy 185.42 58.42) (xy 185.42 60.96)
 		)
 		(stroke
 			(width 0)
@@ -5481,6 +5493,16 @@
 			(type default)
 		)
 		(uuid "e36a55af-ba12-47aa-9377-95159097a22b")
+	)
+	(wire
+		(pts
+			(xy 182.88 66.04) (xy 185.42 66.04)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e387947e-50eb-4ba1-bd74-904267b27294")
 	)
 	(wire
 		(pts
@@ -5511,6 +5533,16 @@
 			(type default)
 		)
 		(uuid "e71e9b4e-1497-4086-ac1e-bd1ed1c2ff0d")
+	)
+	(wire
+		(pts
+			(xy 185.42 66.04) (xy 185.42 68.58)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e7780743-96b8-43cd-acb0-b8e896c1ccf1")
 	)
 	(wire
 		(pts
@@ -5732,6 +5764,16 @@
 		)
 		(uuid "fce83272-78bc-4c2b-992a-47b3925ef49f")
 	)
+	(wire
+		(pts
+			(xy 185.42 60.96) (xy 185.42 66.04)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "fda746d7-d3cc-4797-8eef-09708fd72c59")
+	)
 	(label "QSPI_SD0"
 		(at 77.47 68.58 0)
 		(effects
@@ -5773,7 +5815,7 @@
 		(uuid "3c877c78-44d7-4d25-9640-8356a840e804")
 	)
 	(label "SIG_T0"
-		(at 156.21 58.42 0)
+		(at 156.21 55.88 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5811,6 +5853,16 @@
 			(justify left bottom)
 		)
 		(uuid "578545fd-a0b4-4980-87bc-8fb8c4339bcc")
+	)
+	(label "SIG_INT_UNUSED"
+		(at 156.21 63.5 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "65cbe8e5-1e34-4c40-b7cf-3065f6be9224")
 	)
 	(label "XIN"
 		(at 78.74 88.9 0)
@@ -5872,8 +5924,8 @@
 		)
 		(uuid "b15a5659-448a-4a81-98b4-c427db06e12e")
 	)
-	(label "SIG_GATE_INT"
-		(at 156.21 63.5 0)
+	(label "SIG_INT_TRIG"
+		(at 156.21 60.96 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5903,7 +5955,7 @@
 		(uuid "ea26d483-3473-40d5-9155-9fd56fd81ac1")
 	)
 	(label "SIG_CLOCK"
-		(at 156.21 60.96 0)
+		(at 156.21 58.42 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7748,6 +7800,228 @@
 			(project "opensync"
 				(path "/5101ac75-6b12-4b1f-bd09-4cdc912f4174/20a7c7e4-10c4-408b-81a5-cf38e9f12066"
 					(reference "#PWR03")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 179.07 66.04 270)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "34772a73-0084-4197-ad64-2fcb58a1c016")
+		(property "Reference" "R62"
+			(at 179.07 68.072 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "10k"
+			(at 179.324 66.04 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 179.07 64.262 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2304140030_Vishay-Intertech-CRCW040210K0FKED_C71617.pdf"
+			(at 179.07 66.04 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 179.07 66.04 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C71617"
+			(at 179.07 66.04 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description_1" ""
+			(at 179.07 66.04 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "manufacturer" "Vishay Intertech"
+			(at 179.07 66.04 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "manufacturer_pn" "CRCW040210K0FKED"
+			(at 179.07 66.04 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "package" "0402 (1005 metric)"
+			(at 179.07 66.04 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "operating_temp_min" "-55C"
+			(at 179.07 66.04 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "operating_temp_max" "+155C"
+			(at 179.07 66.04 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "resistance" "10kΩ"
+			(at 179.07 66.04 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "tolerance" "±1%"
+			(at 179.07 66.04 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "power" "63mW"
+			(at 179.07 66.04 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "voltage" "50V"
+			(at 179.07 66.04 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "temp_coefficient" "±100ppm/℃"
+			(at 179.07 66.04 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "technology" "Thick Film Resistor"
+			(at 179.07 66.04 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "9b99cb2e-4344-45f5-9ab5-d5c39671f841")
+		)
+		(pin "2"
+			(uuid "b6472468-1dcf-4be5-a243-5e2a94934822")
+		)
+		(instances
+			(project "opensync"
+				(path "/5101ac75-6b12-4b1f-bd09-4cdc912f4174/20a7c7e4-10c4-408b-81a5-cf38e9f12066"
+					(reference "R62")
 					(unit 1)
 				)
 			)
@@ -11174,7 +11448,7 @@
 	)
 	(symbol
 		(lib_id "Device:R")
-		(at 172.72 60.96 270)
+		(at 172.72 58.42 270)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -11184,7 +11458,7 @@
 		(dnp no)
 		(uuid "7a327769-6390-453d-82a4-a9e03c5e7511")
 		(property "Reference" "R6"
-			(at 172.72 58.928 90)
+			(at 172.72 56.388 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -11194,7 +11468,7 @@
 			)
 		)
 		(property "Value" "10k"
-			(at 172.974 60.96 90)
+			(at 172.974 58.42 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -11204,7 +11478,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
-			(at 172.72 59.182 90)
+			(at 172.72 56.642 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11215,7 +11489,7 @@
 			)
 		)
 		(property "Datasheet" "https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2304140030_Vishay-Intertech-CRCW040210K0FKED_C71617.pdf"
-			(at 172.72 60.96 0)
+			(at 172.72 58.42 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11226,7 +11500,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 172.72 60.96 0)
+			(at 172.72 58.42 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11237,7 +11511,7 @@
 			)
 		)
 		(property "LCSC" "C71617"
-			(at 172.72 60.96 0)
+			(at 172.72 58.42 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11248,7 +11522,7 @@
 			)
 		)
 		(property "Description_1" ""
-			(at 172.72 60.96 90)
+			(at 172.72 58.42 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11259,7 +11533,7 @@
 			)
 		)
 		(property "manufacturer" "Vishay Intertech"
-			(at 172.72 60.96 0)
+			(at 172.72 58.42 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11270,7 +11544,7 @@
 			)
 		)
 		(property "manufacturer_pn" "CRCW040210K0FKED"
-			(at 172.72 60.96 0)
+			(at 172.72 58.42 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11281,7 +11555,7 @@
 			)
 		)
 		(property "package" "0402 (1005 metric)"
-			(at 172.72 60.96 0)
+			(at 172.72 58.42 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11292,7 +11566,7 @@
 			)
 		)
 		(property "operating_temp_min" "-55C"
-			(at 172.72 60.96 0)
+			(at 172.72 58.42 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11303,7 +11577,7 @@
 			)
 		)
 		(property "operating_temp_max" "+155C"
-			(at 172.72 60.96 0)
+			(at 172.72 58.42 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11314,7 +11588,7 @@
 			)
 		)
 		(property "resistance" "10kΩ"
-			(at 172.72 60.96 0)
+			(at 172.72 58.42 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11325,7 +11599,7 @@
 			)
 		)
 		(property "tolerance" "±1%"
-			(at 172.72 60.96 0)
+			(at 172.72 58.42 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11336,7 +11610,7 @@
 			)
 		)
 		(property "power" "63mW"
-			(at 172.72 60.96 0)
+			(at 172.72 58.42 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11347,7 +11621,7 @@
 			)
 		)
 		(property "voltage" "50V"
-			(at 172.72 60.96 0)
+			(at 172.72 58.42 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11358,7 +11632,7 @@
 			)
 		)
 		(property "temp_coefficient" "±100ppm/℃"
-			(at 172.72 60.96 0)
+			(at 172.72 58.42 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11369,7 +11643,7 @@
 			)
 		)
 		(property "technology" "Thick Film Resistor"
-			(at 172.72 60.96 0)
+			(at 172.72 58.42 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11858,7 +12132,7 @@
 	)
 	(symbol
 		(lib_id "Device:R")
-		(at 179.07 63.5 270)
+		(at 179.07 60.96 270)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -11868,7 +12142,7 @@
 		(dnp no)
 		(uuid "805f1da4-c737-407e-8444-ed1caf73db9e")
 		(property "Reference" "R57"
-			(at 179.07 65.532 90)
+			(at 179.07 62.992 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -11878,7 +12152,7 @@
 			)
 		)
 		(property "Value" "10k"
-			(at 179.324 63.5 90)
+			(at 179.324 60.96 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -11888,7 +12162,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
-			(at 179.07 61.722 90)
+			(at 179.07 59.182 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11899,7 +12173,7 @@
 			)
 		)
 		(property "Datasheet" "https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2304140030_Vishay-Intertech-CRCW040210K0FKED_C71617.pdf"
-			(at 179.07 63.5 0)
+			(at 179.07 60.96 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11910,7 +12184,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 179.07 63.5 0)
+			(at 179.07 60.96 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11921,7 +12195,7 @@
 			)
 		)
 		(property "LCSC" "C71617"
-			(at 179.07 63.5 0)
+			(at 179.07 60.96 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11932,7 +12206,7 @@
 			)
 		)
 		(property "Description_1" ""
-			(at 179.07 63.5 90)
+			(at 179.07 60.96 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11943,7 +12217,7 @@
 			)
 		)
 		(property "manufacturer" "Vishay Intertech"
-			(at 179.07 63.5 0)
+			(at 179.07 60.96 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11954,7 +12228,7 @@
 			)
 		)
 		(property "manufacturer_pn" "CRCW040210K0FKED"
-			(at 179.07 63.5 0)
+			(at 179.07 60.96 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11965,7 +12239,7 @@
 			)
 		)
 		(property "package" "0402 (1005 metric)"
-			(at 179.07 63.5 0)
+			(at 179.07 60.96 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11976,7 +12250,7 @@
 			)
 		)
 		(property "operating_temp_min" "-55C"
-			(at 179.07 63.5 0)
+			(at 179.07 60.96 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11987,7 +12261,7 @@
 			)
 		)
 		(property "operating_temp_max" "+155C"
-			(at 179.07 63.5 0)
+			(at 179.07 60.96 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11998,7 +12272,7 @@
 			)
 		)
 		(property "resistance" "10kΩ"
-			(at 179.07 63.5 0)
+			(at 179.07 60.96 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12009,7 +12283,7 @@
 			)
 		)
 		(property "tolerance" "±1%"
-			(at 179.07 63.5 0)
+			(at 179.07 60.96 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12020,7 +12294,7 @@
 			)
 		)
 		(property "power" "63mW"
-			(at 179.07 63.5 0)
+			(at 179.07 60.96 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12031,7 +12305,7 @@
 			)
 		)
 		(property "voltage" "50V"
-			(at 179.07 63.5 0)
+			(at 179.07 60.96 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12042,7 +12316,7 @@
 			)
 		)
 		(property "temp_coefficient" "±100ppm/℃"
-			(at 179.07 63.5 0)
+			(at 179.07 60.96 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12053,7 +12327,7 @@
 			)
 		)
 		(property "technology" "Thick Film Resistor"
-			(at 179.07 63.5 0)
+			(at 179.07 60.96 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12992,7 +13266,7 @@
 	)
 	(symbol
 		(lib_id "Device:R")
-		(at 172.72 55.88 270)
+		(at 172.72 53.34 270)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -13002,7 +13276,7 @@
 		(dnp no)
 		(uuid "a7ac7055-ccc4-48b2-bf13-b4504fdbc5ea")
 		(property "Reference" "R5"
-			(at 172.72 53.848 90)
+			(at 172.72 51.308 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -13012,7 +13286,7 @@
 			)
 		)
 		(property "Value" "10k"
-			(at 172.974 55.88 90)
+			(at 172.974 53.34 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -13022,7 +13296,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
-			(at 172.72 54.102 90)
+			(at 172.72 51.562 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13033,7 +13307,7 @@
 			)
 		)
 		(property "Datasheet" "https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2304140030_Vishay-Intertech-CRCW040210K0FKED_C71617.pdf"
-			(at 172.72 55.88 0)
+			(at 172.72 53.34 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13044,7 +13318,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 172.72 55.88 0)
+			(at 172.72 53.34 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13055,7 +13329,7 @@
 			)
 		)
 		(property "LCSC" "C71617"
-			(at 172.72 55.88 0)
+			(at 172.72 53.34 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13066,7 +13340,7 @@
 			)
 		)
 		(property "Description_1" ""
-			(at 172.72 55.88 90)
+			(at 172.72 53.34 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13077,7 +13351,7 @@
 			)
 		)
 		(property "manufacturer" "Vishay Intertech"
-			(at 172.72 55.88 0)
+			(at 172.72 53.34 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13088,7 +13362,7 @@
 			)
 		)
 		(property "manufacturer_pn" "CRCW040210K0FKED"
-			(at 172.72 55.88 0)
+			(at 172.72 53.34 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13099,7 +13373,7 @@
 			)
 		)
 		(property "package" "0402 (1005 metric)"
-			(at 172.72 55.88 0)
+			(at 172.72 53.34 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13110,7 +13384,7 @@
 			)
 		)
 		(property "operating_temp_min" "-55C"
-			(at 172.72 55.88 0)
+			(at 172.72 53.34 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13121,7 +13395,7 @@
 			)
 		)
 		(property "operating_temp_max" "+155C"
-			(at 172.72 55.88 0)
+			(at 172.72 53.34 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13132,7 +13406,7 @@
 			)
 		)
 		(property "resistance" "10kΩ"
-			(at 172.72 55.88 0)
+			(at 172.72 53.34 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13143,7 +13417,7 @@
 			)
 		)
 		(property "tolerance" "±1%"
-			(at 172.72 55.88 0)
+			(at 172.72 53.34 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13154,7 +13428,7 @@
 			)
 		)
 		(property "power" "63mW"
-			(at 172.72 55.88 0)
+			(at 172.72 53.34 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13165,7 +13439,7 @@
 			)
 		)
 		(property "voltage" "50V"
-			(at 172.72 55.88 0)
+			(at 172.72 53.34 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13176,7 +13450,7 @@
 			)
 		)
 		(property "temp_coefficient" "±100ppm/℃"
-			(at 172.72 55.88 0)
+			(at 172.72 53.34 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13187,7 +13461,7 @@
 			)
 		)
 		(property "technology" "Thick Film Resistor"
-			(at 172.72 55.88 0)
+			(at 172.72 53.34 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13674,7 +13948,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 185.42 66.04 0)
+		(at 185.42 68.58 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -13685,7 +13959,7 @@
 		(fields_autoplaced yes)
 		(uuid "bd037fbf-1ef3-4524-955b-e5f012b1e7db")
 		(property "Reference" "#PWR014"
-			(at 185.42 72.39 0)
+			(at 185.42 74.93 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13696,7 +13970,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 185.42 71.12 0)
+			(at 185.42 73.66 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -13706,7 +13980,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 185.42 66.04 0)
+			(at 185.42 68.58 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13717,7 +13991,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 185.42 66.04 0)
+			(at 185.42 68.58 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13728,7 +14002,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 185.42 66.04 0)
+			(at 185.42 68.58 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)

@@ -25,9 +25,9 @@ Flash the device
 
 1. Close any PWA, Python session, or serial terminal connected to OpenSync,
    then unplug the device from USB.
-2. Access the Pico 2's **BOOTSEL** button. Hold it while reconnecting USB,
+2. Access the PCB's **BOOTSEL** button. Hold it while reconnecting USB,
    then release it when the bootloader drive appears.
-3. Copy the release's UF2 file onto that drive. The Pico 2 bootloader normally
+3. Copy the release's UF2 file onto that drive. The bootloader normally
    identifies the drive as ``RP2350``.
 4. Wait for the file copy to finish. The device reboots and the bootloader
    drive disappears.

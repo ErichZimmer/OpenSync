@@ -1,5 +1,5 @@
-Users Guide
-===========
+User Guide
+==========
 
 OpenSync is an open source synchronizer for particle image velocimetry (PIV)
 and other laboratory measurements that depend on coordinated timing. Cameras,

@@ -8,5 +8,5 @@ triggering, gating, and everyday device operation.
 
 It will be authored in LaTeX and distributed as a printable PDF. This page is
 reserved for that document; the manual is separate from the detailed
-:doc:`Users Guide <../users_guide/index>`, :doc:`API Reference
+:doc:`User Guide <../users_guide/index>`, :doc:`API Reference
 <../api_reference/index>`, and experimental case studies.

@@ -6,6 +6,17 @@ web application (PWA). Both use the device's USB serial SCPI interface. The
 Python library suits scripts, notebooks, and integration with an experiment;
 the PWA provides a graphical editor and an interactive SCPI terminal.
 
+Basic-operation notebooks
+-------------------------
+
+.. toctree::
+   :maxdepth: 1
+
+   ../notebooks/device_communication_basics
+   ../notebooks/clock_setup
+   ../notebooks/pulse_timing
+   ../notebooks/scpi_pulse_basics
+
 Python package
 --------------
 
@@ -70,7 +81,7 @@ The normal Python workflow is:
    ``device_params_load(device, clock_params, pulse_params)``.
 5. Use ``device_system_fire()`` to start and ``device_system_stop()`` to stop.
 
-The notebooks below work through the individual concepts. Function details
+The notebooks above work through the individual concepts. Function details
 are in the :doc:`Python API Reference <../api_reference/index>`.
 
 PWA
@@ -137,20 +148,3 @@ The packaged application is written to ``dist/opensync-pwa``. Serve that
 folder through an appropriate web host. On a supported browser, the PWA can
 be installed as an application window using the browser's installation UI.
 
-Basic-operation notebooks
--------------------------
-
-These notebooks teach device communication, clock configuration, and pulse
-timing. They belong to this guide. Documented uses in real experiments will
-appear separately under :doc:`Examples (experiments) <../examples/index>`.
-
-.. toctree::
-   :maxdepth: 1
-
-   ../notebooks/device_communication_basics
-   ../notebooks/clock_setup
-   ../notebooks/pulse_timing
-   ../notebooks/scpi_pulse_basics
-
-The documentation displays the notebooks and their saved outputs without
-executing their cells or opening a hardware connection.
