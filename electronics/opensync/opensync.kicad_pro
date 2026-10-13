@@ -60,13 +60,13 @@
           "hatch_smoothing_level": 0,
           "hatch_smoothing_value": 0.1,
           "hatch_thickness": 1.0,
-          "min_clearance": 0.2,
+          "min_clearance": 0.18,
           "min_island_area": 10.0,
-          "min_thickness": 0.18,
-          "pad_connection": 1,
-          "remove_islands": 1,
-          "thermal_relief_gap": 0.5,
-          "thermal_relief_spoke_width": 0.5
+          "min_thickness": 0.1,
+          "pad_connection": 2,
+          "remove_islands": 0,
+          "thermal_relief_gap": 0.2,
+          "thermal_relief_spoke_width": 0.3
         }
       },
       "diff_pair_dimensions": [
@@ -162,7 +162,7 @@
         "min_track_width": 0.1,
         "min_via_annular_width": 0.15,
         "min_via_diameter": 0.6,
-        "solder_mask_to_copper_clearance": 0.0,
+        "solder_mask_to_copper_clearance": 0.005,
         "use_height_for_length_calcs": true
       },
       "teardrop_options": [
@@ -588,31 +588,31 @@
           "group_by": true,
           "label": "DNP",
           "name": "${DNP}",
-          "show": true
+          "show": false
         },
         {
           "group_by": true,
           "label": "Exclude from BOM",
           "name": "${EXCLUDE_FROM_BOM}",
-          "show": true
+          "show": false
         },
         {
           "group_by": true,
           "label": "Exclude from Board",
           "name": "${EXCLUDE_FROM_BOARD}",
-          "show": true
+          "show": false
         },
         {
           "group_by": true,
           "label": "Exclude from Simulation",
           "name": "${EXCLUDE_FROM_SIM}",
-          "show": true
+          "show": false
         },
         {
           "group_by": true,
           "label": "Exclude from Position Files",
           "name": "${EXCLUDE_FROM_POS_FILES}",
-          "show": true
+          "show": false
         },
         {
           "group_by": true,
@@ -624,7 +624,7 @@
           "group_by": false,
           "label": "Datasheet",
           "name": "Datasheet",
-          "show": true
+          "show": false
         },
         {
           "group_by": false,
@@ -967,6 +967,300 @@
           "label": "ESD Air Discharge Capability",
           "name": "ESD Air Discharge Capability",
           "show": false
+        },
+        {
+          "group_by": false,
+          "label": "cpu_frequency",
+          "name": "cpu_frequency",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "current",
+          "name": "current",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "dcr",
+          "name": "dcr",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "dielectric",
+          "name": "dielectric",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "esr",
+          "name": "esr",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "forward_voltage",
+          "name": "forward_voltage",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "freq_stability",
+          "name": "freq_stability",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "freq_tolerance",
+          "name": "freq_tolerance",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "frequency",
+          "name": "frequency",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "impedance",
+          "name": "impedance",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "inductance",
+          "name": "inductance",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "input_voltage",
+          "name": "input_voltage",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "junction_capacitance",
+          "name": "junction_capacitance",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "lifetime",
+          "name": "lifetime",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "load_capacitance",
+          "name": "load_capacitance",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "manufacturer",
+          "name": "manufacturer",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "manufacturer_pn",
+          "name": "manufacturer_pn",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "material",
+          "name": "material",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "operating_temp_max",
+          "name": "operating_temp_max",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "operating_temp_min",
+          "name": "operating_temp_min",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "output_current",
+          "name": "output_current",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "output_voltage",
+          "name": "output_voltage",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "package",
+          "name": "package",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "pitch",
+          "name": "pitch",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "polarity",
+          "name": "polarity",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "power",
+          "name": "power",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "program_storage",
+          "name": "program_storage",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "ram",
+          "name": "ram",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "resistance",
+          "name": "resistance",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "ripple_current",
+          "name": "ripple_current",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "rms_current",
+          "name": "rms_current",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "saturation_current",
+          "name": "saturation_current",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "stand_off_voltage",
+          "name": "stand_off_voltage",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "switching_frequency",
+          "name": "switching_frequency",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "technology",
+          "name": "technology",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "temp_coefficient",
+          "name": "temp_coefficient",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "test_current",
+          "name": "test_current",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "tolerance",
+          "name": "tolerance",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "topology",
+          "name": "topology",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "viewing_angle",
+          "name": "viewing_angle",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "voltage",
+          "name": "voltage",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "clamping_voltage",
+          "name": "clamping_voltage",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "breakdown_voltage",
+          "name": "breakdown_voltage",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "capacitance",
+          "name": "capacitance",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "cpu_core",
+          "name": "cpu_core",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "color",
+          "name": "color",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "BOM Comments",
+          "name": "BOM Comments",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "LCSC Part",
+          "name": "LCSC Part",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "MPN",
+          "name": "MPN",
+          "show": false
         }
       ],
       "filter_string": "",
@@ -974,7 +1268,7 @@
       "include_excluded_from_bom": true,
       "name": "",
       "sort_asc": true,
-      "sort_field": "Reference"
+      "sort_field": "${EXCLUDE_FROM_BOARD}"
     },
     "bus_aliases": {},
     "connection_grid_size": 50.0,
@@ -1017,7 +1311,7 @@
         "uuid": "5101ac75-6b12-4b1f-bd09-4cdc912f4174"
       }
     ],
-    "used_designators": "U1-37,#PWR1-211,L1-4,C1-79,J1-15,#FLG1-7,R1-80,SW1-3,Y1,D1-14,FB1,H1-4,CN1-2",
+    "used_designators": "U1-39,#PWR1-211,L1-5,C1-82,J1-15,J17-18,#FLG1-7,R1-84,SW1-3,Y1,D1-14,FB1,H1-4,CN1-2",
     "variants": []
   },
   "sheets": [
@@ -1066,11 +1360,11 @@
       "Mounting Holes"
     ],
     [
-      "327d9d38-80cd-4367-93dc-4a30e21a8db1",
+      "dbee7efe-c96c-4676-a823-bd5f6b232cd2",
       "Input Channel 1"
     ],
     [
-      "5a0d5756-f8a0-451e-8494-0b99a19c3b6f",
+      "7c40e3cf-a45d-4259-b825-5026566da487",
       "Input Channel 2"
     ],
     [
@@ -1084,6 +1378,10 @@
     [
       "f93f3138-0e5e-4633-a8e0-03053deab00d",
       "Indicator Panel"
+    ],
+    [
+      "a26b9b6f-560a-45c6-9974-24fdc773e60e",
+      "Input Channels"
     ]
   ],
   "text_variables": {},

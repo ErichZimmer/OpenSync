@@ -5,34 +5,23 @@
 #include "hardware/pio.h"
 
 #include "sequencer/sequencer_common.h"
-#include "sequencer_pio_clock_t0_gated.pio.h"
+#include "structs/pulse_scpi_config.h"
+#include "structs/clock_sequencer_config.h"
 
-
-static bool t0_pio_valid(PIO pio)
-{
-    return pio == pio0 || pio == pio1 || pio == pio2;
-}
-
-
-static bool t0_resources_owned(
-    const struct clock_sequencer_config* config
-) {
-    return config -> configured || config -> sm_claimed;
-}
+#include "sequencer_pio_clock_t0.pio.h"
 
 
 // Called explicitly by core_1 for the program's lifetime, not per acquisition.
 int sequencer_program_clock_t0_add(PIO pio)
 {
-    if (!t0_pio_valid(pio) ||
-        !pio_can_add_program(pio, &sequencer_pio_clock_t0_gated_program)
+    if (!pio_can_add_program(pio, &sequencer_pio_clock_t0_program)
     ) {
         return -1;
     }
 
     return (int) pio_add_program(
         pio,
-        &sequencer_pio_clock_t0_gated_program
+        &sequencer_pio_clock_t0_program
     );
 }
 
@@ -43,7 +32,7 @@ void sequencer_program_clock_t0_remove(
 ) {
     pio_remove_program(
         pio, 
-        &sequencer_pio_clock_t0_gated_program, 
+        &sequencer_pio_clock_t0_program,
         offset
     );
 }
@@ -56,17 +45,18 @@ bool sequencer_clock_t0_configure(
 ) {
     if (config == NULL || 
         scpi == NULL || 
-        t0_resources_owned(config) ||
-        !t0_pio_valid(config -> pio) ||
-        config -> program_offset > (uint)PIO_INSTRUCTION_COUNT -
-            sequencer_pio_clock_t0_gated_program.length ||
-        scpi -> clock_divider < 1u || 
-        scpi -> clock_divider > 65500 ||
-        scpi -> gate_mode > SCPI_GATE_CHANNEL || 
-        scpi -> gate_level > 1u
+        scpi -> clock_divider > DIVIDER_MAX ||
+        scpi -> gate_mode >= SCPI_GATE_MODE_END || 
+        scpi -> gate_level >= SCPI_GATE_LEVEL_END
     ) {
         return false;
     }
+
+    uint32_t clock_divider = scpi -> clock_divider;
+
+    // If clock divider is zero (this is default behvior), then make it 1
+     if (!clock_divider)
+        clock_divider = 1u;
 
     config -> pin_out = PIN_CLOCK_T0;
     config -> pin_trigger = PIN_CLOCK_INTERNAL;
@@ -81,7 +71,7 @@ bool sequencer_clock_t0_configure(
 
     config -> pcounter = pcounter;
     config -> ocounter = scpi -> ocounter;
-    config -> clock_divider = scpi -> clock_divider;
+    config -> clock_divider = clock_divider;
     config -> active = scpi -> state;
     config -> dma_chan = -1;
     config -> bcounter = 0u;     // Acquisition quota belongs to the internal clock.
@@ -101,18 +91,8 @@ void sequencer_clock_t0_sm_helper_init(
     uint pin_gate,
     uint clock_divider
 ) {
-    assert(t0_pio_valid(pio));
-    assert(sm < NUM_PIO_STATE_MACHINES);
-    assert(offset <= (uint) PIO_INSTRUCTION_COUNT -
-           sequencer_pio_clock_t0_gated_program.length);
-    assert(pin_out < NUM_BANK0_GPIOS && pin_out < 32u);
-    assert(pin_trigger < NUM_BANK0_GPIOS && pin_trigger < 32u);
-    assert(pin_gate < NUM_BANK0_GPIOS && pin_gate < 32u);
-    assert(pin_out != pin_trigger && pin_out != pin_gate && pin_trigger != pin_gate);
-    assert(clock_divider >= 1u && clock_divider <= 65535u);
-
     pio_sm_config sm_config =
-        sequencer_pio_clock_t0_gated_program_get_default_config(offset);
+        sequencer_pio_clock_t0_program_get_default_config(offset);
     sm_config_set_in_pins(&sm_config, pin_trigger);
     sm_config_set_jmp_pin(&sm_config, pin_gate);
 
@@ -213,7 +193,7 @@ bool sequencer_clock_t0_sm_config(
 }
 
 
-void sequencer_clock_t0_sm_free(
+void sequencer_clock_t0_free(
     struct clock_sequencer_config* config
 ) {
     if (config == NULL)
@@ -256,11 +236,4 @@ void sequencer_clock_t0_sm_free(
     }
 
     config -> configured = false;
-}
-
-
-void sequencer_clock_t0_free(
-    struct clock_sequencer_config* config
-) {
-    sequencer_clock_t0_sm_free(config);
 }

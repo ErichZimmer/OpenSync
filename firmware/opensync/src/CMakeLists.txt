@@ -57,8 +57,9 @@ pico_set_program_name(opensync "OpenSync")
 pico_set_program_version(opensync "0.1") # this number is irrespective of firmware!?
 
 # Generate PIO headers
-pico_generate_pio_header(opensync ${CMAKE_CURRENT_SOURCE_DIR}/pio_assembly/sequencer_pio_clock_internal_gated.pio)
-pico_generate_pio_header(opensync ${CMAKE_CURRENT_SOURCE_DIR}/pio_assembly/sequencer_pio_clock_t0_gated.pio)
+pico_generate_pio_header(opensync ${CMAKE_CURRENT_SOURCE_DIR}/pio_assembly/sequencer_pio_clock_internal_triggered.pio)
+pico_generate_pio_header(opensync ${CMAKE_CURRENT_SOURCE_DIR}/pio_assembly/sequencer_pio_clock_internal_freerun.pio)
+pico_generate_pio_header(opensync ${CMAKE_CURRENT_SOURCE_DIR}/pio_assembly/sequencer_pio_clock_t0.pio)
 pico_generate_pio_header(opensync ${CMAKE_CURRENT_SOURCE_DIR}/pio_assembly/sequencer_pio_output.pio)
 
 # Enable native USB OTG

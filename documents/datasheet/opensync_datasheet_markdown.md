@@ -59,26 +59,6 @@ An open source synchronizer for the velocimetry of fluids using a Raspberry Pi m
     <td>Counter Depths</td>
     <td>32 Bits</td>
   </tr>
-  <tr>
-    <td>Outputs</td>
-    <td>T0 Event Out</td>
-  </tr>
-  <tr>
-    <td>Pulse Duration</td>
-    <td>20 ns * Clock Divider</td>
-  </tr>
-  <tr>
-    <td>Output Voltage</td>
-    <td>3.3 V or 5 V</td>
-  </tr>
-  <tr>
-    <td>Output Impedance</td>
-    <td>~50 Ohms</td>
-  </tr>
-  <tr>
-    <td>Output Rise/Fall</td>
-    <td>< 4 ns</td>
-  </tr>
 
   <tr>
     <th colspan="2">Channel Timing Generator</th>
@@ -150,5 +130,9 @@ An open source synchronizer for the velocimetry of fluids using a Raspberry Pi m
   <tr>
     <td>Trigger to Output Delay</td>
     <td>28 ns * Clock Divider</td>
+  </tr>
+  <tr>
+    <td>Trigger Voltage</td>
+    <td>1.1 V to 20 V</td>
   </tr>
 </table>

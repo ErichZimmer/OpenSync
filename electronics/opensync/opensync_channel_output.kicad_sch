@@ -2968,7 +2968,7 @@
 				)
 			)
 		)
-		(property "Description" "Unpolarized capacitor"
+		(property "Description" "100nF ceramic MLCC, 50V, ±10%, X7R, 0402 (1005 metric)"
 			(at 186.69 106.68 0)
 			(hide yes)
 			(show_name no)
@@ -2990,7 +2990,7 @@
 				)
 			)
 		)
-		(property "Description_1" ""
+		(property "Description_1" "100nF ceramic MLCC, 50V, ±10%, X7R, 0402 (1005 metric)"
 			(at 186.69 106.68 0)
 			(hide yes)
 			(show_name no)
@@ -3089,6 +3089,72 @@
 				)
 			)
 		)
+		(property "operating_temp_max" "125 C"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "operating_temp_min" "-55 C"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "polarity" "Non-polarized"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "BOM Comments" ""
+			(at 186.69 106.68 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 186.69 106.68 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
+			(at 186.69 106.68 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "df783939-a005-4bca-85d7-bb4823a882f3")
 		)
@@ -3176,7 +3242,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2304140030_TDK-CGA3E1X7R1E105KT0Y0E_C76708.pdf"
+		(property "Datasheet" "https://datasheet.lcsc.com/datasheet/pdf/4fb65a6126b9f2a326f0af53083e3e4f.pdf?productCode=C76708"
 			(at 110.49 63.5 0)
 			(hide yes)
 			(show_name no)
@@ -3187,7 +3253,7 @@
 				)
 			)
 		)
-		(property "Description" "Unpolarized capacitor"
+		(property "Description" "1uF automotive ceramic MLCC, 25V, +/-10%, X7R, 0603"
 			(at 110.49 63.5 0)
 			(hide yes)
 			(show_name no)
@@ -3209,7 +3275,7 @@
 				)
 			)
 		)
-		(property "Description_1" ""
+		(property "Description_1" "1uF automotive ceramic MLCC, 25V, +/-10%, X7R, 0603"
 			(at 110.49 63.5 0)
 			(hide yes)
 			(show_name no)
@@ -3275,7 +3341,7 @@
 				)
 			)
 		)
-		(property "tolerance" "±10%"
+		(property "tolerance" "+/-10%"
 			(at 110.49 63.5 0)
 			(hide yes)
 			(show_name no)
@@ -3298,6 +3364,72 @@
 			)
 		)
 		(property "material" "Ceramic"
+			(at 110.49 63.5 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "operating_temp_max" "125 C"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "operating_temp_min" "-55 C"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "polarity" "Non-polarized"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "BOM Comments" ""
+			(at 110.49 63.5 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 110.49 63.5 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
 			(at 110.49 63.5 0)
 			(hide yes)
 			(show_name no)
@@ -3526,6 +3658,50 @@
 				)
 			)
 		)
+		(property "LCSC" "C564143"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "BOM Comments" ""
+			(at 207.01 119.38 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 207.01 119.38 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
+			(at 207.01 119.38 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "2"
 			(uuid "61d88f94-b4a9-4086-9f29-9dbd0caf5881")
 		)
@@ -3613,7 +3789,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2304140030_TDK-CGA3E1X7R1E105KT0Y0E_C76708.pdf"
+		(property "Datasheet" "https://datasheet.lcsc.com/datasheet/pdf/4fb65a6126b9f2a326f0af53083e3e4f.pdf?productCode=C76708"
 			(at 142.24 73.66 0)
 			(hide yes)
 			(show_name no)
@@ -3624,7 +3800,7 @@
 				)
 			)
 		)
-		(property "Description" "Unpolarized capacitor"
+		(property "Description" "1uF automotive ceramic MLCC, 25V, +/-10%, X7R, 0603"
 			(at 142.24 73.66 0)
 			(hide yes)
 			(show_name no)
@@ -3646,7 +3822,7 @@
 				)
 			)
 		)
-		(property "Description_1" ""
+		(property "Description_1" "1uF automotive ceramic MLCC, 25V, +/-10%, X7R, 0603"
 			(at 142.24 73.66 0)
 			(hide yes)
 			(show_name no)
@@ -3712,7 +3888,7 @@
 				)
 			)
 		)
-		(property "tolerance" "±10%"
+		(property "tolerance" "+/-10%"
 			(at 142.24 73.66 0)
 			(hide yes)
 			(show_name no)
@@ -3735,6 +3911,72 @@
 			)
 		)
 		(property "material" "Ceramic"
+			(at 142.24 73.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "operating_temp_max" "125 C"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "operating_temp_min" "-55 C"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "polarity" "Non-polarized"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "BOM Comments" ""
+			(at 142.24 73.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 142.24 73.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
 			(at 142.24 73.66 0)
 			(hide yes)
 			(show_name no)
@@ -3841,7 +4083,7 @@
 				)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "10kΩ ±1% thick film resistor, 100mW, 0603 (1608 metric)"
 			(at 184.15 64.77 0)
 			(hide yes)
 			(show_name no)
@@ -3863,7 +4105,7 @@
 				)
 			)
 		)
-		(property "Description_1" ""
+		(property "Description_1" "10kΩ ±1% thick film resistor, 100mW, 0603 (1608 metric)"
 			(at 184.15 64.77 90)
 			(hide yes)
 			(show_name no)
@@ -3986,6 +4228,39 @@
 		)
 		(property "technology" "Thick Film Resistor"
 			(at 184.15 64.77 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "BOM Comments" ""
+			(at 184.15 64.77 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 184.15 64.77 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
+			(at 184.15 64.77 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4409,7 +4684,7 @@
 				)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "10kΩ ±1% thick film resistor, 63mW, 0402 (1005 metric)"
 			(at 106.68 124.46 0)
 			(hide yes)
 			(show_name no)
@@ -4431,7 +4706,7 @@
 				)
 			)
 		)
-		(property "Description_1" ""
+		(property "Description_1" "10kΩ ±1% thick film resistor, 63mW, 0402 (1005 metric)"
 			(at 106.68 124.46 90)
 			(hide yes)
 			(show_name no)
@@ -4554,6 +4829,39 @@
 		)
 		(property "technology" "Thick Film Resistor"
 			(at 106.68 124.46 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "BOM Comments" ""
+			(at 106.68 124.46 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 106.68 124.46 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
+			(at 106.68 124.46 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4871,7 +5179,7 @@
 				)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "10kΩ ±1% thick film resistor, 63mW, 0402 (1005 metric)"
 			(at 125.73 66.04 0)
 			(hide yes)
 			(show_name no)
@@ -4893,7 +5201,7 @@
 				)
 			)
 		)
-		(property "Description_1" ""
+		(property "Description_1" "10kΩ ±1% thick film resistor, 63mW, 0402 (1005 metric)"
 			(at 125.73 66.04 90)
 			(hide yes)
 			(show_name no)
@@ -5016,6 +5324,39 @@
 		)
 		(property "technology" "Thick Film Resistor"
 			(at 125.73 66.04 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "BOM Comments" ""
+			(at 125.73 66.04 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 125.73 66.04 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
+			(at 125.73 66.04 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5213,6 +5554,39 @@
 			)
 		)
 		(property "voltage" "1.65V~5.5V"
+			(at 113.03 115.57 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "BOM Comments" ""
+			(at 113.03 115.57 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 113.03 115.57 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
 			(at 113.03 115.57 0)
 			(hide yes)
 			(show_name no)
@@ -5446,7 +5820,7 @@
 				)
 			)
 		)
-		(property "Description" "Unpolarized capacitor"
+		(property "Description" "100nF ceramic MLCC, 50V, ±10%, X7R, 0402 (1005 metric)"
 			(at 97.79 106.68 0)
 			(hide yes)
 			(show_name no)
@@ -5468,7 +5842,7 @@
 				)
 			)
 		)
-		(property "Description_1" ""
+		(property "Description_1" "100nF ceramic MLCC, 50V, ±10%, X7R, 0402 (1005 metric)"
 			(at 97.79 106.68 0)
 			(hide yes)
 			(show_name no)
@@ -5557,6 +5931,72 @@
 			)
 		)
 		(property "material" "Ceramic"
+			(at 97.79 106.68 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "operating_temp_max" "125 C"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "operating_temp_min" "-55 C"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "polarity" "Non-polarized"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "BOM Comments" ""
+			(at 97.79 106.68 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 97.79 106.68 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
 			(at 97.79 106.68 0)
 			(hide yes)
 			(show_name no)
@@ -5785,6 +6225,39 @@
 				)
 			)
 		)
+		(property "BOM Comments" ""
+			(at 156.21 64.77 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 156.21 64.77 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
+			(at 156.21 64.77 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "7"
 			(uuid "2989284a-57ba-40ec-8d2e-1f39b7f0fd3e")
 		)
@@ -5899,7 +6372,7 @@
 				)
 			)
 		)
-		(property "Description" "Resistor"
+		(property "Description" "47kΩ ±1% thick film resistor, 62.5mW, 0402 (1005 metric)"
 			(at 177.8 135.89 0)
 			(hide yes)
 			(show_name no)
@@ -5921,7 +6394,7 @@
 				)
 			)
 		)
-		(property "Description_1" ""
+		(property "Description_1" "47kΩ ±1% thick film resistor, 62.5mW, 0402 (1005 metric)"
 			(at 177.8 135.89 90)
 			(hide yes)
 			(show_name no)
@@ -6044,6 +6517,39 @@
 		)
 		(property "technology" "Thick Film Resistor"
 			(at 177.8 135.89 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "BOM Comments" ""
+			(at 177.8 135.89 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 177.8 135.89 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
+			(at 177.8 135.89 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6564,7 +7070,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2304140030_Vishay-Intertech-RCS060339R0FKEA_C2105598.pdf"
+		(property "Datasheet" "https://industrial.panasonic.com/cdbs/www-data/pdf/RDP0000/AOA0000C337.pdf"
 			(at 180.34 119.38 0)
 			(hide yes)
 			(show_name no)
@@ -6575,7 +7081,7 @@
 				)
 			)
 		)
-		(property "Description" "Resistor"
+		(property "Description" "39 ohm +/-1% 0.25 W at 70 C, 150 V limiting element voltage, 0603 anti-surge sulfur-resistant thick film resistor"
 			(at 180.34 119.38 0)
 			(hide yes)
 			(show_name no)
@@ -6586,7 +7092,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C2105598"
+		(property "LCSC" "C544038"
 			(at 180.34 119.38 0)
 			(hide yes)
 			(show_name no)
@@ -6597,7 +7103,7 @@
 				)
 			)
 		)
-		(property "Description_1" ""
+		(property "Description_1" "39 ohm +/-1% 0.25 W at 70 C, 150 V limiting element voltage, 0603 anti-surge sulfur-resistant thick film resistor"
 			(at 180.34 119.38 90)
 			(hide yes)
 			(show_name no)
@@ -6608,7 +7114,7 @@
 				)
 			)
 		)
-		(property "manufacturer" "Vishay Intertech"
+		(property "manufacturer" "Panasonic"
 			(at 180.34 119.38 0)
 			(hide yes)
 			(show_name no)
@@ -6619,7 +7125,7 @@
 				)
 			)
 		)
-		(property "manufacturer_pn" "RCS060339R0FKEA"
+		(property "manufacturer_pn" "ERJUP3F39R0V"
 			(at 180.34 119.38 0)
 			(hide yes)
 			(show_name no)
@@ -6641,7 +7147,7 @@
 				)
 			)
 		)
-		(property "operating_temp_min" "-55C"
+		(property "operating_temp_min" "-55 C"
 			(at 180.34 119.38 0)
 			(hide yes)
 			(show_name no)
@@ -6652,7 +7158,7 @@
 				)
 			)
 		)
-		(property "operating_temp_max" "+155C"
+		(property "operating_temp_max" "155 C"
 			(at 180.34 119.38 0)
 			(hide yes)
 			(show_name no)
@@ -6663,7 +7169,7 @@
 				)
 			)
 		)
-		(property "resistance" "39Ω"
+		(property "resistance" "39 ohm"
 			(at 180.34 119.38 0)
 			(hide yes)
 			(show_name no)
@@ -6674,7 +7180,7 @@
 				)
 			)
 		)
-		(property "tolerance" "±1%"
+		(property "tolerance" "+/-1%"
 			(at 180.34 119.38 0)
 			(hide yes)
 			(show_name no)
@@ -6685,7 +7191,7 @@
 				)
 			)
 		)
-		(property "power" "250mW"
+		(property "power" "0.25 W"
 			(at 180.34 119.38 0)
 			(hide yes)
 			(show_name no)
@@ -6696,7 +7202,7 @@
 				)
 			)
 		)
-		(property "voltage" "75V"
+		(property "voltage" "150 V"
 			(at 180.34 119.38 0)
 			(hide yes)
 			(show_name no)
@@ -6707,7 +7213,7 @@
 				)
 			)
 		)
-		(property "temp_coefficient" "±100ppm/℃"
+		(property "temp_coefficient" "+/-100 ppm/C"
 			(at 180.34 119.38 0)
 			(hide yes)
 			(show_name no)
@@ -6718,8 +7224,41 @@
 				)
 			)
 		)
-		(property "technology" "Thick Film Resistor"
+		(property "technology" "Anti-surge sulfur-resistant thick film"
 			(at 180.34 119.38 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "BOM Comments" ""
+			(at 180.34 119.38 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 180.34 119.38 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
+			(at 180.34 119.38 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7176,6 +7715,39 @@
 				)
 			)
 		)
+		(property "BOM Comments" ""
+			(at 191.77 127 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 191.77 127 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
+			(at 191.77 127 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "51f495ec-bfb8-4bb7-bcc5-0b9182da5143")
 		)
@@ -7478,7 +8050,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2202040100_Wurth-Elektronik-865060240001_C2164097.pdf"
+		(property "Datasheet" "https://www.we-online.com/components/products/datasheet/865060240001.pdf"
 			(at 171.45 63.5 0)
 			(hide yes)
 			(show_name no)
@@ -7489,7 +8061,7 @@
 				)
 			)
 		)
-		(property "Description" "Polarized capacitor"
+		(property "Description" "22uF SMD aluminum electrolytic, 10V, +/-20%, WCAP-ASLL, diameter 4mm, height 5.5mm max"
 			(at 171.45 63.5 0)
 			(hide yes)
 			(show_name no)
@@ -7500,7 +8072,7 @@
 				)
 			)
 		)
-		(property "Description_1" ""
+		(property "Description_1" "22uF SMD aluminum electrolytic, 10V, +/-20%, WCAP-ASLL, diameter 4mm, height 5.5mm max"
 			(at 171.45 63.5 0)
 			(hide yes)
 			(show_name no)
@@ -7544,7 +8116,7 @@
 				)
 			)
 		)
-		(property "package" "SMD, D4x5.5mm"
+		(property "package" "SMD, D4xL5.5mm"
 			(at 171.45 63.5 0)
 			(hide yes)
 			(show_name no)
@@ -7555,7 +8127,7 @@
 				)
 			)
 		)
-		(property "operating_temp_min" "-55C"
+		(property "operating_temp_min" "-55 C"
 			(at 171.45 63.5 0)
 			(hide yes)
 			(show_name no)
@@ -7566,7 +8138,7 @@
 				)
 			)
 		)
-		(property "operating_temp_max" "+105C"
+		(property "operating_temp_max" "105 C"
 			(at 171.45 63.5 0)
 			(hide yes)
 			(show_name no)
@@ -7599,7 +8171,7 @@
 				)
 			)
 		)
-		(property "tolerance" "±20%"
+		(property "tolerance" "+/-20%"
 			(at 171.45 63.5 0)
 			(hide yes)
 			(show_name no)
@@ -7610,7 +8182,7 @@
 				)
 			)
 		)
-		(property "ripple_current" "58.5mA@120Hz"
+		(property "ripple_current" "90mA at 100kHz, 105 C"
 			(at 171.45 63.5 0)
 			(hide yes)
 			(show_name no)
@@ -7621,7 +8193,7 @@
 				)
 			)
 		)
-		(property "lifetime" "2000hrs@105℃"
+		(property "lifetime" "2000h at 105 C"
 			(at 171.45 63.5 0)
 			(hide yes)
 			(show_name no)
@@ -7643,7 +8215,62 @@
 				)
 			)
 		)
-		(property "material" "Aluminum Electrolytic"
+		(property "material" "Aluminum electrolytic"
+			(at 171.45 63.5 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "impedance" "1.35 ohm max at 100kHz, 20 C"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "dielectric" "Aluminum oxide"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "BOM Comments" ""
+			(at 171.45 63.5 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 171.45 63.5 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
 			(at 171.45 63.5 0)
 			(hide yes)
 			(show_name no)

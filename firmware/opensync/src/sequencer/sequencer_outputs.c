@@ -6,23 +6,16 @@
 #include "hardware/dma.h"
 
 #include "sequencer/sequencer_common.h"
+#include "structs/pulse_scpi_config.h"
+#include "structs/pulse_sequencer_config.h"
+
 #include "sequencer_pio_output.pio.h"
-
-
-static bool output_hardware_valid(
-    const struct pulse_sequencer_config* config
-) {
-    return config != NULL &&
-        config -> pin_out < NUM_BANK0_GPIOS && 
-        config -> pin_trigger < NUM_BANK0_GPIOS;
-}
 
 
 // core_1 calls these once per PIO block and supplies the resulting offsets.
 int sequencer_program_outputs_add(PIO pio)
 {
     if (
-        (pio != pio0 && pio != pio1 && pio != pio2) ||
         !pio_can_add_program(pio, &sequencer_pio_output_program)
     ) {
         return -1;
@@ -55,7 +48,7 @@ bool sequencer_outputs_init(
     uint pin_out, 
     uint pin_trigger
 ) {
-    if (config == NULL || config -> configured || config -> sm_claimed)
+    if (config == NULL)
         return false;
 
     struct pulse_sequencer_config next = {
@@ -78,9 +71,6 @@ bool sequencer_outputs_init(
         .sm_claimed = false
     };
 
-    if (!output_hardware_valid(&next))
-        return false;
-
     for (uint i = 0; i < PULSE_SEQUENCER_WORDS - 1u; ++i)
         next.instructions[i] = 1u;
 
@@ -100,11 +90,16 @@ bool sequencer_outputs_build_instructions(
         scpi == NULL || 
         config -> configured || 
         config -> sm_claimed ||
-        scpi -> clock_divider == 0u || 
-        scpi -> clock_divider > 65500u
+        scpi -> clock_divider > DIVIDER_MAX
     ) {
         return false;
     }
+
+    uint32_t clock_divider = scpi -> clock_divider;
+
+    // If clock divider is zero (this is default behvior), then make it 1
+     if (!clock_divider)
+        clock_divider = 1u;
 
     uint32_t instructions[PULSE_SEQUENCER_WORDS] = {0};
 
@@ -122,7 +117,7 @@ bool sequencer_outputs_build_instructions(
 
         const double delay_ns = seconds * 1e9;
         double cycles = round(
-            delay_ns / (CLOCK_CYCLE_NS * scpi -> clock_divider)
+            delay_ns / (CLOCK_CYCLE_NS * clock_divider)
         );
 
         // Adjust for cycle skew (10 clock cycles)
@@ -176,18 +171,23 @@ bool sequencer_outputs_configure(
     struct pulse_sequencer_config* config,
     const struct pulse_scpi_config* scpi
 ) {
-    if (!output_hardware_valid(config) || 
+    if (config == NULL ||
         scpi == NULL || 
         config -> configured ||
         config -> sm_claimed || 
         config -> dma_chan != -1 ||
-        scpi -> clock_divider == 0u || 
-        scpi -> clock_divider > 65535u ||
-        scpi -> gate_mode > SCPI_GATE_OUTPUT ||
-        scpi -> gate_level > SCPI_GATE_HIGH
+        scpi -> clock_divider > DIVIDER_MAX ||
+        scpi -> gate_mode >= SCPI_GATE_MODE_END ||
+        scpi -> gate_level >= SCPI_GATE_LEVEL_END
     ) {
         return false;
     }
+
+    uint32_t clock_divider = scpi -> clock_divider;
+
+    // If clock divider is zero (this is default behvior), then make it 1
+     if (!clock_divider)
+        clock_divider = 1u;
 
     // SCPI interface needs to be offset by 1 due to 0 representing disabled
     const uint pin_gate = PINS_TRIGGER_GATE[
@@ -198,9 +198,6 @@ bool sequencer_outputs_configure(
     // Same thing for output channel sync source, subtract 1 for outptu channels.
     uint pin_trigger = (scpi -> sync == 0)
         ? PIN_CLOCK_T0 : PINS_OUTPUT[scpi -> sync - 1];
-
-    if (pin_gate == config -> pin_out)
-        return false;
 
     // Validate and build the complete buffer before changing runtime settings.
     if (!sequencer_outputs_build_instructions(config, scpi))
@@ -218,7 +215,7 @@ bool sequencer_outputs_configure(
     config -> bcounter = scpi -> bcounter;
     config -> pcounter = pcounter;
     config -> ocounter = scpi -> ocounter;
-    config -> clock_divider = scpi -> clock_divider;
+    config -> clock_divider = clock_divider;
     config -> active = scpi -> state;
 
     return true;
@@ -292,8 +289,8 @@ void sequencer_outputs_sm_helper_init(
     pio_sm_set_consecutive_pindirs(
         config -> pio, 
         config -> sm, 
-        config -> pin_out, 
-        1u, 
+        config -> pin_out, // pin base
+        1u,                // pin count
         true
     );
 

@@ -20,13 +20,21 @@ enum {
 extern const int32_t STATEFUL;
 extern const uint32_t COUNTERS_MAX;
 extern const uint32_t BCOUNTER_MAX;
-extern const uint32_t DIVIDER_MAX;
 extern const double DELAY_CLOCK_MIN;
 extern const double DELAY_CLOCK_MAX;
 extern const double DELAY_PULSE_MIN;
 extern const double DELAY_PULSE_MAX;
 
 bool is_running();
+
+double delay_round_nanoseconds(
+    double delay_seconds
+);
+
+double delay_round_clock_cycle(
+    double delay,
+    uint32_t clock_divider
+);
 
 bool SCPI_check_running_and_append_error(
     scpi_t* context

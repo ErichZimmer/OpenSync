@@ -350,6 +350,7 @@ scpi_result_t SCPI_Period(
 ) {
     uint32_t channel_id = 0;
     uint32_t clock_divider = 1;
+    double period_raw = 0.0;
     scpi_number_t period = {0};
 
     if (SCPI_check_running_and_append_error(context))
@@ -405,8 +406,10 @@ scpi_result_t SCPI_Period(
         return SCPI_RES_ERR;
     }
 
-    if (period.content.value < (DELAY_CLOCK_MIN * clock_divider) ||
-        period.content.value > (DELAY_CLOCK_MAX * clock_divider))
+    period_raw = period.content.value;
+
+    if (period_raw < (DELAY_CLOCK_MIN * clock_divider) ||
+        period_raw > (DELAY_CLOCK_MAX * clock_divider))
     {
         SCPI_ErrorPush(
             context,
@@ -416,7 +419,14 @@ scpi_result_t SCPI_Period(
         return SCPI_RES_ERR;
     }
 
-    sequencer_scpi_config[channel_id].period = (double) period.content.value;
+    // Make sure timing is multiple of clock cycle
+    period_raw = delay_round_nanoseconds(period_raw);
+    period_raw = delay_round_clock_cycle(
+        period_raw,
+        clock_divider
+    );
+
+    sequencer_scpi_config[channel_id].period = (double) period_raw;
 
     return SCPI_RES_OK;
 }
@@ -814,6 +824,7 @@ scpi_result_t SCPI_Buffer(
     uint32_t channel_id = 0;
     uint32_t instructions_read = 0;
     uint32_t clock_divider = 1;
+    double delay_raw = 0.0;
 
     bool state_buffer[6] = {false};
     double delay_buffer[6] = {0.0f};
@@ -898,9 +909,12 @@ scpi_result_t SCPI_Buffer(
             return SCPI_RES_ERR;
         }
 
-        if (delay.content.value != 0.0 && (
-            delay.content.value < (DELAY_PULSE_MIN * clock_divider) ||
-            delay.content.value > (DELAY_PULSE_MAX * clock_divider) ))
+        // Bounds check
+        delay_raw = delay.content.value;
+
+        if (delay_raw != 0.0 && (
+            delay_raw < (DELAY_PULSE_MIN * clock_divider) ||
+            delay_raw > (DELAY_PULSE_MAX * clock_divider) ))
         {
             SCPI_ErrorPush(
                 context,
@@ -910,8 +924,15 @@ scpi_result_t SCPI_Buffer(
             return SCPI_RES_ERR;
         }
 
+        // Make sure timing is multiple of clock cycle
+        delay_raw = delay_round_nanoseconds(delay_raw);
+        delay_raw = delay_round_clock_cycle(
+            delay_raw,
+            clock_divider
+        );
+
         state_buffer[instructions_read] = (bool) state;
-        delay_buffer[instructions_read] = (double) delay.content.value;
+        delay_buffer[instructions_read] = (double) delay_raw;
 
         instructions_read++;
     }
@@ -1079,10 +1100,10 @@ scpi_result_t SCPI_GateMode(
     uint32_t channel_id = 0;
 
     const scpi_choice_def_t options[] = {
-        {"DISabled", 0},
-        {"PULSe",    1},
-        {"OUTPut",   2},
-        {"CHANnel",  3},
+        {"DISabled", SCPI_GATE_DISABLED},
+        {"PULSe",    SCPI_GATE_PULSE},
+        {"OUTPut",   SCPI_GATE_OUTPUT},
+        {"CHANnel",  SCPI_GATE_CHANNEL},
         SCPI_CHOICE_LIST_END
     };
 
@@ -1129,10 +1150,10 @@ scpi_result_t SCPI_GateModeQ(
     const char* result = NULL;
 
     const scpi_choice_def_t options[] = {
-        {"DISabled", 0},
-        {"PULSe",    1},
-        {"OUTPut",   2},
-        {"CHANnel",  3},
+        {"DISabled", SCPI_GATE_DISABLED},
+        {"PULSe",    SCPI_GATE_PULSE},
+        {"OUTPut",   SCPI_GATE_OUTPUT},
+        {"CHANnel",  SCPI_GATE_CHANNEL},
         SCPI_CHOICE_LIST_END
     };
 
@@ -1181,8 +1202,8 @@ scpi_result_t SCPI_GateLogicAll(
     uint32_t channel_id = 0;
 
     const scpi_choice_def_t options[] = {
-        {"LOW",  0},
-        {"HIGH", 1},
+        {"LOW",  SCPI_GATE_LOW},
+        {"HIGH", SCPI_GATE_HIGH},
         SCPI_CHOICE_LIST_END
     };
 
@@ -1270,8 +1291,8 @@ scpi_result_t SCPI_GateLogicAllQ(
     const char* result = NULL;
 
     const scpi_choice_def_t options[] = {
-        {"LOW",  0},
-        {"HIGH", 1},
+        {"LOW",  SCPI_GATE_LOW},
+        {"HIGH", SCPI_GATE_HIGH},
         SCPI_CHOICE_LIST_END
     };
 
@@ -1359,9 +1380,9 @@ scpi_result_t SCPI_ChannelGateMode(
     uint32_t channel_id = 0;
 
     const scpi_choice_def_t options[] = {
-        {"DISabled", 0},
-        {"PULSe",    1},
-        {"OUTPut",    2},
+        {"DISabled", SCPI_GATE_DISABLED},
+        {"PULSe",    SCPI_GATE_PULSE},
+        {"OUTPut",   SCPI_GATE_OUTPUT},
         SCPI_CHOICE_LIST_END
     };
 
@@ -1408,9 +1429,9 @@ scpi_result_t SCPI_ChannelGateModeQ(
     const char* result = NULL;
 
     const scpi_choice_def_t options[] = {
-        {"DISabled", 0},
-        {"PULSe",    1},
-        {"OUTPut",   2},
+        {"DISabled", SCPI_GATE_DISABLED},
+        {"PULSe",    SCPI_GATE_PULSE},
+        {"OUTPut",   SCPI_GATE_OUTPUT},
         SCPI_CHOICE_LIST_END
     };
 
@@ -1458,8 +1479,8 @@ scpi_result_t SCPI_TriggerMode(
     uint32_t channel_id = 0;
 
     const scpi_choice_def_t options[] = {
-        {"DISabled",  0},
-        {"TRIGgered", 1},
+        {"DISabled",  SCPI_TRIGGER_DISABLED},
+        {"TRIGgered", SCPI_TRIGGER_ENABLED},
         SCPI_CHOICE_LIST_END
     };
 
@@ -1506,8 +1527,8 @@ scpi_result_t SCPI_TriggerModeQ(
     const char* result = NULL;
 
     const scpi_choice_def_t options[] = {
-        {"DISabled",  0},
-        {"TRIGgered", 1},
+        {"DISabled",  SCPI_TRIGGER_DISABLED},
+        {"TRIGgered", SCPI_TRIGGER_ENABLED},
         SCPI_CHOICE_LIST_END
     };
 
@@ -1555,8 +1576,8 @@ scpi_result_t SCPI_TriggerEdge(
     uint32_t channel_id = 0;
 
     const scpi_choice_def_t options[] = {
-        {"RISing",  0},
-        {"FALLing", 1},
+        {"RISing",  SCPI_TRIGGER_RISING},
+        {"FALLing", SCPI_TRIGGER_FALLING},
         SCPI_CHOICE_LIST_END
     };
 
@@ -1603,8 +1624,8 @@ scpi_result_t SCPI_TriggerEdgeQ(
     const char* result = NULL;
 
     const scpi_choice_def_t options[] = {
-        {"RISing",  0},
-        {"FALLing", 1},
+        {"RISing",  SCPI_TRIGGER_RISING},
+        {"FALLing", SCPI_TRIGGER_FALLING},
         SCPI_CHOICE_LIST_END
     };
 

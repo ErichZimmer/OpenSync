@@ -4,16 +4,21 @@
 #include "structs/pulse_scpi_config.h"
 
 
-int sequencer_program_clock_internal_add(PIO pio);
+int sequencer_program_clock_internal_add(
+    PIO pio,
+    bool triggered
+);
 
 void sequencer_program_clock_internal_remove(
     PIO pio, 
-    uint offset
+    uint offset,
+    bool triggered
 );
 
 bool sequencer_clock_internal_configure(
     struct clock_sequencer_config* config,
-    const struct pulse_scpi_config* scpi
+    const struct pulse_scpi_config* scpi,
+    bool triggered
 );
 
 void sequencer_clock_internal_sm_helper_init(
@@ -23,7 +28,8 @@ void sequencer_clock_internal_sm_helper_init(
     uint pin_out, 
     uint pin_trigger, 
     uint pin_gate, 
-    uint clock_divider
+    uint clock_divider,
+    bool triggered
 );
 
 bool sequencer_clock_internal_dma_configure(
@@ -32,7 +38,8 @@ bool sequencer_clock_internal_dma_configure(
 
 bool sequencer_clock_internal_sm_config(
     struct clock_sequencer_config* config,
-    const struct pulse_scpi_config* scpi
+    const struct pulse_scpi_config* scpi,
+    bool triggered
 );
 
 bool sequencer_clock_internal_finished(

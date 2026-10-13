@@ -1782,6 +1782,28 @@
 				)
 			)
 		)
+		(property "BOM Comments" ""
+			(at 115.57 67.31 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 115.57 67.31 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "70e5bb45-f1e5-45f8-a22f-2dae4df220bd")
 		)
@@ -1850,7 +1872,7 @@
 				)
 			)
 		)
-		(property "Description" "Resistor"
+		(property "Description" "470Ω ±1% thick film resistor, 100mW, 0603 (1608 metric)"
 			(at 125.73 95.25 0)
 			(hide yes)
 			(show_name no)
@@ -1872,7 +1894,7 @@
 				)
 			)
 		)
-		(property "Description_1" ""
+		(property "Description_1" "470Ω ±1% thick film resistor, 100mW, 0603 (1608 metric)"
 			(at 125.73 95.25 90)
 			(hide yes)
 			(show_name no)
@@ -1995,6 +2017,39 @@
 		)
 		(property "technology" "Thick Film Resistor"
 			(at 125.73 95.25 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "BOM Comments" ""
+			(at 125.73 95.25 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 125.73 95.25 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
+			(at 125.73 95.25 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2206,6 +2261,28 @@
 			)
 		)
 		(property "viewing_angle" "120°"
+			(at 115.57 152.4 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "BOM Comments" ""
+			(at 115.57 152.4 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
 			(at 115.57 152.4 0)
 			(hide yes)
 			(show_name no)
@@ -2428,6 +2505,28 @@
 				)
 			)
 		)
+		(property "BOM Comments" ""
+			(at 115.57 110.49 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 115.57 110.49 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "77f6ac5d-2d32-46fb-a957-edddd1f1e20c")
 		)
@@ -2640,6 +2739,28 @@
 				)
 			)
 		)
+		(property "BOM Comments" ""
+			(at 115.57 124.46 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 115.57 124.46 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "ed47df8c-7c73-4079-8333-e462a303d788")
 		)
@@ -2708,7 +2829,7 @@
 				)
 			)
 		)
-		(property "Description" "Resistor"
+		(property "Description" "470Ω ±1% thick film resistor, 100mW, 0603 (1608 metric)"
 			(at 125.73 110.49 0)
 			(hide yes)
 			(show_name no)
@@ -2730,7 +2851,7 @@
 				)
 			)
 		)
-		(property "Description_1" ""
+		(property "Description_1" "470Ω ±1% thick film resistor, 100mW, 0603 (1608 metric)"
 			(at 125.73 110.49 90)
 			(hide yes)
 			(show_name no)
@@ -2853,6 +2974,39 @@
 		)
 		(property "technology" "Thick Film Resistor"
 			(at 125.73 110.49 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "BOM Comments" ""
+			(at 125.73 110.49 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 125.73 110.49 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
+			(at 125.73 110.49 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3076,6 +3230,28 @@
 				)
 			)
 		)
+		(property "BOM Comments" ""
+			(at 187.96 106.68 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 187.96 106.68 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "b17ab523-f5dc-473c-b192-007b51579cf8")
 		)
@@ -3279,6 +3455,28 @@
 			)
 		)
 		(property "viewing_angle" "120°"
+			(at 187.96 120.65 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "BOM Comments" ""
+			(at 187.96 120.65 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
 			(at 187.96 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -3501,6 +3699,28 @@
 				)
 			)
 		)
+		(property "BOM Comments" ""
+			(at 115.57 53.34 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 115.57 53.34 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "21372035-667f-41f6-bae0-a4f6fa09a3b4")
 		)
@@ -3569,7 +3789,7 @@
 				)
 			)
 		)
-		(property "Description" "Resistor"
+		(property "Description" "470Ω ±1% thick film resistor, 100mW, 0603 (1608 metric)"
 			(at 198.12 133.35 0)
 			(hide yes)
 			(show_name no)
@@ -3591,7 +3811,7 @@
 				)
 			)
 		)
-		(property "Description_1" ""
+		(property "Description_1" "470Ω ±1% thick film resistor, 100mW, 0603 (1608 metric)"
 			(at 198.12 133.35 90)
 			(hide yes)
 			(show_name no)
@@ -3714,6 +3934,39 @@
 		)
 		(property "technology" "Thick Film Resistor"
 			(at 198.12 133.35 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "BOM Comments" ""
+			(at 198.12 133.35 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 198.12 133.35 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
+			(at 198.12 133.35 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3935,6 +4188,28 @@
 				)
 			)
 		)
+		(property "BOM Comments" ""
+			(at 115.57 138.43 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 115.57 138.43 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "9c502505-ef81-4daa-bf75-e5486e953377")
 		)
@@ -4003,7 +4278,7 @@
 				)
 			)
 		)
-		(property "Description" "Resistor"
+		(property "Description" "470Ω ±1% thick film resistor, 100mW, 0603 (1608 metric)"
 			(at 198.12 106.68 0)
 			(hide yes)
 			(show_name no)
@@ -4025,7 +4300,7 @@
 				)
 			)
 		)
-		(property "Description_1" ""
+		(property "Description_1" "470Ω ±1% thick film resistor, 100mW, 0603 (1608 metric)"
 			(at 198.12 106.68 90)
 			(hide yes)
 			(show_name no)
@@ -4148,6 +4423,39 @@
 		)
 		(property "technology" "Thick Film Resistor"
 			(at 198.12 106.68 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "BOM Comments" ""
+			(at 198.12 106.68 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 198.12 106.68 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
+			(at 198.12 106.68 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4225,7 +4533,7 @@
 				)
 			)
 		)
-		(property "Description" "Resistor"
+		(property "Description" "470Ω ±1% thick film resistor, 100mW, 0603 (1608 metric)"
 			(at 125.73 67.31 0)
 			(hide yes)
 			(show_name no)
@@ -4247,7 +4555,7 @@
 				)
 			)
 		)
-		(property "Description_1" ""
+		(property "Description_1" "470Ω ±1% thick film resistor, 100mW, 0603 (1608 metric)"
 			(at 125.73 67.31 90)
 			(hide yes)
 			(show_name no)
@@ -4370,6 +4678,39 @@
 		)
 		(property "technology" "Thick Film Resistor"
 			(at 125.73 67.31 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "BOM Comments" ""
+			(at 125.73 67.31 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 125.73 67.31 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
+			(at 125.73 67.31 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4592,6 +4933,28 @@
 				)
 			)
 		)
+		(property "BOM Comments" ""
+			(at 187.96 133.35 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 187.96 133.35 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "86e04865-bd06-41e3-9eb6-7a6a46bb2885")
 		)
@@ -4660,7 +5023,7 @@
 				)
 			)
 		)
-		(property "Description" "Resistor"
+		(property "Description" "470Ω ±1% thick film resistor, 100mW, 0603 (1608 metric)"
 			(at 125.73 53.34 0)
 			(hide yes)
 			(show_name no)
@@ -4682,7 +5045,7 @@
 				)
 			)
 		)
-		(property "Description_1" ""
+		(property "Description_1" "470Ω ±1% thick film resistor, 100mW, 0603 (1608 metric)"
 			(at 125.73 53.34 90)
 			(hide yes)
 			(show_name no)
@@ -4805,6 +5168,39 @@
 		)
 		(property "technology" "Thick Film Resistor"
 			(at 125.73 53.34 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "BOM Comments" ""
+			(at 125.73 53.34 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 125.73 53.34 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
+			(at 125.73 53.34 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4882,7 +5278,7 @@
 				)
 			)
 		)
-		(property "Description" "Resistor"
+		(property "Description" "470Ω ±1% thick film resistor, 100mW, 0603 (1608 metric)"
 			(at 125.73 81.28 0)
 			(hide yes)
 			(show_name no)
@@ -4904,7 +5300,7 @@
 				)
 			)
 		)
-		(property "Description_1" ""
+		(property "Description_1" "470Ω ±1% thick film resistor, 100mW, 0603 (1608 metric)"
 			(at 125.73 81.28 90)
 			(hide yes)
 			(show_name no)
@@ -5027,6 +5423,39 @@
 		)
 		(property "technology" "Thick Film Resistor"
 			(at 125.73 81.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "BOM Comments" ""
+			(at 125.73 81.28 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 125.73 81.28 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
+			(at 125.73 81.28 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5404,6 +5833,28 @@
 				)
 			)
 		)
+		(property "BOM Comments" ""
+			(at 115.57 95.25 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 115.57 95.25 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "17800cfa-24c7-4559-97ff-5b391c8afbf9")
 		)
@@ -5585,6 +6036,39 @@
 				)
 			)
 		)
+		(property "BOM Comments" ""
+			(at 204.47 40.64 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 204.47 40.64 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
+			(at 204.47 40.64 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "4"
 			(uuid "1772e710-a429-41a9-802f-ab7ac3c5dbb2")
 		)
@@ -5659,7 +6143,7 @@
 				)
 			)
 		)
-		(property "Description" "Resistor"
+		(property "Description" "470Ω ±1% thick film resistor, 100mW, 0603 (1608 metric)"
 			(at 125.73 124.46 0)
 			(hide yes)
 			(show_name no)
@@ -5681,7 +6165,7 @@
 				)
 			)
 		)
-		(property "Description_1" ""
+		(property "Description_1" "470Ω ±1% thick film resistor, 100mW, 0603 (1608 metric)"
 			(at 125.73 124.46 90)
 			(hide yes)
 			(show_name no)
@@ -5804,6 +6288,39 @@
 		)
 		(property "technology" "Thick Film Resistor"
 			(at 125.73 124.46 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "BOM Comments" ""
+			(at 125.73 124.46 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 125.73 124.46 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
+			(at 125.73 124.46 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5881,7 +6398,7 @@
 				)
 			)
 		)
-		(property "Description" "Resistor"
+		(property "Description" "470Ω ±1% thick film resistor, 100mW, 0603 (1608 metric)"
 			(at 125.73 138.43 0)
 			(hide yes)
 			(show_name no)
@@ -5903,7 +6420,7 @@
 				)
 			)
 		)
-		(property "Description_1" ""
+		(property "Description_1" "470Ω ±1% thick film resistor, 100mW, 0603 (1608 metric)"
 			(at 125.73 138.43 90)
 			(hide yes)
 			(show_name no)
@@ -6035,6 +6552,39 @@
 				)
 			)
 		)
+		(property "BOM Comments" ""
+			(at 125.73 138.43 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 125.73 138.43 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
+			(at 125.73 138.43 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "2"
 			(uuid "b9869ac1-55fc-4c11-b9b0-58d827c7fa1c")
 		)
@@ -6103,7 +6653,7 @@
 				)
 			)
 		)
-		(property "Description" "Resistor"
+		(property "Description" "470Ω ±1% thick film resistor, 100mW, 0603 (1608 metric)"
 			(at 198.12 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -6125,7 +6675,7 @@
 				)
 			)
 		)
-		(property "Description_1" ""
+		(property "Description_1" "470Ω ±1% thick film resistor, 100mW, 0603 (1608 metric)"
 			(at 198.12 120.65 90)
 			(hide yes)
 			(show_name no)
@@ -6248,6 +6798,39 @@
 		)
 		(property "technology" "Thick Film Resistor"
 			(at 198.12 120.65 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "BOM Comments" ""
+			(at 198.12 120.65 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 198.12 120.65 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
+			(at 198.12 120.65 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6325,7 +6908,7 @@
 				)
 			)
 		)
-		(property "Description" "Resistor"
+		(property "Description" "470Ω ±1% thick film resistor, 100mW, 0603 (1608 metric)"
 			(at 125.73 152.4 0)
 			(hide yes)
 			(show_name no)
@@ -6347,7 +6930,7 @@
 				)
 			)
 		)
-		(property "Description_1" ""
+		(property "Description_1" "470Ω ±1% thick film resistor, 100mW, 0603 (1608 metric)"
 			(at 125.73 152.4 90)
 			(hide yes)
 			(show_name no)
@@ -6470,6 +7053,39 @@
 		)
 		(property "technology" "Thick Film Resistor"
 			(at 125.73 152.4 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "BOM Comments" ""
+			(at 125.73 152.4 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 125.73 152.4 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
+			(at 125.73 152.4 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6681,6 +7297,28 @@
 			)
 		)
 		(property "viewing_angle" "120°"
+			(at 115.57 81.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "BOM Comments" ""
+			(at 115.57 81.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
 			(at 115.57 81.28 0)
 			(hide yes)
 			(show_name no)

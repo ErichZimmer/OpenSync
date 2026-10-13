@@ -15,7 +15,8 @@ void core_1_init();
 PIO get_pio_mapping(uint channel);
 
 bool sequencer_configure(
-    const struct pulse_scpi_config* scpi_interface
+    const struct pulse_scpi_config* scpi_interface,
+    bool triggered
 );
 
 bool sequencer_dma_failed(int channel);
@@ -34,8 +35,8 @@ bool sequencer_wait_for_t0();
 
 bool sequencer_wait_for_output(uint channel);
 
-bool sequencer_start();
+bool sequencer_start(void);
 
-bool sequencer_wait();
+bool sequencer_wait(void);
 
 void sequencer_free();

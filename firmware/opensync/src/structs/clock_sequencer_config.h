@@ -13,19 +13,19 @@ struct clock_sequencer_config
 {
     PIO pio;
     uint sm;
-    uint program_offset;       // Loaded once and supplied by core_1
+    uint program_offset;       // Internal loaded per run; T0 loaded once by core_1
     int dma_chan;              // -1 for unclaimed; always -1 for T0
 
-    uint32_t bcounter;         // Internal: total acquisitions, NOT ticks per trigger
+    uint32_t bcounter;         // Internal: total groups, NOT ticks per trigger
     uint32_t pcounter;         // Exact ON count
     uint32_t ocounter;         // Exact OFF count
-    uint32_t delay;            // Internal: encoded D; tick period = D + 8 SM cycles
+    uint32_t delay;            // Internal: D + 8 cycles triggered, D + 11 freerun
     uint32_t __attribute__((aligned(4))) instructions; // One-word DMA read ring
 
-    uint pin_out;              // Internal GPIO 3, or the single T0 GPIO 2
+    uint pin_out;              // Internal GPIO 2, or the single T0 GPIO 1
     uint pin_trigger;          // External trigger, or internal-clock input for T0
     uint pin_gate;             // Active-HIGH inhibit; board supplies LOW if unused
-    uint clock_divider;        // Integer SM divider, 1..65535
+    uint clock_divider;        // Integer SM divider, 1..65500
 
     bool active;               // Caller selection flag, like pulse_config.active
     bool configured;

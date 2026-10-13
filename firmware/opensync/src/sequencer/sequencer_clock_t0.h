@@ -33,10 +33,6 @@ bool sequencer_clock_t0_sm_config(
     const struct pulse_scpi_config* scpi
 );
 
-void sequencer_clock_t0_sm_free(
-    struct clock_sequencer_config* config
-);
-
 void sequencer_clock_t0_free(
     struct clock_sequencer_config* config
 );

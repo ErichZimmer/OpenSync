@@ -1,0 +1,26 @@
+; Target: Pico 2 / RP2350.
+.program sequencer_pio_clock_internal_freerun
+.pio_version 1
+.fifo txrx
+
+.side_set 1 opt
+    wait 0 pin 0
+    wait 1 pin 0
+
+.wrap_target
+public instruction_pull:
+    pull block
+    mov y, osr               ; One reserved burst, N-1
+
+gate_stall:
+pulse_inhibit:
+    jmp pin gate_stall      ; Stall while gate is high
+
+pulse:
+    nop                      side 1 [4]
+    mov x, isr               side 0
+
+delay:
+    jmp x-- delay
+    jmp y-- pulse
+.wrap

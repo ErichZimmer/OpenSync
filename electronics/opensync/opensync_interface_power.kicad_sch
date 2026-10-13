@@ -7,7 +7,7 @@
 	(title_block
 		(title "OpenPIV Power Interface")
 		(date "2026-09-05")
-		(rev "0.2.1")
+		(rev "0.3.0")
 		(company "OpenPIV Consortium")
 	)
 	(lib_symbols
@@ -331,6 +331,199 @@
 						)
 					)
 					(number "9"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "7427922808:7427922808"
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "L"
+				(at 0 5.08 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "7427922808"
+				(at 0 -5.08 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" "7427922808:L0603"
+				(at 0 -7.62 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" "https://www.lcsc.com/datasheet/C2661810.pdf"
+				(at 0 -10.16 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Manufacturer" "Wurth(伍尔特)"
+				(at 0 -12.7 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "MPN" "7427922808"
+				(at 0 -15.24 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "LCSC Part" "C2661810"
+				(at 0 -17.78 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "Ferrite Beads"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "7427922808_0_1"
+				(arc
+					(start -4.06 0.01)
+					(mid -3.035 1.0102)
+					(end -2.03 -0.01)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(arc
+					(start -2.03 0.01)
+					(mid -1.005 1.0102)
+					(end 0 -0.01)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(arc
+					(start 0 0.01)
+					(mid 1.0249 1.0101)
+					(end 2.03 -0.01)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(arc
+					(start 2.03 0.01)
+					(mid 3.0549 1.0101)
+					(end 4.06 -0.01)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "7427922808_1_1"
+				(pin passive line
+					(at -5.08 0 0)
+					(length 1.27)
+					(name "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 0 180)
+					(length 1.27)
+					(name "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -2283,6 +2476,12 @@
 		(uuid "fb03a609-4a99-41b9-b9d6-f5fbb1d4cc59")
 	)
 	(junction
+		(at 76.2 67.31)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "0814f0b6-c6d3-4f9d-b568-6c2bd66a00c1")
+	)
+	(junction
 		(at 116.84 110.49)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -2313,6 +2512,12 @@
 		(uuid "2722db64-bb1f-4393-a231-e6adb208e1fb")
 	)
 	(junction
+		(at 196.85 127)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "2d27b936-93cf-4607-aa21-2cc5645991a5")
+	)
+	(junction
 		(at 78.74 167.64)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -2331,16 +2536,16 @@
 		(uuid "4c2a725a-50d5-464b-a949-e4f59859ed73")
 	)
 	(junction
+		(at 242.57 129.54)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "4f8c5b3a-c878-4094-9c93-8b043bfe2b7d")
+	)
+	(junction
 		(at 252.73 62.23)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "5de769c3-aa00-4e6c-bec5-2890b1e623a3")
-	)
-	(junction
-		(at 196.85 115.57)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "63ef8baf-21ad-4103-884f-6a7762bea2ae")
 	)
 	(junction
 		(at 243.84 62.23)
@@ -2349,13 +2554,19 @@
 		(uuid "644d0b28-3f24-4ffb-aabe-c6dcbf5790e7")
 	)
 	(junction
+		(at 208.28 115.57)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "687aeec1-cdba-4137-958f-8b12d0962997")
+	)
+	(junction
 		(at 185.42 115.57)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "7005cfc3-5a8e-4389-8767-eb9800175601")
 	)
 	(junction
-		(at 72.39 44.45)
+		(at 72.39 67.31)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "7685a4f6-ba03-46d1-ad15-edaa090b1d5d")
@@ -2365,6 +2576,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "76a9574b-c41a-4f4b-bb58-546d664322ac")
+	)
+	(junction
+		(at 248.92 139.7)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "78a32d93-3492-487f-9c83-4751e215c625")
 	)
 	(junction
 		(at 105.41 110.49)
@@ -2379,7 +2596,7 @@
 		(uuid "8721b64c-099a-4a1a-b138-bc92baaca88d")
 	)
 	(junction
-		(at 220.98 87.63)
+		(at 222.25 87.63)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "8b62b4e9-8f81-49da-b81b-f36c2ceaf8eb")
@@ -2395,6 +2612,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "996289b1-7315-417e-9381-4c80e0912004")
+	)
+	(junction
+		(at 254 129.54)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "a897d40e-10b7-48f3-806b-cb7270a03b20")
 	)
 	(junction
 		(at 168.91 62.23)
@@ -2421,22 +2644,16 @@
 		(uuid "bdbc9855-ba8e-4c1c-bd2c-5f8d6013d9e3")
 	)
 	(junction
-		(at 52.07 57.15)
+		(at 196.85 115.57)
 		(diameter 0)
 		(color 0 0 0 0)
-		(uuid "cf66c735-9a4f-402c-963e-4038d3cec4f7")
+		(uuid "e70ccfa4-cccb-47da-bd0c-b4ceb95b1afa")
 	)
 	(junction
 		(at 86.36 67.31)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "ed231024-a0dd-4c1f-a642-88f00a2fb4cb")
-	)
-	(junction
-		(at 76.2 44.45)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "f1f16edd-c9cf-4a9f-beb9-d2923fd209aa")
 	)
 	(junction
 		(at 212.09 82.55)
@@ -2488,7 +2705,7 @@
 	)
 	(wire
 		(pts
-			(xy 68.58 67.31) (xy 86.36 67.31)
+			(xy 68.58 67.31) (xy 72.39 67.31)
 		)
 		(stroke
 			(width 0)
@@ -2505,26 +2722,6 @@
 			(type default)
 		)
 		(uuid "083ae66a-9f9e-4352-92b2-cd1b1e7779f6")
-	)
-	(wire
-		(pts
-			(xy 52.07 57.15) (xy 52.07 59.69)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "0cc858b2-ad45-4fdb-a3fd-35f6962aeef8")
-	)
-	(wire
-		(pts
-			(xy 52.07 44.45) (xy 72.39 44.45)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "0d08a386-a37e-49b3-98fa-629ecdf35e80")
 	)
 	(wire
 		(pts
@@ -2578,23 +2775,13 @@
 	)
 	(wire
 		(pts
-			(xy 236.22 87.63) (xy 236.22 85.09)
+			(xy 237.49 87.63) (xy 237.49 85.09)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
 		(uuid "15357473-3023-44b3-bc86-cc227a2b4876")
-	)
-	(wire
-		(pts
-			(xy 93.98 64.77) (xy 90.17 64.77)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "162f8f41-efa4-4384-bf8c-2784020f4b5b")
 	)
 	(wire
 		(pts
@@ -2605,6 +2792,16 @@
 			(type default)
 		)
 		(uuid "174d486d-0703-467d-b70d-45e466211dea")
+	)
+	(wire
+		(pts
+			(xy 86.36 64.77) (xy 93.98 64.77)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "18837a0b-435e-4a9c-a646-50971ccb8e31")
 	)
 	(wire
 		(pts
@@ -2628,13 +2825,33 @@
 	)
 	(wire
 		(pts
-			(xy 196.85 115.57) (xy 209.55 115.57)
+			(xy 242.57 129.54) (xy 254 129.54)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "237716d6-8f04-4ca2-8b73-d74c007cdcfb")
+		(uuid "230423c8-f7fc-43bc-bc8c-1ff0ee5b9dab")
+	)
+	(wire
+		(pts
+			(xy 72.39 67.31) (xy 76.2 67.31)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "235c7c3b-b26c-4546-b268-9c18eb7d56d4")
+	)
+	(wire
+		(pts
+			(xy 72.39 64.77) (xy 72.39 67.31)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "274eb127-cfba-4f38-a8e6-a273ea280844")
 	)
 	(wire
 		(pts
@@ -2648,6 +2865,16 @@
 	)
 	(wire
 		(pts
+			(xy 208.28 115.57) (xy 208.28 116.84)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2c5b7cb6-322c-4f67-b25a-11ad2f875ed5")
+	)
+	(wire
+		(pts
 			(xy 78.74 154.94) (xy 78.74 167.64)
 		)
 		(stroke
@@ -2655,6 +2882,16 @@
 			(type default)
 		)
 		(uuid "36e76e37-d13a-43b6-a564-f47460889563")
+	)
+	(wire
+		(pts
+			(xy 254 124.46) (xy 254 129.54)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "38f050b3-20d4-4843-ba52-6987c7dab3c1")
 	)
 	(wire
 		(pts
@@ -2688,13 +2925,23 @@
 	)
 	(wire
 		(pts
-			(xy 232.41 87.63) (xy 236.22 87.63)
+			(xy 233.68 87.63) (xy 237.49 87.63)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
 		(uuid "40d76f42-aa33-4a25-a492-7aa474597654")
+	)
+	(wire
+		(pts
+			(xy 242.57 139.7) (xy 242.57 137.16)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4286e1b0-55cd-4e5e-8362-19227d8365ed")
 	)
 	(wire
 		(pts
@@ -2728,6 +2975,16 @@
 	)
 	(wire
 		(pts
+			(xy 242.57 139.7) (xy 248.92 139.7)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "49be48e7-1e40-4b63-9d40-3c4da2a57d52")
+	)
+	(wire
+		(pts
 			(xy 208.28 82.55) (xy 212.09 82.55)
 		)
 		(stroke
@@ -2735,6 +2992,16 @@
 			(type default)
 		)
 		(uuid "4a12d3c2-c626-4130-abde-4b1e2a809d1e")
+	)
+	(wire
+		(pts
+			(xy 214.63 111.76) (xy 214.63 115.57)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4a53898e-c15f-45a6-aad5-49cc71ef35be")
 	)
 	(wire
 		(pts
@@ -2788,13 +3055,23 @@
 	)
 	(wire
 		(pts
-			(xy 220.98 99.06) (xy 220.98 101.6)
+			(xy 222.25 99.06) (xy 222.25 101.6)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
 		(uuid "5002b2c9-c277-4296-9d5e-190cd3e59d4c")
+	)
+	(wire
+		(pts
+			(xy 208.28 124.46) (xy 208.28 127)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5360f223-421f-4c84-b362-61994339001f")
 	)
 	(wire
 		(pts
@@ -2875,6 +3152,16 @@
 			(type default)
 		)
 		(uuid "67fd1cfd-e041-41bd-9247-04b508d2a860")
+	)
+	(wire
+		(pts
+			(xy 196.85 115.57) (xy 208.28 115.57)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "68989538-4cdd-4c80-ad69-f87e989b330b")
 	)
 	(wire
 		(pts
@@ -3018,16 +3305,6 @@
 	)
 	(wire
 		(pts
-			(xy 209.55 114.3) (xy 209.55 115.57)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "8794e716-867c-4fd3-bbe6-9d140598521d")
-	)
-	(wire
-		(pts
 			(xy 105.41 118.11) (xy 105.41 120.65)
 		)
 		(stroke
@@ -3038,13 +3315,13 @@
 	)
 	(wire
 		(pts
-			(xy 76.2 57.15) (xy 76.2 59.69)
+			(xy 254 139.7) (xy 254 137.16)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "8d6b260f-913d-4181-be20-b87db08d8aa4")
+		(uuid "89d2bd2f-7ac0-4a27-9eb3-bc46992270c9")
 	)
 	(wire
 		(pts
@@ -3055,6 +3332,26 @@
 			(type default)
 		)
 		(uuid "8f20026a-09dd-4903-892f-512753360103")
+	)
+	(wire
+		(pts
+			(xy 227.33 125.73) (xy 227.33 129.54)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "90f6f14a-4b7e-4fa9-ae31-e207d8b3d0c1")
+	)
+	(wire
+		(pts
+			(xy 76.2 74.93) (xy 76.2 78.74)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "923b2885-11e7-4c66-9270-8520d4dfb6a0")
 	)
 	(wire
 		(pts
@@ -3088,7 +3385,7 @@
 	)
 	(wire
 		(pts
-			(xy 224.79 87.63) (xy 220.98 87.63)
+			(xy 226.06 87.63) (xy 222.25 87.63)
 		)
 		(stroke
 			(width 0)
@@ -3115,26 +3412,6 @@
 			(type default)
 		)
 		(uuid "a078ff07-e253-4119-912c-e06bc2fe2491")
-	)
-	(wire
-		(pts
-			(xy 52.07 54.61) (xy 52.07 57.15)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "a1198c97-f961-4ff9-8c48-77ec5ef04208")
-	)
-	(wire
-		(pts
-			(xy 52.07 67.31) (xy 52.07 71.12)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "a1bca844-9f45-4d6c-8b1c-54a8fc415524")
 	)
 	(wire
 		(pts
@@ -3168,16 +3445,6 @@
 	)
 	(wire
 		(pts
-			(xy 52.07 57.15) (xy 76.2 57.15)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "a884f011-db12-4203-a687-b7a779bf96b6")
-	)
-	(wire
-		(pts
 			(xy 232.41 62.23) (xy 243.84 62.23)
 		)
 		(stroke
@@ -3195,6 +3462,26 @@
 			(type default)
 		)
 		(uuid "ae393d77-7df6-4a8a-b8e0-03757b9ad993")
+	)
+	(wire
+		(pts
+			(xy 76.2 67.31) (xy 86.36 67.31)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "af3ac000-037a-43e6-8429-455c2699d12f")
+	)
+	(wire
+		(pts
+			(xy 248.92 139.7) (xy 254 139.7)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b0a4a352-563a-4d78-8f50-6e843ef999ce")
 	)
 	(wire
 		(pts
@@ -3238,6 +3525,16 @@
 	)
 	(wire
 		(pts
+			(xy 86.36 64.77) (xy 86.36 67.31)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c02a8118-44d0-4e1d-b5a9-3ca48f59589a")
+	)
+	(wire
+		(pts
 			(xy 196.85 115.57) (xy 196.85 116.84)
 		)
 		(stroke
@@ -3268,6 +3565,16 @@
 	)
 	(wire
 		(pts
+			(xy 208.28 115.57) (xy 214.63 115.57)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c65e0ec7-d679-49eb-b43c-fc2d442e4092")
+	)
+	(wire
+		(pts
 			(xy 54.61 113.03) (xy 60.96 113.03)
 		)
 		(stroke
@@ -3295,6 +3602,16 @@
 			(type default)
 		)
 		(uuid "cae57fff-a9dc-4852-9a45-a7054d2df326")
+	)
+	(wire
+		(pts
+			(xy 208.28 127) (xy 196.85 127)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "cb5c223e-e18a-4973-b228-124cf8a3fd99")
 	)
 	(wire
 		(pts
@@ -3348,16 +3665,6 @@
 	)
 	(wire
 		(pts
-			(xy 72.39 44.45) (xy 76.2 44.45)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "d6ae9ea8-81e3-4a67-8ef3-27f77c61a011")
-	)
-	(wire
-		(pts
 			(xy 208.28 57.15) (xy 208.28 43.18)
 		)
 		(stroke
@@ -3408,23 +3715,33 @@
 	)
 	(wire
 		(pts
-			(xy 52.07 44.45) (xy 52.07 46.99)
+			(xy 237.49 129.54) (xy 242.57 129.54)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "e49f61e9-00ff-4ddc-819a-3b246b455b42")
+		(uuid "e66c2226-1cbc-4e95-9035-52e65afb3378")
 	)
 	(wire
 		(pts
-			(xy 208.28 74.93) (xy 220.98 74.93)
+			(xy 208.28 74.93) (xy 222.25 74.93)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
 		(uuid "e900ef84-f917-4c95-9ca4-d3379a46437e")
+	)
+	(wire
+		(pts
+			(xy 248.92 139.7) (xy 248.92 143.51)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "eabe4b61-22ce-4e28-b2ee-4c2a881b3a79")
 	)
 	(wire
 		(pts
@@ -3448,7 +3765,7 @@
 	)
 	(wire
 		(pts
-			(xy 220.98 74.93) (xy 220.98 91.44)
+			(xy 222.25 74.93) (xy 222.25 91.44)
 		)
 		(stroke
 			(width 0)
@@ -3478,7 +3795,7 @@
 	)
 	(wire
 		(pts
-			(xy 76.2 59.69) (xy 93.98 59.69)
+			(xy 81.28 59.69) (xy 93.98 59.69)
 		)
 		(stroke
 			(width 0)
@@ -3557,7 +3874,7 @@
 		(uuid "a49012d3-7ed0-4277-99a4-a3c2c6545f88")
 	)
 	(label "VDC"
-		(at 76.2 40.64 0)
+		(at 68.58 67.31 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3578,7 +3895,7 @@
 	)
 	(global_label "VBUS"
 		(shape input)
-		(at 68.58 67.31 180)
+		(at 76.2 40.64 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -3588,7 +3905,7 @@
 		)
 		(uuid "d8ecc6e6-f58b-4313-801a-e925ee9a9fb5")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 60.6962 67.31 0)
+			(at 68.3162 40.64 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3679,6 +3996,341 @@
 		)
 	)
 	(symbol
+		(lib_id "power:GND")
+		(at 248.92 143.51 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "02f5bfb8-e2c1-472d-b627-791ff43fd71a")
+		(property "Reference" "#PWR0210"
+			(at 248.92 149.86 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 248.92 148.59 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 248.92 143.51 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 248.92 143.51 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 248.92 143.51 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "7b20542a-748c-4686-8a4e-48ad3a0ada49")
+		)
+		(instances
+			(project "opensync"
+				(path "/5101ac75-6b12-4b1f-bd09-4cdc912f4174/d21f1f07-0dd9-47a5-8053-812c1f8a1804"
+					(reference "#PWR0210")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 254 133.35 180)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "06a1cccd-f3d7-4ca2-9b63-94addea840a7")
+		(property "Reference" "C81"
+			(at 250.19 134.6201 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "22u"
+			(at 250.19 132.0801 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+			(at 253.0348 129.54 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2304140030_TDK-C2012X7S1A226MT000E_C342717.pdf"
+			(at 254 133.35 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "22uF ceramic MLCC, 10V, ±20%, X7S, 0805 (2012 metric)"
+			(at 254 133.35 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C342717"
+			(at 254 133.35 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description_1" "22uF ceramic MLCC, 10V, ±20%, X7S, 0805 (2012 metric)"
+			(at 254 133.35 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "manufacturer" "TDK"
+			(at 254 133.35 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "manufacturer_pn" "C2012X7S1A226MT000E"
+			(at 254 133.35 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "package" "0805 (2012 metric)"
+			(at 254 133.35 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "capacitance" "22uF"
+			(at 254 133.35 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "voltage" "10V"
+			(at 254 133.35 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "tolerance" "±20%"
+			(at 254 133.35 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "dielectric" "X7S"
+			(at 254 133.35 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "material" "Ceramic"
+			(at 254 133.35 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "operating_temp_max" "125 C"
+			(at 57.15 12.7 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "operating_temp_min" "-55 C"
+			(at 57.15 12.7 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "polarity" "Non-polarized"
+			(at 57.15 12.7 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "BOM Comments" ""
+			(at 254 133.35 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 254 133.35 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
+			(at 254 133.35 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "4ee654a4-4aa2-4509-812e-26b613f40f87")
+		)
+		(pin "2"
+			(uuid "0dc38f26-da61-41c3-a16a-3ca1dad45053")
+		)
+		(instances
+			(project "opensync"
+				(path "/5101ac75-6b12-4b1f-bd09-4cdc912f4174/d21f1f07-0dd9-47a5-8053-812c1f8a1804"
+					(reference "C81")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:R")
 		(at 162.56 133.35 90)
 		(unit 1)
@@ -3720,7 +4372,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2304140030_Vishay-Intertech-TNPW040215K6BEED_C2075329.pdf"
+		(property "Datasheet" "https://datasheet.lcsc.com/datasheet/pdf/e18b46cea483ec7fb867c472cf072521.pdf?productCode=C2075329"
 			(at 162.56 133.35 0)
 			(hide yes)
 			(show_name no)
@@ -3731,7 +4383,7 @@
 				)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "15.6 kohm +/-0.1%, 0402 thin film resistor, 0.1 W at 70 C, 50 V max working, +/-25 ppm/C"
 			(at 162.56 133.35 0)
 			(hide yes)
 			(show_name no)
@@ -3753,7 +4405,7 @@
 				)
 			)
 		)
-		(property "Description_1" ""
+		(property "Description_1" "15.6 kohm +/-0.1%, 0402 thin film resistor, 0.1 W at 70 C, 50 V max working, +/-25 ppm/C"
 			(at 162.56 133.35 90)
 			(hide yes)
 			(show_name no)
@@ -3764,7 +4416,7 @@
 				)
 			)
 		)
-		(property "manufacturer" "Vishay Intertech"
+		(property "manufacturer" "Vishay"
 			(at 162.56 133.35 0)
 			(hide yes)
 			(show_name no)
@@ -3797,7 +4449,7 @@
 				)
 			)
 		)
-		(property "operating_temp_min" "-55C"
+		(property "operating_temp_min" "-55 C"
 			(at 162.56 133.35 0)
 			(hide yes)
 			(show_name no)
@@ -3808,7 +4460,7 @@
 				)
 			)
 		)
-		(property "operating_temp_max" "+155C"
+		(property "operating_temp_max" "155 C"
 			(at 162.56 133.35 0)
 			(hide yes)
 			(show_name no)
@@ -3819,7 +4471,7 @@
 				)
 			)
 		)
-		(property "resistance" "15.6kΩ"
+		(property "resistance" "15.6 kohm"
 			(at 162.56 133.35 0)
 			(hide yes)
 			(show_name no)
@@ -3830,7 +4482,7 @@
 				)
 			)
 		)
-		(property "tolerance" "±0.1%"
+		(property "tolerance" "+/-0.1%"
 			(at 162.56 133.35 0)
 			(hide yes)
 			(show_name no)
@@ -3841,7 +4493,7 @@
 				)
 			)
 		)
-		(property "power" "100mW"
+		(property "power" "0.1 W"
 			(at 162.56 133.35 0)
 			(hide yes)
 			(show_name no)
@@ -3852,7 +4504,7 @@
 				)
 			)
 		)
-		(property "voltage" "50V"
+		(property "voltage" "50 V"
 			(at 162.56 133.35 0)
 			(hide yes)
 			(show_name no)
@@ -3863,7 +4515,7 @@
 				)
 			)
 		)
-		(property "temp_coefficient" "±25ppm/℃"
+		(property "temp_coefficient" "+/-25 ppm/C"
 			(at 162.56 133.35 0)
 			(hide yes)
 			(show_name no)
@@ -3874,8 +4526,41 @@
 				)
 			)
 		)
-		(property "technology" "Thin Film Resistor"
+		(property "technology" "Thin film"
 			(at 162.56 133.35 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "BOM Comments" ""
+			(at 162.56 133.35 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 162.56 133.35 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
+			(at 162.56 133.35 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3942,7 +4627,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2312181353_Vishay-Intertech-CRCW04024K99FKEE_C4010684.pdf"
+		(property "Datasheet" "https://www.vishay.com/docs/20035/dcrcwe3.pdf"
 			(at 154.94 140.97 0)
 			(hide yes)
 			(show_name no)
@@ -3953,7 +4638,7 @@
 				)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "4.99 kohm +/-1%, 0402 thick film resistor, 0.063 W at 70 C, 50 V max working, +/-100 ppm/C (standard operation)"
 			(at 154.94 140.97 0)
 			(hide yes)
 			(show_name no)
@@ -3975,7 +4660,7 @@
 				)
 			)
 		)
-		(property "Description_1" ""
+		(property "Description_1" "4.99 kohm +/-1%, 0402 thick film resistor, 0.063 W at 70 C, 50 V max working, +/-100 ppm/C (standard operation)"
 			(at 154.94 140.97 90)
 			(hide yes)
 			(show_name no)
@@ -3986,7 +4671,7 @@
 				)
 			)
 		)
-		(property "manufacturer" "Vishay Intertech"
+		(property "manufacturer" "Vishay"
 			(at 154.94 140.97 0)
 			(hide yes)
 			(show_name no)
@@ -4019,7 +4704,7 @@
 				)
 			)
 		)
-		(property "operating_temp_min" "-55C"
+		(property "operating_temp_min" "-55 C"
 			(at 154.94 140.97 0)
 			(hide yes)
 			(show_name no)
@@ -4030,7 +4715,7 @@
 				)
 			)
 		)
-		(property "operating_temp_max" "+155C"
+		(property "operating_temp_max" "155 C"
 			(at 154.94 140.97 0)
 			(hide yes)
 			(show_name no)
@@ -4041,7 +4726,7 @@
 				)
 			)
 		)
-		(property "resistance" "4.99kΩ"
+		(property "resistance" "4.99 kohm"
 			(at 154.94 140.97 0)
 			(hide yes)
 			(show_name no)
@@ -4052,7 +4737,7 @@
 				)
 			)
 		)
-		(property "tolerance" "±1%"
+		(property "tolerance" "+/-1%"
 			(at 154.94 140.97 0)
 			(hide yes)
 			(show_name no)
@@ -4063,7 +4748,7 @@
 				)
 			)
 		)
-		(property "power" "62.5mW"
+		(property "power" "0.063 W"
 			(at 154.94 140.97 0)
 			(hide yes)
 			(show_name no)
@@ -4074,7 +4759,7 @@
 				)
 			)
 		)
-		(property "temp_coefficient" "±100ppm/℃"
+		(property "temp_coefficient" "+/-100 ppm/C"
 			(at 154.94 140.97 0)
 			(hide yes)
 			(show_name no)
@@ -4085,8 +4770,52 @@
 				)
 			)
 		)
-		(property "technology" "Thick Film Resistor"
+		(property "technology" "Thick film"
 			(at 154.94 140.97 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "voltage" "50 V"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "BOM Comments" ""
+			(at 154.94 140.97 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 154.94 140.97 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
+			(at 154.94 140.97 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4190,6 +4919,118 @@
 		)
 	)
 	(symbol
+		(lib_id "7427922808:7427922808")
+		(at 232.41 129.54 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "189af8da-6b10-4ce7-99a4-abf6649234d9")
+		(property "Reference" "L5"
+			(at 232.41 123.19 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "7427922808"
+			(at 234.442 126.492 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "7427922808:L0603"
+			(at 232.41 137.16 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.lcsc.com/datasheet/C2661810.pdf"
+			(at 232.41 139.7 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 232.41 129.54 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Wurth(伍尔特)"
+			(at 232.41 142.24 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "7427922808"
+			(at 232.41 144.78 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C2661810"
+			(at 232.41 147.32 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "91981aed-b240-419f-ab11-57f30d2fc73d")
+		)
+		(pin "2"
+			(uuid "258ee838-aee0-4b11-b9e6-0179d8117969")
+		)
+		(instances
+			(project "opensync"
+				(path "/5101ac75-6b12-4b1f-bd09-4cdc912f4174/d21f1f07-0dd9-47a5-8053-812c1f8a1804"
+					(reference "L5")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:C")
 		(at 162.56 66.04 180)
 		(unit 1)
@@ -4211,7 +5052,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10u"
+		(property "Value" "22u"
 			(at 158.75 64.7701 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4233,7 +5074,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2304140030_TDK-C2012X5R1V106KT000E_C342722.pdf"
+		(property "Datasheet" "https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2304140030_TDK-C2012X7S1A226MT000E_C342717.pdf"
 			(at 162.56 66.04 0)
 			(hide yes)
 			(show_name no)
@@ -4244,7 +5085,7 @@
 				)
 			)
 		)
-		(property "Description" "Unpolarized capacitor"
+		(property "Description" "22uF ceramic MLCC, 10V, ±20%, X7S, 0805 (2012 metric)"
 			(at 162.56 66.04 0)
 			(hide yes)
 			(show_name no)
@@ -4255,7 +5096,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C342722"
+		(property "LCSC" "C342717"
 			(at 162.56 66.04 0)
 			(hide yes)
 			(show_name no)
@@ -4266,7 +5107,7 @@
 				)
 			)
 		)
-		(property "Description_1" ""
+		(property "Description_1" "22uF ceramic MLCC, 10V, ±20%, X7S, 0805 (2012 metric)"
 			(at 162.56 66.04 0)
 			(hide yes)
 			(show_name no)
@@ -4288,7 +5129,7 @@
 				)
 			)
 		)
-		(property "manufacturer_pn" "C2012X5R1V106KT000E"
+		(property "manufacturer_pn" "C2012X7S1A226MT000E"
 			(at 162.56 66.04 0)
 			(hide yes)
 			(show_name no)
@@ -4310,7 +5151,7 @@
 				)
 			)
 		)
-		(property "capacitance" "10uF"
+		(property "capacitance" "22uF"
 			(at 162.56 66.04 0)
 			(hide yes)
 			(show_name no)
@@ -4321,7 +5162,7 @@
 				)
 			)
 		)
-		(property "voltage" "35V"
+		(property "voltage" "10V"
 			(at 162.56 66.04 0)
 			(hide yes)
 			(show_name no)
@@ -4332,7 +5173,7 @@
 				)
 			)
 		)
-		(property "tolerance" "±10%"
+		(property "tolerance" "±20%"
 			(at 162.56 66.04 0)
 			(hide yes)
 			(show_name no)
@@ -4343,7 +5184,7 @@
 				)
 			)
 		)
-		(property "dielectric" "X5R"
+		(property "dielectric" "X7S"
 			(at 162.56 66.04 0)
 			(hide yes)
 			(show_name no)
@@ -4355,6 +5196,72 @@
 			)
 		)
 		(property "material" "Ceramic"
+			(at 162.56 66.04 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "operating_temp_max" "125 C"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "operating_temp_min" "-55 C"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "polarity" "Non-polarized"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "BOM Comments" ""
+			(at 162.56 66.04 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 162.56 66.04 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
 			(at 162.56 66.04 0)
 			(hide yes)
 			(show_name no)
@@ -4446,6 +5353,50 @@
 				)
 			)
 		)
+		(property "LCSC" "C127361"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "BOM Comments" ""
+			(at 60.96 152.4 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 60.96 152.4 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
+			(at 60.96 152.4 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "2"
 			(uuid "9f793ea7-a4e8-4671-815d-37e15bbb44f7")
 		)
@@ -4463,7 +5414,7 @@
 	)
 	(symbol
 		(lib_id "Device:R")
-		(at 228.6 87.63 90)
+		(at 229.87 87.63 90)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -4473,7 +5424,7 @@
 		(dnp no)
 		(uuid "2de60218-b2d8-47aa-93f2-2d03350716cb")
 		(property "Reference" "R77"
-			(at 228.6 89.662 90)
+			(at 229.87 89.662 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4483,7 +5434,7 @@
 			)
 		)
 		(property "Value" "806k"
-			(at 228.6 87.63 90)
+			(at 229.87 87.63 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4493,7 +5444,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
-			(at 228.6 89.408 90)
+			(at 229.87 89.408 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4503,8 +5454,8 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2304140030_Vishay-Intertech-CRCW0402806KFKED_C2076627.pdf"
-			(at 228.6 87.63 0)
+		(property "Datasheet" "https://www.vishay.com/docs/20035/dcrcwe3.pdf"
+			(at 229.87 87.63 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4514,8 +5465,8 @@
 				)
 			)
 		)
-		(property "Description" ""
-			(at 228.6 87.63 0)
+		(property "Description" "806 kohm +/-1%, 0402 thick film resistor, 0.063 W at 70 C, 50 V max working, +/-100 ppm/C (standard operation)"
+			(at 229.87 87.63 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4526,7 +5477,7 @@
 			)
 		)
 		(property "LCSC" "C2076627"
-			(at 228.6 87.63 0)
+			(at 229.87 87.63 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4536,8 +5487,8 @@
 				)
 			)
 		)
-		(property "Description_1" ""
-			(at 228.6 87.63 90)
+		(property "Description_1" "806 kohm +/-1%, 0402 thick film resistor, 0.063 W at 70 C, 50 V max working, +/-100 ppm/C (standard operation)"
+			(at 229.87 87.63 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4547,8 +5498,8 @@
 				)
 			)
 		)
-		(property "manufacturer" "Vishay Intertech"
-			(at 228.6 87.63 0)
+		(property "manufacturer" "Vishay"
+			(at 229.87 87.63 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4559,7 +5510,7 @@
 			)
 		)
 		(property "manufacturer_pn" "CRCW0402806KFKED"
-			(at 228.6 87.63 0)
+			(at 229.87 87.63 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4570,7 +5521,7 @@
 			)
 		)
 		(property "package" "0402 (1005 metric)"
-			(at 228.6 87.63 0)
+			(at 229.87 87.63 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4580,8 +5531,8 @@
 				)
 			)
 		)
-		(property "operating_temp_min" "-55C"
-			(at 228.6 87.63 0)
+		(property "operating_temp_min" "-55 C"
+			(at 229.87 87.63 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4591,8 +5542,8 @@
 				)
 			)
 		)
-		(property "operating_temp_max" "+155C"
-			(at 228.6 87.63 0)
+		(property "operating_temp_max" "155 C"
+			(at 229.87 87.63 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4602,8 +5553,8 @@
 				)
 			)
 		)
-		(property "resistance" "806kΩ"
-			(at 228.6 87.63 0)
+		(property "resistance" "806 kohm"
+			(at 229.87 87.63 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4613,8 +5564,8 @@
 				)
 			)
 		)
-		(property "tolerance" "±1%"
-			(at 228.6 87.63 0)
+		(property "tolerance" "+/-1%"
+			(at 229.87 87.63 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4624,8 +5575,8 @@
 				)
 			)
 		)
-		(property "power" "62.5mW"
-			(at 228.6 87.63 0)
+		(property "power" "0.063 W"
+			(at 229.87 87.63 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4635,8 +5586,8 @@
 				)
 			)
 		)
-		(property "voltage" "75V"
-			(at 228.6 87.63 0)
+		(property "voltage" "50 V"
+			(at 229.87 87.63 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4646,8 +5597,8 @@
 				)
 			)
 		)
-		(property "temp_coefficient" "±100ppm/℃"
-			(at 228.6 87.63 0)
+		(property "temp_coefficient" "+/-100 ppm/C"
+			(at 229.87 87.63 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4657,8 +5608,41 @@
 				)
 			)
 		)
-		(property "technology" "Thick Film Resistor"
-			(at 228.6 87.63 0)
+		(property "technology" "Thick film"
+			(at 229.87 87.63 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "BOM Comments" ""
+			(at 229.87 87.63 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 229.87 87.63 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
+			(at 229.87 87.63 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4678,6 +5662,263 @@
 			(project "opensync"
 				(path "/5101ac75-6b12-4b1f-bd09-4cdc912f4174/d21f1f07-0dd9-47a5-8053-812c1f8a1804"
 					(reference "R77")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 242.57 133.35 180)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "349276ad-6682-4d5a-87a4-f79528f433d5")
+		(property "Reference" "C80"
+			(at 238.76 134.6201 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "22u"
+			(at 238.76 132.0801 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+			(at 241.6048 129.54 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2304140030_TDK-C2012X7S1A226MT000E_C342717.pdf"
+			(at 242.57 133.35 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "22uF ceramic MLCC, 10V, ±20%, X7S, 0805 (2012 metric)"
+			(at 242.57 133.35 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C342717"
+			(at 242.57 133.35 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description_1" "22uF ceramic MLCC, 10V, ±20%, X7S, 0805 (2012 metric)"
+			(at 242.57 133.35 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "manufacturer" "TDK"
+			(at 242.57 133.35 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "manufacturer_pn" "C2012X7S1A226MT000E"
+			(at 242.57 133.35 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "package" "0805 (2012 metric)"
+			(at 242.57 133.35 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "capacitance" "22uF"
+			(at 242.57 133.35 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "voltage" "10V"
+			(at 242.57 133.35 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "tolerance" "±20%"
+			(at 242.57 133.35 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "dielectric" "X7S"
+			(at 242.57 133.35 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "material" "Ceramic"
+			(at 242.57 133.35 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "operating_temp_max" "125 C"
+			(at 45.72 12.7 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "operating_temp_min" "-55 C"
+			(at 45.72 12.7 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "polarity" "Non-polarized"
+			(at 45.72 12.7 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "BOM Comments" ""
+			(at 242.57 133.35 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 242.57 133.35 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
+			(at 242.57 133.35 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "f603f636-43c6-4846-91fe-cc17dac3619e")
+		)
+		(pin "2"
+			(uuid "e9fca480-06db-41c7-b95c-64caec2b0fab")
+		)
+		(instances
+			(project "opensync"
+				(path "/5101ac75-6b12-4b1f-bd09-4cdc912f4174/d21f1f07-0dd9-47a5-8053-812c1f8a1804"
+					(reference "C80")
 					(unit 1)
 				)
 			)
@@ -4816,7 +6057,7 @@
 				)
 			)
 		)
-		(property "Description" "Unpolarized capacitor"
+		(property "Description" "10uF ceramic MLCC, 35V, ±10%, X5R, 0805 (2012 metric)"
 			(at 116.84 114.3 0)
 			(hide yes)
 			(show_name no)
@@ -4838,7 +6079,7 @@
 				)
 			)
 		)
-		(property "Description_1" ""
+		(property "Description_1" "10uF ceramic MLCC, 35V, ±10%, X5R, 0805 (2012 metric)"
 			(at 116.84 114.3 0)
 			(hide yes)
 			(show_name no)
@@ -4937,6 +6178,72 @@
 				)
 			)
 		)
+		(property "operating_temp_max" "85 C"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "operating_temp_min" "-55 C"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "polarity" "Non-polarized"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "BOM Comments" ""
+			(at 116.84 114.3 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 116.84 114.3 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
+			(at 116.84 114.3 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "04eb306e-57dd-4909-9499-84343369690c")
 		)
@@ -4954,7 +6261,7 @@
 	)
 	(symbol
 		(lib_id "Device:R")
-		(at 220.98 95.25 0)
+		(at 222.25 95.25 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -4964,7 +6271,7 @@
 		(dnp no)
 		(uuid "3ad09675-2a01-46cb-b50a-12a7964174f6")
 		(property "Reference" "R78"
-			(at 218.948 95.25 90)
+			(at 220.218 95.25 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4974,7 +6281,7 @@
 			)
 		)
 		(property "Value" "91k"
-			(at 220.98 95.25 90)
+			(at 222.25 95.25 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4984,7 +6291,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
-			(at 219.202 95.25 90)
+			(at 220.472 95.25 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4994,8 +6301,8 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2304140030_Vishay-Intertech-CRCW040291K0FKED_C2086333.pdf"
-			(at 220.98 95.25 0)
+		(property "Datasheet" "https://www.vishay.com/docs/20035/dcrcwe3.pdf"
+			(at 222.25 95.25 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5005,8 +6312,8 @@
 				)
 			)
 		)
-		(property "Description" ""
-			(at 220.98 95.25 0)
+		(property "Description" "91 kohm +/-1%, 0402 thick film resistor, 0.063 W at 70 C, 50 V max working, +/-100 ppm/C (standard operation)"
+			(at 222.25 95.25 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5017,7 +6324,7 @@
 			)
 		)
 		(property "LCSC" "C2086333"
-			(at 220.98 95.25 0)
+			(at 222.25 95.25 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5027,8 +6334,8 @@
 				)
 			)
 		)
-		(property "Description_1" ""
-			(at 220.98 95.25 90)
+		(property "Description_1" "91 kohm +/-1%, 0402 thick film resistor, 0.063 W at 70 C, 50 V max working, +/-100 ppm/C (standard operation)"
+			(at 222.25 95.25 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5038,8 +6345,8 @@
 				)
 			)
 		)
-		(property "manufacturer" "Vishay Intertech"
-			(at 220.98 95.25 0)
+		(property "manufacturer" "Vishay"
+			(at 222.25 95.25 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5050,7 +6357,7 @@
 			)
 		)
 		(property "manufacturer_pn" "CRCW040291K0FKED"
-			(at 220.98 95.25 0)
+			(at 222.25 95.25 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5061,7 +6368,7 @@
 			)
 		)
 		(property "package" "0402 (1005 metric)"
-			(at 220.98 95.25 0)
+			(at 222.25 95.25 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5071,8 +6378,8 @@
 				)
 			)
 		)
-		(property "operating_temp_min" "-55C"
-			(at 220.98 95.25 0)
+		(property "operating_temp_min" "-55 C"
+			(at 222.25 95.25 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5082,8 +6389,8 @@
 				)
 			)
 		)
-		(property "operating_temp_max" "+155C"
-			(at 220.98 95.25 0)
+		(property "operating_temp_max" "155 C"
+			(at 222.25 95.25 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5093,8 +6400,8 @@
 				)
 			)
 		)
-		(property "resistance" "91kΩ"
-			(at 220.98 95.25 0)
+		(property "resistance" "91 kohm"
+			(at 222.25 95.25 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5104,8 +6411,8 @@
 				)
 			)
 		)
-		(property "tolerance" "±1%"
-			(at 220.98 95.25 0)
+		(property "tolerance" "+/-1%"
+			(at 222.25 95.25 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5115,8 +6422,8 @@
 				)
 			)
 		)
-		(property "power" "62.5mW"
-			(at 220.98 95.25 0)
+		(property "power" "0.063 W"
+			(at 222.25 95.25 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5126,8 +6433,8 @@
 				)
 			)
 		)
-		(property "voltage" "50V"
-			(at 220.98 95.25 0)
+		(property "voltage" "50 V"
+			(at 222.25 95.25 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5137,8 +6444,8 @@
 				)
 			)
 		)
-		(property "temp_coefficient" "±100ppm/℃"
-			(at 220.98 95.25 0)
+		(property "temp_coefficient" "+/-100 ppm/C"
+			(at 222.25 95.25 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5148,8 +6455,41 @@
 				)
 			)
 		)
-		(property "technology" "Thick Film Resistor"
-			(at 220.98 95.25 0)
+		(property "technology" "Thick film"
+			(at 222.25 95.25 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "BOM Comments" ""
+			(at 222.25 95.25 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 222.25 95.25 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
+			(at 222.25 95.25 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5349,6 +6689,39 @@
 				)
 			)
 		)
+		(property "BOM Comments" ""
+			(at 104.14 62.23 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 104.14 62.23 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
+			(at 104.14 62.23 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "8"
 			(uuid "5574640c-03cc-443a-9e18-5084792a8b34")
 		)
@@ -5539,217 +6912,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:R")
-		(at 52.07 50.8 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "4c278c70-4027-48f0-98a5-d73f7f710d43")
-		(property "Reference" "R75"
-			(at 50.038 50.8 90)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "301k"
-			(at 52.07 50.8 90)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
-			(at 50.292 50.8 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" "https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2312121702_Vishay-Intertech-CRCW0402301KFKED_C3917912.pdf"
-			(at 52.07 50.8 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" ""
-			(at 52.07 50.8 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "LCSC" "C3917912"
-			(at 52.07 50.8 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description_1" ""
-			(at 52.07 50.8 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "manufacturer" "Vishay Intertech"
-			(at 52.07 50.8 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "manufacturer_pn" "CRCW0402301KFKED"
-			(at 52.07 50.8 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "package" "0402 (1005 metric)"
-			(at 52.07 50.8 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "operating_temp_min" "-55C"
-			(at 52.07 50.8 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "operating_temp_max" "+155C"
-			(at 52.07 50.8 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "resistance" "301kΩ"
-			(at 52.07 50.8 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "tolerance" "±1%"
-			(at 52.07 50.8 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "power" "63mW"
-			(at 52.07 50.8 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "temp_coefficient" "±100ppm/℃"
-			(at 52.07 50.8 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "technology" "Thick Film Resistor"
-			(at 52.07 50.8 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "64ae2b71-bba1-4a52-8c94-1be4d99bd1f2")
-		)
-		(pin "2"
-			(uuid "a9fb40a4-a609-419d-b1ae-d836bffa60ef")
-		)
-		(instances
-			(project "opensync"
-				(path "/5101ac75-6b12-4b1f-bd09-4cdc912f4174/d21f1f07-0dd9-47a5-8053-812c1f8a1804"
-					(reference "R75")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:C")
 		(at 173.99 120.65 180)
 		(unit 1)
@@ -5793,7 +6955,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://www.lcsc.com/datasheet/C338078.pdf"
+		(property "Datasheet" "https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2304140030_TDK-C2012X7S1A226MT000E_C342717.pdf"
 			(at 173.99 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -5804,7 +6966,7 @@
 				)
 			)
 		)
-		(property "Description" "Unpolarized capacitor"
+		(property "Description" "22uF ceramic MLCC, 10V, ±20%, X7S, 0805 (2012 metric)"
 			(at 173.99 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -5815,7 +6977,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C338078"
+		(property "LCSC" "C342717"
 			(at 173.99 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -5826,7 +6988,7 @@
 				)
 			)
 		)
-		(property "Description_1" ""
+		(property "Description_1" "22uF ceramic MLCC, 10V, ±20%, X7S, 0805 (2012 metric)"
 			(at 173.99 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -5848,7 +7010,7 @@
 				)
 			)
 		)
-		(property "manufacturer_pn" "C2012X5R1E226MT000E"
+		(property "manufacturer_pn" "C2012X7S1A226MT000E"
 			(at 173.99 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -5881,7 +7043,7 @@
 				)
 			)
 		)
-		(property "voltage" "25V"
+		(property "voltage" "10V"
 			(at 173.99 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -5903,7 +7065,7 @@
 				)
 			)
 		)
-		(property "dielectric" "X5R"
+		(property "dielectric" "X7S"
 			(at 173.99 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -5915,6 +7077,72 @@
 			)
 		)
 		(property "material" "Ceramic"
+			(at 173.99 120.65 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "operating_temp_max" "125 C"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "operating_temp_min" "-55 C"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "polarity" "Non-polarized"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "BOM Comments" ""
+			(at 173.99 120.65 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 173.99 120.65 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
 			(at 173.99 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -6527,6 +7755,39 @@
 				)
 			)
 		)
+		(property "BOM Comments" ""
+			(at 142.24 120.65 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 142.24 120.65 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
+			(at 142.24 120.65 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "9"
 			(uuid "7992f8c4-08ba-4055-94a5-770c9187aeff")
 		)
@@ -6568,7 +7829,7 @@
 	)
 	(symbol
 		(lib_id "Device:R")
-		(at 52.07 63.5 0)
+		(at 76.2 71.12 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -6578,7 +7839,7 @@
 		(dnp no)
 		(uuid "652c4b1f-dc67-4fbe-8529-f83a483cf31f")
 		(property "Reference" "R76"
-			(at 50.038 63.5 90)
+			(at 73.025 69.85 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6588,7 +7849,7 @@
 			)
 		)
 		(property "Value" "100k"
-			(at 52.07 63.5 90)
+			(at 73.025 72.39 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6598,7 +7859,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
-			(at 50.292 63.5 90)
+			(at 74.422 71.12 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6609,7 +7870,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_2304140030_Vishay-Intertech-CRCW0402100KFKED_C481918.pdf"
-			(at 52.07 63.5 0)
+			(at 76.2 71.12 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6619,8 +7880,8 @@
 				)
 			)
 		)
-		(property "Description" ""
-			(at 52.07 63.5 0)
+		(property "Description" "100kΩ ±1% thick film resistor, 63mW, 0402 (1005 metric)"
+			(at 76.2 71.12 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6631,7 +7892,7 @@
 			)
 		)
 		(property "LCSC" "C481918"
-			(at 52.07 63.5 0)
+			(at 76.2 71.12 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6641,8 +7902,8 @@
 				)
 			)
 		)
-		(property "Description_1" ""
-			(at 52.07 63.5 90)
+		(property "Description_1" "100kΩ ±1% thick film resistor, 63mW, 0402 (1005 metric)"
+			(at 76.2 71.12 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6653,7 +7914,7 @@
 			)
 		)
 		(property "manufacturer" "Vishay Intertech"
-			(at 52.07 63.5 0)
+			(at 76.2 71.12 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6664,7 +7925,7 @@
 			)
 		)
 		(property "manufacturer_pn" "CRCW0402100KFKED"
-			(at 52.07 63.5 0)
+			(at 76.2 71.12 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6675,7 +7936,7 @@
 			)
 		)
 		(property "package" "0402 (1005 metric)"
-			(at 52.07 63.5 0)
+			(at 76.2 71.12 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6686,7 +7947,7 @@
 			)
 		)
 		(property "operating_temp_min" "-55C"
-			(at 52.07 63.5 0)
+			(at 76.2 71.12 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6697,7 +7958,7 @@
 			)
 		)
 		(property "operating_temp_max" "+155C"
-			(at 52.07 63.5 0)
+			(at 76.2 71.12 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6708,7 +7969,7 @@
 			)
 		)
 		(property "resistance" "100kΩ"
-			(at 52.07 63.5 0)
+			(at 76.2 71.12 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6719,7 +7980,7 @@
 			)
 		)
 		(property "tolerance" "±1%"
-			(at 52.07 63.5 0)
+			(at 76.2 71.12 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6730,7 +7991,7 @@
 			)
 		)
 		(property "power" "63mW"
-			(at 52.07 63.5 0)
+			(at 76.2 71.12 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6741,7 +8002,7 @@
 			)
 		)
 		(property "voltage" "50V"
-			(at 52.07 63.5 0)
+			(at 76.2 71.12 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6752,7 +8013,7 @@
 			)
 		)
 		(property "temp_coefficient" "±100ppm/C"
-			(at 52.07 63.5 0)
+			(at 76.2 71.12 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6763,7 +8024,40 @@
 			)
 		)
 		(property "technology" "Thick Film Resistor"
-			(at 52.07 63.5 0)
+			(at 76.2 71.12 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "BOM Comments" ""
+			(at 76.2 71.12 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 76.2 71.12 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
+			(at 76.2 71.12 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6832,7 +8126,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_2304140030_TDK-C2012X5R1V226MT000E_C338080.pdf"
+		(property "Datasheet" "https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2304140030_TDK-C2012X7S1A226MT000E_C342717.pdf"
 			(at 243.84 67.31 0)
 			(hide yes)
 			(show_name no)
@@ -6843,7 +8137,7 @@
 				)
 			)
 		)
-		(property "Description" "Unpolarized capacitor"
+		(property "Description" "22uF ceramic MLCC, 10V, ±20%, X7S, 0805 (2012 metric)"
 			(at 243.84 67.31 0)
 			(hide yes)
 			(show_name no)
@@ -6854,7 +8148,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C338080"
+		(property "LCSC" "C342717"
 			(at 243.84 67.31 0)
 			(hide yes)
 			(show_name no)
@@ -6865,7 +8159,7 @@
 				)
 			)
 		)
-		(property "Description_1" ""
+		(property "Description_1" "22uF ceramic MLCC, 10V, ±20%, X7S, 0805 (2012 metric)"
 			(at 243.84 67.31 0)
 			(hide yes)
 			(show_name no)
@@ -6887,7 +8181,7 @@
 				)
 			)
 		)
-		(property "manufacturer_pn" "C2012X5R1V226MT000E"
+		(property "manufacturer_pn" "C2012X7S1A226MT000E"
 			(at 243.84 67.31 0)
 			(hide yes)
 			(show_name no)
@@ -6920,7 +8214,7 @@
 				)
 			)
 		)
-		(property "voltage" "35V"
+		(property "voltage" "10V"
 			(at 243.84 67.31 0)
 			(hide yes)
 			(show_name no)
@@ -6942,7 +8236,7 @@
 				)
 			)
 		)
-		(property "dielectric" "X5R"
+		(property "dielectric" "X7S"
 			(at 243.84 67.31 0)
 			(hide yes)
 			(show_name no)
@@ -6954,6 +8248,72 @@
 			)
 		)
 		(property "material" "Ceramic"
+			(at 243.84 67.31 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "operating_temp_max" "125 C"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "operating_temp_min" "-55 C"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "polarity" "Non-polarized"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "BOM Comments" ""
+			(at 243.84 67.31 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 243.84 67.31 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
 			(at 243.84 67.31 0)
 			(hide yes)
 			(show_name no)
@@ -6981,7 +8341,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 52.07 71.12 0)
+		(at 76.2 78.74 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -6992,7 +8352,7 @@
 		(fields_autoplaced yes)
 		(uuid "6db339fa-fdb6-454a-96a3-6d6b69169420")
 		(property "Reference" "#PWR0184"
-			(at 52.07 77.47 0)
+			(at 76.2 85.09 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7003,7 +8363,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 52.07 76.2 0)
+			(at 76.2 83.82 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -7013,7 +8373,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 52.07 71.12 0)
+			(at 76.2 78.74 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7024,7 +8384,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 52.07 71.12 0)
+			(at 76.2 78.74 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7035,7 +8395,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 52.07 71.12 0)
+			(at 76.2 78.74 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7101,7 +8461,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2304140030_TDK-CGA3E1X7R1E105KT0Y0E_C76708.pdf"
+		(property "Datasheet" "https://datasheet.lcsc.com/datasheet/pdf/4fb65a6126b9f2a326f0af53083e3e4f.pdf?productCode=C76708"
 			(at 86.36 71.12 0)
 			(hide yes)
 			(show_name no)
@@ -7112,7 +8472,7 @@
 				)
 			)
 		)
-		(property "Description" "Unpolarized capacitor"
+		(property "Description" "1uF automotive ceramic MLCC, 25V, +/-10%, X7R, 0603"
 			(at 86.36 71.12 0)
 			(hide yes)
 			(show_name no)
@@ -7134,7 +8494,7 @@
 				)
 			)
 		)
-		(property "Description_1" ""
+		(property "Description_1" "1uF automotive ceramic MLCC, 25V, +/-10%, X7R, 0603"
 			(at 86.36 71.12 0)
 			(hide yes)
 			(show_name no)
@@ -7200,7 +8560,7 @@
 				)
 			)
 		)
-		(property "tolerance" "±10%"
+		(property "tolerance" "+/-10%"
 			(at 86.36 71.12 0)
 			(hide yes)
 			(show_name no)
@@ -7223,6 +8583,72 @@
 			)
 		)
 		(property "material" "Ceramic"
+			(at 86.36 71.12 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "operating_temp_max" "125 C"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "operating_temp_min" "-55 C"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "polarity" "Non-polarized"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "BOM Comments" ""
+			(at 86.36 71.12 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 86.36 71.12 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
 			(at 86.36 71.12 0)
 			(hide yes)
 			(show_name no)
@@ -7327,6 +8753,84 @@
 		)
 	)
 	(symbol
+		(lib_id "power:+3V3")
+		(at 227.33 125.73 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "76d1e216-58c7-4d58-8c44-79f72eeb47ba")
+		(property "Reference" "#PWR0117"
+			(at 227.33 129.54 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "+3V3_RAW"
+			(at 227.33 120.65 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 227.33 125.73 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 227.33 125.73 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+3V3\""
+			(at 227.33 125.73 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "2d7fcae1-abd5-45e2-b5c8-5f913ee49349")
+		)
+		(instances
+			(project "opensync"
+				(path "/5101ac75-6b12-4b1f-bd09-4cdc912f4174/d21f1f07-0dd9-47a5-8053-812c1f8a1804"
+					(reference "#PWR0117")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:GND")
 		(at 212.09 85.09 0)
 		(unit 1)
@@ -7405,6 +8909,84 @@
 		)
 	)
 	(symbol
+		(lib_id "power:GND")
+		(at 81.28 59.69 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "80827030-35ea-4fb9-9a7e-c671c9581404")
+		(property "Reference" "#PWR0202"
+			(at 81.28 66.04 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 81.28 64.77 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 81.28 59.69 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 81.28 59.69 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 81.28 59.69 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "1ffdc4c4-c4ff-4ad5-913e-5bbf5c86d801")
+		)
+		(instances
+			(project "opensync"
+				(path "/5101ac75-6b12-4b1f-bd09-4cdc912f4174/d21f1f07-0dd9-47a5-8053-812c1f8a1804"
+					(reference "#PWR0202")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:C")
 		(at 85.09 48.26 180)
 		(unit 1)
@@ -7448,7 +9030,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2304140030_TDK-CGA3E1X7R1E105KT0Y0E_C76708.pdf"
+		(property "Datasheet" "https://datasheet.lcsc.com/datasheet/pdf/4fb65a6126b9f2a326f0af53083e3e4f.pdf?productCode=C76708"
 			(at 85.09 48.26 0)
 			(hide yes)
 			(show_name no)
@@ -7459,7 +9041,7 @@
 				)
 			)
 		)
-		(property "Description" "Unpolarized capacitor"
+		(property "Description" "1uF automotive ceramic MLCC, 25V, +/-10%, X7R, 0603"
 			(at 85.09 48.26 0)
 			(hide yes)
 			(show_name no)
@@ -7481,7 +9063,7 @@
 				)
 			)
 		)
-		(property "Description_1" ""
+		(property "Description_1" "1uF automotive ceramic MLCC, 25V, +/-10%, X7R, 0603"
 			(at 85.09 48.26 0)
 			(hide yes)
 			(show_name no)
@@ -7547,7 +9129,7 @@
 				)
 			)
 		)
-		(property "tolerance" "±10%"
+		(property "tolerance" "+/-10%"
 			(at 85.09 48.26 0)
 			(hide yes)
 			(show_name no)
@@ -7580,6 +9162,72 @@
 				)
 			)
 		)
+		(property "operating_temp_max" "125 C"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "operating_temp_min" "-55 C"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "polarity" "Non-polarized"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "BOM Comments" ""
+			(at 85.09 48.26 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 85.09 48.26 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
+			(at 85.09 48.26 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "4704d4f3-cb8e-4a13-8ddd-b847fbd9d910")
 		)
@@ -7590,6 +9238,84 @@
 			(project "opensync"
 				(path "/5101ac75-6b12-4b1f-bd09-4cdc912f4174/d21f1f07-0dd9-47a5-8053-812c1f8a1804"
 					(reference "C68")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:PWR_FLAG")
+		(at 208.28 115.57 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "8720210e-9c01-4975-8515-493f18004701")
+		(property "Reference" "#FLG03"
+			(at 208.28 113.665 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 208.28 110.49 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 208.28 115.57 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 208.28 115.57 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Special symbol for telling ERC where power comes from"
+			(at 208.28 115.57 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "61e49e53-9bc5-4e11-9c9d-ca13ec02d6a5")
+		)
+		(instances
+			(project "opensync"
+				(path "/5101ac75-6b12-4b1f-bd09-4cdc912f4174/d21f1f07-0dd9-47a5-8053-812c1f8a1804"
+					(reference "#FLG03")
 					(unit 1)
 				)
 			)
@@ -7639,7 +9365,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://www.lcsc.com/datasheet/C338078.pdf"
+		(property "Datasheet" "https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2304140030_TDK-C2012X7S1A226MT000E_C342717.pdf"
 			(at 196.85 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -7650,7 +9376,7 @@
 				)
 			)
 		)
-		(property "Description" "Unpolarized capacitor"
+		(property "Description" "22uF ceramic MLCC, 10V, ±20%, X7S, 0805 (2012 metric)"
 			(at 196.85 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -7661,7 +9387,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C338078"
+		(property "LCSC" "C342717"
 			(at 196.85 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -7672,7 +9398,7 @@
 				)
 			)
 		)
-		(property "Description_1" ""
+		(property "Description_1" "22uF ceramic MLCC, 10V, ±20%, X7S, 0805 (2012 metric)"
 			(at 196.85 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -7694,7 +9420,7 @@
 				)
 			)
 		)
-		(property "manufacturer_pn" "C2012X5R1E226MT000E"
+		(property "manufacturer_pn" "C2012X7S1A226MT000E"
 			(at 196.85 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -7727,7 +9453,7 @@
 				)
 			)
 		)
-		(property "voltage" "25V"
+		(property "voltage" "10V"
 			(at 196.85 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -7749,7 +9475,7 @@
 				)
 			)
 		)
-		(property "dielectric" "X5R"
+		(property "dielectric" "X7S"
 			(at 196.85 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -7761,6 +9487,72 @@
 			)
 		)
 		(property "material" "Ceramic"
+			(at 196.85 120.65 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "operating_temp_max" "125 C"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "operating_temp_min" "-55 C"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "polarity" "Non-polarized"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "BOM Comments" ""
+			(at 196.85 120.65 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 196.85 120.65 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
 			(at 196.85 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -7997,7 +9789,7 @@
 				)
 			)
 		)
-		(property "Description" "Unpolarized capacitor"
+		(property "Description" "10uF ceramic MLCC, 35V, ±10%, X5R, 0805 (2012 metric)"
 			(at 105.41 114.3 0)
 			(hide yes)
 			(show_name no)
@@ -8019,7 +9811,7 @@
 				)
 			)
 		)
-		(property "Description_1" ""
+		(property "Description_1" "10uF ceramic MLCC, 35V, ±10%, X5R, 0805 (2012 metric)"
 			(at 105.41 114.3 0)
 			(hide yes)
 			(show_name no)
@@ -8108,6 +9900,72 @@
 			)
 		)
 		(property "material" "Ceramic"
+			(at 105.41 114.3 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "operating_temp_max" "85 C"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "operating_temp_min" "-55 C"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "polarity" "Non-polarized"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "BOM Comments" ""
+			(at 105.41 114.3 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 105.41 114.3 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
 			(at 105.41 114.3 0)
 			(hide yes)
 			(show_name no)
@@ -8286,6 +10144,39 @@
 				)
 			)
 		)
+		(property "BOM Comments" ""
+			(at 46.99 115.57 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 46.99 115.57 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
+			(at 46.99 115.57 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "bebcbb7d-dff0-4813-b040-18abdf0f5be0")
 		)
@@ -8305,8 +10196,8 @@
 		)
 	)
 	(symbol
-		(lib_id "power:PWR_FLAG")
-		(at 72.39 44.45 0)
+		(lib_id "power:+3V3")
+		(at 214.63 111.76 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -8315,9 +10206,9 @@
 		(in_pos_files yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "abd62b96-ae3d-41fc-b137-9645a213570c")
-		(property "Reference" "#FLG01"
-			(at 72.39 42.545 0)
+		(uuid "aad806cf-c95c-412b-927f-8a7674f7d47e")
+		(property "Reference" "#PWR0116"
+			(at 214.63 115.57 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8327,8 +10218,8 @@
 				)
 			)
 		)
-		(property "Value" "PWR_FLAG"
-			(at 72.39 38.1 0)
+		(property "Value" "+3V3_RAW"
+			(at 214.63 106.68 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -8338,7 +10229,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 72.39 44.45 0)
+			(at 214.63 111.76 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8349,7 +10240,84 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 72.39 44.45 0)
+			(at 214.63 111.76 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+3V3\""
+			(at 214.63 111.76 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "11aea696-c6da-498c-aa93-1ebddebcdb7f")
+		)
+		(instances
+			(project "opensync"
+				(path "/5101ac75-6b12-4b1f-bd09-4cdc912f4174/d21f1f07-0dd9-47a5-8053-812c1f8a1804"
+					(reference "#PWR0116")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:PWR_FLAG")
+		(at 72.39 64.77 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "abd62b96-ae3d-41fc-b137-9645a213570c")
+		(property "Reference" "#FLG01"
+			(at 72.39 62.865 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 72.39 60.96 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 72.39 64.77 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 72.39 64.77 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8360,7 +10328,7 @@
 			)
 		)
 		(property "Description" "Special symbol for telling ERC where power comes from"
-			(at 72.39 44.45 0)
+			(at 72.39 64.77 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8384,7 +10352,7 @@
 	)
 	(symbol
 		(lib_id "power:+3V3")
-		(at 209.55 114.3 0)
+		(at 254 124.46 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -8395,7 +10363,7 @@
 		(fields_autoplaced yes)
 		(uuid "b96241d6-5834-40d8-854e-1e89b8e82b41")
 		(property "Reference" "#PWR0193"
-			(at 209.55 118.11 0)
+			(at 254 128.27 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8406,7 +10374,7 @@
 			)
 		)
 		(property "Value" "+3V3"
-			(at 212.09 113.0299 0)
+			(at 256.54 123.1899 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -8417,7 +10385,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 209.55 114.3 0)
+			(at 254 124.46 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8428,7 +10396,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 209.55 114.3 0)
+			(at 254 124.46 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8439,7 +10407,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+3V3\""
-			(at 209.55 114.3 0)
+			(at 254 124.46 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8638,6 +10606,39 @@
 		)
 		(property "current" "4.7A"
 			(at 160.02 110.49 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "BOM Comments" ""
+			(at 160.02 110.49 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 160.02 110.49 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
+			(at 160.02 110.49 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8848,6 +10849,39 @@
 				)
 			)
 		)
+		(property "BOM Comments" ""
+			(at 190.5 43.18 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 190.5 43.18 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
+			(at 190.5 43.18 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "0e09eeaf-acc3-4f70-9f46-194902dc6daf")
 		)
@@ -8858,6 +10892,263 @@
 			(project "opensync"
 				(path "/5101ac75-6b12-4b1f-bd09-4cdc912f4174/d21f1f07-0dd9-47a5-8053-812c1f8a1804"
 					(reference "L2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 208.28 120.65 180)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "c2f0930b-0c0f-4ffc-912a-53783b1942fd")
+		(property "Reference" "C82"
+			(at 204.47 121.9201 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "22u"
+			(at 204.47 119.3801 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+			(at 207.3148 116.84 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2304140030_TDK-C2012X7S1A226MT000E_C342717.pdf"
+			(at 208.28 120.65 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "22uF ceramic MLCC, 10V, ±20%, X7S, 0805 (2012 metric)"
+			(at 208.28 120.65 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C342717"
+			(at 208.28 120.65 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description_1" "22uF ceramic MLCC, 10V, ±20%, X7S, 0805 (2012 metric)"
+			(at 208.28 120.65 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "manufacturer" "TDK"
+			(at 208.28 120.65 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "manufacturer_pn" "C2012X7S1A226MT000E"
+			(at 208.28 120.65 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "package" "0805 (2012 metric)"
+			(at 208.28 120.65 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "capacitance" "22uF"
+			(at 208.28 120.65 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "voltage" "10V"
+			(at 208.28 120.65 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "tolerance" "±20%"
+			(at 208.28 120.65 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "dielectric" "X7S"
+			(at 208.28 120.65 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "material" "Ceramic"
+			(at 208.28 120.65 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "operating_temp_max" "125 C"
+			(at 11.43 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "operating_temp_min" "-55 C"
+			(at 11.43 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "polarity" "Non-polarized"
+			(at 11.43 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "BOM Comments" ""
+			(at 208.28 120.65 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 208.28 120.65 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
+			(at 208.28 120.65 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "d7025445-f4e7-467d-b1cf-3b635e869fe5")
+		)
+		(pin "2"
+			(uuid "111264c3-951d-4332-a0e7-2c0936d60864")
+		)
+		(instances
+			(project "opensync"
+				(path "/5101ac75-6b12-4b1f-bd09-4cdc912f4174/d21f1f07-0dd9-47a5-8053-812c1f8a1804"
+					(reference "C82")
 					(unit 1)
 				)
 			)
@@ -8907,7 +11198,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2304140030_TDK-CGA2B1X7S1C474KT000F_C432936.pdf"
+		(property "Datasheet" "https://datasheet.lcsc.com/datasheet/pdf/60658f6add88b3a06963a5ed95bbd140.pdf?productCode=C432936"
 			(at 121.92 130.81 0)
 			(hide yes)
 			(show_name no)
@@ -8918,7 +11209,7 @@
 				)
 			)
 		)
-		(property "Description" "Unpolarized capacitor"
+		(property "Description" "470nF automotive ceramic MLCC, 16V, +/-10%, X7S, 0402"
 			(at 121.92 130.81 0)
 			(hide yes)
 			(show_name no)
@@ -8940,7 +11231,7 @@
 				)
 			)
 		)
-		(property "Description_1" ""
+		(property "Description_1" "470nF automotive ceramic MLCC, 16V, +/-10%, X7S, 0402"
 			(at 121.92 130.81 0)
 			(hide yes)
 			(show_name no)
@@ -9006,7 +11297,7 @@
 				)
 			)
 		)
-		(property "tolerance" "±10%"
+		(property "tolerance" "+/-10%"
 			(at 121.92 130.81 0)
 			(hide yes)
 			(show_name no)
@@ -9039,6 +11330,72 @@
 				)
 			)
 		)
+		(property "operating_temp_max" "125 C"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "operating_temp_min" "-55 C"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "polarity" "Non-polarized"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "BOM Comments" ""
+			(at 121.92 130.81 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 121.92 130.81 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
+			(at 121.92 130.81 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "824c9471-5f16-4c3d-8513-3b7c74e16bac")
 		)
@@ -9056,7 +11413,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 220.98 101.6 0)
+		(at 222.25 101.6 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -9064,10 +11421,9 @@
 		(on_board yes)
 		(in_pos_files yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "c9745dec-7e2f-4e91-b0dc-01b0ab3c571e")
 		(property "Reference" "#PWR0191"
-			(at 220.98 107.95 0)
+			(at 222.25 107.95 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9078,7 +11434,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 220.98 106.68 0)
+			(at 222.25 105.664 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -9088,7 +11444,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 220.98 101.6 0)
+			(at 222.25 101.6 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9099,7 +11455,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 220.98 101.6 0)
+			(at 222.25 101.6 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9110,7 +11466,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 220.98 101.6 0)
+			(at 222.25 101.6 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9566,6 +11922,39 @@
 				)
 			)
 		)
+		(property "BOM Comments" ""
+			(at 190.5 69.85 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 190.5 69.85 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
+			(at 190.5 69.85 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "425d6fe7-7d3b-4f1a-92d0-f6fa9098322a")
 		)
@@ -9727,7 +12116,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://www.lcsc.com/datasheet/C338078.pdf"
+		(property "Datasheet" "https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2304140030_TDK-C2012X7S1A226MT000E_C342717.pdf"
 			(at 185.42 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -9738,7 +12127,7 @@
 				)
 			)
 		)
-		(property "Description" "Unpolarized capacitor"
+		(property "Description" "22uF ceramic MLCC, 10V, ±20%, X7S, 0805 (2012 metric)"
 			(at 185.42 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -9749,7 +12138,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C338078"
+		(property "LCSC" "C342717"
 			(at 185.42 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -9760,7 +12149,7 @@
 				)
 			)
 		)
-		(property "Description_1" ""
+		(property "Description_1" "22uF ceramic MLCC, 10V, ±20%, X7S, 0805 (2012 metric)"
 			(at 185.42 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -9782,7 +12171,7 @@
 				)
 			)
 		)
-		(property "manufacturer_pn" "C2012X5R1E226MT000E"
+		(property "manufacturer_pn" "C2012X7S1A226MT000E"
 			(at 185.42 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -9815,7 +12204,7 @@
 				)
 			)
 		)
-		(property "voltage" "25V"
+		(property "voltage" "10V"
 			(at 185.42 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -9837,7 +12226,7 @@
 				)
 			)
 		)
-		(property "dielectric" "X5R"
+		(property "dielectric" "X7S"
 			(at 185.42 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -9849,6 +12238,72 @@
 			)
 		)
 		(property "material" "Ceramic"
+			(at 185.42 120.65 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "operating_temp_max" "125 C"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "operating_temp_min" "-55 C"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "polarity" "Non-polarized"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "BOM Comments" ""
+			(at 185.42 120.65 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 185.42 120.65 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
 			(at 185.42 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -10110,7 +12565,7 @@
 	)
 	(symbol
 		(lib_id "power:+5V")
-		(at 236.22 85.09 0)
+		(at 237.49 85.09 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -10121,7 +12576,7 @@
 		(fields_autoplaced yes)
 		(uuid "edcb2a61-4321-4339-8e9c-ae2c0d56e741")
 		(property "Reference" "#PWR0190"
-			(at 236.22 88.9 0)
+			(at 237.49 88.9 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10132,7 +12587,7 @@
 			)
 		)
 		(property "Value" "+5V"
-			(at 236.22 80.01 0)
+			(at 237.49 80.01 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -10142,7 +12597,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 236.22 85.09 0)
+			(at 237.49 85.09 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10153,7 +12608,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 236.22 85.09 0)
+			(at 237.49 85.09 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10164,7 +12619,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+5V\""
-			(at 236.22 85.09 0)
+			(at 237.49 85.09 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10308,7 +12763,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2304140030_TDK-CGA2B2X7R1H222KT0Y0F_C338081.pdf"
+		(property "Datasheet" "https://datasheet.lcsc.com/datasheet/pdf/a59aaf14b4dc37748b23ef506c65beed.pdf?productCode=C338081"
 			(at 93.98 114.3 0)
 			(hide yes)
 			(show_name no)
@@ -10319,7 +12774,7 @@
 				)
 			)
 		)
-		(property "Description" "Unpolarized capacitor"
+		(property "Description" "2.2nF automotive ceramic MLCC, 50V, +/-10%, X7R, 0402"
 			(at 93.98 114.3 0)
 			(hide yes)
 			(show_name no)
@@ -10341,7 +12796,7 @@
 				)
 			)
 		)
-		(property "Description_1" ""
+		(property "Description_1" "2.2nF automotive ceramic MLCC, 50V, +/-10%, X7R, 0402"
 			(at 93.98 114.3 0)
 			(hide yes)
 			(show_name no)
@@ -10407,7 +12862,7 @@
 				)
 			)
 		)
-		(property "tolerance" "±10%"
+		(property "tolerance" "+/-10%"
 			(at 93.98 114.3 0)
 			(hide yes)
 			(show_name no)
@@ -10430,6 +12885,72 @@
 			)
 		)
 		(property "material" "Ceramic"
+			(at 93.98 114.3 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "operating_temp_max" "125 C"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "operating_temp_min" "-55 C"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "polarity" "Non-polarized"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "BOM Comments" ""
+			(at 93.98 114.3 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 93.98 114.3 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
 			(at 93.98 114.3 0)
 			(hide yes)
 			(show_name no)
@@ -10510,7 +13031,7 @@
 				)
 			)
 		)
-		(property "Description" "Unpolarized capacitor"
+		(property "Description" "100nF ceramic MLCC, 50V, ±10%, X7R, 0402 (1005 metric)"
 			(at 121.92 62.23 0)
 			(hide yes)
 			(show_name no)
@@ -10532,7 +13053,7 @@
 				)
 			)
 		)
-		(property "Description_1" ""
+		(property "Description_1" "100nF ceramic MLCC, 50V, ±10%, X7R, 0402 (1005 metric)"
 			(at 121.92 62.23 0)
 			(hide yes)
 			(show_name no)
@@ -10631,6 +13152,72 @@
 				)
 			)
 		)
+		(property "operating_temp_max" "125 C"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "operating_temp_min" "-55 C"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "polarity" "Non-polarized"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "BOM Comments" ""
+			(at 121.92 62.23 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 121.92 62.23 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
+			(at 121.92 62.23 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "18a8101a-9cbf-49a0-a72e-a83da714ca17")
 		)
@@ -10690,7 +13277,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_2304140030_TDK-C2012X5R1V226MT000E_C338080.pdf"
+		(property "Datasheet" "https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2304140030_TDK-C2012X7S1A226MT000E_C342717.pdf"
 			(at 232.41 67.31 0)
 			(hide yes)
 			(show_name no)
@@ -10701,7 +13288,7 @@
 				)
 			)
 		)
-		(property "Description" "Unpolarized capacitor"
+		(property "Description" "22uF ceramic MLCC, 10V, ±20%, X7S, 0805 (2012 metric)"
 			(at 232.41 67.31 0)
 			(hide yes)
 			(show_name no)
@@ -10712,7 +13299,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C338080"
+		(property "LCSC" "C342717"
 			(at 232.41 67.31 0)
 			(hide yes)
 			(show_name no)
@@ -10723,7 +13310,7 @@
 				)
 			)
 		)
-		(property "Description_1" ""
+		(property "Description_1" "22uF ceramic MLCC, 10V, ±20%, X7S, 0805 (2012 metric)"
 			(at 232.41 67.31 0)
 			(hide yes)
 			(show_name no)
@@ -10745,7 +13332,7 @@
 				)
 			)
 		)
-		(property "manufacturer_pn" "C2012X5R1V226MT000E"
+		(property "manufacturer_pn" "C2012X7S1A226MT000E"
 			(at 232.41 67.31 0)
 			(hide yes)
 			(show_name no)
@@ -10778,7 +13365,7 @@
 				)
 			)
 		)
-		(property "voltage" "35V"
+		(property "voltage" "10V"
 			(at 232.41 67.31 0)
 			(hide yes)
 			(show_name no)
@@ -10800,7 +13387,7 @@
 				)
 			)
 		)
-		(property "dielectric" "X5R"
+		(property "dielectric" "X7S"
 			(at 232.41 67.31 0)
 			(hide yes)
 			(show_name no)
@@ -10812,6 +13399,72 @@
 			)
 		)
 		(property "material" "Ceramic"
+			(at 232.41 67.31 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "operating_temp_max" "125 C"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "operating_temp_min" "-55 C"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "polarity" "Non-polarized"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "BOM Comments" ""
+			(at 232.41 67.31 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 232.41 67.31 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
 			(at 232.41 67.31 0)
 			(hide yes)
 			(show_name no)
@@ -10893,6 +13546,50 @@
 			)
 		)
 		(property "Description" "Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"
+			(at 60.96 165.1 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C127361"
+			(at 0 0 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "BOM Comments" ""
+			(at 60.96 165.1 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "DigiKey_Part_Number" ""
+			(at 60.96 165.1 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
 			(at 60.96 165.1 0)
 			(hide yes)
 			(show_name no)
