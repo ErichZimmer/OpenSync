@@ -1,4 +1,4 @@
-# OpenSync Arbitrary Pulse Generator
+# OpenSync Digital Delay/Pulse Generator
 An open source synchronizer for the velocimetry of fluids using a Raspberry Pi microcontroller.
 
 <table>
