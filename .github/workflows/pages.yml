@@ -1,4 +1,5 @@
-name: OpenSync documentation
+
+name: OpenSync Documentation
 
 on:
   push:
@@ -17,34 +18,82 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
+      # Checkout repository
       - name: Checkout
         uses: actions/checkout@v6
 
+      # Configure GitHub Pages
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      # Configure Python for Sphinx
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
           python-version: '3.12'
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
+      # Install documentation dependencies
+      - name: Install documentation dependencies
+        run: |
+          python -m pip install \
+            -r documents/docs/requirements.txt \
+            numpy matplotlib pyserial
 
-      - name: Install documentation and OpenSync import dependencies
-        run: python -m pip install -r documents/docs/requirements.txt numpy matplotlib pyserial
-
+      # Build Sphinx documentation
       - name: Build documentation
-        run: python -B -m sphinx -b html -W --keep-going documents/docs/src _site
+        run: |
+          python -B -m sphinx \
+            -b html \
+            -W --keep-going \
+            documents/docs/src \
+            _site
 
-      - name: Upload artifact
+      # Configure Node.js for Arcane OS SDK
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: software/pwa/package-lock.json
+
+      # Install Arcane SDK and package PWA
+      - name: Package OpenSync PWA
+        working-directory: software/pwa
+        run: |
+          npm ci
+          npm run package
+
+      # Copy packaged PWA into GitHub Pages
+      - name: Publish PWA
+        run: |
+          test -f software/pwa/dist/opensync-pwa/index.html
+          mkdir -p _site/pwa
+
+          cp -a \
+            software/pwa/dist/opensync-pwa/. \
+            _site/pwa/
+
+          touch _site/.nojekyll
+
+      # Create downloadable ZIP archive
+      - name: Create PWA download
+        run: |
+          cd _site/pwa
+          zip -qr ../opensync-pwa.zip .
+
+      # Upload combined documentation + PWA
+      - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          # Publish the generated contents at the project site's root.
           path: _site
 
+      # Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
