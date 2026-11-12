@@ -1,32 +1,7 @@
 PWA Installation
 ================
 
-The OpenSync Synchronizer PWA is an installable browser application. To run it
-from the repository, use Node.js as specified by ``software/pwa/package.json``
-(currently version ``>=22.23.2``). From the repository root:
-
-.. code-block:: console
-
-   cd software/pwa
-   npm ci
-   npm run dev -- --app opensync-pwa --http --port 8000
-
-Open the local URL printed by the server in a browser that supports Web Serial.
-Use the browser's **Install app** command or install icon to add OpenSync as an
-application. The installed app opens in its own window. To update the PWA in the
-case of future enhancements and contributions, there are two ways to accomplish
-this.
-
-One way is to run the npm command again and open the url in the **same** browser
-used for the installation. Then, open up the OpenSync installed app and wait for
-a few minuted. An update button should appear in the top left corner which would
-update the app with the latest version once clicked. After the update, you can stop
-the local http server from the command line used to run the npm command (Ctrl + c).
-
-Another way is to go into the installed app settings of the computer. The installed
-OpenSync app will appear as an ordinary application and can be uninstalled as such.
-Then, run the npm command, open the link in a browser that supports Web USB, and
-re-install the OpenSync app with the updated code.
+The OpenSync Synchronizer PWA is an installable browser application. Installation is as simple as navigating to the `official PWA <https://erichz.net/OpenSync/pwa>`_ and clicking the install button located in the top right corner. A desktop icon should then appear and the app automatically launch in an independent browser window. The app automatically checks for updates and will notify the user when one is available for in-place installation. Uninstallation is also simple and can be done by simply navigating to the installed apps setting on a computer and uninstalling OpenSync from there.
 
 For an introduction to the controls, see :doc:`PWA Basic Usage
 <../basic_usage/pwa>`.
